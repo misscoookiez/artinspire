@@ -22,6 +22,7 @@ import "./inspire-event-faq-inline.css";
 import "./inspire-events-hero.css";
 import "./inspire-local-guide.css";
 import "./inspire-top-refine.css";
+import "./inspire-about-continuity.css";
 
 const statementSlides = [
   ["/art/inspire-studio.jpeg", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -38,7 +39,10 @@ const statementSlides = [
 const youthGallerySlides = [
   ["/art/inspire-student-work.jpeg", "Skolēna darbs Art Studio Inspire"],
   ["/art/studio-slide-easel.jpeg", "Darbs uz molberta Art Studio Inspire"],
-  ["/art/studio-slide-garden.jpeg", "Gleznojums uz molberta Art Studio Inspire"],
+  [
+    "/art/studio-slide-garden.jpeg",
+    "Gleznojums uz molberta Art Studio Inspire",
+  ],
   ["/art/studio-slide-eyes.jpeg", "Skolēna darbs Art Studio Inspire"],
 ];
 const studioSlides = [
@@ -57,10 +61,7 @@ const tattooPreviewImages = [
   ["/art/tattoo-room-detail.jpeg", "Tattoo telpas darba aprīkojums"],
 ];
 const eventSlides = [
-  [
-    "/art/studio-slide-room.jpeg",
-    "The studio prepared for a creative event",
-  ],
+  ["/art/studio-slide-room.jpeg", "The studio prepared for a creative event"],
   [
     "/art/studio-slide-garden.jpeg",
     "A bright studio corner ready for a creative event",
@@ -82,21 +83,21 @@ const eventSlides = [
 const moodQuotes = {
   lv: [
     "Nav jāzin viss ceļš. Pietiek ieraudzīt nākamo soli.",
-  "Tava gaume var būt sākumpunkts — arī tad, ja vēl nezini, kā to nosaukt.",
+    "Tava gaume var būt sākumpunkts — arī tad, ja vēl nezini, kā to nosaukt.",
     "Var sākt ar vienu krāsu, vienu tēlu vai vienkārši ar ziņkārību.",
     "Laba ideja drīkst augt lēni.",
     "Rokas bieži saprot ātrāk nekā vārdi.",
   ],
   en: [
-  "You do not need to know the whole way. It is enough to see the next step.",
-  "Your taste can be a starting point — even before you know how to name it.",
+    "You do not need to know the whole way. It is enough to see the next step.",
+    "Your taste can be a starting point — even before you know how to name it.",
     "You can begin with one colour, one image, or simply curiosity.",
     "A good idea is allowed to grow slowly.",
     "Hands often understand sooner than words.",
   ],
   ru: [
-  "Не нужно знать весь путь. Достаточно увидеть следующий шаг.",
-  "Ваш вкус может стать отправной точкой — даже если вы пока не знаете, как его назвать.",
+    "Не нужно знать весь путь. Достаточно увидеть следующий шаг.",
+    "Ваш вкус может стать отправной точкой — даже если вы пока не знаете, как его назвать.",
     "Можно начать с одного цвета, одного образа или просто с любопытства.",
     "Хорошей идее можно расти медленно.",
     "Руки часто понимают раньше слов.",
@@ -1224,17 +1225,41 @@ export default function InspirePage() {
         ]
       : lang === "ru"
         ? [
-            ["Вкус ребёнка — не ошибка", "Даже необычный выбор цвета, образ или интерес может стать важной отправной точкой. Мы помогаем увидеть, что действительно увлекает самого ребёнка."],
-            ["Играть и удивляться", "Творчество растёт из безопасного пространства, где можно пробовать, ошибаться и открывать. Здесь не нужно делать «правильно» с первого раза."],
-            ["Техника растёт вместе с идеей", "Рисунок, композиция, цвет и материалы появляются тогда, когда помогают идее стать сильнее. Правила — инструмент, а не граница."],
-            ["Голос подростка важен", "Здесь есть место для больших работ, идей портфолио и смелых тем. Их взгляд заслуживает времени, внимания и серьёзного разговора."],
+            [
+              "Вкус ребёнка — не ошибка",
+              "Даже необычный выбор цвета, образ или интерес может стать важной отправной точкой. Мы помогаем увидеть, что действительно увлекает самого ребёнка.",
+            ],
+            [
+              "Играть и удивляться",
+              "Творчество растёт из безопасного пространства, где можно пробовать, ошибаться и открывать. Здесь не нужно делать «правильно» с первого раза.",
+            ],
+            [
+              "Техника растёт вместе с идеей",
+              "Рисунок, композиция, цвет и материалы появляются тогда, когда помогают идее стать сильнее. Правила — инструмент, а не граница.",
+            ],
+            [
+              "Голос подростка важен",
+              "Здесь есть место для больших работ, идей портфолио и смелых тем. Их взгляд заслуживает времени, внимания и серьёзного разговора.",
+            ],
           ]
         : [
-            ["A child’s taste is not a mistake to correct", "An unusual colour choice, image or interest can be an important starting point. We help each person notice what genuinely holds their attention."],
-            ["Remembering how to play and wonder", "Creativity grows in the safety to try, make mistakes and discover. There is no need to get it “right” on the first attempt."],
-            ["Technique grows alongside the idea", "Drawing, composition, colour and materials come in when they help an idea become stronger. Rules are tools, not limits."],
-          ["Young people’s voices are taken seriously", "There is room here for bigger works, portfolio ideas and bold themes. Their point of view deserves time, attention and a thoughtful conversation."],
-        ];
+            [
+              "A child’s taste is not a mistake to correct",
+              "An unusual colour choice, image or interest can be an important starting point. We help each person notice what genuinely holds their attention.",
+            ],
+            [
+              "Remembering how to play and wonder",
+              "Creativity grows in the safety to try, make mistakes and discover. There is no need to get it “right” on the first attempt.",
+            ],
+            [
+              "Technique grows alongside the idea",
+              "Drawing, composition, colour and materials come in when they help an idea become stronger. Rules are tools, not limits.",
+            ],
+            [
+              "Young people’s voices are taken seriously",
+              "There is room here for bigger works, portfolio ideas and bold themes. Their point of view deserves time, attention and a thoughtful conversation.",
+            ],
+          ];
   const youthMeta =
     lang === "lv"
       ? ["8–16 gadi", "mazas grupas", "materiāli uz vietas"]
@@ -1445,7 +1470,8 @@ export default function InspirePage() {
           }),
         });
         const result = await response.json();
-        if (!response.ok) throw new Error(result.error || "Could not send application.");
+        if (!response.ok)
+          throw new Error(result.error || "Could not send application.");
         setSent(true);
       } catch (error) {
         setStatus(error.message);
@@ -1733,7 +1759,8 @@ export default function InspirePage() {
             const personal =
               option === "membership" || option === "treatment-room";
             const directPurchase = option === "pass" || option === "gift-card";
-            const contactLabel = option === "membership"
+            const contactLabel =
+              option === "membership"
                 ? lang === "lv"
                   ? "APRUNĀSIM DALĪBU →"
                   : lang === "ru"
@@ -1744,7 +1771,8 @@ export default function InspirePage() {
                   : lang === "ru"
                     ? "НАПИСАТЬ О КОМНАТЕ →"
                     : "ASK ABOUT THE ROOM →";
-            const subject = option === "membership"
+            const subject =
+              option === "membership"
                 ? "Studio membership"
                 : "Private tattoo room rental";
             return (
@@ -1824,7 +1852,10 @@ export default function InspirePage() {
             </summary>
             <div>
               <p>{content("inspire.host.tattoo", host.tattoo)}</p>
-              <div className="inspire-space-preview inspire-tattoo-preview" aria-label={host.tattooTitle}>
+              <div
+                className="inspire-space-preview inspire-tattoo-preview"
+                aria-label={host.tattooTitle}
+              >
                 {tattooPreviewImages.map(([src, alt]) => (
                   <button
                     key={src}
@@ -1856,7 +1887,9 @@ export default function InspirePage() {
       </section>
       <section className="inspire-capabilities">
         <div>
-          <p className="inspire-kicker">{capabilities.kicker}</p>
+          <p className="inspire-kicker">
+            {lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}
+          </p>
           <h2>{capabilities.title}</h2>
           <p>{capabilities.lead}</p>
         </div>
@@ -1864,19 +1897,22 @@ export default function InspirePage() {
           {capabilities.items.map(([title, body], index) => (
             <article key={title}>
               <b>{title}</b>
-              <p>{content(["inspire.practical.materials", "inspire.practical.foundation", "inspire.practical.freedom", "inspire.practical.ambition"][index], body)}</p>
+              <p>
+                {content(
+                  [
+                    "inspire.practical.materials",
+                    "inspire.practical.foundation",
+                    "inspire.practical.freedom",
+                    "inspire.practical.ambition",
+                  ][index],
+                  body,
+                )}
+              </p>
             </article>
           ))}
         </div>
       </section>
       <section className="inspire-depth">
-        <p className="inspire-depth-label">
-          {lang === "lv"
-            ? "PAR STUDIJU"
-            : lang === "ru"
-              ? "О СТУДИИ"
-              : "ABOUT THE STUDIO"}
-        </p>
         <details className="inspire-depth-panel" open>
           <summary>
             <span>01</span>
@@ -1903,15 +1939,24 @@ export default function InspirePage() {
               <div className="inspire-host-gallery">
                 <img
                   className="inspire-host-portrait"
-                  src={image("inspire.image.host.0", "/art/sandra-profile-lead.jpeg")}
+                  src={image(
+                    "inspire.image.host.0",
+                    "/art/sandra-profile-lead.jpeg",
+                  )}
                   alt="Sandra Rudzīte in her painting studio"
                 />
                 <img
-                  src={image("inspire.image.host.1", "/art/sandra-studio-tea-upright.jpg")}
+                  src={image(
+                    "inspire.image.host.1",
+                    "/art/sandra-studio-tea-upright.jpg",
+                  )}
                   alt="Sandra Rudzīte enjoying tea in her sunlit studio"
                 />
                 <img
-                  src={image("inspire.image.host.2", "/art/sandra-studio-07.jpg")}
+                  src={image(
+                    "inspire.image.host.2",
+                    "/art/sandra-studio-07.jpg",
+                  )}
                   alt="Sandra Rudzīte painting a dramatic studio work"
                 />
               </div>
@@ -1981,7 +2026,11 @@ export default function InspirePage() {
               <p className="inspire-kicker">{approach.more}</p>
               <h2>{content("inspire.adults.heading", approach.heading)}</h2>
               <p>{content("inspire.adults.lead", approach.moreLead)}</p>
-              {approach.quote ? <blockquote>{content("inspire.adults.quote", approach.quote)}</blockquote> : null}
+              {approach.quote ? (
+                <blockquote>
+                  {content("inspire.adults.quote", approach.quote)}
+                </blockquote>
+              ) : null}
             </div>
             <div className="inspire-proof-list">
               {approach.items.map(([title, body], index) => (
@@ -2009,12 +2058,15 @@ export default function InspirePage() {
             </strong>
             <b>+</b>
           </summary>
-          <section
-            id="studentu-darbi"
-            className="inspire-section inspire-children inspire-youth-hero"
-          >
+          <section id="studentu-darbi" className="inspire-proof inspire-youth-proof">
             <div>
-              <p className="inspire-kicker">{t.youth}</p>
+              <p className="inspire-kicker">
+                {lang === "lv"
+                  ? "KĀ MĒS STRĀDĀJAM"
+                  : lang === "ru"
+                    ? "КАК МЫ РАБОТАЕМ"
+                    : "HOW WE WORK"}
+              </p>
               <h2>
                 {t.youthTitle.split("\n").map((line, index) => (
                   <span key={line}>
@@ -2026,7 +2078,10 @@ export default function InspirePage() {
                 <em>{content("inspire.youth.emphasis", t.youthEm)}</em>
               </h2>
               <p>{content("inspire.youth.body", t.youthBody)}</p>
-              <ul className="inspire-youth-meta" aria-label="Youth class details">
+              <ul
+                className="inspire-youth-meta"
+                aria-label="Youth class details"
+              >
                 {youthMeta.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -2040,35 +2095,6 @@ export default function InspirePage() {
               >
                 {t.apply}
               </button>
-            </div>
-            <img
-              src={image("inspire.image.youth.hero", "/art/inspire-student-work.jpeg")}
-              alt="Student artwork at Inspire"
-            />
-          </section>
-          <section className="inspire-youth-principles">
-            <div>
-              <p className="inspire-kicker">
-                {lang === "lv"
-                  ? "KĀ MĒS STRĀDĀJAM"
-                  : lang === "ru"
-                    ? "КАК МЫ РАБОТАЕМ"
-                    : "HOW WE WORK"}
-              </p>
-              <h3>
-                {lang === "lv"
-                  ? content("inspire.youth.principlesLead", "Radošumam vajag gan brīvību, gan balstu.")
-                  : lang === "ru"
-                    ? "Творчество важно беречь — и помогать ему расти."
-                    : "Creativity deserves protection — and room to grow."}
-              </h3>
-              <p>
-                {lang === "lv"
-                  ? "Mēs apvienojam brīvību, rūpīgu uzmanību un vajadzīgos instrumentus tad, kad tie patiešām palīdz — lai bērns vai jaunietis attīstītu savu vizuālo valodu, nevis aizņemtos svešu."
-                  : lang === "ru"
-                    ? "Мы соединяем свободу, внимательное сопровождение и нужные инструменты в нужный момент — чтобы ребёнок или подросток развивал собственный визуальный язык, а не заимствовал чужой."
-                    : "We combine freedom, attentive guidance and the right tools at the right time, so each young artist can develop a visual language of their own."}
-              </p>
             </div>
             <div className="inspire-proof-list">
               {youthPrinciples.map(([title, body], index) => (
@@ -2162,15 +2188,26 @@ export default function InspirePage() {
             <h2>{content("inspire.events.title", t.eventTitle)}</h2>
             <p>{content("inspire.events.lead", events.lead)}</p>
           </div>
-          <div className="inspire-event-gallery" aria-label="Private events at Art Studio Inspire">
+          <div
+            className="inspire-event-gallery"
+            aria-label="Private events at Art Studio Inspire"
+          >
             {eventSlides.map(([src, alt], index) => (
               <button
                 key={src}
                 type="button"
                 aria-label={`${alt}. Skatīt lielākā izmērā`}
-                onClick={() => setImagePreview({ src: image(`inspire.image.event.${index}`, src), alt })}
+                onClick={() =>
+                  setImagePreview({
+                    src: image(`inspire.image.event.${index}`, src),
+                    alt,
+                  })
+                }
               >
-                <img src={image(`inspire.image.event.${index}`, src)} alt={alt} />
+                <img
+                  src={image(`inspire.image.event.${index}`, src)}
+                  alt={alt}
+                />
               </button>
             ))}
           </div>
@@ -2185,7 +2222,9 @@ export default function InspirePage() {
           ))}
         </div>
         <p className="inspire-event-hangout">{events.hangout}</p>
-        {events.formatsLabel ? <p className="inspire-event-formats-label">{events.formatsLabel}</p> : null}
+        {events.formatsLabel ? (
+          <p className="inspire-event-formats-label">{events.formatsLabel}</p>
+        ) : null}
         <div className="inspire-event-grid">
           {events.formats.map(([title, body], index) => (
             <article key={title}>
@@ -2213,8 +2252,20 @@ export default function InspirePage() {
             <summary>
               {events.faqTitle}
               <span className="inspire-event-faq-action" aria-hidden="true">
-                <span>{lang === "lv" ? "ATVĒRT" : lang === "ru" ? "ОТКРЫТЬ" : "OPEN"}</span>
-                <span>{lang === "lv" ? "AIZVĒRT" : lang === "ru" ? "ЗАКРЫТЬ" : "CLOSE"}</span>
+                <span>
+                  {lang === "lv"
+                    ? "ATVĒRT"
+                    : lang === "ru"
+                      ? "ОТКРЫТЬ"
+                      : "OPEN"}
+                </span>
+                <span>
+                  {lang === "lv"
+                    ? "AIZVĒRT"
+                    : lang === "ru"
+                      ? "ЗАКРЫТЬ"
+                      : "CLOSE"}
+                </span>
               </span>
               <b>+</b>
             </summary>
@@ -2309,7 +2360,10 @@ export default function InspirePage() {
         </div>
         <figure>
           <img
-            src={image("inspire.image.directions", "/art/inspire-door-directions.jpg")}
+            src={image(
+              "inspire.image.directions",
+              "/art/inspire-door-directions.jpg",
+            )}
             alt="The entrance door to Art Studio Inspire"
           />
           <figcaption>
@@ -2456,13 +2510,16 @@ export default function InspirePage() {
                                 ? "Выберите 4, 6 или 8 занятий. Абонемент действует 4 недели с первого занятия."
                                 : "Choose 4, 6 or 8 classes. The pass is valid for four weeks from the first class."
                             : lang === "lv"
-                            ? "Izvēlies nodarbību skaitu — 2, 4, 6, 8 vai savu daudzumu."
-                            : lang === "ru"
-                              ? "Выберите количество занятий: 2, 4, 6, 8 или своё количество."
-                              : "Choose 2, 4, 6, 8 classes or your own amount."}
+                              ? "Izvēlies nodarbību skaitu — 2, 4, 6, 8 vai savu daudzumu."
+                              : lang === "ru"
+                                ? "Выберите количество занятий: 2, 4, 6, 8 или своё количество."
+                                : "Choose 2, 4, 6, 8 classes or your own amount."}
                         </p>
                         <div>
-                          {(calendarKind === "pass" ? [4, 6, 8] : [2, 4, 6, 8]).map((count) => (
+                          {(calendarKind === "pass"
+                            ? [4, 6, 8]
+                            : [2, 4, 6, 8]
+                          ).map((count) => (
                             <button
                               key={count}
                               type="button"
@@ -2487,7 +2544,10 @@ export default function InspirePage() {
                               value={giftClasses}
                               onChange={(e) =>
                                 setGiftClasses(
-                                  Math.max(2, Number.parseInt(e.target.value, 10) || 2),
+                                  Math.max(
+                                    2,
+                                    Number.parseInt(e.target.value, 10) || 2,
+                                  ),
                                 )
                               }
                             />
@@ -2499,83 +2559,89 @@ export default function InspirePage() {
                         </strong>
                       </div>
                     ) : (
-                    <select
-                      required
-                      value={selection}
-                      onChange={(e) => {
-                        const [kind, itemId] = e.target.value.split(":");
-                        const item =
-                          kind === "class"
-                            ? liveClasses.find((x) => x.id === itemId)
-                            : livePrivateSlots.find((x) => x.id === itemId);
-                        setBooking({
-                          kind,
-                          itemId,
-                          label:
+                      <select
+                        required
+                        value={selection}
+                        onChange={(e) => {
+                          const [kind, itemId] = e.target.value.split(":");
+                          const item =
                             kind === "class"
-                              ? `${sessionName(item)} · ${item.date} · ${item.time}`
-                              : labelSlot(item),
-                        });
-                        setSelection(e.target.value);
-                      }}
-                    >
-                      <option value="">{t.choose}</option>
-                      {calendarKind === "class" && (
-                        <optgroup label={t.group}>
-                          {liveClasses.map((item) => (
-                            <option
-                              key={item.id}
-                              disabled={remaining(item.id, item.seats) < 1}
-                              value={`class:${item.id}`}
-                            >
-                              {sessionName(item)} · {item.date} · {item.time}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      {calendarKind === "private" && (
-                        <optgroup
-                          label={
-                            lang === "lv"
-                              ? "INDIVIDUĀLĀS NODARBĪBAS"
-                              : lang === "ru"
-                                ? "ИНДИВИДУАЛЬНЫЕ ЗАНЯТИЯ"
-                                : "PRIVATE SESSIONS"
-                          }
-                        >
-                          {availablePrivateSlots.map((item) => (
-                            <option key={item.id} value={`private:${item.id}`}>
-                              {labelSlot(item)}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      {calendarKind === "rental" && (
-                        <optgroup
-                          label={
-                            lang === "lv"
-                              ? "STUDIJAS NOMA · €10/STUNDĀ"
-                              : lang === "ru"
-                                ? "АРЕНДА СТУДИИ · €10/ЧАС"
-                                : "STUDIO RENT · €10/HOUR"
-                          }
-                        >
-                          {availableRentalSlots.map((item) => (
-                            <option key={item.id} value={`private:${item.id}`}>
-                              {labelSlot(item)}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                    </select>
+                              ? liveClasses.find((x) => x.id === itemId)
+                              : livePrivateSlots.find((x) => x.id === itemId);
+                          setBooking({
+                            kind,
+                            itemId,
+                            label:
+                              kind === "class"
+                                ? `${sessionName(item)} · ${item.date} · ${item.time}`
+                                : labelSlot(item),
+                          });
+                          setSelection(e.target.value);
+                        }}
+                      >
+                        <option value="">{t.choose}</option>
+                        {calendarKind === "class" && (
+                          <optgroup label={t.group}>
+                            {liveClasses.map((item) => (
+                              <option
+                                key={item.id}
+                                disabled={remaining(item.id, item.seats) < 1}
+                                value={`class:${item.id}`}
+                              >
+                                {sessionName(item)} · {item.date} · {item.time}
+                              </option>
+                            ))}
+                          </optgroup>
+                        )}
+                        {calendarKind === "private" && (
+                          <optgroup
+                            label={
+                              lang === "lv"
+                                ? "INDIVIDUĀLĀS NODARBĪBAS"
+                                : lang === "ru"
+                                  ? "ИНДИВИДУАЛЬНЫЕ ЗАНЯТИЯ"
+                                  : "PRIVATE SESSIONS"
+                            }
+                          >
+                            {availablePrivateSlots.map((item) => (
+                              <option
+                                key={item.id}
+                                value={`private:${item.id}`}
+                              >
+                                {labelSlot(item)}
+                              </option>
+                            ))}
+                          </optgroup>
+                        )}
+                        {calendarKind === "rental" && (
+                          <optgroup
+                            label={
+                              lang === "lv"
+                                ? "STUDIJAS NOMA · €10/STUNDĀ"
+                                : lang === "ru"
+                                  ? "АРЕНДА СТУДИИ · €10/ЧАС"
+                                  : "STUDIO RENT · €10/HOUR"
+                            }
+                          >
+                            {availableRentalSlots.map((item) => (
+                              <option
+                                key={item.id}
+                                value={`private:${item.id}`}
+                              >
+                                {labelSlot(item)}
+                              </option>
+                            ))}
+                          </optgroup>
+                        )}
+                      </select>
                     )}
                     {calendarKind !== "gift" && calendarKind !== "pass" && (
                       <p className="inspire-cancellation inspire-modal-policy">
-                      {lang === "lv"
-                        ? "Apmaksāta rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
-                        : lang === "ru"
-                          ? "Оплаченную бронь нужно отменить или перенести не позднее чем за 24 часа до начала; до этого возможны бесплатная отмена и автоматический возврат."
-                          : "A paid booking must be cancelled or rescheduled at least 24 hours before it starts; until then, cancellation is free and the refund is automatic."}
+                        {lang === "lv"
+                          ? "Apmaksāta rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
+                          : lang === "ru"
+                            ? "Оплаченную бронь нужно отменить или перенести не позднее чем за 24 часа до начала; до этого возможны бесплатная отмена и автоматический возврат."
+                            : "A paid booking must be cancelled or rescheduled at least 24 hours before it starts; until then, cancellation is free and the refund is automatic."}
                       </p>
                     )}
                   </>
