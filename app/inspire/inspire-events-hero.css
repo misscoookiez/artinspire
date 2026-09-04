@@ -20,3 +20,12 @@
 @media(max-width:900px){.inspire-event-slideshow{min-height:380px}.inspire-event-grid{grid-template-columns:1fr!important}.inspire-event-grid details:nth-child(odd){border-right:0;padding-right:0}}
 @media(max-width:520px){.inspire-event-slideshow{min-height:320px}.inspire-event-grid details p{margin-left:46px!important}}
 @media(max-width:700px){.inspire-events{background-position:64% center!important}.inspire-event-rates{margin-top:35px}}
+
+/* Event formats borrow the same tactile card logic as the booking choices. */
+@media(min-width:901px){
+  .inspire-event-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;max-width:1440px;margin-left:auto!important;margin-right:auto!important;border:0!important}
+  .inspire-event-grid details{min-height:218px;padding:0 22px!important;border:1px solid rgba(126,239,249,.28)!important;background:linear-gradient(145deg,rgba(17,50,75,.48),rgba(30,13,55,.55));transition:background .22s ease,box-shadow .22s ease,transform .22s ease}
+  .inspire-event-grid details:nth-child(2){background:linear-gradient(145deg,rgba(70,18,75,.52),rgba(17,28,70,.54))}.inspire-event-grid details:nth-child(3){background:linear-gradient(145deg,rgba(18,69,75,.48),rgba(29,22,64,.58))}.inspire-event-grid details:nth-child(4){background:linear-gradient(145deg,rgba(64,40,80,.5),rgba(10,39,66,.55))}.inspire-event-grid details:nth-child(5){background:linear-gradient(145deg,rgba(79,45,29,.5),rgba(24,28,65,.57))}
+  .inspire-event-grid details:hover,.inspire-event-grid details:focus-within{position:relative;z-index:1;transform:translateY(-3px);box-shadow:0 0 0 1px rgba(126,239,249,.55),0 16px 36px rgba(28,212,235,.16)}
+  .inspire-event-grid summary{min-height:104px;padding:25px 0!important}.inspire-event-grid details p{margin:0 0 24px 46px!important;font-size:17px!important;line-height:1.62!important}
+}

@@ -498,8 +498,8 @@
   padding: 0;
   overflow: hidden;
   break-inside: avoid;
-  border: 1px solid rgba(139, 229, 238, .2);
-  background: #17151a;
+  border: 0;
+  background: transparent;
   cursor: zoom-in;
 }
 .inspire-student-gallery-item img {

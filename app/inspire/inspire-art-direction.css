@@ -1,6 +1,15 @@
 /* Final art direction: accessible micro-type, stronger rhythm, and a few deliberate
    moments of alignment so the site does not read as one continuous left rail. */
-.inspire { --micro: clamp(11px, .72vw, 13px); --small: clamp(13px, .9vw, 15px); --body: clamp(16px, 1.08vw, 18px); }
+.inspire { --micro: clamp(12px, .78vw, 14px); --small: clamp(16px, 1.08vw, 18px); --body: clamp(18px, 1.28vw, 20px); }
+.inspire { display: flex; flex-direction: column; }
+.inspire > * { order: 1; }
+.inspire > .inspire-booking { order: 4; }
+.inspire > #pasakumi { order: 5; }
+.inspire > .inspire-capabilities { order: 6; }
+.inspire > .inspire-depth { order: 7; }
+.inspire > .inspire-student-galleries { order: 8; }
+.inspire > .inspire-directions { order: 9; }
+.inspire > .inspire-local-guide { order: 10; }
 .inspire .inspire-kicker,
 .inspire .inspire-products article > p,
 .inspire .inspire-event-rates p,
@@ -29,6 +38,22 @@
 .inspire .inspire-space-details p,
 .inspire .inspire-host-details p,
 .inspire .inspire-local-guide-grid p { font-size: var(--small) !important; line-height: 1.65 !important; }
+.inspire .inspire-statement-copy > div p,
+.inspire .inspire-philosophy > div > p:not(.inspire-kicker),
+.inspire .inspire-proof > div > p:not(.inspire-kicker),
+.inspire .inspire-proof details p,
+.inspire .inspire-capabilities > div > p:not(.inspire-kicker),
+.inspire .inspire-directions-copy > p:not(.inspire-kicker),
+.inspire .inspire-events-intro > p:last-child,
+.inspire .inspire-host-bio p { font-size: var(--body) !important; line-height: 1.68 !important; }
+.inspire .inspire-capability-grid p { font-size: clamp(17px, 1.18vw, 19px) !important; line-height: 1.68 !important; }
+.inspire .inspire-student-galleries summary,
+.inspire .inspire-space-details summary,
+.inspire .inspire-host summary,
+.inspire .inspire-local-guide summary { font-size: clamp(14px, .95vw, 16px) !important; line-height: 1.35; }
+.inspire-youth-proof > div > p:not(.inspire-kicker) { max-width: 64ch; font-size: var(--body) !important; line-height: 1.66 !important; }
+.inspire-youth-proof .inspire-proof-list summary strong { font-size: clamp(22px, 1.8vw, 31px); }
+.inspire-youth-proof .inspire-proof-list details p { font-size: var(--small); line-height: 1.65; }
 
 /* The booking step is an editorial pause, not just another left-aligned section. */
 .inspire-booking > h2 { max-width: 880px; margin-inline: auto; text-align: center; }
