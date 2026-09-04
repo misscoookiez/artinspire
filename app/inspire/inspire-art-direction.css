@@ -77,6 +77,49 @@
 .inspire-mood-strip { text-align: center; }
 .inspire-mood-strip p { margin-inline: auto; font-size: clamp(18px, 1.55vw, 25px); }
 
+/* Opening statement: three distinct thoughts, then a single quiet conclusion. */
+.inspire-statement-copy > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(22px, 4vw, 62px);
+  max-width: 1040px;
+  margin: 34px auto 0;
+  counter-reset: studio-thought;
+}
+.inspire-statement-copy > div p {
+  position: relative;
+  margin: 0;
+  padding: 24px 0 0 34px;
+  border-top: 1px solid rgba(104, 233, 244, .62);
+  color: #f2eef5 !important;
+  text-align: left;
+}
+.inspire-statement-copy > div p::before {
+  counter-increment: studio-thought;
+  content: "0" counter(studio-thought);
+  position: absolute;
+  top: 25px;
+  left: 0;
+  color: #78edf7;
+  font-size: 12px;
+  letter-spacing: .12em;
+}
+.inspire-statement-copy blockquote {
+  max-width: 620px;
+  margin-top: 48px;
+  padding-top: 23px;
+  border-top-color: #71edf5;
+  color: #fff;
+  text-align: center;
+  font-size: clamp(22px, 1.85vw, 30px) !important;
+  line-height: 1.2 !important;
+}
+@media (max-width: 800px) {
+  .inspire-statement-copy > div { grid-template-columns: 1fr; gap: 18px; margin-top: 28px; }
+  .inspire-statement-copy > div p { padding-top: 20px; }
+  .inspire-statement-copy blockquote { margin-top: 34px; font-size: 22px !important; }
+}
+
 /* Small colour gestures guide the eye without turning the studio into a dashboard. */
 .inspire-student-galleries { background: linear-gradient(115deg, #07070b, #0c0c18 54%, #090912) !important; }
 .inspire-student-galleries-intro { max-width: 720px; }
