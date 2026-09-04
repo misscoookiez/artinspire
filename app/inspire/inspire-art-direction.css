@@ -1,0 +1,67 @@
+/* Final art direction: accessible micro-type, stronger rhythm, and a few deliberate
+   moments of alignment so the site does not read as one continuous left rail. */
+.inspire { --micro: clamp(11px, .72vw, 13px); --small: clamp(13px, .9vw, 15px); --body: clamp(16px, 1.08vw, 18px); }
+.inspire .inspire-kicker,
+.inspire .inspire-products article > p,
+.inspire .inspire-event-rates p,
+.inspire .inspire-capability-grid b,
+.inspire .inspire-proof summary span,
+.inspire .inspire-site-footer,
+.inspire .inspire-local-guide summary,
+.inspire .inspire-space-details summary,
+.inspire .inspire-rent-contact,
+.inspire .inspire-directions-copy a,
+.inspire .inspire-cancellation,
+.inspire .inspire-schedule-note,
+.inspire .inspire-student-galleries summary { font-size: var(--micro) !important; }
+
+.inspire .inspire-weekly-columns button small,
+.inspire .inspire-weekly-columns button i,
+.inspire .inspire-event-rates span,
+.inspire .inspire-host summary,
+.inspire .inspire-host-details a,
+.inspire .inspire-space-details a,
+.inspire .inspire-local-guide-grid p,
+.inspire .inspire-event-faq-inline .inspire-event-faq-action { font-size: var(--small) !important; }
+
+.inspire .inspire-capability-grid p,
+.inspire .inspire-event-faq-inline p,
+.inspire .inspire-space-details p,
+.inspire .inspire-host-details p,
+.inspire .inspire-local-guide-grid p { font-size: var(--small) !important; line-height: 1.65 !important; }
+
+/* The booking step is an editorial pause, not just another left-aligned section. */
+.inspire-booking > h2 { max-width: 880px; margin-inline: auto; text-align: center; }
+.inspire-booking > h2::after { content: ""; display: block; width: 74px; height: 2px; margin: 22px auto 0; background: linear-gradient(90deg, #54eafa, #e87bd9); }
+.inspire-products { max-width: 1440px; margin-inline: auto; }
+.inspire-products article > p { color: #d08aff !important; }
+.inspire-products article > h3 { font-size: clamp(22px, 1.65vw, 31px) !important; line-height: .98; }
+.inspire-products article > b { font-size: clamp(27px, 2.05vw, 38px) !important; }
+.inspire-products article > span { font-size: var(--small) !important; line-height: 1.56 !important; }
+.inspire-products article > button,
+.inspire-products article > a { font-size: var(--micro) !important; letter-spacing: .13em !important; }
+
+/* Stronger type hierarchy in supporting panels, while retaining their quietness. */
+.inspire-capability-grid b { color: #157984; }
+.inspire-capability-grid p { max-width: 42ch; }
+.inspire-event-formats-label { font-size: var(--micro) !important; letter-spacing: .15em !important; }
+.inspire-event-hangout { font-size: var(--body) !important; line-height: 1.62 !important; }
+.inspire-event-faq-inline > details > summary { font-size: clamp(19px, 1.7vw, 27px) !important; }
+.inspire-mood-strip { text-align: center; }
+.inspire-mood-strip p { margin-inline: auto; font-size: clamp(18px, 1.55vw, 25px); }
+
+/* Small colour gestures guide the eye without turning the studio into a dashboard. */
+.inspire-student-galleries { background: linear-gradient(115deg, #07070b, #0c0c18 54%, #090912) !important; }
+.inspire-student-galleries-intro { max-width: 720px; }
+.inspire-student-galleries h2 { font-size: clamp(38px, 4vw, 66px); letter-spacing: -.06em; }
+.inspire-directions-copy { position: relative; }
+.inspire-directions-copy::before { content: ""; position: absolute; right: 0; top: -26px; width: 110px; height: 2px; background: linear-gradient(90deg, transparent, #6feaf3); }
+
+@media (max-width: 800px) {
+  .inspire { --micro: 11px; --small: 14px; --body: 17px; }
+  .inspire-booking > h2 { text-align: left; margin-inline: 0; }
+  .inspire-booking > h2::after { margin-left: 0; }
+  .inspire-products article > h3 { font-size: 24px !important; }
+  .inspire-products article > b { font-size: 29px !important; }
+  .inspire-site-footer { font-size: 11px !important; }
+}

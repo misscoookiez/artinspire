@@ -23,6 +23,7 @@ import "./inspire-events-hero.css";
 import "./inspire-local-guide.css";
 import "./inspire-top-refine.css";
 import "./inspire-about-continuity.css";
+import "./inspire-art-direction.css";
 
 const statementSlides = [
   ["/art/inspire-studio.jpeg", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -608,6 +609,39 @@ const products = [
   ],
 ];
 
+const productSummaries = {
+  lv: [
+    "Iepazīsti studiju un savu gleznošanas ritmu.",
+    "Mazā grupā ar individuālu uzmanību.",
+    "Regulāram ritmam un stabilākai cenai.",
+    "Viens pret vienu — idejai vai tehnikai.",
+    "Rezervē laiku savam darbam studijā.",
+    "Piekļuve studijai saviem projektiem.",
+    "Aprīkota privāta telpa meistariem.",
+    "Dāvini radošus mirkļus.",
+  ],
+  en: [
+    "Meet the studio and find your painting rhythm.",
+    "A small group with focused attention.",
+    "A regular rhythm at a steadier price.",
+    "One-to-one time for an idea or technique.",
+    "Reserve studio time for your own work.",
+    "Studio access for your own projects.",
+    "An equipped private room for practitioners.",
+    "Give classes, or choose your own amount.",
+  ],
+  ru: [
+    "Познакомьтесь со студией и своим ритмом.",
+    "Небольшая группа и внимательный подход.",
+    "Регулярный ритм по более выгодной цене.",
+    "Личное время для идеи или техники.",
+    "Забронируйте время для своей работы.",
+    "Доступ к студии для личных проектов.",
+    "Оборудованная приватная комната для мастеров.",
+    "Подарите занятия или выберите своё количество.",
+  ],
+};
+
 const englishGroups = [
   ["Thursday", "16:00–18:00", "YOUTH · AGES 8–16"],
   ["Thursday", "18:30–20:30", "ADULTS"],
@@ -970,7 +1004,7 @@ const words = {
     booking: "PIETEIKŠANĀS",
     format: "IZVĒLIES SAVU FORMĀTU",
     book: "REZERVĒT VIETU",
-    price: "€15 PIRMAIS APMEKLĒJUMS · €25 VIENA NODARBĪBA · ABONEMENTS NO €80",
+    price: "€15 PIRMAIS APMEKLĒJUMS · €25 VIENA NODARBĪBA · ABONEMENTS 4× €80",
     scheduleNote:
       "8–16 GADU GRUPAS · CETURTDIEN UN SESTDIEN\nPIEAUGUŠIE · CETURTDIEN, SESTDIEN UN SVĒTDIEN",
     upcoming: "TUVĀKĀS DATĒTĀS REZERVĒJAMĀS NODARBĪBAS",
@@ -1191,12 +1225,13 @@ export default function InspirePage() {
     },
   }[lang];
   const artistBio = {
-    lv: "Sandras Rudzītes glezniecībā figurālais un simboliskais bieži kļūst par iekšēju ainavu: tēls, dzīvnieks, klusā daba vai tumšāka gaisma nav tikai dekorācija, bet veids, kā noturēt skatienu pie sajūtas. Viņa strādā starp rūpīgu novērojumu un iztēli — ar eļļu, zīmējumu, akrilu un akvareli — un nebaidās no darba, kuram vajag laiku. Lai gan viņas darbos nereti ienāk smagāki, tumšāki vai simboliski motīvi, Sandra pati ir viegla, priecīga un ziņkārīga klātbūtne: studijā ir vieta smiekliem, tējai un arī gleznai par mīļu kaķi. Viņa brīvi strādā dažādos žanros, un viens no viņas mazajiem vainīgajiem priekiem ir gleznot īpaši mīļus kaķus. Ar Adobe, tiešsaistes mākslas projektiem un dzīvo studijas darbu viņai ir plaša pieredze, taču mācīšanā svarīgākais ir vienkāršs: palīdzēt cilvēkam ieraudzīt, ko viņš pats mēģina pateikt attēlā.",
+    lv: "Sandras Rudzītes glezniecībā figurālais un simboliskais bieži kļūst par iekšēju ainavu: tēls, dzīvnieks, klusā daba vai tumšāka gaisma nav tikai dekorācija, bet veids, kā noturēt skatienu pie sajūtas. Viņa strādā starp rūpīgu novērojumu un iztēli — ar eļļu, zīmējumu, akrilu un akvareli — un nebaidās no darba, kuram vajag laiku.\n\nLai gan viņas darbos nereti ienāk smagāki, tumšāki vai simboliski motīvi, Sandra pati ir viegla, priecīga un ziņkārīga klātbūtne: studijā ir vieta smiekliem, tējai un arī gleznai par mīļu kaķi. Viņa brīvi strādā dažādos žanros, un viens no viņas mazajiem vainīgajiem priekiem ir gleznot īpaši mīļus kaķus.\n\nAr Adobe, tiešsaistes mākslas projektiem un dzīvo studijas darbu viņai ir plaša pieredze, taču mācīšanā svarīgākais ir vienkāršs: palīdzēt cilvēkam ieraudzīt, ko viņš pats mēģina pateikt attēlā.",
     en: "Sandra Rudzīte’s paintings often let the figurative and symbolic become an inner landscape: a figure, animal, still life or darker light is not decoration, but a way of holding attention on a feeling. She works between close observation and invention — in oils, drawing, acrylics and watercolour — without rushing a work that needs time. Although her work often carries darker, heavier or symbolic subjects, Sandra herself is light-hearted, happy and curious: the studio has room for laughter, tea, and a painting of a sweet cat. She works freely across genres, and one of her small guilty pleasures is painting cute cats. Her experience spans Adobe, online art projects and the daily life of a working studio; in teaching, the essential thing is simpler: helping someone see what they are already trying to say in an image.",
     ru: "В живописи Сандры Рудзите фигуративное и символическое часто становятся внутренним пейзажем: персонаж, животное, натюрморт или более тёмный свет — не просто декор, а способ удержать внимание на ощущении. Она работает между внимательным наблюдением и воображением — маслом, рисунком, акрилом и акварелью — не торопя работу, которой нужно время. Хотя в её работах нередко появляются более тяжёлые, тёмные или символические мотивы, сама Сандра — лёгкий, радостный и любопытный человек: в студии есть место смеху, чаю и картине с милым котом. Она свободно работает в разных жанрах, а одно из её маленьких удовольствий — рисовать милых котиков. Её опыт включает Adobe, онлайн-проекты об искусстве и повседневную жизнь работающей студии; в преподавании главное проще: помочь человеку увидеть, что именно он уже пытается сказать своим изображением.",
   }[lang];
   const [slide, setSlide] = useState(0);
   const [studioSlide, setStudioSlide] = useState(0);
+  const [eventSlide, setEventSlide] = useState(0);
   const [moodQuote, setMoodQuote] = useState(0);
   const [imagePreview, setImagePreview] = useState(null);
   const [editableContent, setEditableContent] = useState({});
@@ -1221,6 +1256,30 @@ export default function InspirePage() {
           [
             "Jauniešu balsi uztveram nopietni",
             "Pusaudžiem šeit ir vieta gan lielākiem darbiem, gan portfolio idejām, gan drosmīgām tēmām. Viņu redzējums ir pelnījis laiku, uzmanību un kvalitatīvu sarunu.",
+          ],
+          [
+            "No skices līdz lielam darbam",
+            "Ideja drīkst sākties ar mazu zīmējumu un izaugt līdz gleznai, sērijai vai portfolio darbam. Mēs palīdzam pamanīt, kad ir vērts darbu turpināt, nevis uzreiz sākt nākamo.",
+          ],
+          [
+            "Īsti materiāli, īstas izvēles",
+            "Bērni iepazīst krāsu, zīmuli, ogli, akvareli, akrilu un kolāžu, nevis tikai vienu pareizo tehniku. Materiāls var iedot idejai virzienu.",
+          ],
+          [
+            "Skatāmies uz mākslu, ne tikai taisām",
+            "Reizēm pētām mākslas grāmatas, māksliniekus un attēlus, kas aizķeras. Tas māca skatīties uzmanīgāk un dod vārdus savām idejām.",
+          ],
+          [
+            "Draudzīga vieta kļūdām",
+            "Neveiksmīgs vilciens, nejauša krāsa vai pārdomāts plāns nav iemesls visu mest prom. Mācāmies pamanīt, ko darbs pats piedāvā darīt tālāk.",
+          ],
+          [
+            "Portfolio un mākslas skola",
+            "Ja jaunietim vajag nopietnāku virzienu, varam strādāt pie portfolio, uzdevumiem, novērošanas zīmējuma un pārliecības par savu darbu — bez liekas sacensības.",
+          ],
+          [
+            "Vecāki redz procesu",
+            "Svarīgs ir ne tikai gatavais darbs. Pastāstām, pie kā bērns strādā un ko viņš vai viņa jau ir iemācījies pamanīt, izvēlēties un pabeigt.",
           ],
         ]
       : lang === "ru"
@@ -1294,6 +1353,13 @@ export default function InspirePage() {
     return () => window.clearInterval(timer);
   }, []);
   useEffect(() => {
+    const timer = window.setInterval(
+      () => setEventSlide((current) => (current + 1) % eventSlides.length),
+      5200,
+    );
+    return () => window.clearInterval(timer);
+  }, []);
+  useEffect(() => {
     setMoodQuote(0);
     const timer = window.setInterval(
       () => setMoodQuote((current) => (current + 1) % moodQuotes[lang].length),
@@ -1334,6 +1400,21 @@ export default function InspirePage() {
   const content = (id, fallback) =>
     typeof editableContent[id] === "string" ? editableContent[id] : fallback;
   const image = (id, fallback) => content(id, fallback);
+  const checkoutDetail = (() => {
+    const productIndex = [
+      "trial",
+      "group",
+      "pass",
+      "private",
+      "rental",
+      "membership",
+      "treatment-room",
+      "gift-card",
+    ].indexOf(checkoutOption);
+    return productIndex >= 0 && !["pass", "gift-card"].includes(checkoutOption)
+      ? activeProducts[productIndex]?.[3]
+      : "";
+  })();
   const remaining = (id, fallback) =>
     availability.classAvailability?.find((item) => item.id === id)?.remaining ??
     fallback;
@@ -1780,7 +1861,7 @@ export default function InspirePage() {
                 <p>{meta}</p>
                 <h3>{name}</h3>
                 {price ? <b>{price}</b> : null}
-                <span>{description}</span>
+                <span>{productSummaries[lang]?.[index] || description}</span>
                 {personal ? (
                   <a
                     className="inspire-rent-contact"
@@ -1933,7 +2014,13 @@ export default function InspirePage() {
                 <br />
                 <em>{content("inspire.host.role", host.role)}</em>
               </h2>
-              <p>{content("inspire.host.bio", artistBio)}</p>
+              <div className="inspire-host-bio">
+                {content("inspire.host.bio", artistBio)
+                  .split(/\n\s*\n/)
+                  .map((paragraph, index) => (
+                    <p key={`${index}-${paragraph.slice(0, 16)}`}>{paragraph}</p>
+                  ))}
+              </div>
             </div>
             <div className="inspire-host-visuals">
               <div className="inspire-host-gallery">
@@ -2077,24 +2164,10 @@ export default function InspirePage() {
                 <br />
                 <em>{content("inspire.youth.emphasis", t.youthEm)}</em>
               </h2>
+              <div className="inspire-youth-visual" aria-hidden="true">
+                <img src="/art/inspire-visual-elements.png" alt="" />
+              </div>
               <p>{content("inspire.youth.body", t.youthBody)}</p>
-              <ul
-                className="inspire-youth-meta"
-                aria-label="Youth class details"
-              >
-                {youthMeta.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-              <button
-                onClick={() =>
-                  document
-                    .getElementById("nodarbibas")
-                    ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                }
-              >
-                {t.apply}
-              </button>
             </div>
             <div className="inspire-proof-list">
               {youthPrinciples.map(([title, body], index) => (
@@ -2189,13 +2262,14 @@ export default function InspirePage() {
             <p>{content("inspire.events.lead", events.lead)}</p>
           </div>
           <div
-            className="inspire-event-gallery"
+            className="inspire-event-gallery inspire-event-slideshow"
             aria-label="Private events at Art Studio Inspire"
           >
             {eventSlides.map(([src, alt], index) => (
               <button
                 key={src}
                 type="button"
+                className={index === eventSlide ? "active" : ""}
                 aria-label={`${alt}. Skatīt lielākā izmērā`}
                 onClick={() =>
                   setImagePreview({
@@ -2210,6 +2284,17 @@ export default function InspirePage() {
                 />
               </button>
             ))}
+            <div className="inspire-event-slide-controls" aria-label="Pasākumu foto">
+              {eventSlides.map(([, alt], index) => (
+                <button
+                  key={alt}
+                  type="button"
+                  className={index === eventSlide ? "active" : ""}
+                  aria-label={`Rādīt foto ${index + 1}`}
+                  onClick={() => setEventSlide(index)}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <div className="inspire-event-rates">
@@ -2227,11 +2312,14 @@ export default function InspirePage() {
         ) : null}
         <div className="inspire-event-grid">
           {events.formats.map(([title, body], index) => (
-            <article key={title}>
-              <span>0{index + 1}</span>
-              <h3>{title}</h3>
+            <details key={title} open={index === 0}>
+              <summary>
+                <span>0{index + 1}</span>
+                <h3>{title}</h3>
+                <b>+</b>
+              </summary>
               <p>{body}</p>
-            </article>
+            </details>
           ))}
         </div>
         {events.custom ? (
@@ -2500,6 +2588,11 @@ export default function InspirePage() {
                               : "Class pass"
                           : t.bookingTitle}
                     </h2>
+                    {checkoutDetail ? (
+                      <p className="inspire-modal-format-detail">
+                        {checkoutDetail}
+                      </p>
+                    ) : null}
                     {calendarKind === "gift" || calendarKind === "pass" ? (
                       <div className="inspire-gift-options">
                         <p>

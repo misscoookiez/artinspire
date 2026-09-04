@@ -32,7 +32,17 @@
 .inspire-youth-proof .inspire-proof-list details:nth-child(3n) summary span { color: #eca2f5; }
 .inspire-youth-proof .inspire-youth-meta { margin-top: 25px; }
 .inspire-youth-proof button { margin-top: 22px; }
+.inspire-youth-proof > div:first-child { position: relative; }
+.inspire-youth-visual { position: absolute; top: 0; right: 0; width: min(180px, 33%); aspect-ratio: 1.35; overflow: hidden; border: 1px solid rgba(156, 233, 243, .55); box-shadow: 0 12px 35px rgba(0, 0, 0, .28), 0 0 24px rgba(133, 78, 216, .18); transform: rotate(2deg); }
+.inspire-youth-visual img { display: block; width: 320%; max-width: none; height: 280%; object-fit: cover; transform: translate(-12%, -5%); filter: saturate(1.18) contrast(1.06); }
+.inspire-youth-proof h2 { max-width: calc(100% - min(205px, 37%)); }
+.inspire-host-bio { max-width: 620px; }
+.inspire-host-bio p { margin: 0; color: #d7d0da; font-size: 17px; line-height: 1.62; }
+.inspire-host-bio p + p { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(117, 229, 240, .22); }
 .inspire-depth > .inspire-depth-panel:nth-child(4) { border-bottom: 1px solid rgba(142, 211, 223, .2); }
 @media (max-width: 800px) {
   .inspire-proof::after { width: 78vw; height: 66vw; right: -25%; }
+  .inspire-youth-visual { position: relative; top: auto; right: auto; width: min(220px, 62%); margin: 0 0 24px; }
+  .inspire-youth-proof h2 { max-width: none; }
+  .inspire-host-bio p { font-size: 16px; }
 }

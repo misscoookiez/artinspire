@@ -4,59 +4,1010 @@ import { useEffect, useMemo, useState } from "react";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 import "./admin.css";
 
-const sections = ["Overview", "Content", "Images", "Schedule", "Bookings", "Artworks"];
-const emptySlot = { kind: "private", title_en: "", title_lv: "", starts_at: "", ends_at: "", capacity: 7, price_cents: 4500, status: "open" };
+const sections = [
+  "Overview",
+  "Content",
+  "Images",
+  "Schedule",
+  "Bookings",
+  "Artworks",
+];
+const emptySlot = {
+  kind: "private",
+  title_en: "",
+  title_lv: "",
+  starts_at: "",
+  ends_at: "",
+  capacity: 7,
+  price_cents: 4500,
+  status: "open",
+};
 const textFields = [
-  ["inspire.statement.title", "Main statement", "MĒS SĀKAM NEVIS AR TO, KO TU PROTI, BET AR TO, KO VĒLIES RADĪT."],
-  ["inspire.statement.quote", "Statement quote", "Tavai idejai nav jābūt vienkāršai tikai tāpēc, ka Tu vēl nezini, kā to realizēt."],
-  ["inspire.events.title", "Events headline", "Pasākums, kurā var arī gleznot."],
-  ["inspire.events.lead", "Events introduction", "Mūsu studija ir vieta dzimšanas dienām, vecmeitu ballītēm, draugu vakariem, komandu pasākumiem un prezentācijām. Var izvēlēties mierīgu gleznošanas vakaru vai pavisam individuālu formātu ar papildu aktivitātēm."],
-  ["inspire.host.role", "Sandra — short role", "Glezniecībā jau 18 gadus — un mīlestība pret mākslu joprojām neļauj apstāties."],
-  ["inspire.host.bio", "Sandra — full biography", "Sandras Rudzītes glezniecībā figurālais un simboliskais bieži kļūst par iekšēju ainavu: tēls, dzīvnieks, klusā daba vai tumšāka gaisma nav tikai dekorācija, bet veids, kā noturēt skatienu pie sajūtas."],
-  ["inspire.host.space", "Space and facilities", "72 m² studija ar apmēram 50 m² galveno gleznošanas telpu. Ir 9 pilna izmēra molberti, saliekami galdi 80–180 cm, līdz 20 krēsliem, tēja un kafija uz vietas."],
-  ["inspire.host.tattoo", "Tattoo room", "Studijā ir aprīkota privāta telpa tattoo, pīrsinga un citiem meistariem — ar savu izlietni, kušeti, tattoo roku paliktņiem un pamata aprīkojumu, kas nepieciešams procedūru veikšanai."],
-  ["inspire.adults.heading", "Adults — heading", "Atgūt spēju brīnīties un radīt."],
-  ["inspire.adults.lead", "Adults — introduction", "Gleznošana var būt satikšanās ar sevi, vieta sen atliktai vēlmei radīt vai iespēja pilnveidot savu jau esošo rokrakstu."],
-  ["inspire.adults.quote", "Adults — quote", "Nav jāzin viss ceļš. Pietiek ieraudzīt nākamo soli."],
-  ["inspire.youth.title", "Children & youth — heading", "Bērniem un jauniešiem ir sava gaume."],
-  ["inspire.youth.emphasis", "Children & youth — emphasis", "Mēs to uztveram nopietni."],
-  ["inspire.youth.body", "Children & youth — introduction", "Mēs strādājam ar uzmanību, izvēli un materiāliem, kas ir pa rokai — pieeja, kas daudzējādā ziņā ir radniecīga Montessori principiem."],
-  ["inspire.youth.principlesLead", "Children & youth — principles", "Radošumam vajag gan brīvību, gan balstu."],
-  ["inspire.practical.materials", "Practical — materials", "Eļļa, akrils, guaša, akvarelis, zīmuļi un citi mākslas materiāli ir pieejami uz vietas. Standarta 30 × 40 cm audekls vai akvareļu/zīmēšanas papīrs ir iekļauts nodarbības cenā."],
-  ["inspire.practical.foundation", "Practical — foundations", "Kad darbam tas vajadzīgs, pieslēdzam plašu mākslas teorijas un prakses arsenālu: zīmējuma, kompozīcijas un krāsu teoriju."],
-  ["inspire.practical.freedom", "Practical — freedom", "Te ir nepiespiesta mākslinieciska atmosfēra, kur Tava gaume ir mēraukla, nevis kaut kas, kas jālabo."],
+  [
+    "inspire.statement.title",
+    "Main statement",
+    "MĒS SĀKAM NEVIS AR TO, KO TU PROTI, BET AR TO, KO VĒLIES RADĪT.",
+  ],
+  [
+    "inspire.statement.quote",
+    "Statement quote",
+    "Tavai idejai nav jābūt vienkāršai tikai tāpēc, ka Tu vēl nezini, kā to realizēt.",
+  ],
+  [
+    "inspire.events.title",
+    "Events headline",
+    "Pasākums, kurā var arī gleznot.",
+  ],
+  [
+    "inspire.events.lead",
+    "Events introduction",
+    "Mūsu studija ir vieta dzimšanas dienām, vecmeitu ballītēm, draugu vakariem, komandu pasākumiem un prezentācijām. Var izvēlēties mierīgu gleznošanas vakaru vai pavisam individuālu formātu ar papildu aktivitātēm.",
+  ],
+  [
+    "inspire.host.role",
+    "Sandra — short role",
+    "Glezniecībā jau 18 gadus — un mīlestība pret mākslu joprojām neļauj apstāties.",
+  ],
+  [
+    "inspire.host.bio",
+    "Sandra — full biography",
+    "Sandras Rudzītes glezniecībā figurālais un simboliskais bieži kļūst par iekšēju ainavu: tēls, dzīvnieks, klusā daba vai tumšāka gaisma nav tikai dekorācija, bet veids, kā noturēt skatienu pie sajūtas.",
+  ],
+  [
+    "inspire.host.space",
+    "Space and facilities",
+    "72 m² studija ar apmēram 50 m² galveno gleznošanas telpu. Ir 9 pilna izmēra molberti, saliekami galdi 80–180 cm, līdz 20 krēsliem, tēja un kafija uz vietas.",
+  ],
+  [
+    "inspire.host.tattoo",
+    "Tattoo room",
+    "Studijā ir aprīkota privāta telpa tattoo, pīrsinga un citiem meistariem — ar savu izlietni, kušeti, tattoo roku paliktņiem un pamata aprīkojumu, kas nepieciešams procedūru veikšanai.",
+  ],
+  [
+    "inspire.adults.heading",
+    "Adults — heading",
+    "Atgūt spēju brīnīties un radīt.",
+  ],
+  [
+    "inspire.adults.lead",
+    "Adults — introduction",
+    "Gleznošana var būt satikšanās ar sevi, vieta sen atliktai vēlmei radīt vai iespēja pilnveidot savu jau esošo rokrakstu.",
+  ],
+  [
+    "inspire.adults.quote",
+    "Adults — quote",
+    "Nav jāzin viss ceļš. Pietiek ieraudzīt nākamo soli.",
+  ],
+  [
+    "inspire.youth.title",
+    "Children & youth — heading",
+    "Bērniem un jauniešiem ir sava gaume.",
+  ],
+  [
+    "inspire.youth.emphasis",
+    "Children & youth — emphasis",
+    "Mēs to uztveram nopietni.",
+  ],
+  [
+    "inspire.youth.body",
+    "Children & youth — introduction",
+    "Mēs strādājam ar uzmanību, izvēli un materiāliem, kas ir pa rokai — pieeja, kas daudzējādā ziņā ir radniecīga Montessori principiem.",
+  ],
+  [
+    "inspire.youth.principlesLead",
+    "Children & youth — principles",
+    "Radošumam vajag gan brīvību, gan balstu.",
+  ],
+  [
+    "inspire.practical.materials",
+    "Practical — materials",
+    "Eļļa, akrils, guaša, akvarelis, zīmuļi un citi mākslas materiāli ir pieejami uz vietas. Standarta 30 × 40 cm audekls vai akvareļu/zīmēšanas papīrs ir iekļauts nodarbības cenā.",
+  ],
+  [
+    "inspire.practical.foundation",
+    "Practical — foundations",
+    "Kad darbam tas vajadzīgs, pieslēdzam plašu mākslas teorijas un prakses arsenālu: zīmējuma, kompozīcijas un krāsu teoriju.",
+  ],
+  [
+    "inspire.practical.freedom",
+    "Practical — freedom",
+    "Te ir nepiespiesta mākslinieciska atmosfēra, kur Tava gaume ir mēraukla, nevis kaut kas, kas jālabo.",
+  ],
 ];
 const imageGroups = [
-  ["First slideshow", [["inspire.image.statement.0", "Studio welcome", "/art/inspire-studio.jpeg"], ["inspire.image.statement.1", "Studio room", "/art/studio-slide-room.jpeg"], ["inspire.image.statement.2", "Easel", "/art/studio-slide-garden.jpeg"], ["inspire.image.statement.3", "Studio work", "/art/inspire-slide-02.jpeg"]]],
-  ["Sandra’s section", [["inspire.image.host.0", "Main portrait", "/art/sandra-profile-lead.jpeg"], ["inspire.image.host.1", "Dreamy studio portrait", "/art/sandra-studio-tea-upright.jpg"], ["inspire.image.host.2", "Serious studio portrait", "/art/sandra-studio-07.jpg"]]],
-  ["Events", [["inspire.image.event.0", "Event image 1", "/art/studio-slide-room.jpeg"], ["inspire.image.event.1", "Event image 2", "/art/studio-slide-garden.jpeg"], ["inspire.image.event.2", "Event image 3", "/art/event-slide-student-work.jpeg"], ["inspire.image.event.3", "Event image 4", "/art/event-slide-student-work-02.jpeg"], ["inspire.image.event.4", "Event image 5", "/art/event-slide-lecture.jpg"]]],
-  ["Useful images", [["inspire.image.youth.hero", "Youth section", "/art/inspire-student-work.jpeg"], ["inspire.image.directions", "Directions / entrance", "/art/inspire-door-directions.jpg"]]],
+  [
+    "First slideshow",
+    [
+      [
+        "inspire.image.statement.0",
+        "Studio welcome",
+        "/art/inspire-studio.jpeg",
+      ],
+      [
+        "inspire.image.statement.1",
+        "Studio room",
+        "/art/studio-slide-room.jpeg",
+      ],
+      ["inspire.image.statement.2", "Easel", "/art/studio-slide-garden.jpeg"],
+      [
+        "inspire.image.statement.3",
+        "Studio work",
+        "/art/inspire-slide-02.jpeg",
+      ],
+    ],
+  ],
+  [
+    "Sandra’s section",
+    [
+      [
+        "inspire.image.host.0",
+        "Main portrait",
+        "/art/sandra-profile-lead.jpeg",
+      ],
+      [
+        "inspire.image.host.1",
+        "Dreamy studio portrait",
+        "/art/sandra-studio-tea-upright.jpg",
+      ],
+      [
+        "inspire.image.host.2",
+        "Serious studio portrait",
+        "/art/sandra-studio-07.jpg",
+      ],
+    ],
+  ],
+  [
+    "Events",
+    [
+      ["inspire.image.event.0", "Event image 1", "/art/studio-slide-room.jpeg"],
+      [
+        "inspire.image.event.1",
+        "Event image 2",
+        "/art/studio-slide-garden.jpeg",
+      ],
+      [
+        "inspire.image.event.2",
+        "Event image 3",
+        "/art/event-slide-student-work.jpeg",
+      ],
+      [
+        "inspire.image.event.3",
+        "Event image 4",
+        "/art/event-slide-student-work-02.jpeg",
+      ],
+      [
+        "inspire.image.event.4",
+        "Event image 5",
+        "/art/event-slide-lecture.jpg",
+      ],
+    ],
+  ],
+  [
+    "Useful images",
+    [
+      [
+        "inspire.image.youth.hero",
+        "Youth section",
+        "/art/inspire-student-work.jpeg",
+      ],
+      [
+        "inspire.image.directions",
+        "Directions / entrance",
+        "/art/inspire-door-directions.jpg",
+      ],
+    ],
+  ],
 ];
-const defaults = Object.fromEntries([...textFields, ...imageGroups.flatMap(([, fields]) => fields)].map(([id, , fallback]) => [id, fallback]));
+const defaults = Object.fromEntries(
+  [...textFields, ...imageGroups.flatMap(([, fields]) => fields)].map(
+    ([id, , fallback]) => [id, fallback],
+  ),
+);
 
 export default function OwnerDashboard() {
-  const [section, setSection] = useState("Overview"); const [language, setLanguage] = useState("lv"); const [values, setValues] = useState(defaults); const [session, setSession] = useState(null); const [loginEmail, setLoginEmail] = useState(""); const [notice, setNotice] = useState(""); const [uploading, setUploading] = useState(""); const [schedule, setSchedule] = useState({ classes: [], privateSlots: [], bookings: [], weeklySignups: [] }); const [slotDraft, setSlotDraft] = useState(emptySlot); const [addingSlot, setAddingSlot] = useState(false); const [artworks, setArtworks] = useState([]); const [editingArtwork, setEditingArtwork] = useState(null);
+  const [section, setSection] = useState("Overview");
+  const [language, setLanguage] = useState("lv");
+  const [values, setValues] = useState(defaults);
+  const [session, setSession] = useState(null);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [notice, setNotice] = useState("");
+  const [uploading, setUploading] = useState("");
+  const [schedule, setSchedule] = useState({
+    classes: [],
+    privateSlots: [],
+    bookings: [],
+    weeklySignups: [],
+  });
+  const [slotDraft, setSlotDraft] = useState(emptySlot);
+  const [addingSlot, setAddingSlot] = useState(false);
+  const [artworks, setArtworks] = useState([]);
+  const [editingArtwork, setEditingArtwork] = useState(null);
   const supabase = useMemo(() => getSupabaseBrowser(), []);
-  useEffect(() => { if (!supabase) return; supabase.auth.getSession().then(({ data }) => setSession(data.session)); const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, next) => setSession(next)); return () => subscription.unsubscribe(); }, [supabase]);
-  useEffect(() => { let mounted = true; fetch(`/api/content?page=inspire&locale=${language}`).then((res) => res.ok ? res.json() : null).then((data) => { if (mounted && data?.content) setValues((old) => ({ ...defaults, ...old, ...data.content })); }).catch(() => {}); return () => { mounted = false; }; }, [language]);
-  const auth = session ? { authorization: `Bearer ${session.access_token}` } : {};
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, next) => setSession(next));
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+  useEffect(() => {
+    let mounted = true;
+    fetch(`/api/content?page=inspire&locale=${language}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (mounted && data?.content)
+          setValues((old) => ({ ...defaults, ...old, ...data.content }));
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, [language]);
+  const auth = session
+    ? { authorization: `Bearer ${session.access_token}` }
+    : {};
   const update = (id, value) => setValues((old) => ({ ...old, [id]: value }));
-  const publish = async (entries, message) => { if (!session) return setNotice("Sign in with your owner email to publish. Your edits stay open in this tab."); try { const res = await fetch("/api/admin/content", { method: "PATCH", headers: { "content-type": "application/json", ...auth }, body: JSON.stringify({ page: "inspire", locale: language, entries }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error || "Could not publish changes."); setNotice(message); } catch (error) { setNotice(error.message); } };
-  const saveText = () => publish(textFields.map(([id]) => ({ id, value: values[id] || "" })), "Text published. Refresh the public page to see it.");
-  const saveImages = () => publish(imageGroups.flatMap(([, fields]) => fields.map(([id]) => ({ id, value: values[id] || "" }))), "Image choices published. Refresh the public page to see them.");
-  const signIn = async (event) => { event.preventDefault(); if (!supabase) return setNotice("Supabase is not connected."); const { error } = await supabase.auth.signInWithOtp({ email: loginEmail, options: { emailRedirectTo: `${window.location.origin}/admin` } }); setNotice(error ? error.message : "Check your email for the secure sign-in link."); };
-  const upload = async (id, file) => { if (!file) return; if (!session) return setNotice("Sign in first, then you can upload directly to the image library."); setUploading(id); try { const form = new FormData(); form.append("file", file); const res = await fetch("/api/admin/media", { method: "POST", headers: auth, body: form }); const data = await res.json(); if (!res.ok) throw new Error(data.error); update(id, data.url); setNotice("Uploaded. Publish image choices when you are happy with the preview."); } catch (error) { setNotice(error.message); } finally { setUploading(""); } };
-  const loadSchedule = async () => { if (!session) return; try { const res = await fetch("/api/admin/schedule", { headers: auth }); const data = await res.json(); if (!res.ok) throw new Error(data.error); setSchedule(data); } catch (error) { setNotice(error.message); } };
-  const loadArtworks = async () => { if (!session) return; try { const res = await fetch("/api/admin/artworks", { headers: auth }); const data = await res.json(); if (!res.ok) throw new Error(data.error); setArtworks(data.artworks || []); } catch (error) { setNotice(error.message); } };
-  useEffect(() => { if (section === "Schedule" || section === "Bookings") loadSchedule(); if (section === "Artworks") loadArtworks(); }, [section, session]);
-  const createSlot = async (event) => { event.preventDefault(); try { const values = { ...slotDraft, starts_at: new Date(slotDraft.starts_at).toISOString(), ends_at: new Date(slotDraft.ends_at).toISOString() }; const res = await fetch("/api/admin/schedule", { method: "POST", headers: { "content-type": "application/json", ...auth }, body: JSON.stringify({ kind: slotDraft.kind, values }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error); setSlotDraft(emptySlot); setAddingSlot(false); setNotice("Availability published."); loadSchedule(); } catch (error) { setNotice(error.message); } };
-  const updateBooking = async (id, status) => { try { const res = await fetch("/api/admin/bookings", { method: "PATCH", headers: { "content-type": "application/json", ...auth }, body: JSON.stringify({ id, status }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error); setSchedule((old) => ({ ...old, bookings: old.bookings.map((booking) => booking.id === id ? { ...booking, status: data.booking.status } : booking) })); setNotice("Booking updated."); } catch (error) { setNotice(error.message); } };
-  const header = { Overview: ["A calm control room.", "Everyday updates live here. Bigger design changes stay safely versioned in GitLab."], Content: ["Your words,\nin your hands.", "Edit the page like a document. Your saved version replaces the built-in copy."], Images: ["Swap the mood,\nkeep the story.", "Upload a photo or paste a URL. Old images are retained for a recoverable workflow."], Schedule: ["Keep the studio\nin motion.", "Public availability is simple; capacity remains private to you."], Bookings: ["A small, clear\ninbox.", "See every paid booking and update its status without a complicated CRM."], Artworks: ["One work at\na time.", "Manage live artwork listings."] }[section];
-  return <main className="studio-admin"><aside><a className="admin-mark" href="/inspire">art studio<br /><b>inspire</b></a><p>OWNER DASHBOARD</p><nav>{sections.map((item) => <button type="button" className={section === item ? "active" : ""} onClick={() => setSection(item)} key={item}>{item}</button>)}</nav><div className="admin-account">{session ? <><span>OWNER SESSION</span><small>{session.user.email}</small><button type="button" onClick={() => supabase?.auth.signOut()}>SIGN OUT</button></> : <><span>PRIVATE ACCESS</span><small>Sign in to publish changes</small><a href="#owner-login">OWNER SIGN IN ↓</a></>}<a href="/inspire">VIEW SITE ↗</a></div></aside><section className="admin-main"><header><div><p>{section.toUpperCase()}</p><h1>{header[0]}</h1><span>{header[1]}</span></div><div className="admin-header-actions"><button className="admin-lang" type="button" onClick={() => setLanguage(language === "lv" ? "en" : language === "en" ? "ru" : "lv")}>{language.toUpperCase()}</button>{section === "Content" && <button className="admin-save" type="button" onClick={saveText}>PUBLISH TEXT</button>}{section === "Images" && <button className="admin-save" type="button" onClick={saveImages}>PUBLISH IMAGES</button>}</div></header>{!session && <form id="owner-login" className="admin-login" onSubmit={signIn}><div><p>OWNER ACCESS</p><strong>Use a private magic link — no dashboard password to remember.</strong></div><input required type="email" placeholder="owner@email.com" value={loginEmail} onChange={(event) => setLoginEmail(event.target.value)} /><button>SEND SIGN-IN LINK</button></form>}
-    {section === "Overview" && <div className="admin-overview"><article><span>TEXT & OFFERS</span><b>01</b><p>Statements, practical information, events and philosophy.</p><button type="button" onClick={() => setSection("Content")}>EDIT CONTENT →</button></article><article><span>IMAGE LIBRARY</span><b>02</b><p>Slideshow, portraits, events and directions.</p><button type="button" onClick={() => setSection("Images")}>SWAP IMAGES →</button></article><article><span>BOOKINGS</span><b>{schedule.bookings.length || "03"}</b><p>See incoming paid reservations and their status.</p><button type="button" onClick={() => setSection("Bookings")}>OPEN BOOKINGS →</button></article><div className="admin-next"><p>HOW THIS STAYS SIMPLE</p><h2>Daily edits here.<br />Design changes through GitLab.</h2><span>This dashboard is for the studio’s actual day-to-day: words, offers, photos, availability and bookings. GitLab keeps the entire site code safe, versioned and ready for automatic host deployment.</span></div></div>}
-    {section === "Content" && <div className="admin-editor"><div className="admin-editor-intro"><p>PUBLIC PAGE COPY · {language.toUpperCase()}</p><h2>Change the site like a document.</h2><span>Edit the fields you need. The public site uses these values after you publish.</span></div>{textFields.map(([id, label, fallback]) => <label key={id}>{label}<textarea value={values[id] ?? fallback} onChange={(event) => update(id, event.target.value)} /></label>)}</div>}
-    {section === "Images" && <div className="admin-media"><div className="admin-editor-intro"><p>OWNER IMAGE LIBRARY</p><h2>Replace, preview, publish.</h2><span>Use a file from your computer or a hosted link. The preview shown is exactly the image the live page will receive.</span></div>{imageGroups.map(([title, fields]) => <section className="admin-media-group" key={title}><h3>{title}</h3><div>{fields.map(([id, label, fallback]) => <article key={id}><img src={values[id] ?? fallback} alt="" /><p>{label}</p><input value={values[id] ?? fallback} onChange={(event) => update(id, event.target.value)} /><label className="admin-upload">{uploading === id ? "UPLOADING…" : "UPLOAD NEW IMAGE"}<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" disabled={uploading === id} onChange={(event) => upload(id, event.target.files?.[0])} /></label></article>)}</div></section>)}</div>}
-    {section === "Schedule" && <div className="admin-list"><div className="admin-list-head"><p>CLASSES & PRIVATE SLOTS</p><button type="button" onClick={() => setAddingSlot((old) => !old)}>+ ADD CLASS OR SLOT</button></div>{addingSlot && <form className="admin-slot-form" onSubmit={createSlot}><select value={slotDraft.kind} onChange={(event) => setSlotDraft((old) => ({ ...old, kind: event.target.value }))}><option value="private">Private session / studio time</option><option value="class">Dated class</option></select>{slotDraft.kind === "class" && <><input required placeholder="Class title (English)" value={slotDraft.title_en} onChange={(event) => setSlotDraft((old) => ({ ...old, title_en: event.target.value }))} /><input required placeholder="Nodarbības nosaukums (LV)" value={slotDraft.title_lv} onChange={(event) => setSlotDraft((old) => ({ ...old, title_lv: event.target.value }))} /></>}<label>Starts<input required type="datetime-local" value={slotDraft.starts_at} onChange={(event) => setSlotDraft((old) => ({ ...old, starts_at: event.target.value }))} /></label><label>Ends<input required type="datetime-local" value={slotDraft.ends_at} onChange={(event) => setSlotDraft((old) => ({ ...old, ends_at: event.target.value }))} /></label><label>Price in cents<input required type="number" min="1" value={slotDraft.price_cents} onChange={(event) => setSlotDraft((old) => ({ ...old, price_cents: Number(event.target.value) }))} /></label>{slotDraft.kind === "class" && <label>Internal capacity<input required type="number" min="1" value={slotDraft.capacity} onChange={(event) => setSlotDraft((old) => ({ ...old, capacity: Number(event.target.value) }))} /></label>}<button>SAVE AVAILABILITY</button></form>}{schedule.classes.map((item) => <article key={item.id}><span>{new Date(item.starts_at).toLocaleDateString("en-GB")}</span><b>{item.title_en}</b><small>{new Date(item.starts_at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })} · €{(item.price_cents / 100).toFixed(0)}</small><button type="button" onClick={() => fetch("/api/admin/schedule", { method: "PATCH", headers: { "content-type": "application/json", ...auth }, body: JSON.stringify({ kind: "class", id: item.id, values: { status: "closed" } }) }).then(loadSchedule)}>CLOSE</button></article>)}{schedule.privateSlots.filter((item) => item.status === "open").slice(0, 30).map((item) => <article key={item.id}><span>{new Date(item.starts_at).toLocaleDateString("en-GB")}</span><b>Private / studio slot</b><small>{new Date(item.starts_at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })} · €{(item.price_cents / 100).toFixed(0)}</small><button type="button" onClick={() => fetch("/api/admin/schedule", { method: "PATCH", headers: { "content-type": "application/json", ...auth }, body: JSON.stringify({ kind: "private", id: item.id, values: { status: "closed" } }) }).then(loadSchedule)}>CLOSE</button></article>)}<p className="admin-empty-note">Internal capacity is never shown on the public site.</p></div>}
-    {section === "Bookings" && <div className="admin-list"><div className="admin-list-head"><p>INCOMING BOOKINGS</p><button type="button" onClick={loadSchedule}>REFRESH</button></div>{!session ? <p className="admin-empty-note">Sign in with the owner email to view private booking details.</p> : schedule.bookings.length ? schedule.bookings.map((booking) => <article className="admin-booking" key={booking.id}><span>{new Date(booking.created_at).toLocaleDateString("en-GB")}</span><div><b>{booking.customer_name || "Customer"}</b><small>{booking.email}</small></div><small>{booking.kind} · {booking.amount_cents ? `€${(booking.amount_cents / 100).toFixed(0)}` : "no payment"}</small><select value={booking.status} onChange={(event) => updateBooking(booking.id, event.target.value)}><option value="confirmed">Confirmed</option><option value="pending">Pending</option><option value="cancelled">Cancelled</option><option value="refunded">Refunded</option></select></article>) : <p className="admin-empty-note">No paid bookings yet. Weekly group applications are collected separately so people can reserve a spot without paying.</p>}</div>}
-    {section === "Artworks" && <><div className="admin-art-grid">{!session ? <p className="admin-empty-note">Sign in with the owner email above to load the live shop inventory.</p> : artworks.map((item) => <article key={item.id}><img src={item.image_path} alt="" /><div><p>{item.status?.toUpperCase()} · €{(item.price_cents / 100).toFixed(0)}</p><h2>{item.title_en}</h2><button type="button" onClick={() => setEditingArtwork({ ...item })}>EDIT ARTWORK</button></div></article>)}</div>{editingArtwork && <form className="admin-art-editor" onSubmit={async (event) => { event.preventDefault(); try { const { id, ...values } = editingArtwork; const res = await fetch("/api/admin/artworks", { method: "PATCH", headers: { "content-type": "application/json", ...auth }, body: JSON.stringify({ id, values: { ...values, price_cents: Number(values.price_cents) } }) }); const data = await res.json(); if (!res.ok) throw new Error(data.error); setEditingArtwork(null); setNotice("Artwork listing published."); loadArtworks(); } catch (error) { setNotice(error.message); } }}><h2>Edit live shop listing</h2><label>Title — English<input value={editingArtwork.title_en || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, title_en: event.target.value }))} /></label><label>Title — Latvian<input value={editingArtwork.title_lv || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, title_lv: event.target.value }))} /></label><label>Price in cents<input required type="number" value={editingArtwork.price_cents || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, price_cents: event.target.value }))} /></label><label>Status<select value={editingArtwork.status || "available"} onChange={(event) => setEditingArtwork((old) => ({ ...old, status: event.target.value }))}><option value="available">Available</option><option value="sold">Sold</option><option value="held">Held</option></select></label><label>Medium<input value={editingArtwork.medium || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, medium: event.target.value }))} /></label><label>Dimensions<input value={editingArtwork.dimensions || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, dimensions: event.target.value }))} /></label><label>English description<textarea value={editingArtwork.description_en || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, description_en: event.target.value }))} /></label><label>Latvian description<textarea value={editingArtwork.description_lv || ""} onChange={(event) => setEditingArtwork((old) => ({ ...old, description_lv: event.target.value }))} /></label><button>SAVE LIVE LISTING</button><button type="button" onClick={() => setEditingArtwork(null)}>CANCEL</button></form>}</>}{notice && <div className="admin-notice">{notice}</div>}</section></main>;
+  const publish = async (entries, message) => {
+    if (!session)
+      return setNotice(
+        "Sign in with your owner email to publish. Your edits stay open in this tab.",
+      );
+    try {
+      const res = await fetch("/api/admin/content", {
+        method: "PATCH",
+        headers: { "content-type": "application/json", ...auth },
+        body: JSON.stringify({ page: "inspire", locale: language, entries }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not publish changes.");
+      setNotice(message);
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
+  const saveText = () =>
+    publish(
+      textFields.map(([id]) => ({ id, value: values[id] || "" })),
+      "Text published. Refresh the public page to see it.",
+    );
+  const saveImages = () =>
+    publish(
+      imageGroups.flatMap(([, fields]) =>
+        fields.map(([id]) => ({ id, value: values[id] || "" })),
+      ),
+      "Image choices published. Refresh the public page to see them.",
+    );
+  const signIn = async (event) => {
+    event.preventDefault();
+    if (!supabase) return setNotice("Supabase is not connected.");
+    const { error } = await supabase.auth.signInWithOtp({
+      email: loginEmail,
+      options: { emailRedirectTo: `${window.location.origin}/admin` },
+    });
+    setNotice(
+      error ? error.message : "Check your email for the secure sign-in link.",
+    );
+  };
+  const upload = async (id, file) => {
+    if (!file) return;
+    if (!session)
+      return setNotice(
+        "Sign in first, then you can upload directly to the image library.",
+      );
+    setUploading(id);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/admin/media", {
+        method: "POST",
+        headers: auth,
+        body: form,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      update(id, data.url);
+      setNotice(
+        "Uploaded. Publish image choices when you are happy with the preview.",
+      );
+    } catch (error) {
+      setNotice(error.message);
+    } finally {
+      setUploading("");
+    }
+  };
+  const loadSchedule = async () => {
+    if (!session) return;
+    try {
+      const res = await fetch("/api/admin/schedule", { headers: auth });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setSchedule(data);
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
+  const loadArtworks = async () => {
+    if (!session) return;
+    try {
+      const res = await fetch("/api/admin/artworks", { headers: auth });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setArtworks(data.artworks || []);
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
+  useEffect(() => {
+    if (section === "Schedule" || section === "Bookings") loadSchedule();
+    if (section === "Artworks") loadArtworks();
+  }, [section, session]);
+  const createSlot = async (event) => {
+    event.preventDefault();
+    try {
+      const values = {
+        ...slotDraft,
+        starts_at: new Date(slotDraft.starts_at).toISOString(),
+        ends_at: new Date(slotDraft.ends_at).toISOString(),
+      };
+      const res = await fetch("/api/admin/schedule", {
+        method: "POST",
+        headers: { "content-type": "application/json", ...auth },
+        body: JSON.stringify({ kind: slotDraft.kind, values }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setSlotDraft(emptySlot);
+      setAddingSlot(false);
+      setNotice("Availability published.");
+      loadSchedule();
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
+  const updateBooking = async (id, status) => {
+    try {
+      const res = await fetch("/api/admin/bookings", {
+        method: "PATCH",
+        headers: { "content-type": "application/json", ...auth },
+        body: JSON.stringify({ id, status }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setSchedule((old) => ({
+        ...old,
+        bookings: old.bookings.map((booking) =>
+          booking.id === id
+            ? { ...booking, status: data.booking.status }
+            : booking,
+        ),
+      }));
+      setNotice("Booking updated.");
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
+  const header = {
+    Overview: [
+      "A calm control room.",
+      "Everyday updates live here. Bigger design changes stay safely versioned in GitLab.",
+    ],
+    Content: [
+      "Your words,\nin your hands.",
+      "Edit the page like a document. Your saved version replaces the built-in copy.",
+    ],
+    Images: [
+      "Swap the mood,\nkeep the story.",
+      "Upload a photo or paste a URL. Old images are retained for a recoverable workflow.",
+    ],
+    Schedule: [
+      "Keep the studio\nin motion.",
+      "Public availability is simple; capacity remains private to you.",
+    ],
+    Bookings: [
+      "A small, clear\ninbox.",
+      "See every paid booking and update its status without a complicated CRM.",
+    ],
+    Artworks: ["One work at\na time.", "Manage live artwork listings."],
+  }[section];
+  return (
+    <main className="studio-admin">
+      <aside>
+        <a className="admin-mark" href="/inspire">
+          art studio
+          <br />
+          <b>inspire</b>
+        </a>
+        <p>OWNER DASHBOARD</p>
+        <nav>
+          {sections.map((item) => (
+            <button
+              type="button"
+              className={section === item ? "active" : ""}
+              onClick={() => setSection(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          ))}
+        </nav>
+        <div className="admin-account">
+          {session ? (
+            <>
+              <span>OWNER SESSION</span>
+              <small>{session.user.email}</small>
+              <button type="button" onClick={() => supabase?.auth.signOut()}>
+                SIGN OUT
+              </button>
+            </>
+          ) : (
+            <>
+              <span>PRIVATE ACCESS</span>
+              <small>Sign in to publish changes</small>
+              <a href="#owner-login">OWNER SIGN IN ↓</a>
+            </>
+          )}
+          <a href="/inspire">VIEW SITE ↗</a>
+        </div>
+      </aside>
+      <section className="admin-main">
+        <header>
+          <div>
+            <p>{section.toUpperCase()}</p>
+            <h1>{header[0]}</h1>
+            <span>{header[1]}</span>
+          </div>
+          <div className="admin-header-actions">
+            <button
+              className="admin-lang"
+              type="button"
+              onClick={() =>
+                setLanguage(
+                  language === "lv" ? "en" : language === "en" ? "ru" : "lv",
+                )
+              }
+            >
+              {language.toUpperCase()}
+            </button>
+            {section === "Content" && (
+              <button className="admin-save" type="button" onClick={saveText}>
+                PUBLISH TEXT
+              </button>
+            )}
+            {section === "Images" && (
+              <button className="admin-save" type="button" onClick={saveImages}>
+                PUBLISH IMAGES
+              </button>
+            )}
+          </div>
+        </header>
+        {!session && (
+          <form id="owner-login" className="admin-login" onSubmit={signIn}>
+            <div>
+              <p>OWNER ACCESS</p>
+              <strong>
+                Use a private magic link — no dashboard password to remember.
+              </strong>
+            </div>
+            <input
+              required
+              type="email"
+              placeholder="owner@email.com"
+              value={loginEmail}
+              onChange={(event) => setLoginEmail(event.target.value)}
+            />
+            <button>SEND SIGN-IN LINK</button>
+          </form>
+        )}
+        {section === "Overview" && (
+          <div className="admin-overview">
+            <article>
+              <span>TEXT & OFFERS</span>
+              <b>01</b>
+              <p>Statements, practical information, events and philosophy.</p>
+              <button type="button" onClick={() => setSection("Content")}>
+                EDIT CONTENT →
+              </button>
+            </article>
+            <article>
+              <span>IMAGE LIBRARY</span>
+              <b>02</b>
+              <p>Slideshow, portraits, events and directions.</p>
+              <button type="button" onClick={() => setSection("Images")}>
+                SWAP IMAGES →
+              </button>
+            </article>
+            <article>
+              <span>BOOKINGS</span>
+              <b>{schedule.bookings.length || "03"}</b>
+              <p>See incoming paid reservations and their status.</p>
+              <button type="button" onClick={() => setSection("Bookings")}>
+                OPEN BOOKINGS →
+              </button>
+            </article>
+            <div className="admin-next">
+              <p>HOW THIS STAYS SIMPLE</p>
+              <h2>
+                Daily edits here.
+                <br />
+                Design changes through GitLab.
+              </h2>
+              <span>
+                This dashboard is for the studio’s actual day-to-day: words,
+                offers, photos, availability and bookings. GitLab keeps the
+                entire site code safe, versioned and ready for automatic host
+                deployment.
+              </span>
+            </div>
+          </div>
+        )}
+        {section === "Content" && (
+          <div className="admin-editor">
+            <div className="admin-editor-intro">
+              <p>PUBLIC PAGE COPY · {language.toUpperCase()}</p>
+              <h2>Change the site like a document.</h2>
+              <span>
+                Edit the fields you need. The public site uses these values
+                after you publish.
+              </span>
+            </div>
+            {textFields.map(([id, label, fallback]) => (
+              <label key={id}>
+                {label}
+                <textarea
+                  value={values[id] ?? fallback}
+                  onChange={(event) => update(id, event.target.value)}
+                />
+              </label>
+            ))}
+          </div>
+        )}
+        {section === "Images" && (
+          <div className="admin-media">
+            <div className="admin-editor-intro">
+              <p>OWNER IMAGE LIBRARY</p>
+              <h2>Replace, preview, publish.</h2>
+              <span>
+                Use a file from your computer or a hosted link. The preview
+                shown is exactly the image the live page will receive.
+              </span>
+            </div>
+            {imageGroups.map(([title, fields]) => (
+              <section className="admin-media-group" key={title}>
+                <h3>{title}</h3>
+                <div>
+                  {fields.map(([id, label, fallback]) => (
+                    <article key={id}>
+                      <img src={values[id] ?? fallback} alt="" />
+                      <p>{label}</p>
+                      <input
+                        value={values[id] ?? fallback}
+                        onChange={(event) => update(id, event.target.value)}
+                      />
+                      <label className="admin-upload">
+                        {uploading === id ? "UPLOADING…" : "UPLOAD NEW IMAGE"}
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp,image/gif"
+                          disabled={uploading === id}
+                          onChange={(event) =>
+                            upload(id, event.target.files?.[0])
+                          }
+                        />
+                      </label>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+        {section === "Schedule" && (
+          <div className="admin-list">
+            <div className="admin-list-head">
+              <p>CLASSES & PRIVATE SLOTS</p>
+              <button
+                type="button"
+                onClick={() => setAddingSlot((old) => !old)}
+              >
+                + ADD CLASS OR SLOT
+              </button>
+            </div>
+            {addingSlot && (
+              <form className="admin-slot-form" onSubmit={createSlot}>
+                <select
+                  value={slotDraft.kind}
+                  onChange={(event) =>
+                    setSlotDraft((old) => ({
+                      ...old,
+                      kind: event.target.value,
+                    }))
+                  }
+                >
+                  <option value="private">Private session / studio time</option>
+                  <option value="class">Dated class</option>
+                </select>
+                {slotDraft.kind === "class" && (
+                  <>
+                    <input
+                      required
+                      placeholder="Class title (English)"
+                      value={slotDraft.title_en}
+                      onChange={(event) =>
+                        setSlotDraft((old) => ({
+                          ...old,
+                          title_en: event.target.value,
+                        }))
+                      }
+                    />
+                    <input
+                      required
+                      placeholder="Nodarbības nosaukums (LV)"
+                      value={slotDraft.title_lv}
+                      onChange={(event) =>
+                        setSlotDraft((old) => ({
+                          ...old,
+                          title_lv: event.target.value,
+                        }))
+                      }
+                    />
+                  </>
+                )}
+                <label>
+                  Starts
+                  <input
+                    required
+                    type="datetime-local"
+                    value={slotDraft.starts_at}
+                    onChange={(event) =>
+                      setSlotDraft((old) => ({
+                        ...old,
+                        starts_at: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Ends
+                  <input
+                    required
+                    type="datetime-local"
+                    value={slotDraft.ends_at}
+                    onChange={(event) =>
+                      setSlotDraft((old) => ({
+                        ...old,
+                        ends_at: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Price in cents
+                  <input
+                    required
+                    type="number"
+                    min="1"
+                    value={slotDraft.price_cents}
+                    onChange={(event) =>
+                      setSlotDraft((old) => ({
+                        ...old,
+                        price_cents: Number(event.target.value),
+                      }))
+                    }
+                  />
+                </label>
+                {slotDraft.kind === "class" && (
+                  <label>
+                    Internal capacity
+                    <input
+                      required
+                      type="number"
+                      min="1"
+                      value={slotDraft.capacity}
+                      onChange={(event) =>
+                        setSlotDraft((old) => ({
+                          ...old,
+                          capacity: Number(event.target.value),
+                        }))
+                      }
+                    />
+                  </label>
+                )}
+                <button>SAVE AVAILABILITY</button>
+              </form>
+            )}
+            {schedule.classes.map((item) => (
+              <article key={item.id}>
+                <span>
+                  {new Date(item.starts_at).toLocaleDateString("en-GB")}
+                </span>
+                <b>{item.title_en}</b>
+                <small>
+                  {new Date(item.starts_at).toLocaleTimeString("en-GB", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}{" "}
+                  · €{(item.price_cents / 100).toFixed(0)}
+                </small>
+                <button
+                  type="button"
+                  onClick={() =>
+                    fetch("/api/admin/schedule", {
+                      method: "PATCH",
+                      headers: { "content-type": "application/json", ...auth },
+                      body: JSON.stringify({
+                        kind: "class",
+                        id: item.id,
+                        values: { status: "closed" },
+                      }),
+                    }).then(loadSchedule)
+                  }
+                >
+                  CLOSE
+                </button>
+              </article>
+            ))}
+            {schedule.privateSlots
+              .filter((item) => item.status === "open")
+              .slice(0, 30)
+              .map((item) => (
+                <article key={item.id}>
+                  <span>
+                    {new Date(item.starts_at).toLocaleDateString("en-GB")}
+                  </span>
+                  <b>Private / studio slot</b>
+                  <small>
+                    {new Date(item.starts_at).toLocaleTimeString("en-GB", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                    · €{(item.price_cents / 100).toFixed(0)}
+                  </small>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      fetch("/api/admin/schedule", {
+                        method: "PATCH",
+                        headers: {
+                          "content-type": "application/json",
+                          ...auth,
+                        },
+                        body: JSON.stringify({
+                          kind: "private",
+                          id: item.id,
+                          values: { status: "closed" },
+                        }),
+                      }).then(loadSchedule)
+                    }
+                  >
+                    CLOSE
+                  </button>
+                </article>
+              ))}
+            <p className="admin-empty-note">
+              Internal capacity is never shown on the public site.
+            </p>
+          </div>
+        )}
+        {section === "Bookings" && (
+          <div className="admin-list">
+            <div className="admin-list-head">
+              <p>INCOMING BOOKINGS</p>
+              <button type="button" onClick={loadSchedule}>
+                REFRESH
+              </button>
+            </div>
+            {!session ? (
+              <p className="admin-empty-note">
+                Sign in with the owner email to view private booking details.
+              </p>
+            ) : schedule.bookings.length ? (
+              schedule.bookings.map((booking) => (
+                <article className="admin-booking" key={booking.id}>
+                  <span>
+                    {new Date(booking.created_at).toLocaleDateString("en-GB")}
+                  </span>
+                  <div>
+                    <b>{booking.customer_name || "Customer"}</b>
+                    <small>{booking.email}</small>
+                  </div>
+                  <small>
+                    {booking.kind} ·{" "}
+                    {booking.amount_cents
+                      ? `€${(booking.amount_cents / 100).toFixed(0)}`
+                      : "no payment"}
+                  </small>
+                  <select
+                    value={booking.status}
+                    onChange={(event) =>
+                      updateBooking(booking.id, event.target.value)
+                    }
+                  >
+                    <option value="confirmed">Confirmed</option>
+                    <option value="pending">Pending</option>
+                    <option value="cancelled">Cancelled</option>
+                    <option value="refunded">Refunded</option>
+                  </select>
+                </article>
+              ))
+            ) : (
+              <p className="admin-empty-note">
+                No paid bookings yet. Weekly group applications are collected
+                separately so people can reserve a spot without paying.
+              </p>
+            )}
+          </div>
+        )}
+        {section === "Artworks" && (
+          <>
+            <div className="admin-art-grid">
+              {!session ? (
+                <p className="admin-empty-note">
+                  Sign in with the owner email above to load the live shop
+                  inventory.
+                </p>
+              ) : (
+                artworks.map((item) => (
+                  <article key={item.id}>
+                    <img src={item.image_path} alt="" />
+                    <div>
+                      <p>
+                        {item.status?.toUpperCase()} · €
+                        {(item.price_cents / 100).toFixed(0)}
+                      </p>
+                      <h2>{item.title_en}</h2>
+                      <button
+                        type="button"
+                        onClick={() => setEditingArtwork({ ...item })}
+                      >
+                        EDIT ARTWORK
+                      </button>
+                    </div>
+                  </article>
+                ))
+              )}
+            </div>
+            {editingArtwork && (
+              <form
+                className="admin-art-editor"
+                onSubmit={async (event) => {
+                  event.preventDefault();
+                  try {
+                    const { id, ...values } = editingArtwork;
+                    const res = await fetch("/api/admin/artworks", {
+                      method: "PATCH",
+                      headers: { "content-type": "application/json", ...auth },
+                      body: JSON.stringify({
+                        id,
+                        values: {
+                          ...values,
+                          price_cents: Number(values.price_cents),
+                        },
+                      }),
+                    });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error);
+                    setEditingArtwork(null);
+                    setNotice("Artwork listing published.");
+                    loadArtworks();
+                  } catch (error) {
+                    setNotice(error.message);
+                  }
+                }}
+              >
+                <h2>Edit live shop listing</h2>
+                <label>
+                  Title — English
+                  <input
+                    value={editingArtwork.title_en || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        title_en: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Title — Latvian
+                  <input
+                    value={editingArtwork.title_lv || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        title_lv: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Price in cents
+                  <input
+                    required
+                    type="number"
+                    value={editingArtwork.price_cents || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        price_cents: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Status
+                  <select
+                    value={editingArtwork.status || "available"}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        status: event.target.value,
+                      }))
+                    }
+                  >
+                    <option value="available">Available</option>
+                    <option value="sold">Sold</option>
+                    <option value="held">Held</option>
+                  </select>
+                </label>
+                <label>
+                  Medium
+                  <input
+                    value={editingArtwork.medium || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        medium: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Dimensions
+                  <input
+                    value={editingArtwork.dimensions || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        dimensions: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  English description
+                  <textarea
+                    value={editingArtwork.description_en || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        description_en: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <label>
+                  Latvian description
+                  <textarea
+                    value={editingArtwork.description_lv || ""}
+                    onChange={(event) =>
+                      setEditingArtwork((old) => ({
+                        ...old,
+                        description_lv: event.target.value,
+                      }))
+                    }
+                  />
+                </label>
+                <button>SAVE LIVE LISTING</button>
+                <button type="button" onClick={() => setEditingArtwork(null)}>
+                  CANCEL
+                </button>
+              </form>
+            )}
+          </>
+        )}
+        {notice && <div className="admin-notice">{notice}</div>}
+      </section>
+    </main>
+  );
 }
