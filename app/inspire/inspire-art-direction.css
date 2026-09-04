@@ -131,6 +131,13 @@
 .inspire-space-details details[open] summary b::before { content: "AIZVĒRT"; }
 .inspire-space-details details[open] summary b::after { content: "×"; }
 .inspire-space-details summary:hover { color: #8af3ff; }
+
+/* One consistent expand/collapse language across the site. */
+.inspire details > summary > b { font-size: 0 !important; transform: none !important; }
+.inspire details > summary > b::after { content: "⌄"; display: block; color: currentColor; font-size: 31px; font-weight: 300; line-height: .7; transition: transform .2s ease; }
+.inspire details[open] > summary > b::after { transform: rotate(180deg); }
+.inspire-space-details summary b::after { content: "⌄"; }
+.inspire-space-details details[open] summary b::after { content: "⌃"; }
 @media (max-width: 800px) {
   .inspire-statement-copy > div { grid-template-columns: 1fr; gap: 18px; margin-top: 28px; }
   .inspire-statement-copy > div p { padding-top: 20px; }
