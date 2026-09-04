@@ -26,6 +26,11 @@
 .inspire .inspire-schedule-note,
 .inspire .inspire-student-galleries summary { font-size: var(--micro) !important; }
 
+/* Quietly remove labels that repeat what the heading or the card already says. */
+.inspire-events .inspire-event-formats-label { display: none !important; }
+.inspire-booking > .inspire-kicker,
+.inspire-events > .inspire-kicker { display: none !important; }
+
 .inspire .inspire-weekly-columns button small,
 .inspire .inspire-weekly-columns button i,
 .inspire .inspire-event-rates span,
@@ -86,7 +91,6 @@
   gap: clamp(22px, 4vw, 62px);
   max-width: 1040px;
   margin: 34px auto 0;
-  counter-reset: studio-thought;
 }
 .inspire-statement-copy > div p {
   position: relative;
@@ -97,14 +101,25 @@
   text-align: left;
 }
 .inspire-statement-copy > div p::before {
-  counter-increment: studio-thought;
-  content: "0" counter(studio-thought);
+  content: "✦";
   position: absolute;
   top: 25px;
   left: 0;
   color: #78edf7;
-  font-size: 12px;
-  letter-spacing: .12em;
+  font-size: 13px;
+}
+
+/* These are ideas to explore, not steps in a prescribed sequence. */
+.inspire-proof summary span,
+.inspire-youth-proof .inspire-proof-list summary span {
+  font-size: 0 !important;
+  letter-spacing: 0 !important;
+}
+.inspire-proof summary span::after,
+.inspire-youth-proof .inspire-proof-list summary span::after {
+  content: "✦";
+  color: #78edf7;
+  font-size: 13px;
 }
 .inspire-statement-copy blockquote {
   max-width: 620px;

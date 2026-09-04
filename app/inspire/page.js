@@ -2353,10 +2353,9 @@ export default function InspirePage() {
           <p className="inspire-event-formats-label">{events.formatsLabel}</p>
         ) : null}
         <div className="inspire-event-grid">
-          {events.formats.map(([title, body], index) => (
+          {events.formats.map(([title, body]) => (
             <details key={title}>
               <summary>
-                <span>0{index + 1}</span>
                 <h3>{title}</h3>
                 <b>+</b>
               </summary>
