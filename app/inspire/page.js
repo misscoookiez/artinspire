@@ -1339,7 +1339,7 @@ export default function InspirePage() {
           ["AKVARELIS", "2 stundas ar materiāliem"],
           ["AKRILA GLEZNOŠANA", "3 stundas ar materiāliem"],
           ["IEKĻAUTS", "2 stundas brīvam laikam studijā"],
-          ["PAPILDU AKTIVITĀTES", "dekorācijas, karaoke, spēles, tattoo un pīrsings"],
+          ["PAPILDU AKTIVITĀTES", "dekorācijas, karaoke, galda spēles, tattoo, pīrsings un citas trakas idejas"],
           ["ARĪ PIE JUMS", "izbraukuma formāts pēc vienošanās"],
         ]
       : lang === "ru"
