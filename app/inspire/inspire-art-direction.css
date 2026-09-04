@@ -10,6 +10,8 @@
 .inspire > .inspire-student-galleries { order: 8; }
 .inspire > .inspire-directions { order: 9; }
 .inspire > .inspire-local-guide { order: 10; }
+.inspire > .inspire-faq { order: 11; }
+.inspire > .inspire-site-footer { order: 12; }
 .inspire .inspire-kicker,
 .inspire .inspire-products article > p,
 .inspire .inspire-event-rates p,

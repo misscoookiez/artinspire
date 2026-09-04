@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { classes, privateSlots } from "@/lib/catalog";
-import InspireLocalGuide from "@/components/InspireLocalGuide";
+import InspireLocalGuide, { InspireFooter } from "@/components/InspireLocalGuide";
 import "./inspire.css";
 import "./inspire-mobile.css";
 import "./inspire-philosophy.css";
@@ -2506,6 +2506,7 @@ export default function InspirePage() {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </section>
+      <InspireLocalGuide lang={lang} />
       <section id="biezakie-jautajumi" className="inspire-faq">
         <div>
           {faq.title && <p className="inspire-kicker">{faq.title}</p>}
@@ -2524,7 +2525,7 @@ export default function InspirePage() {
           ))}
         </div>
       </section>
-      <InspireLocalGuide lang={lang} />{" "}
+      <InspireFooter lang={lang} />
       {imagePreview && (
         <div
           className="inspire-image-lightbox"
