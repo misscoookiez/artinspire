@@ -1,0 +1,30 @@
+# Klientes projekta CI. Tas pats princips kā tavos projektos: SSH uz serveri, git pull, artisan.
+# Atšķirība: SSH useris ir ISPConfig jailkit shell user, kas redz tikai savu vietni.
+#
+# CI/CD mainīgie (setup-client.mjs tos izveido grupas līmenī, protected):
+#   SSH_PRIVATE_KEY    - CI -> serveris privātā atslēga (keys/ci_deploy_<kliente>)
+#   SSH_KNOWN_HOSTS    - `ssh-keyscan -t ed25519 <serveris>` izvads (pin host key)
+#   SSH_USER           - ISPConfig shell user, piem. deploy_kliente
+#   DEPLOY_IPADDRESS   - servera IP vai hostname
+#   DEPLOY_PATH        - ceļš jail iekšpusē; docroot ir /web, tātad /web vai /web/app
+
+image: alpine:latest
+
+deploy_prod:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    # umask 002: jaunie faili ir grupai rakstāmi, lai PHP-FPM (webY, tā pati grupa clientX) tos var lietot
+    - ssh $SSH_USER@$DEPLOY_IPADDRESS "umask 002 && cd $DEPLOY_PATH && git pull --ff-only"
+    # Pēc-deploy komandas pieliek, kad zināms projekta tips. Piemēri:
+    #   PHP/Laravel (vajag php jail iekšā): ssh $SSH_USER@$DEPLOY_IPADDRESS "cd $DEPLOY_PATH && php artisan migrate --force"
+    #   Node/static build: būvē CI pusē (image: node) un rsync dist/ uz $DEPLOY_PATH, git pull tad nav vajadzīgs
