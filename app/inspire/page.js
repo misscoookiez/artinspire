@@ -847,23 +847,31 @@ const eventFormats = {
     ],
     cta: "PIESAKI SAVU PASĀKUMU — ĪSTENOSIM TO KOPĀ →",
     emailSubject: "Pasākums Art Studio Inspire",
-    faqTitle: "Kā notiek privātie pasākumi?",
+    faqTitle: "SVARĪGI PIRMS PASĀKUMA REZERVĒŠANAS",
     faq: [
       [
-        "Vai materiāli ir iekļauti?",
-        "Jā. Pasākumam sagatavojam nepieciešamos materiālus un darba vietas. Ja ir konkrēta tehnika vai liela ideja, vienkārši pasaki to pieteikumā.",
+        "Kā pieteikt pasākumu?",
+        "Uzraksti mums vēlamo datumu, cilvēku skaitu un savu ideju. Atbildēsim ar piemērotu formātu, cenu un nākamajiem soļiem.",
       ],
       [
-        "Vai drīkst ņemt līdzi dzērienus vai uzkodas?",
-        "Privātiem pieaugušo pasākumiem to varam saskaņot. Mērķis nav steigā “atķeksēt” gleznu, bet radīt vakaru, kurā cilvēkiem ir patīkami būt.",
+        "Kas ir iekļauts?",
+        "Iekļauti nepieciešamie mākslas materiāli, darba vietas un pasniedzējas vadība. Katram studijas pasākumam pievienojam arī 2 stundas brīvai būšanai kopā.",
       ],
       [
-        "Vai visi obligāti glezno vienu darbu?",
-        "Nē. Var būt kopīga tēma vai dažādi darbi. Mēs pielāgojam vadību grupai, nevis pārvēršam cilvēkus par vienu konveijera rezultātu.",
+        "Vai drīkst ņemt līdzi ēdienu un dzērienus?",
+        "Jā — droši ņem līdzi kūku, uzkodas un dzērienus. Iepriekš tikai pasaki, ko plāno, lai sagatavojam telpu.",
       ],
       [
-        "Vai intuitīvā māksla ir terapija?",
-        "Nē. Tā ir vadīta radoša pieredze. Ja pasākumu vada konkrēts speciālists, piemēram, mākslas terapeits–koučs, viņa loma un formāts tiek skaidri norādīts pieteikumā.",
+        "Vai var pievienot papildu aktivitātes?",
+        "Jā. Varam saskaņot dekorācijas, karaoke, spēles, tattoo vai pīrsinga sesijas, kopīgu audeklu un citas Tavas idejas. Papildu aktivitātes tiek aprēķinātas atsevišķi.",
+      ],
+      [
+        "Vai pasākums var notikt pie mums?",
+        "Jā. Visus formātus varam pielāgot izbraukumam — atsūti vietu, datumu un grupas lielumu, un sagatavosim piedāvājumu.",
+      ],
+      [
+        "Kas notiek, ja plāni mainās?",
+        "Par datuma maiņu vai atcelšanu dod ziņu pēc iespējas agrāk. Precīzu rezervācijas un apmaksas kārtību saskaņosim pirms apstiprināšanas.",
       ],
     ],
   },
@@ -1325,6 +1333,30 @@ export default function InspirePage() {
       : lang === "ru"
         ? ["8–16 лет", "небольшие группы", "материалы в студии"]
         : ["ages 8–16", "small groups", "materials in the studio"];
+  const eventHighlights =
+    lang === "lv"
+      ? [
+          ["AKVARELIS", "2 stundas ar materiāliem"],
+          ["AKRILA GLEZNOŠANA", "3 stundas ar materiāliem"],
+          ["IEKĻAUTS", "2 stundas brīvam laikam studijā"],
+          ["PAPILDU AKTIVITĀTES", "dekorācijas, karaoke, spēles, tattoo un pīrsings"],
+          ["ARĪ PIE JUMS", "izbraukuma formāts pēc vienošanās"],
+        ]
+      : lang === "ru"
+        ? [
+            ["АКВАРЕЛЬ", "2 часа со всеми материалами"],
+            ["АКРИЛОВАЯ ЖИВОПИСЬ", "3 часа со всеми материалами"],
+            ["ВКЛЮЧЕНО", "2 часа свободного времени в студии"],
+            ["ДОПОЛНИТЕЛЬНО", "декор, караоке, игры, тату и пирсинг"],
+            ["И У ВАС", "выездной формат по договорённости"],
+          ]
+        : [
+            ["WATERCOLOUR", "2 hours with materials"],
+            ["ACRYLIC PAINTING", "3 hours with materials"],
+            ["INCLUDED", "2 hours of free time at the studio"],
+            ["EXTRA ACTIVITIES", "decor, karaoke, games, tattoo and piercing"],
+            ["AT YOUR PLACE", "a travelling format by arrangement"],
+          ];
   const weeklyColumns = [
     activeGroups.slice(0, 2),
     activeGroups.slice(2, 4),
@@ -2306,13 +2338,20 @@ export default function InspirePage() {
             </article>
           ))}
         </div>
-        <p className="inspire-event-hangout">{events.hangout}</p>
+        <ul className="inspire-event-highlights">
+          {eventHighlights.map(([label, value]) => (
+            <li key={label}>
+              <b>{label}</b>
+              <span>{value}</span>
+            </li>
+          ))}
+        </ul>
         {events.formatsLabel ? (
           <p className="inspire-event-formats-label">{events.formatsLabel}</p>
         ) : null}
         <div className="inspire-event-grid">
           {events.formats.map(([title, body], index) => (
-            <details key={title} open={index === 0}>
+            <details key={title}>
               <summary>
                 <span>0{index + 1}</span>
                 <h3>{title}</h3>
