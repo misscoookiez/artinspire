@@ -1,0 +1,10 @@
+/* A very small accent system: hand-painted texture stays behind the information. */
+.inspire-statement>div:first-child h2{position:relative;isolation:isolate}
+.inspire-statement>div:first-child h2:after{content:"";position:absolute;z-index:-1;left:-10%;bottom:-17%;width:54%;height:50%;background:url('/art/accents/watercolor-stroke.png') left bottom/contain no-repeat;opacity:.18;mix-blend-mode:screen;pointer-events:none}
+.inspire-philosophy:before{content:"";position:absolute;z-index:0;left:-10vw;top:-19vw;width:min(520px,46vw);height:440px;background:url('/art/accents/watercolor-splotch.png') center/contain no-repeat;opacity:.09;mix-blend-mode:screen;pointer-events:none;transform:rotate(-18deg)}
+.inspire-events{position:relative;isolation:isolate;overflow:hidden}
+.inspire-events>*{position:relative;z-index:1}
+.inspire-events:before{content:"";position:absolute;z-index:0;right:-100px;top:-80px;width:min(520px,43vw);height:430px;background:url('/art/accents/watercolor-stroke.png') center/contain no-repeat;opacity:.15;mix-blend-mode:screen;pointer-events:none;transform:rotate(34deg)}
+.inspire-weekly-columns>div:after{content:"";position:absolute;z-index:0;right:-29px;bottom:-57px;width:160px;height:160px;background:url('/art/accents/aqua-star-trail.png') center/contain no-repeat;opacity:.22;mix-blend-mode:screen;pointer-events:none;transform:rotate(-21deg)}
+.inspire-weekly-columns>div>*{z-index:1}
+@media(max-width:800px){.inspire-statement>div:first-child h2:after{left:-4%;width:70%;opacity:.13}.inspire-philosophy:before{left:-42vw;top:-46vw;width:520px;opacity:.07}.inspire-events:before{right:-210px;top:-160px;width:520px;opacity:.1}}

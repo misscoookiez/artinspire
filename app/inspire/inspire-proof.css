@@ -1,0 +1,123 @@
+.inspire-proof {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  padding: clamp(75px, 10vw, 135px) max(20px, 10vw);
+  overflow: hidden;
+  background: #0b0b0e;
+  color: #f6f3f7;
+}
+.inspire-proof:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -13vw;
+  bottom: -17vw;
+  width: min(530px, 42vw);
+  height: 520px;
+  background: url("/art/inspire-inkwell-swash.png") center/contain no-repeat;
+  opacity: 0.1;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.inspire-proof h2 {
+  max-width: 760px;
+  margin: 16px 0 23px;
+  font-size: clamp(40px, 4.9vw, 76px);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+}
+.inspire-proof > div > p:not(.inspire-kicker) {
+  max-width: 860px;
+  color: #cfc8d2;
+  font-size: 17px;
+  line-height: 1.58;
+}
+.inspire-proof blockquote {
+  max-width: 690px;
+  margin: 37px 0 0;
+  padding-top: 15px;
+  border-top: 1px solid #52dce9;
+  color: #fff;
+  font-size: clamp(18px, 1.7vw, 25px);
+  line-height: 1.22;
+  letter-spacing: -0.04em;
+}
+.inspire-proof-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(34px, 6vw, 100px);
+  margin-top: clamp(52px, 7vw, 90px);
+  border-top: 1px solid #454249;
+}
+.inspire-proof details {
+  border-bottom: 1px solid #454249;
+}
+.inspire-proof summary {
+  display: grid;
+  grid-template-columns: 43px 1fr 22px;
+  gap: 15px;
+  align-items: center;
+  padding: 23px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.inspire-proof summary::-webkit-details-marker {
+  display: none;
+}
+.inspire-proof summary span {
+  color: #6ce5ef;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+.inspire-proof summary strong {
+  font-size: clamp(19px, 1.65vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+.inspire-proof summary b {
+  font-size: 25px;
+  font-weight: 300;
+  transition: transform 0.2s;
+}
+.inspire-proof details[open] summary b {
+  transform: rotate(45deg);
+}
+.inspire-proof details p {
+  max-width: 690px;
+  margin: 0 26px 27px 58px;
+  color: #d4ced8;
+  font-size: 16px;
+  line-height: 1.62;
+}
+@media (max-width: 800px) {
+  .inspire-proof {
+    padding: 75px 20px;
+  }
+  .inspire-proof h2 {
+    font-size: 49px;
+  }
+  .inspire-proof-list {
+    grid-template-columns: 1fr;
+    margin-top: 38px;
+  }
+  .inspire-proof summary {
+    grid-template-columns: 35px 1fr 18px;
+    gap: 11px;
+  }
+  .inspire-proof summary strong {
+    font-size: 22px;
+  }
+  .inspire-proof details p {
+    margin: 0 0 25px 46px;
+    font-size: 16px;
+  }
+  .inspire-proof:before {
+    right: -63vw;
+    bottom: -29vw;
+    width: 540px;
+    opacity: 0.08;
+  }
+}

@@ -1,0 +1,1172 @@
+/* Final masthead, utility bar and one quiet visual breath between sections. */
+.inspire-masthead {
+  background-size: cover !important;
+  background-position: center 42% !important;
+}
+
+/* Keep the two masthead thoughts intact at every width. */
+.inspire-masthead-copy h1 > span {
+  display: block;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.inspire-language {
+  align-items: center;
+}
+
+.inspire-utility-faq {
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.28);
+  color: #d8d4dd;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  text-decoration: none;
+}
+
+.inspire-utility-faq:hover {
+  color: #62e3ef;
+}
+
+.inspire-gift-icon {
+  filter: brightness(0) saturate(100%) invert(69%) sepia(91%) saturate(824%)
+    hue-rotate(135deg) brightness(102%) contrast(101%) !important;
+  mix-blend-mode: screen;
+}
+
+.inspire-mood-strip {
+  min-height: 136px;
+  display: grid;
+  place-items: center;
+  padding: 32px max(20px, 10vw);
+  border-top: 1px solid #28dce9;
+  border-bottom: 1px solid #28dce9;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 5, 20, 0.34),
+      rgba(9, 8, 24, 0.08),
+      rgba(7, 5, 20, 0.42)
+    ),
+    url("/art/inspire-mood-strip.png") center 52% / cover;
+  color: #fff;
+  text-align: center;
+}
+
+.inspire-mood-strip p {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(16px, 1.8vw, 27px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  animation: inspire-mood-arrive 0.55s ease both;
+}
+
+@keyframes inspire-mood-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inspire-event-support {
+  max-width: 760px;
+  margin: 26px 0 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* The long-form studio information is deliberately one calm, expandable block. */
+.inspire-depth {
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  background: #0b0a10;
+}
+.inspire-depth-label {
+  margin: 0;
+  padding: 18px max(22px, 8vw) 5px;
+  color: #76e7ef;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.inspire-depth-panel {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.19);
+}
+.inspire-depth-panel:last-child {
+  border-bottom: 0;
+}
+
+.inspire-depth-panel > summary {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 27px max(22px, 8vw);
+  color: #fff;
+  cursor: pointer;
+  list-style: none;
+}
+.inspire-depth-panel > summary::-webkit-details-marker {
+  display: none;
+}
+.inspire-depth-panel > summary span {
+  color: #58e2ee;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+.inspire-depth-panel > summary strong {
+  font-size: clamp(19px, 2.2vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+.inspire-depth-panel > summary b {
+  font-size: 28px;
+  font-weight: 300;
+}
+.inspire-depth-panel[open] > summary b {
+  transform: rotate(45deg);
+}
+
+.inspire-depth .inspire-host,
+.inspire-depth .inspire-proof,
+.inspire-depth .inspire-children {
+  margin: 0;
+}
+
+.inspire-host-artworks {
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.32);
+}
+.inspire-host-artworks summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 0;
+  cursor: pointer;
+  list-style: none;
+  color: #76e7ef;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.inspire-host-artworks summary::-webkit-details-marker {
+  display: none;
+}
+.inspire-host-artworks summary b {
+  font-size: 20px;
+  font-weight: 300;
+}
+.inspire-host-artworks[open] summary b {
+  transform: rotate(45deg);
+}
+.inspire-host-artworks > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+.inspire-host-artworks > div img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+@media (max-width: 800px) {
+  .inspire-depth-label {
+    padding: 16px 24px 3px;
+  }
+  .inspire-depth-panel > summary {
+    grid-template-columns: 31px 1fr auto;
+    gap: 10px;
+    padding: 20px 24px;
+  }
+  .inspire-depth-panel > summary strong {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 800px) {
+  .inspire-masthead {
+    background-size: auto 100% !important;
+    background-position: left center !important;
+  }
+  .inspire-utility-faq {
+    margin-left: 7px;
+    padding-left: 7px;
+    font-size: 8px;
+  }
+  .inspire-mood-strip {
+    min-height: 108px;
+  }
+}
+
+/* Sandra's profile is intentionally edited: three visible images, then optional depth. */
+.inspire-host-visuals {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.inspire-host-gallery {
+  min-height: 660px;
+}
+.inspire-host-gallery > img {
+  display: block;
+}
+.inspire-host-visuals > details {
+  max-width: none;
+  margin: 0;
+  border-top: 1px solid #49444b;
+}
+.inspire-host-visuals > details:last-child {
+  border-bottom: 1px solid #49444b;
+}
+.inspire-host-visuals > details > summary {
+  display: grid;
+  grid-template-columns: 1fr 24px;
+  gap: 12px;
+  padding: 18px 0;
+  cursor: pointer;
+  list-style: none;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.inspire-host-visuals > details > summary::-webkit-details-marker {
+  display: none;
+}
+.inspire-host-visuals > details > summary b {
+  font-size: 24px;
+  font-weight: 300;
+  transition: transform 0.2s;
+}
+.inspire-host-visuals > details[open] > summary b {
+  transform: rotate(45deg);
+}
+.inspire-host-visuals > details > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 0 14px;
+}
+.inspire-host-visuals > details > div img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  background: #17151a;
+  filter: saturate(0.92);
+}
+@media (max-width: 900px) {
+  .inspire-host-gallery {
+    min-height: 540px;
+  }
+}
+@media (max-width: 520px) {
+  .inspire-host-gallery {
+    min-height: 430px;
+  }
+  .inspire-host-visuals > details > div {
+    gap: 8px;
+  }
+}
+
+/* Keep Sandra's portrait block compact; the work itself gets the full-width gallery. */
+.inspire-host {
+  align-items: start;
+}
+.inspire-host-gallery {
+  min-height: clamp(390px, 35vw, 540px) !important;
+  max-height: 540px;
+}
+.inspire-host-gallery .inspire-host-portrait {
+  object-position: center 34%;
+}
+.inspire-host-gallery {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+.inspire-host-gallery .inspire-host-portrait {
+  grid-row: span 2;
+}
+.inspire-host-gallery img:nth-child(2) {
+  object-position: center 46%;
+  transform: none !important;
+}
+.inspire-wide-artworks {
+  padding: 0 max(20px, 10vw) clamp(56px, 7vw, 104px);
+  background: #111013;
+}
+.inspire-wide-artworks .inspire-host-artworks {
+  max-width: none;
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.32);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+.inspire-wide-artworks .inspire-host-artworks summary {
+  padding: 19px 0;
+  color: #76e7ef;
+}
+.inspire-wide-artworks .inspire-host-artworks > div {
+  display: block;
+  columns: 4 220px;
+  column-gap: 12px;
+  padding: 0 0 18px;
+}
+.inspire-wide-artworks .inspire-host-artworks > div img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  background: #17151a;
+  display: block;
+  margin: 0 0 12px;
+  break-inside: avoid;
+}
+
+/* The children/youth chapter follows the adult chapter’s deeper, two-part rhythm. */
+.inspire-youth-principles {
+  display: grid;
+  grid-template-columns: minmax(250px, .8fr) minmax(0, 1.2fr);
+  gap: clamp(36px, 8vw, 130px);
+  padding: clamp(52px, 7vw, 96px) max(20px, 10vw);
+  background: #0a0a0d;
+  color: #f6f3f7;
+}
+.inspire-youth-principles h3 {
+  max-width: 480px;
+  margin: 14px 0 20px;
+  font-size: clamp(34px, 3.7vw, 58px);
+  font-weight: 400;
+  letter-spacing: -.06em;
+  line-height: .96;
+}
+.inspire-youth-principles > div > p:not(.inspire-kicker) {
+  max-width: 470px;
+  margin: 0;
+  color: #d3ced8;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.inspire-youth-principles .inspire-proof-list {
+  border-top-color: rgba(147, 224, 234, .42);
+}
+.inspire-youth-principles .inspire-proof-list details {
+  border-bottom-color: rgba(147, 224, 234, .28);
+}
+.inspire-youth-principles .inspire-proof-list summary span {
+  color: #76e7ef;
+}
+
+/* A youthful palette, kept inside clear panels so it feels joyful rather than noisy. */
+.inspire-youth-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(72% 100% at 0% 0%, rgba(244, 167, 56, .17), transparent 57%),
+    radial-gradient(52% 72% at 63% 100%, rgba(111, 225, 235, .12), transparent 64%),
+    #0a0d19;
+}
+.inspire-youth-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 auto;
+  height: 7px;
+  background: linear-gradient(90deg, #f5b544 0 31%, #70e5ec 31% 63%, #d57af0 63% 100%);
+}
+.inspire-youth-hero .inspire-kicker {
+  color: #ffe09a;
+}
+.inspire-youth-hero h2 em {
+  color: #82ecf2;
+}
+.inspire-youth-hero > img {
+  border: 1px solid rgba(126, 232, 239, .4);
+  box-shadow: 18px 18px 0 rgba(213, 122, 240, .12);
+}
+.inspire-youth-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 540px;
+  margin: 25px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.inspire-youth-meta li {
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 224, 154, .42);
+  color: #ffe09a;
+  font-size: 10px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.inspire-youth-meta li:nth-child(2) {
+  border-color: rgba(126, 232, 239, .48);
+  color: #8ceaf0;
+}
+.inspire-youth-meta li:nth-child(3) {
+  border-color: rgba(225, 143, 244, .42);
+  color: #e9a2f4;
+}
+.inspire-youth-principles {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(115deg, rgba(26, 36, 66, .92), rgba(29, 14, 45, .94)),
+    #0a0a0d;
+}
+.inspire-youth-principles::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: max(20px, 10vw);
+  left: max(20px, 10vw);
+  height: 1px;
+  background: linear-gradient(90deg, #f5b544, #70e5ec 52%, #d57af0);
+}
+.inspire-youth-principles::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -90px;
+  bottom: -170px;
+  width: min(600px, 50vw);
+  height: 520px;
+  background: url("/art/inspire-inkwell-swash.png") center / contain no-repeat;
+  opacity: .085;
+  filter: hue-rotate(128deg) saturate(1.5);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.inspire-youth-principles > div {
+  position: relative;
+  z-index: 1;
+}
+.inspire-youth-principles .inspire-kicker { color: #ffe09a; }
+.inspire-youth-principles .inspire-proof-list summary span { color: #ffe09a; }
+.inspire-youth-principles .inspire-proof-list details:nth-child(2n) summary span { color: #82ecf2; }
+.inspire-youth-principles .inspire-proof-list details:nth-child(3n) summary span { color: #e9a2f4; }
+
+/* Adults keep their darker character, with one quiet colour wash rather than a flat black slab. */
+.inspire-proof {
+  background:
+    radial-gradient(66% 100% at 100% 0%, rgba(48, 156, 188, .12), transparent 61%),
+    radial-gradient(54% 74% at 0% 100%, rgba(123, 58, 153, .12), transparent 65%),
+    #0b0b0e;
+}
+.inspire-proof .inspire-kicker { color: #a8ebf1; }
+
+.inspire-student-galleries {
+  padding-top: clamp(55px, 7vw, 100px) !important;
+}
+.inspire-student-galleries-intro {
+  max-width: 760px;
+  margin: 0 0 31px;
+}
+.inspire-student-galleries-intro h2 {
+  margin: 10px 0 0;
+  color: #f6f4f7;
+  font-size: clamp(32px, 4vw, 62px);
+  font-weight: 400;
+  letter-spacing: -.06em;
+  line-height: .95;
+}
+/* A real, uneven gallery rhythm — works remain visible in their natural proportions. */
+.inspire-student-galleries details > div {
+  display: block;
+  columns: 4 180px;
+  column-gap: 10px;
+}
+.inspire-student-gallery-item {
+  display: block;
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+  overflow: hidden;
+  break-inside: avoid;
+  border: 1px solid rgba(139, 229, 238, .2);
+  background: #17151a;
+  cursor: zoom-in;
+}
+.inspire-student-gallery-item img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  transition: transform .35s ease, filter .35s ease;
+}
+.inspire-student-gallery-item:hover img,
+.inspire-student-gallery-item:focus-visible img {
+  transform: scale(1.025);
+  filter: saturate(1.08) contrast(1.03);
+}
+.inspire-student-gallery-item:focus-visible {
+  outline: 2px solid #b9faff;
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .inspire-host-gallery {
+    min-height: 480px !important;
+    max-height: none;
+  }
+  .inspire-wide-artworks .inspire-host-artworks > div {
+    columns: 2 190px;
+  }
+  .inspire-youth-principles {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}
+@media (max-width: 520px) {
+  .inspire-host-gallery {
+    min-height: 410px !important;
+  }
+  .inspire-wide-artworks .inspire-host-artworks > div {
+    columns: 2 130px;
+    column-gap: 8px;
+  }
+  .inspire-wide-artworks .inspire-host-artworks > div img { margin-bottom: 8px; }
+  .inspire-student-galleries details > div { columns: 2 130px; column-gap: 8px; }
+  .inspire-student-gallery-item { margin-bottom: 8px; }
+}
+
+/* FAQ is a compact, full-width library: the cards begin directly beneath its heading. */
+.inspire-faq {
+  display: block !important;
+}
+.inspire-faq > div:first-child {
+  max-width: 780px;
+  margin-bottom: 34px;
+}
+.inspire-faq > div:first-child > p:last-child {
+  display: none;
+}
+.inspire-faq h2 {
+  margin: 0 !important;
+}
+.inspire-faq-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 34px;
+}
+.inspire-faq details:nth-child(odd) {
+  padding-right: 0 !important;
+  border-right: 0 !important;
+}
+.inspire-faq details:nth-child(even) {
+  padding-left: 0 !important;
+}
+.inspire-faq summary {
+  min-height: 74px;
+  padding: 17px 0 !important;
+  font-size: clamp(17px, 1.35vw, 22px) !important;
+}
+.inspire-faq details p {
+  max-width: 720px;
+  margin: 0 0 24px !important;
+  font-size: 15px !important;
+  line-height: 1.62 !important;
+}
+@media (max-width: 800px) {
+  .inspire-faq > div:first-child {
+    margin-bottom: 25px;
+  }
+  .inspire-faq-list {
+    grid-template-columns: 1fr !important;
+  }
+  .inspire-faq summary {
+    min-height: 0;
+    font-size: 20px !important;
+  }
+}
+
+/* The welcome text and rotating image share one frame on wide screens. */
+.inspire-statement {
+  align-items: stretch !important;
+}
+.inspire-statement-copy {
+  min-height: clamp(500px, 42vw, 650px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.inspire-statement-slideshow {
+  height: 100%;
+  min-height: 0 !important;
+}
+@media (max-width: 800px) {
+  .inspire-statement-copy {
+    min-height: 0;
+    display: block;
+  }
+  .inspire-statement-slideshow {
+    height: auto;
+    min-height: 380px !important;
+  }
+}
+
+/* A small, real-events slideshow occupies the breathing room beside the event introduction. */
+.inspire-events-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.62fr);
+  gap: clamp(32px, 6vw, 92px);
+  align-items: stretch;
+}
+.inspire-events-top .inspire-events-intro {
+  max-width: 760px;
+}
+.inspire-event-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-self: start;
+}
+.inspire-event-gallery a {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(116, 227, 236, 0.42);
+  background: #15111f;
+  aspect-ratio: 1 / 1.18;
+}
+.inspire-event-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.95) contrast(1.02);
+  transition: transform .35s ease, filter .35s ease;
+}
+.inspire-event-gallery a:hover img,
+.inspire-event-gallery a:focus-visible img {
+  transform: scale(1.04);
+  filter: saturate(1.08) contrast(1.03);
+}
+.inspire-event-gallery a:focus-visible { outline: 2px solid #b9faff; outline-offset: 3px; }
+.inspire-events-top + .inspire-event-rates {
+  max-width: 760px;
+  margin-top: 30px;
+}
+.inspire-events-top + .inspire-event-rates article {
+  min-height: 118px;
+  padding: 16px 18px;
+}
+@media (max-width: 900px) {
+  .inspire-events-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .inspire-event-gallery {
+    max-width: 760px;
+  }
+  .inspire-events-top + .inspire-event-rates {
+    max-width: none;
+  }
+}
+@media (max-width: 520px) {
+  .inspire-event-gallery {
+    gap: 7px;
+  }
+}
+
+/* A fixed, exported wordmark crop prevents responsive background positioning from ever clipping the logo. */
+.inspire-masthead-brand {
+  max-width: 690px;
+}
+.inspire-masthead-brand img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: none !important;
+  opacity: 1;
+}
+@media (max-width: 800px) {
+  .inspire-masthead-brand {
+    max-width: min(100%, 390px);
+  }
+}
+
+/* Format cards: complete borders at every responsive row and a restrained trace of colour. */
+.inspire-booking {
+  padding-top: clamp(72px, 8vw, 105px);
+}
+.inspire-booking > h2 {
+  margin-bottom: 32px;
+}
+.inspire-products article {
+  position: relative;
+  border-left: 1px solid #333 !important;
+  border-right: 0 !important;
+}
+.inspire-products article:last-child {
+  border-right: 1px solid #333 !important;
+}
+
+/* Keep the eight formats in two deliberate rows at desktop scale. */
+@media (min-width: 901px) {
+  .inspire-products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .inspire-products article:nth-child(4n) {
+    border-right: 1px solid #333 !important;
+  }
+}
+
+.inspire-gift-options {
+  margin: 18px 0 14px;
+  padding: 18px;
+  border: 1px solid #242329;
+  background: #f4f0f6;
+}
+
+.inspire-gift-options > p {
+  margin: 0 0 13px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.inspire-gift-options > div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+
+.inspire-modal .inspire-gift-options button {
+  min-width: 0;
+  margin: 0;
+  padding: 10px 6px;
+  border: 1px solid #1d1b22;
+  background: transparent;
+  color: #17151b;
+  font-size: 12px;
+}
+
+.inspire-modal .inspire-gift-options button.active,
+.inspire-modal .inspire-gift-options button:hover {
+  background: #17151b;
+  color: #fff;
+}
+
+.inspire-gift-options label {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  align-items: center;
+  gap: 14px;
+  margin-top: 15px;
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+
+.inspire-modal .inspire-gift-options input {
+  width: 90px;
+  margin: 0;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.inspire-gift-options strong {
+  display: block;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+/* Group registration is the primary decision on this page: give it a quiet neon cue. */
+.inspire-weekly-columns button i {
+  color: #c2fbff !important;
+  text-shadow: 0 0 11px rgba(46, 228, 255, .75);
+}
+
+.inspire-weekly-columns button:hover {
+  background: linear-gradient(90deg, rgba(12, 77, 93, .55), rgba(8, 12, 28, .22)) !important;
+  box-shadow: inset 3px 0 0 #43f1ff, 0 0 24px rgba(33, 224, 247, .18);
+}
+
+.inspire-products article:nth-child(2) > button {
+  border-color: #53edff;
+  background: linear-gradient(90deg, #e9fdff, #fff) !important;
+  box-shadow: 0 0 18px rgba(61, 230, 250, .22);
+}
+
+.inspire-products article:nth-child(2) > button:hover {
+  border-color: #7ef5ff;
+  background: #43e9fb !important;
+  color: #061116 !important;
+  box-shadow: 0 0 26px rgba(61, 230, 250, .52);
+}
+
+.inspire-products article > button:not(:disabled) {
+  border-color: #53edff;
+  background: linear-gradient(90deg, #e9fdff, #fff) !important;
+  box-shadow: 0 0 18px rgba(61, 230, 250, .22);
+}
+
+.inspire-products article > button:not(:disabled):hover {
+  border-color: #7ef5ff;
+  background: #43e9fb !important;
+  color: #061116 !important;
+  box-shadow: 0 0 26px rgba(61, 230, 250, .52);
+}
+
+/* Every booking option should respond as a card, not only the highlighted pass. */
+.inspire-products article {
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.inspire-products article:hover,
+.inspire-products article:focus-within {
+  position: relative;
+  z-index: 1;
+  border-color: #53edff !important;
+  background: linear-gradient(145deg, rgba(23, 59, 85, .48), rgba(24, 12, 52, .46)) !important;
+  box-shadow: 0 0 0 1px rgba(115, 243, 255, .38), 0 0 30px rgba(49, 224, 247, .24);
+}
+
+/* Replace the scattered decorative marks with one calm, inky splatter language. */
+.inspire-statement > div:first-child h2:after,
+.inspire-weekly-columns > div:after {
+  display: none !important;
+}
+
+.inspire-philosophy:before,
+.inspire-capabilities:before {
+  background-image: url("/art/inspire-inkwell-swash.png") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  mix-blend-mode: screen;
+  filter: hue-rotate(152deg) saturate(1.4) brightness(1.25);
+}
+
+/* Events get one soft pool of colour, never a field of tiny splatters. */
+.inspire-events {
+  background:
+    linear-gradient(112deg, rgba(24, 14, 52, .66), rgba(17, 31, 68, .48)),
+    url("/art/inspire-cosmic-strip.png") center/cover !important;
+}
+
+.inspire-events:before {
+  background-image: radial-gradient(circle at 82% 15%, rgba(154, 104, 204, .28), transparent 34%), radial-gradient(circle at 8% 90%, rgba(47, 205, 216, .19), transparent 31%) !important;
+  background-size: auto !important;
+  background-repeat: no-repeat !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.inspire-events > .inspire-event-primary-cta {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 54px;
+  margin: 30px 0 0 !important;
+  padding: 14px 24px !important;
+  border: 1px solid #62f0ff !important;
+  background: linear-gradient(100deg, #dffcff, #9cecf8) !important;
+  color: #071116 !important;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .11em;
+  text-decoration: none;
+  box-shadow: 0 0 28px rgba(67, 233, 251, .35), inset 0 0 0 1px rgba(255,255,255,.65);
+}
+
+.inspire-events > .inspire-event-primary-cta:hover {
+  background: #4cecff !important;
+  border-color: #b2f9ff !important;
+  color: #061116 !important;
+  transform: translateY(-1px);
+}
+
+.inspire-events .inspire-event-primary-cta + .inspire-event-faq-inline {
+  margin-top: 42px !important;
+}
+
+.inspire-event-formats-label {
+  margin: 58px 0 -37px !important;
+  color: #8af3ff !important;
+  font-size: 11px !important;
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+
+.inspire-event-custom {
+  max-width: 900px;
+  margin: 38px 0 0;
+  padding: 23px 0 0;
+  border-top: 1px solid rgba(222, 215, 229, .42);
+}
+
+.inspire-event-custom p {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: clamp(21px, 1.7vw, 29px);
+  font-family: var(--font-display, Georgia, serif);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+
+.inspire-event-custom span {
+  display: block;
+  max-width: 780px;
+  color: #f5f1f6;
+  font-size: 16px;
+  line-height: 1.58;
+}
+
+@media (max-width: 800px) {
+  .inspire-event-formats-label { margin-top: 44px !important; }
+}
+
+/* One colour gesture per day — visible, but never a separate dashboard treatment. */
+.inspire-weekly-columns > div {
+  overflow: hidden;
+}
+
+.inspire-weekly-columns > div:before {
+  content: "" !important;
+  z-index: 0;
+  right: -72px !important;
+  top: -78px !important;
+  width: 235px !important;
+  height: 235px !important;
+  background: url("/art/inspire-inkwell-swash.png") center/contain no-repeat !important;
+  opacity: .16 !important;
+  filter: hue-rotate(145deg) saturate(1.65) brightness(1.25);
+  transform: rotate(-12deg) !important;
+}
+
+.inspire-weekly-columns > div:nth-child(2):before {
+  filter: hue-rotate(255deg) saturate(1.7) brightness(1.25);
+}
+
+.inspire-weekly-columns > div:nth-child(3):before {
+  filter: hue-rotate(28deg) saturate(1.75) brightness(1.25);
+}
+
+/* The small clustered mark read as a virus at card scale; colour stays in the border and glow instead. */
+.inspire-weekly-columns > div:before {
+  display: none !important;
+}
+
+.inspire-weekly-columns > div:nth-child(1) {
+  border-color: rgba(78, 232, 247, .72) !important;
+  box-shadow: inset 0 -3px 0 rgba(78, 232, 247, .42);
+}
+
+.inspire-weekly-columns > div:nth-child(2) {
+  border-color: rgba(235, 105, 221, .7) !important;
+  box-shadow: inset 0 -3px 0 rgba(235, 105, 221, .42);
+}
+
+.inspire-weekly-columns > div:nth-child(3) {
+  border-color: rgba(248, 190, 79, .7) !important;
+  box-shadow: inset 0 -3px 0 rgba(248, 190, 79, .42);
+}
+
+@media (min-width: 801px) {
+  .inspire-statement {
+    --statement-frame-height: clamp(500px, 42vw, 650px);
+    grid-template-rows: var(--statement-frame-height);
+  }
+
+  .inspire-statement-copy,
+  .inspire-statement-slideshow {
+    height: var(--statement-frame-height) !important;
+    min-height: 0 !important;
+  }
+}
+.inspire-products article:nth-child(3n + 1) {
+  background:
+    radial-gradient(
+      150% 100% at 0% 100%,
+      rgba(61, 33, 114, 0.22),
+      transparent 58%
+    ),
+    #080808;
+}
+.inspire-products article:nth-child(3n + 2) {
+  background:
+    radial-gradient(
+      120% 100% at 100% 0%,
+      rgba(24, 138, 171, 0.14),
+      transparent 58%
+    ),
+    #080808;
+}
+
+/* The adult approach stays rich in meaning without dominating the page. */
+.inspire-proof-list {
+  margin-top: clamp(36px, 4.5vw, 60px) !important;
+  column-gap: clamp(26px, 4vw, 64px) !important;
+}
+
+.inspire-proof summary {
+  grid-template-columns: 32px 1fr 18px !important;
+  gap: 11px !important;
+  padding: 16px 0 !important;
+}
+
+.inspire-proof summary strong {
+  font-size: clamp(16px, 1.18vw, 20px) !important;
+  line-height: 1.1 !important;
+}
+
+.inspire-proof summary b {
+  font-size: 20px !important;
+}
+
+.inspire-proof details p {
+  margin: 0 20px 20px 43px !important;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+}
+
+/* Fixed wordmark crop: its own box now has a stable size rather than inheriting artwork proportions. */
+.inspire-masthead {
+  height: 320px !important;
+  min-height: 320px !important;
+  grid-template-columns: minmax(300px, 1fr) minmax(420px, 0.9fr) !important;
+  align-items: center !important;
+}
+.inspire-masthead-brand {
+  width: min(590px, 42vw);
+  max-width: none !important;
+  line-height: 0;
+}
+.inspire-masthead-brand img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 190px;
+  object-fit: contain !important;
+}
+
+/* The supplied master already contains the correct logo and composition. Do not rebuild it from movable layers. */
+.inspire-masthead {
+  background:
+    linear-gradient(90deg, rgba(7, 4, 27, 0.03), rgba(3, 8, 22, 0.15)),
+    url("/art/inspire-masthead-wide.png") center/cover no-repeat !important;
+}
+.inspire-masthead-brand {
+  display: none !important;
+}
+
+/* Match the exported banner's ratio at normal desktop widths so its wordmark is never side-cropped. */
+@media (min-width: 801px) {
+  .inspire-masthead {
+    height: clamp(240px, 16.6667vw, 320px) !important;
+    min-height: clamp(240px, 16.6667vw, 320px) !important;
+    background-size: 100% auto !important;
+    background-position: center center !important;
+  }
+}
+
+/* Keep the utility text on the same visual gutter as the masthead and navigation. */
+.inspire-utility {
+  padding-left: max(24px, 10vw) !important;
+  padding-right: max(24px, 10vw) !important;
+}
+.inspire-utility > span {
+  display: block;
+  min-width: 0;
+}
+.inspire-language {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
+}
+
+/* Separate the weekly label from the main heading without changing the schedule layout. */
+#nodarbibas > .inspire-kicker {
+  margin: 0 0 16px;
+}
+#nodarbibas > h2 {
+  margin-top: 0;
+}
+
+/* The hand-painted mark should read as a deliberate underline, not a tiny stray brush. */
+.inspire-statement > div:first-child h2:after {
+  left: 2%;
+  bottom: -30%;
+  width: clamp(330px, 64%, 560px);
+  height: 122px;
+  background-size: 100% auto;
+  opacity: 0.3;
+}
+
+@media (max-width: 800px) {
+  .inspire-masthead {
+    height: 470px !important;
+    min-height: 470px !important;
+    grid-template-columns: 1fr !important;
+    align-items: end !important;
+  }
+  .inspire-masthead {
+    background-image:
+      linear-gradient(90deg, rgba(7, 4, 27, 0.07), rgba(3, 8, 22, 0.2)),
+      url("/art/inspire-masthead-locked.png") !important;
+    background-size: auto 100% !important;
+    background-position: left center !important;
+  }
+  .inspire-masthead-brand {
+    width: min(100%, 390px);
+    max-width: 390px !important;
+  }
+  .inspire-masthead-copy {
+    width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
+    min-width: 0;
+  }
+  .inspire-masthead-copy h1 {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    font-size: clamp(14px, 4vw, 18px);
+    line-height: 1.16;
+  }
+  .inspire-utility {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  #nodarbibas > .inspire-kicker {
+    margin-bottom: 13px;
+  }
+  .inspire-statement > div:first-child h2:after {
+    left: 3%;
+    bottom: -22%;
+    width: min(390px, 88%);
+    height: 102px;
+    opacity: 0.26;
+  }
+}
+
+/* Gallery images stay on the page: a compact lightbox is calmer than new tabs. */
+.inspire-event-gallery button {
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(116, 227, 236, 0.42);
+  background: #15111f;
+  aspect-ratio: 1 / 1.18;
+  cursor: zoom-in;
+}
+.inspire-event-gallery button:hover img,
+.inspire-event-gallery button:focus-visible img {
+  transform: scale(1.04);
+  filter: saturate(1.08) contrast(1.03);
+}
+.inspire-event-gallery button:focus-visible { outline: 2px solid #b9faff; outline-offset: 3px; }
+.inspire-image-lightbox { position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:clamp(18px,5vw,68px); background:rgba(3,3,8,.82); backdrop-filter:blur(10px); }
+.inspire-image-lightbox-frame { position:relative; max-width:min(100%,1080px); max-height:100%; padding:10px; background:#12101a; box-shadow:0 30px 90px rgba(0,0,0,.68),0 0 0 1px rgba(160,242,250,.34); }
+.inspire-image-lightbox-frame img { display:block; max-width:min(100%,1000px); max-height:calc(100vh - clamp(54px,10vw,136px)); object-fit:contain; }
+.inspire-image-lightbox-close { position:absolute; top:-14px; right:-14px; width:34px; height:34px; margin:0; padding:0; border:1px solid #aef7ff; border-radius:50%; background:#e9fdff; color:#090b13; font-size:26px; line-height:1; cursor:pointer; box-shadow:0 8px 22px rgba(47,224,245,.3); }

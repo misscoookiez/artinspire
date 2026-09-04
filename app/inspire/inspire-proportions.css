@@ -1,0 +1,3 @@
+/* Keep the original tall portrait rhythm of Sandra's statement/gallery section. */
+@media(min-width:801px){.inspire-statement-slideshow{min-height:0;aspect-ratio:.718/1}.inspire-statement{align-items:start}}
+@media(max-width:800px){.inspire-statement-slideshow{min-height:430px}}
