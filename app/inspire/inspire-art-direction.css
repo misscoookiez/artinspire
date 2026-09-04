@@ -136,7 +136,7 @@
    broad, legible introduction rather than three narrow technical columns. */
 .inspire-utility > span { display: none !important; }
 .inspire-utility { justify-content: flex-end !important; }
-.inspire-masthead-copy { max-width: 700px !important; }
+.inspire-masthead-copy { position: static !important; max-width: 700px !important; }
 .inspire-masthead-copy p {
   max-width: 590px;
   margin-bottom: 13px !important;
@@ -147,12 +147,16 @@
   line-height: 1.35;
 }
 .inspire-masthead-copy h1 { font-size: clamp(20px, 1.55vw, 28px) !important; line-height: 1.16 !important; }
-.inspire-masthead-copy > span { margin-top: 13px !important; color: #c8ffff; font-size: clamp(17px, 1.3vw, 22px) !important; }
+.inspire-masthead-copy > span { margin-top: 13px !important; color: #c8ffff; font-size: clamp(19px, 1.5vw, 25px) !important; }
 .inspire-masthead-language {
   display: flex !important;
   align-items: center;
   gap: 10px;
-  margin-top: 18px !important;
+  position: absolute;
+  top: 19px;
+  right: max(24px, 3vw);
+  z-index: 3;
+  margin: 0 !important;
 }
 .inspire-masthead-language button {
   min-width: 35px;
@@ -167,8 +171,7 @@
   letter-spacing: .09em !important;
 }
 .inspire-masthead-language button.active { background: #b7fbff !important; color: #0a1830 !important; }
-.inspire-masthead-language .inspire-utility-faq { margin-left: 4px; padding-left: 14px; color: #e5ffff; font-size: 12px; }
-.inspire-icon-nav { min-height: 72px; align-items: center; }
+.inspire-icon-nav { min-height: 72px; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; align-items: center; }
 .inspire-icon-nav a { gap: 14px !important; font-size: clamp(14px, 1.05vw, 17px) !important; font-weight: 600; }
 .inspire-icon-nav a img { width: 31px !important; height: 31px !important; }
 .inspire-statement {
@@ -203,7 +206,7 @@
   .inspire-utility { justify-content: flex-start !important; }
   .inspire-statement { grid-template-columns: 1fr !important; }
   .inspire-statement h2 { font-size: clamp(38px, 11vw, 54px) !important; }
-  .inspire-masthead-language { margin-top: 14px !important; }
+  .inspire-masthead-language { top: 12px; right: 18px; }
   .inspire-icon-nav { min-height: 0; }
   .inspire-icon-nav a { font-size: 12px !important; }
 }

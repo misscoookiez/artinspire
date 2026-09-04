@@ -108,8 +108,7 @@ const moodQuotes = {
 const studioCopy = {
   lv: {
     heading: "Mākslinieka studija arī Tev.",
-    quote:
-      "Tavai idejai nav jābūt vienkāršai tikai tāpēc, ka Tu vēl nezini, kā to realizēt.",
+    quote: "Mēs sākam ar to, ko vēlies radīt, nevis ar to, ko jau proti.",
     more: "Kā mēs strādājam",
     moreLead: "Vari sākt no nulles vai iet savā mākslā arvien dziļāk.",
     items: [
@@ -999,7 +998,8 @@ const words = {
     sub: "GLEZNOŠANAS NODARBĪBAS BĒRNIEM UN PIEAUGUŠAJIEM · MIERA IELA 17, RĪGA",
     lead: "MĀKSLAS STUDIJA CILVĒKIEM AR IDEJĀM.\nARĪ TIEM, KURI VĒL NEZINA, KA VIŅIEM TĀDAS IR.",
     apply: "PIETEIKTIES NODARBĪBAI",
-    statement: "MĒS SĀKAM AR TO,\nKO VĒLIES RADĪT.",
+    statement: "MĀKSLAS STUDIJA CILVĒKIEM AR IDEJĀM.\nARĪ TIEM, KURI VĒL NEZINA, KA VIŅIEM TĀDAS IR.",
+    statementQuote: "Mēs sākam ar to, ko vēlies radīt, nevis ar to, ko jau proti.",
     statementBody: [
       "Tava ideja ir sākumpunkts. Mums ir svarīgi nevis iemācīt visiem gleznot vienādi, bet palīdzēt Tev arvien labāk saprast savu gaumi, redzējumu.",
       "Bērniem un pieaugušajiem — individualitāte šeit vienmēr ir galvenā vērtība.",
@@ -1056,7 +1056,8 @@ const words = {
     sub: "PAINTING CLASSES FOR CHILDREN & ADULTS · MIERA IELA 17, RIGA",
     lead: "AN ART STUDIO FOR PEOPLE WITH IDEAS.\nALSO FOR THOSE WHO DO NOT YET KNOW THEY HAVE THEM.",
     apply: "BOOK A CLASS",
-    statement: "WE START WITH WHAT\nYOU WANT TO CREATE.",
+    statement: "AN ART STUDIO FOR PEOPLE WITH IDEAS.\nALSO FOR THOSE WHO DO NOT YET KNOW THEY HAVE THEM.",
+    statementQuote: "We begin with what you want to create, not with what you already know how to do.",
     statementBody: [
       "Your idea is the starting point. We do not want to teach everyone to paint alike; we want to help you understand your own taste and vision more deeply.",
       "For children and adults alike, individuality is always the central value here.",
@@ -1113,7 +1114,8 @@ const words = {
     sub: "ЗАНЯТИЯ ЖИВОПИСЬЮ ДЛЯ ДЕТЕЙ И ВЗРОСЛЫХ · MIERA IELA 17, РИГА",
     lead: "ХУДОЖЕСТВЕННАЯ СТУДИЯ ДЛЯ ЛЮДЕЙ С ИДЕЯМИ.\nИ ДЛЯ ТЕХ, КТО ЕЩЁ НЕ ЗНАЕТ, ЧТО ОНИ У НИХ ЕСТЬ.",
     apply: "ЗАПИСАТЬСЯ НА ЗАНЯТИЕ",
-    statement: "МЫ НАЧИНАЕМ С ТОГО,\nЧТО ХОЧЕШЬ СОЗДАТЬ.",
+    statement: "СТУДИЯ ДЛЯ ЛЮДЕЙ С ИДЕЯМИ.\nИ ДЛЯ ТЕХ, КТО ЕЩЁ НЕ ЗНАЕТ, ЧТО ОНИ У НИХ ЕСТЬ.",
+    statementQuote: "Мы начинаем с того, что ты хочешь создать, а не с того, что уже умеешь.",
     statementBody: [
       "Твоя идея — это начало. Нам важно не научить всех рисовать одинаково, а помочь лучше почувствовать собственный вкус и видение.",
       "Для детей и взрослых индивидуальность здесь всегда остаётся главной ценностью.",
@@ -1706,11 +1708,6 @@ export default function InspirePage() {
         </div>
         <div className="inspire-masthead-copy">
           <p>{t.sub}</p>
-          <h1>
-            {t.lead.split("\n").map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </h1>
           <span>
             {t.hero} {t.hero2} {t.hero3}
           </span>
@@ -1718,9 +1715,6 @@ export default function InspirePage() {
             <button className={lang === "lv" ? "active" : ""} onClick={() => setLang("lv")}>LV</button>
             <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
             <button className={lang === "ru" ? "active" : ""} onClick={() => setLang("ru")}>RU</button>
-            <a className="inspire-utility-faq" href="#biezakie-jautajumi">
-              {lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}
-            </a>
           </div>
         </div>
       </section>
@@ -1761,6 +1755,9 @@ export default function InspirePage() {
                 : "PRIVATE EVENTS"}
           </span>
         </a>
+        <a href="#biezakie-jautajumi">
+          <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
+        </a>
       </nav>
       <section className="inspire-statement">
         <div className="inspire-statement-copy">
@@ -1777,7 +1774,7 @@ export default function InspirePage() {
             ))}
           </div>
           <blockquote>
-            {content("inspire.statement.quote", approach.quote)}
+            {content("inspire.statement.quote.v2", t.statementQuote)}
           </blockquote>
         </div>
         <div
