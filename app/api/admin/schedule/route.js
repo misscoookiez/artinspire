@@ -13,14 +13,15 @@ function validTimes(row) { return !row.starts_at || !row.ends_at || new Date(row
 export async function GET(request) {
   const auth=await requireOwner(request);
   if(auth.error) return NextResponse.json({error:auth.error},{status:auth.status});
-  const [classes,slots,bookings]=await Promise.all([
+  const [classes,slots,bookings,weeklySignups]=await Promise.all([
     supabaseAdmin.from("class_sessions").select("*").order("starts_at"),
     supabaseAdmin.from("private_slots").select("*").order("starts_at"),
-    supabaseAdmin.from("bookings").select("id,kind,class_session_id,private_slot_id,customer_name,email,status,amount_cents,created_at").order("created_at",{ascending:false}).limit(100)
+    supabaseAdmin.from("bookings").select("id,kind,class_session_id,private_slot_id,customer_name,email,status,amount_cents,created_at").order("created_at",{ascending:false}).limit(100),
+    supabaseAdmin.from("weekly_group_signups").select("id,group_key,group_label,customer_name,email,status,created_at").order("created_at",{ascending:false}).limit(100)
   ]);
-  const error=[classes,slots,bookings].find(result=>result.error)?.error;
+  const error=[classes,slots,bookings,weeklySignups].find(result=>result.error)?.error;
   if(error) return NextResponse.json({error:"Schedule is temporarily unavailable."},{status:503});
-  return NextResponse.json({classes:classes.data||[],privateSlots:slots.data||[],bookings:bookings.data||[]});
+  return NextResponse.json({classes:classes.data||[],privateSlots:slots.data||[],bookings:bookings.data||[],weeklySignups:weeklySignups.data||[]});
 }
 
 export async function POST(request) {
