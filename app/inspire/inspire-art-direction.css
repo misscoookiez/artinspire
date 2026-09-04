@@ -148,6 +148,29 @@
 }
 .inspire-masthead-copy h1 { font-size: clamp(20px, 1.55vw, 28px) !important; line-height: 1.16 !important; }
 .inspire-masthead-copy > span { margin-top: 13px !important; color: #c8ffff; font-size: clamp(17px, 1.3vw, 22px) !important; }
+.inspire-masthead-language {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px !important;
+}
+.inspire-masthead-language button {
+  min-width: 35px;
+  margin: 0 !important;
+  padding: 7px 6px !important;
+  border: 1px solid rgba(172, 248, 252, .52) !important;
+  border-radius: 0 !important;
+  background: rgba(5, 15, 30, .18) !important;
+  color: #ddffff !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: .09em !important;
+}
+.inspire-masthead-language button.active { background: #b7fbff !important; color: #0a1830 !important; }
+.inspire-masthead-language .inspire-utility-faq { margin-left: 4px; padding-left: 14px; color: #e5ffff; font-size: 12px; }
+.inspire-icon-nav { min-height: 72px; align-items: center; }
+.inspire-icon-nav a { gap: 14px !important; font-size: clamp(14px, 1.05vw, 17px) !important; font-weight: 600; }
+.inspire-icon-nav a img { width: 31px !important; height: 31px !important; }
 .inspire-statement {
   grid-template-columns: minmax(0, 1.45fr) minmax(310px, .55fr) !important;
   gap: clamp(40px, 5vw, 86px) !important;
@@ -180,6 +203,9 @@
   .inspire-utility { justify-content: flex-start !important; }
   .inspire-statement { grid-template-columns: 1fr !important; }
   .inspire-statement h2 { font-size: clamp(38px, 11vw, 54px) !important; }
+  .inspire-masthead-language { margin-top: 14px !important; }
+  .inspire-icon-nav { min-height: 0; }
+  .inspire-icon-nav a { font-size: 12px !important; }
 }
 
 /* Sandra's bio has pauses built in: first the work, then the person, then the teaching. */
@@ -198,6 +224,64 @@
   color: #f5f0f6 !important;
   font-size: clamp(19px, 1.3vw, 22px) !important;
   line-height: 1.55 !important;
+}
+
+/* The adult and youth ideas are prompts, not a corporate checklist. */
+.inspire-proof-list { margin-top: clamp(34px, 4vw, 58px) !important; border-top: 0 !important; }
+.inspire-proof details { border-bottom: 0 !important; }
+.inspire-proof summary {
+  grid-template-columns: minmax(0, 1fr) 22px !important;
+  gap: 14px !important;
+  margin-bottom: 8px;
+  padding: 16px 0 16px 19px !important;
+  border-left: 2px solid rgba(120, 237, 247, .56);
+  background: linear-gradient(90deg, rgba(76, 202, 213, .08), transparent 68%);
+}
+.inspire-proof summary strong::before { content: "✦"; margin-right: 10px; color: #83eef5; font-size: .62em; vertical-align: .16em; }
+.inspire-proof details p { margin: 0 24px 20px 21px !important; }
+
+/* Both work galleries use the same calm, unboxed wall treatment. */
+.inspire-wide-artworks .inspire-host-artworks summary,
+.inspire-student-galleries summary {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 25px;
+  align-items: center;
+  padding: 19px 0 !important;
+  color: #a7f6fb !important;
+  font-size: 13px !important;
+  letter-spacing: .1em;
+}
+.inspire-student-galleries details > div {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px !important;
+  columns: unset !important;
+  padding: 0 0 22px !important;
+}
+.inspire-student-gallery-item {
+  display: grid !important;
+  place-items: center;
+  margin: 0 !important;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 0 !important;
+  background: #0b0b0c !important;
+  cursor: default !important;
+}
+.inspire-student-gallery-item img {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  transform: none !important;
+  filter: none !important;
+}
+.inspire-student-gallery-item:hover img { transform: none !important; filter: none !important; }
+@media (max-width: 800px) {
+  .inspire-proof summary { padding-left: 14px !important; }
+  .inspire-proof details p { margin-left: 16px !important; }
+  .inspire-student-galleries details > div { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px !important; }
 }
 
 /* Restore the original generous portrait frame; it should show Sandra in the room. */

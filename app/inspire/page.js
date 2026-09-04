@@ -1714,40 +1714,16 @@ export default function InspirePage() {
           <span>
             {t.hero} {t.hero2} {t.hero3}
           </span>
+          <div className="inspire-language inspire-masthead-language" aria-label="Language">
+            <button className={lang === "lv" ? "active" : ""} onClick={() => setLang("lv")}>LV</button>
+            <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
+            <button className={lang === "ru" ? "active" : ""} onClick={() => setLang("ru")}>RU</button>
+            <a className="inspire-utility-faq" href="#biezakie-jautajumi">
+              {lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}
+            </a>
+          </div>
         </div>
       </section>
-      <div className="inspire-utility">
-        <span>
-          {lang === "lv"
-            ? "GLEZNOŠANAS NODARBĪBAS BĒRNIEM UN PIEAUGUŠAJIEM · MIERA IELA 17, RĪGA"
-            : lang === "ru"
-              ? "ЗАНЯТИЯ ЖИВОПИСЬЮ ДЛЯ ДЕТЕЙ И ВЗРОСЛЫХ · MIERA IELA 17, РИГА"
-              : "PAINTING CLASSES FOR CHILDREN & ADULTS · MIERA IELA 17, RIGA"}
-        </span>
-        <div className="inspire-language" aria-label="Language">
-          <button
-            className={lang === "lv" ? "active" : ""}
-            onClick={() => setLang("lv")}
-          >
-            LV
-          </button>
-          <button
-            className={lang === "en" ? "active" : ""}
-            onClick={() => setLang("en")}
-          >
-            EN
-          </button>
-          <button
-            className={lang === "ru" ? "active" : ""}
-            onClick={() => setLang("ru")}
-          >
-            RU
-          </button>
-          <a className="inspire-utility-faq" href="#biezakie-jautajumi">
-            {lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}
-          </a>
-        </div>
-      </div>
       <nav className="inspire-icon-nav" aria-label="Inspire sections">
         <a href="#nodarbibas">
           <img src="/art/inspire-icon-calendar.png" alt="" />
@@ -2158,7 +2134,6 @@ export default function InspirePage() {
               {approach.items.map(([title, body], index) => (
                 <details key={title} open={index === 0}>
                   <summary>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
                     <strong>{title}</strong>
                     <b>+</b>
                   </summary>
@@ -2208,7 +2183,6 @@ export default function InspirePage() {
               {youthPrinciples.map(([title, body], index) => (
                 <details key={title} open={index === 0}>
                   <summary>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
                     <strong>{title}</strong>
                     <b>+</b>
                   </summary>
@@ -2253,15 +2227,12 @@ export default function InspirePage() {
                 "Pieaugušā studenta gleznošanas process Art Studio Inspire",
               ],
             ].map(([src, alt]) => (
-              <button
+              <div
                 key={src}
-                type="button"
                 className="inspire-student-gallery-item"
-                onClick={() => setImagePreview({ src, alt })}
-                aria-label={`${alt}. Skatīt lielākā izmērā`}
               >
                 <img src={src} alt={alt} />
-              </button>
+              </div>
             ))}
           </div>
         </details>
@@ -2276,15 +2247,12 @@ export default function InspirePage() {
           </summary>
           <div>
             {youthGallerySlides.map(([src, alt]) => (
-              <button
+              <div
                 key={src}
-                type="button"
                 className="inspire-student-gallery-item"
-                onClick={() => setImagePreview({ src, alt })}
-                aria-label={`${alt}. Skatīt lielākā izmērā`}
               >
                 <img src={src} alt={alt} />
-              </button>
+              </div>
             ))}
           </div>
         </details>
