@@ -114,6 +114,21 @@
   font-size: clamp(22px, 1.85vw, 30px) !important;
   line-height: 1.2 !important;
 }
+
+/* Space previews say what the control does; a lone plus is too easy to miss. */
+.inspire-space-details summary b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  font-size: 0 !important;
+  color: #8af3ff;
+}
+.inspire-space-details summary b::before { content: "SKATĪT"; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.inspire-space-details summary b::after { content: "+"; font-size: 24px; font-weight: 300; line-height: 1; }
+.inspire-space-details details[open] summary b::before { content: "AIZVĒRT"; }
+.inspire-space-details details[open] summary b::after { content: "×"; }
+.inspire-space-details summary:hover { color: #8af3ff; }
 @media (max-width: 800px) {
   .inspire-statement-copy > div { grid-template-columns: 1fr; gap: 18px; margin-top: 28px; }
   .inspire-statement-copy > div p { padding-top: 20px; }
