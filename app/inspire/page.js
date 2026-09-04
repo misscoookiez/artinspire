@@ -847,7 +847,7 @@ const eventFormats = {
     ],
     cta: "PIESAKI SAVU PASĀKUMU — ĪSTENOSIM TO KOPĀ →",
     emailSubject: "Pasākums Art Studio Inspire",
-    faqTitle: "PASĀKUMA PLĀNOŠANA",
+    faqTitle: "PASĀKUMU ORGANIZĀCIJAS KĀRTĪBA",
     faq: [
       [
         "Kā pieteikt pasākumu?",
