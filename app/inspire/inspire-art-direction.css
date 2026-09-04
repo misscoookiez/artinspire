@@ -182,6 +182,37 @@
   .inspire-statement h2 { font-size: clamp(38px, 11vw, 54px) !important; }
 }
 
+/* Sandra's bio has pauses built in: first the work, then the person, then the teaching. */
+.inspire-host-bio { max-width: 62ch; }
+.inspire-host-bio p {
+  margin: 0 !important;
+  padding: 20px 0 !important;
+  border-top: 1px solid rgba(123, 234, 243, .34);
+}
+.inspire-host-bio p:first-child { padding-top: 0 !important; border-top: 0; }
+.inspire-host-bio p:last-child {
+  margin-top: 5px !important;
+  padding: 18px 0 2px 22px !important;
+  border-left: 2px solid #75e5f0;
+  border-top: 0;
+  color: #f5f0f6 !important;
+  font-size: clamp(19px, 1.3vw, 22px) !important;
+  line-height: 1.55 !important;
+}
+
+/* Restore the original generous portrait frame; it should show Sandra in the room. */
+@media (min-width: 901px) {
+  .inspire-host-gallery {
+    min-height: 660px !important;
+    max-height: none !important;
+    grid-template-rows: 1.35fr .65fr .65fr !important;
+  }
+  .inspire-host-gallery .inspire-host-portrait {
+    grid-row: span 3 !important;
+    object-position: center 25% !important;
+  }
+}
+
 /* Space previews say what the control does; a lone plus is too easy to miss. */
 .inspire-space-details summary b {
   display: inline-flex;

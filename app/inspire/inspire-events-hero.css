@@ -41,3 +41,28 @@
 @media(min-width:901px){.inspire-event-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}.inspire-event-grid details{min-height:122px!important}.inspire-event-grid details p{margin:0 0 18px!important}}
 @media(max-width:900px){.inspire-events-top{grid-template-columns:1fr!important}.inspire-event-slideshow{min-height:280px!important}.inspire-event-highlights{grid-template-columns:1fr 1fr}.inspire-event-highlights li:nth-child(2n){border-right:0}.inspire-event-highlights li:nth-child(-n+3){border-bottom:1px solid rgba(126,239,249,.24)}}
 @media(max-width:560px){.inspire-event-highlights{grid-template-columns:1fr}.inspire-event-highlights li{border-right:0;border-bottom:1px solid rgba(126,239,249,.24)}.inspire-event-highlights li:last-child{border-bottom:0}.inspire-event-highlights span{font-size:16px}.inspire-events-intro>p:last-child{font-size:17px!important}}
+
+/* Desktop events work as an at-a-glance plan: detail stays behind the disclosure. */
+@media (min-width: 901px) {
+  .inspire-events { padding-top: 36px !important; padding-bottom: 32px !important; }
+  .inspire-events-top { align-items: start !important; }
+  .inspire-events h2 { margin: 7px 0 10px !important; font-size: clamp(38px, 3.45vw, 55px) !important; }
+  .inspire-events-intro > p:last-child { max-width: 55ch; margin: 0 !important; font-size: 16px !important; line-height: 1.48 !important; }
+  .inspire-event-slideshow { min-height: 175px !important; max-height: 175px !important; }
+  .inspire-event-rates { max-width: 620px !important; margin-top: 16px !important; }
+  .inspire-events-top + .inspire-event-rates article { min-height: 74px !important; padding: 10px 13px !important; }
+  .inspire-event-rates p { margin-bottom: 7px !important; }
+  .inspire-event-rates b { font-size: clamp(22px, 1.7vw, 28px) !important; }
+  .inspire-event-highlights { margin-top: 16px !important; }
+  .inspire-event-highlights li { min-height: 59px !important; padding: 9px 12px !important; }
+  .inspire-event-highlights b { margin-bottom: 4px !important; font-size: 10px !important; }
+  .inspire-event-highlights span { font-size: 14px !important; line-height: 1.24 !important; }
+  .inspire-event-grid details { min-height: 82px !important; }
+  .inspire-event-grid summary { min-height: 0 !important; padding: 13px 0 !important; }
+  .inspire-event-grid h3 { font-size: clamp(17px, 1.26vw, 21px) !important; }
+  .inspire-event-custom { margin-top: 14px !important; padding-top: 12px !important; }
+  .inspire-event-custom p { font-size: clamp(20px, 1.45vw, 25px) !important; }
+  .inspire-event-custom span { font-size: 15px !important; line-height: 1.42 !important; }
+  .inspire-events > .inspire-event-primary-cta { margin-top: 14px !important; padding: 11px 18px !important; }
+  .inspire-event-faq-inline { margin-top: 16px !important; }
+}

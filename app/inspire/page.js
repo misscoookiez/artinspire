@@ -809,8 +809,8 @@ const studioCapabilities = {
 const eventFormats = {
   lv: {
     kicker: "PASĀKUMI STUDIJĀ",
-    title: "Ne tikai nodarbība. Vesels vakars, ko atcerēties.",
-    lead: "Mūsu studija ir vieta dzimšanas dienām, vecmeitu ballītēm, draugu vakariem, komandu pasākumiem un prezentācijām. Var izvēlēties mierīgu gleznošanas vakaru vai pavisam individuālu formātu ar papildu aktivitātēm. Studijā ērti jūtas līdz 30 viesiem, un varam sagatavot līdz 20 gleznošanas vietām.",
+    title: "Radošs vakars,\nkas izskatās pēc Tevis.",
+    lead: "Dzimšanas dienām, draugu vakariem un komandām — līdz 30 viesiem un 20 gleznošanas vietām. Izvēlies gleznošanu vai savu formātu ar papildu aktivitātēm.",
     rates: [
       ["AKVARELIS", "€20 / pers.", ""],
       ["GLEZNOŠANA", "€35 / pers.", ""],
@@ -843,7 +843,7 @@ const eventFormats = {
     ],
     custom: [
       "TELPA TAVAI IDEJAI",
-      "Te varam pievienot jebkuru traku ideju, kas Tev ienāk prātā — telpas dekorēšanu, tattoo un pīrsinga sesijas, spēles, karaoke, lielu kopīgu audeklu viesiem vai vēl ko neparedzētu. Ja Tavs ideālais vakars neietilpst vienā no gatavajiem formātiem, piesaki to: saliksim tieši Tavu kombināciju.",
+      "Dekorācijas, karaoke, galda spēles, tattoo, pīrsings, kopīgs audekls un citas trakas idejas — saliksim tieši Tavu kombināciju.",
     ],
     cta: "PIESAKI SAVU PASĀKUMU — ĪSTENOSIM TO KOPĀ →",
     emailSubject: "Pasākums Art Studio Inspire",
