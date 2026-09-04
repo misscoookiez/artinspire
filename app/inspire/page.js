@@ -996,11 +996,10 @@ const words = {
     hero: "GLEZNO.",
     hero2: "EKSPERIMENTĒ.",
     hero3: "IEDVESMOJIES.",
-    sub: "Gleznošana · meistarklases · radošie pasākumi Rīgā",
+    sub: "GLEZNOŠANAS NODARBĪBAS BĒRNIEM UN PIEAUGUŠAJIEM · MIERA IELA 17, RĪGA",
     lead: "MĀKSLAS STUDIJA CILVĒKIEM AR IDEJĀM.\nARĪ TIEM, KURI VĒL NEZINA, KA VIŅIEM TĀDAS IR.",
     apply: "PIETEIKTIES NODARBĪBAI",
-    statement:
-      "MĒS SĀKAM NEVIS AR TO, KO TU PROTI, BET AR TO, KO VĒLIES RADĪT.",
+    statement: "MĒS SĀKAM AR TO,\nKO VĒLIES RADĪT.",
     statementBody: [
       "Tava ideja ir sākumpunkts. Mums ir svarīgi nevis iemācīt visiem gleznot vienādi, bet palīdzēt Tev arvien labāk saprast savu gaumi, redzējumu.",
       "Bērniem un pieaugušajiem — individualitāte šeit vienmēr ir galvenā vērtība.",
@@ -1054,11 +1053,10 @@ const words = {
     hero: "PAINT.",
     hero2: "EXPERIMENT.",
     hero3: "GET INSPIRED.",
-    sub: "Painting · workshops · creative events in Riga",
+    sub: "PAINTING CLASSES FOR CHILDREN & ADULTS · MIERA IELA 17, RIGA",
     lead: "AN ART STUDIO FOR PEOPLE WITH IDEAS.\nALSO FOR THOSE WHO DO NOT YET KNOW THEY HAVE THEM.",
     apply: "BOOK A CLASS",
-    statement:
-      "WE START NOT WITH WHAT YOU CAN DO, BUT WITH WHAT YOU WANT TO CREATE.",
+    statement: "WE START WITH WHAT\nYOU WANT TO CREATE.",
     statementBody: [
       "Your idea is the starting point. We do not want to teach everyone to paint alike; we want to help you understand your own taste and vision more deeply.",
       "For children and adults alike, individuality is always the central value here.",
@@ -1112,11 +1110,10 @@ const words = {
     hero: "РИСУЙ.",
     hero2: "ЭКСПЕРИМЕНТИРУЙ.",
     hero3: "ВДОХНОВЛЯЙСЯ.",
-    sub: "Живопись · мастер-классы · творческие события в Риге",
+    sub: "ЗАНЯТИЯ ЖИВОПИСЬЮ ДЛЯ ДЕТЕЙ И ВЗРОСЛЫХ · MIERA IELA 17, РИГА",
     lead: "ХУДОЖЕСТВЕННАЯ СТУДИЯ ДЛЯ ЛЮДЕЙ С ИДЕЯМИ.\nИ ДЛЯ ТЕХ, КТО ЕЩЁ НЕ ЗНАЕТ, ЧТО ОНИ У НИХ ЕСТЬ.",
     apply: "ЗАПИСАТЬСЯ НА ЗАНЯТИЕ",
-    statement:
-      "МЫ НАЧИНАЕМ НЕ С ТОГО, ЧТО ТЫ УМЕЕШЬ, А С ТОГО, ЧТО ХОЧЕШЬ СОЗДАТЬ.",
+    statement: "МЫ НАЧИНАЕМ С ТОГО,\nЧТО ХОЧЕШЬ СОЗДАТЬ.",
     statementBody: [
       "Твоя идея — это начало. Нам важно не научить всех рисовать одинаково, а помочь лучше почувствовать собственный вкус и видение.",
       "Для детей и взрослых индивидуальность здесь всегда остаётся главной ценностью.",
@@ -1791,7 +1788,13 @@ export default function InspirePage() {
       </nav>
       <section className="inspire-statement">
         <div className="inspire-statement-copy">
-          <h2>{content("inspire.statement.title", t.statement)}</h2>
+          <h2>
+            {content("inspire.statement.title", t.statement)
+              .split("\n")
+              .map((line, index) => (
+                <span key={`${line}-${index}`}>{line}</span>
+              ))}
+          </h2>
           <div>
             {t.statementBody.map((text) => (
               <p key={text}>{text}</p>
