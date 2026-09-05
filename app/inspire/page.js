@@ -2593,18 +2593,19 @@ export default function InspirePage({ page = "home" }) {
         </div>
       )}
       {form && (
-        <div className="inspire-modal">
+        <div className="inspire-modal" role="dialog" aria-modal="true" aria-labelledby="inspire-booking-modal-title">
           <form onSubmit={submit}>
             <button
               type="button"
               className="inspire-x"
               onClick={() => setForm(false)}
+              aria-label={lang === "lv" ? "Aizvērt pieteikšanos" : lang === "ru" ? "Закрыть бронирование" : "Close booking"}
             >
               ×
             </button>
             {sent ? (
               <>
-                <h2>{t.thanks}</h2>
+                <h2 id="inspire-booking-modal-title">{t.thanks}</h2>
                 <p>
                   {lang === "lv"
                       ? "Vieta ir rezervēta. Drīzumā sazināsimies ar praktisko informāciju."
@@ -2641,7 +2642,7 @@ export default function InspirePage({ page = "home" }) {
                               : "BUY A GIFT CARD"
                         : t.booking}
                     </p>
-                    <h2>
+                    <h2 id="inspire-booking-modal-title">
                       {calendarKind === "gift"
                         ? lang === "lv"
                           ? "Dāvanu karte"

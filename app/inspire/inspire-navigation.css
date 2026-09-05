@@ -73,7 +73,7 @@
     padding: 10px 12px !important;
     gap: 9px 5px !important;
   }
-  .inspire-icon-nav a { min-width: 0; min-height: 31px; font-size: 10px !important; }
+  .inspire-icon-nav a { min-width: 0; min-height: 35px; font-size: 11px !important; line-height: 1.15; }
   .inspire-icon-nav a img { display: none; }
   .inspire-week-switcher { width: 100%; grid-template-columns: 36px minmax(0, 1fr) 36px; gap: 7px; }
   .inspire-week-switcher > button { width: 36px; height: 36px; }
