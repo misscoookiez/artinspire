@@ -11,7 +11,6 @@ import "./inspire-rent.css";
 import "./inspire-schedule.css";
 import "./inspire-proportions.css";
 import "./inspire-weekly-cards.css";
-import "./inspire-upcoming-classes.css";
 import "./inspire-booking-calendar.css";
 import "./inspire-page-split.css";
 import "./inspire-panel-clarity.css";
@@ -1019,7 +1018,6 @@ const words = {
     price: "€15 PIRMAIS APMEKLĒJUMS · €25 VIENA NODARBĪBA · ABONEMENTS 4× €80",
     scheduleNote:
       "JAUNIEŠU GRUPA — BĒRNI NO 8 GADU VECUMA · CETURTDIEN UN SESTDIEN\nPIEAUGUŠIE · CETURTDIEN, SESTDIEN UN SVĒTDIEN",
-    upcoming: "TUVĀKĀS DATĒTĀS REZERVĒJAMĀS NODARBĪBAS",
     approach: "STUDIJAS PIEEJA",
     beginner: "Nekad neesi gleznojis?",
     enough: "Tas ir pilnīgi pietiekams sākumpunkts.",
@@ -1077,7 +1075,6 @@ const words = {
     price: "€15 TRIAL · €25 SINGLE CLASS · €80 FOUR-CLASS PASS",
     scheduleNote:
       "YOUTH GROUP — CHILDREN AGED 8+ · THURSDAY & SATURDAY\nADULTS · THURSDAY, SATURDAY & SUNDAY",
-    upcoming: "NEXT DATED CLASSES AVAILABLE TO BOOK",
     approach: "OUR APPROACH",
     beginner: "Never painted before?",
     enough: "That is a perfectly good place to start.",
@@ -1135,7 +1132,6 @@ const words = {
     price: "€15 ПРОБНОЕ · €25 ОДНО ЗАНЯТИЕ · €80 АБОНЕМЕНТ НА 4 ЗАНЯТИЯ",
     scheduleNote:
       "МОЛОДЁЖНАЯ ГРУППА — ДЕТИ ОТ 8 ЛЕТ · ЧЕТВЕРГ И СУББОТА\nВЗРОСЛЫЕ · ЧЕТВЕРГ, СУББОТА И ВОСКРЕСЕНЬЕ",
-    upcoming: "БЛИЖАЙШИЕ ЗАНЯТИЯ С ОНЛАЙН-БРОНИРОВАНИЕМ",
     approach: "ПОДХОД СТУДИИ",
     beginner: "Никогда не рисовал?",
     enough: "Это вполне хорошая точка для начала.",
