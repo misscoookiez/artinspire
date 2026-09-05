@@ -342,7 +342,9 @@
 .inspire-page-events .inspire-event-faq-inline { width: min(1280px, 100%); max-width: 1280px !important; }
 
 @media (min-width: 801px) {
-  .inspire-icon-nav { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+  .inspire-icon-nav { display: block !important; }
+  .inspire-navigation-links { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; }
+  .inspire-mobile-menu-toggle { display: none !important; }
 }
 
 /* One masthead geometry everywhere: the home page is the reference and every
@@ -401,4 +403,40 @@
   .inspire-page-events .inspire-event-rates { margin-top: 38px !important; }
   .inspire-page-events .inspire-event-highlights { grid-template-columns: 1fr 1fr !important; }
   .inspire-page-events .inspire-event-grid { grid-template-columns: 1fr !important; }
+  .inspire-icon-nav { display: block !important; padding: 0 !important; }
+  .inspire-mobile-menu-toggle {
+    display: flex !important;
+    width: 100%;
+    min-height: 56px;
+    margin: 0 !important;
+    padding: 0 24px !important;
+    align-items: center;
+    justify-content: space-between;
+    border: 0 !important;
+    border-bottom: 1px solid #28dce9 !important;
+    background: #050507 !important;
+    color: #f7f5f8 !important;
+    font: 700 11px/1 Arial, sans-serif !important;
+    letter-spacing: .14em !important;
+  }
+  .inspire-mobile-menu-toggle b { font-size: 25px; font-weight: 300; line-height: 1; }
+  .inspire-navigation-links {
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 10px 20px 16px;
+    background: #050507;
+    border-bottom: 1px solid #28dce9;
+  }
+  .inspire-icon-nav.is-open .inspire-navigation-links { display: grid; }
+  .inspire-navigation-links a {
+    min-height: 54px;
+    padding: 10px 5px;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    font-size: 10px !important;
+    text-align: left !important;
+  }
+  .inspire-navigation-links a:last-child { grid-column: 1 / -1; }
+  .inspire-navigation-links a img { width: 16px; height: 16px; object-fit: contain; }
 }
