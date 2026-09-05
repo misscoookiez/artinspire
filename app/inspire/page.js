@@ -1531,12 +1531,18 @@ export default function InspirePage({ page = "home" }) {
         : session.title;
     return title?.replace(/\s*\((?:ages?\s*)?8[–-]16(?:\s*(?:gadi|years))?\)/gi, "") || "";
   };
-  const weekKey = (dateValue) => {
+  const dateKeyInRiga = (dateValue) => {
     if (!dateValue) return "";
-    const date = new Date(dateValue);
-    const mondayOffset = (date.getDay() + 6) % 7;
-    date.setDate(date.getDate() - mondayOffset);
-    date.setHours(0, 0, 0, 0);
+    const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Riga", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date(dateValue));
+    const value = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+    return `${value.year}-${value.month}-${value.day}`;
+  };
+  const dayInRiga = (dateValue) => new Date(`${dateKeyInRiga(dateValue)}T12:00:00Z`).getUTCDay();
+  const weekKey = (dateValue) => {
+    const key = dateKeyInRiga(dateValue);
+    if (!key) return "";
+    const date = new Date(`${key}T12:00:00Z`);
+    date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
     return date.toISOString().slice(0, 10);
   };
   const scheduleWeeks = [...new Set(liveClasses.map((item) => weekKey(item.startsAt)).filter(Boolean))];
@@ -1544,36 +1550,48 @@ export default function InspirePage({ page = "home" }) {
   const locale = lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB";
   const weekDays = visibleWeek
     ? Array.from({ length: 7 }, (_, index) => {
-        const date = new Date(`${visibleWeek}T12:00:00`);
-        date.setDate(date.getDate() + index);
+        const date = new Date(`${visibleWeek}T12:00:00Z`);
+        date.setUTCDate(date.getUTCDate() + index);
         const hasClass = liveClasses.some(
-          (item) => weekKey(item.startsAt) === visibleWeek && new Date(item.startsAt).getDay() === date.getDay(),
+          (item) => weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === date.getUTCDay(),
         );
         return {
           key: date.toISOString().slice(0, 10),
-          label: new Intl.DateTimeFormat(locale, { weekday: "short" }).format(date),
-          date: new Intl.DateTimeFormat(locale, { day: "numeric" }).format(date),
+          label: new Intl.DateTimeFormat(locale, { weekday: "narrow", timeZone: "UTC" }).format(date),
+          fullLabel: new Intl.DateTimeFormat(locale, { weekday: "long", timeZone: "UTC" }).format(date),
+          date: new Intl.DateTimeFormat(locale, { day: "numeric", timeZone: "UTC" }).format(date),
           hasClass,
         };
       })
     : [];
   const dateForColumn = (columnIndex) => {
     const day = [4, 6, 0][columnIndex];
-    const session = liveClasses.find((item) => weekKey(item.startsAt) === visibleWeek && new Date(item.startsAt).getDay() === day);
+    const session = liveClasses.find((item) => weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === day);
     if (!session) return "";
     return new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { day: "numeric", month: "short" }).format(new Date(session.startsAt));
   };
   const sameCalendarDay = (dateValue, dateKey) =>
-    Boolean(dateValue && dateKey) && new Date(dateValue).toISOString().slice(0, 10) === dateKey;
+    Boolean(dateValue && dateKey) && dateKeyInRiga(dateValue) === dateKey;
   const bookingClasses = bookingDay
     ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
     : liveClasses;
+  const changeScheduleWeek = (direction) => {
+    const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, scheduleWeek + direction));
+    if (nextWeek === scheduleWeek) return;
+    setScheduleWeek(nextWeek);
+    if (form && calendarKind === "class") {
+      const nextSession = liveClasses.find((item) => weekKey(item.startsAt) === scheduleWeeks[nextWeek]);
+      setBookingDay(nextSession ? dateKeyInRiga(nextSession.startsAt) : "");
+      setBooking(null);
+      setSelection("");
+    }
+  };
   const openBooking = (kind, itemId, label) => {
     const selectedSession = kind === "class" ? liveClasses.find((item) => item.id === itemId) : null;
     if (selectedSession) {
       const week = scheduleWeeks.indexOf(weekKey(selectedSession.startsAt));
       if (week >= 0) setScheduleWeek(week);
-      setBookingDay(new Date(selectedSession.startsAt).toISOString().slice(0, 10));
+      setBookingDay(dateKeyInRiga(selectedSession.startsAt));
     } else setBookingDay("");
     setBooking({ kind, itemId, label });
     setSelection(`${kind}:${itemId}`);
@@ -1591,7 +1609,7 @@ export default function InspirePage({ page = "home" }) {
     setCalendarKind(kind);
     setCheckoutOption(option);
     setFormMode("pay");
-    setBookingDay("");
+    setBookingDay(kind === "class" ? weekDays.find((day) => day.hasClass)?.key || "" : "");
     setStatus("");
     setSent(false);
     setConfirmationEmailSent(false);
@@ -1905,11 +1923,11 @@ export default function InspirePage({ page = "home" }) {
         <div className="inspire-schedule-heading">
           <h2>{t.group}</h2>
           {scheduleWeeks.length > 0 && <div className="inspire-week-switcher" aria-label={lang === "lv" ? "Nedēļas grafiks" : lang === "ru" ? "Расписание недели" : "Weekly schedule"}>
-            <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => setScheduleWeek((week) => Math.max(0, week - 1))} disabled={scheduleWeek === 0}>‹</button>
+            <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={scheduleWeek === 0}>‹</button>
             <div className="inspire-week-strip" aria-label={new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(new Date(`${visibleWeek}T12:00:00`))}>
-              {weekDays.map((day) => <span key={day.key} className={day.hasClass ? "available" : ""}><small>{day.label}</small><b>{day.date}</b></span>)}
+              {weekDays.map((day) => <span key={day.key} aria-label={`${day.fullLabel} ${day.date}`} className={day.hasClass ? "available" : ""}><small>{day.label}</small><b>{day.date}</b></span>)}
             </div>
-            <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => setScheduleWeek((week) => Math.min(scheduleWeeks.length - 1, week + 1))} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
+            <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeScheduleWeek(1)} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
           </div>}
         </div>
         <div className="inspire-weekly-columns">
@@ -2780,11 +2798,11 @@ export default function InspirePage({ page = "home" }) {
                     ) : calendarKind === "class" ? (
                       <div className="inspire-booking-calendar-wrap">
                         {scheduleWeeks.length > 0 && <div className="inspire-booking-week" aria-label={lang === "lv" ? "Izvēlies nodarbības dienu" : lang === "ru" ? "Выберите день занятия" : "Choose a class day"}>
-                          <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => setScheduleWeek((week) => Math.max(0, week - 1))} disabled={scheduleWeek === 0}>‹</button>
+                          <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={scheduleWeek === 0}>‹</button>
                           <div>
-                            {weekDays.map((day) => <button key={day.key} type="button" disabled={!day.hasClass} className={`${day.hasClass ? "available" : ""} ${bookingDay === day.key ? "active" : ""}`} onClick={() => { setBookingDay(day.key); setBooking(null); setSelection(""); }}><small>{day.label}</small><b>{day.date}</b></button>)}
+                            {weekDays.map((day) => <button key={day.key} type="button" aria-label={`${day.fullLabel} ${day.date}`} disabled={!day.hasClass} className={`${day.hasClass ? "available" : ""} ${bookingDay === day.key ? "active" : ""}`} onClick={() => { setBookingDay(day.key); setBooking(null); setSelection(""); }}><small>{day.label}</small><b>{day.date}</b></button>)}
                           </div>
-                          <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => setScheduleWeek((week) => Math.min(scheduleWeeks.length - 1, week + 1))} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
+                          <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeScheduleWeek(1)} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
                         </div>}
                         <div className="inspire-booking-calendar" role="group" aria-label={t.choose}>
                         {bookingClasses.map((item) => {

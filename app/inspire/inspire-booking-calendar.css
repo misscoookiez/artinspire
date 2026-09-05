@@ -1,12 +1,13 @@
 .inspire-booking-calendar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: 330px; overflow: auto; padding: 2px; }
 .inspire-booking-calendar-wrap { display: grid; gap: 16px; }
-.inspire-booking-week { display: grid; grid-template-columns: 30px minmax(0, 1fr) 30px; gap: 8px; align-items: center; }
-.inspire-booking-week > button { width: 30px; height: 30px; padding: 0; border: 1px solid rgba(130, 227, 236, .42); background: transparent; color: #a7f4f9; font-size: 22px; line-height: 1; cursor: pointer; }
+.inspire-booking-week { display: grid; grid-template-columns: 30px minmax(0, 1fr) 30px; gap: 8px; align-items: center; padding: 7px; border: 1px solid #c6d7da; background: #f4f8f8; }
+.inspire-booking-week > button { width: 30px; height: 30px; padding: 0; border: 1px solid #5f878d; background: transparent; color: #16454d; font-size: 22px; line-height: 1; cursor: pointer; }
 .inspire-booking-week > button:disabled { opacity: .3; cursor: default; }
 .inspire-booking-week > div { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
-.inspire-booking-week > div button { min-width: 0; min-height: 42px; display: grid; place-items: center; gap: 2px; padding: 3px 1px; border: 0; background: transparent; color: rgba(230, 237, 240, .3); cursor: default; }
-.inspire-booking-week > div button.available { color: #9df3f8; cursor: pointer; }
-.inspire-booking-week > div button.available:hover, .inspire-booking-week > div button.active { border-radius: 50%; background: rgba(102, 231, 240, .16); outline: 1px solid rgba(150, 244, 250, .58); }
+.inspire-booking-week > div button { min-width: 0; min-height: 42px; display: grid; place-items: center; gap: 2px; padding: 3px 1px; border: 0; background: transparent; color: #a1afb1; cursor: default; }
+.inspire-booking-week > div button.available { color: #155863; cursor: pointer; }
+.inspire-booking-week > div button.available:hover { border-radius: 50%; background: #d9f0f2; }
+.inspire-booking-week > div button.active { border-radius: 50%; background: #135864; color: #fff; outline: 1px solid #135864; }
 .inspire-booking-week small { font: 700 8px/1 Arial, sans-serif; letter-spacing: .03em; text-transform: uppercase; }
 .inspire-booking-week b { font: 500 15px/1 Arial, sans-serif; }
 .inspire-modal { align-items: start; overflow-y: auto; }
