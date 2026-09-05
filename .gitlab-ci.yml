@@ -1,21 +1,16 @@
-# Klientes projekta CI. Tas pats princips kā tavos projektos: SSH uz serveri, git pull, artisan.
-# Atšķirība: SSH useris ir ISPConfig jailkit shell user, kas redz tikai savu vietni.
-#
-# CI/CD mainīgie (setup-client.mjs tos izveido grupas līmenī, protected):
-#   SSH_PRIVATE_KEY    - CI -> serveris privātā atslēga (keys/ci_deploy_<kliente>)
-#   SSH_KNOWN_HOSTS    - `ssh-keyscan -t ed25519 <serveris>` izvads (pin host key)
-#   SSH_USER           - ISPConfig shell user, piem. deploy_kliente
-#   DEPLOY_IPADDRESS   - servera IP vai hostname
-#   DEPLOY_PATH        - ceļš jail iekšpusē; docroot ir /web, tātad /web vai /web/app
+# Next.js production deploy.
+# Required protected CI/CD variables (configured by the host):
+# SSH_PRIVATE_KEY, SSH_KNOWN_HOSTS, SSH_USER, DEPLOY_IPADDRESS, DEPLOY_PATH.
+# Optional: APP_PORT (defaults to 3000), APP_NAME (defaults to art-studio-inspire).
 
-image: alpine:latest
+image: node:20-alpine
 
 deploy_prod:
   stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   before_script:
-    - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )'
+    - apk add --no-cache openssh-client git
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -23,8 +18,23 @@ deploy_prod:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    # umask 002: jaunie faili ir grupai rakstāmi, lai PHP-FPM (webY, tā pati grupa clientX) tos var lietot
-    - ssh $SSH_USER@$DEPLOY_IPADDRESS "umask 002 && cd $DEPLOY_PATH && git pull --ff-only"
-    # Pēc-deploy komandas pieliek, kad zināms projekta tips. Piemēri:
-    #   PHP/Laravel (vajag php jail iekšā): ssh $SSH_USER@$DEPLOY_IPADDRESS "cd $DEPLOY_PATH && php artisan migrate --force"
-    #   Node/static build: būvē CI pusē (image: node) un rsync dist/ uz $DEPLOY_PATH, git pull tad nav vajadzīgs
+    - |
+      ssh "$SSH_USER@$DEPLOY_IPADDRESS" "DEPLOY_PATH='$DEPLOY_PATH' APP_PORT='${APP_PORT:-3000}' APP_NAME='${APP_NAME:-art-studio-inspire}' sh -s" <<'REMOTE'
+      set -eu
+      umask 002
+      cd "$DEPLOY_PATH"
+      git pull --ff-only
+      export NEXT_TELEMETRY_DISABLED=1
+      npm ci
+      npm run build
+      if ! command -v pm2 >/dev/null 2>&1; then
+        echo "PM2 is required on the hosting account to keep Next.js running."
+        exit 1
+      fi
+      if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
+        PORT="$APP_PORT" pm2 restart "$APP_NAME" --update-env
+      else
+        PORT="$APP_PORT" pm2 start npm --name "$APP_NAME" -- start
+      fi
+      pm2 save
+      REMOTE
