@@ -49,7 +49,6 @@
 .inspire-page-about > .inspire-statement,
 .inspire-page-about > .inspire-mood-strip,
 .inspire-page-about > .inspire-section,
-.inspire-page-about > .inspire-capabilities,
 .inspire-page-about > .inspire-events,
 .inspire-page-about > .inspire-contact-panel,
 .inspire-page-about > .inspire-directions,
@@ -62,22 +61,35 @@
 .inspire-page-contact > .inspire-capabilities,
 .inspire-page-contact > .inspire-depth,
 .inspire-page-contact > .inspire-student-galleries,
-.inspire-page-contact > .inspire-events,
-.inspire-page-contact > .inspire-local-guide { display: none !important; }
+.inspire-page-contact > .inspire-events { display: none !important; }
+.inspire-page-contact > .inspire-local-guide { display: block !important; }
 
 .inspire-page-about .inspire-depth-panel:first-child { display: block; }
+.inspire-page-about > .inspire-capabilities { order: 6; }
+.inspire-page-about > .inspire-student-galleries { order: 7; }
+.inspire-page-about > .inspire-depth { order: 8; }
 .inspire-depth-panel > summary > span { display: none; }
 .inspire-depth-panel > summary { grid-template-columns: minmax(0, 1fr) 28px !important; }
 .inspire-about-classes-cta { display: inline-block; margin-top: 34px; padding: 14px 18px; border: 1px solid #85edf6; color: #a9f7fb; font: 700 11px/1 Arial, sans-serif; letter-spacing: .12em; text-decoration: none; }
 .inspire-about-classes-cta:hover { background: #9cf4fa; color: #061019; }
 
-/* Keep the weekly rhythm legible even after a day has passed. */
-.inspire-page-classes .inspire-section { max-width: 1120px; }
+/* Keep the weekly rhythm legible even after a day has passed. The heading keeps
+   its petite centred measure; only the three day cards get the wider canvas
+   they need, so their brackets remain equal without becoming towering strips. */
+.inspire-page-classes .inspire-section {
+  width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+  max-width: 1750px;
+  padding-inline: max(24px, 4vw);
+}
 .inspire-page-classes .inspire-section > .inspire-kicker { margin: 0 0 15px !important; }
-.inspire-page-classes .inspire-schedule-heading { margin-bottom: clamp(30px, 3vw, 44px); }
+.inspire-page-classes .inspire-schedule-heading { width: min(813px, 100%); margin: 0 auto clamp(30px, 3vw, 44px); }
 .inspire-page-classes .inspire-schedule-heading h2 { margin: 0 !important; }
-.inspire-weekly-columns { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.inspire-page-classes .inspire-weekly-columns { width: min(1280px, 100%); margin-inline: auto; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 .inspire-weekly-columns > div { min-height: 244px; }
+.inspire-page-classes .inspire-booking { width: 100%; align-self: stretch; box-sizing: border-box; }
+.inspire-page-classes .inspire-products { width: min(1280px, 100%) !important; max-width: 1280px !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; margin-inline: auto; }
 .inspire-empty-session { display: flex; align-items: flex-end; min-height: 154px; padding: 25px 28px; border-top: 1px solid rgba(255,255,255,.26); color: rgba(205,241,244,.46); font: 700 10px/1.3 Arial, sans-serif; letter-spacing: .13em; }
 
 /* The reservation dialog must always sit over the persistent navigation. */
@@ -85,7 +97,7 @@
 .inspire-modal .inspire-x { display: grid !important; place-items: center !important; width: 40px !important; height: 40px !important; padding: 0 !important; border: 1px solid transparent !important; border-radius: 50% !important; background: #fff !important; color: #10141b !important; font-size: 27px !important; line-height: 1 !important; transform: none !important; transition: background .16s ease, color .16s ease, border-color .16s ease !important; }
 .inspire-modal .inspire-x:hover, .inspire-modal .inspire-x:focus-visible { border-color: #13212a !important; background: #8ef1f5 !important; color: #081015 !important; outline: none !important; transform: none !important; }
 
-.inspire-contact-panel { max-width: 1180px; margin: 0 auto; padding: clamp(72px, 9vw, 130px) clamp(24px, 6vw, 92px); background: #111013; color: #f7f4f7; }
+.inspire-contact-panel { width: 100%; max-width: none; margin: 0; padding: clamp(72px, 9vw, 130px) max(24px, 10vw); background: #111013; color: #f7f4f7; }
 .inspire-contact-panel h2 { max-width: 600px; margin: 14px 0; font-size: clamp(45px, 6vw, 86px); line-height: .88; letter-spacing: -.07em; font-weight: 400; }
 .inspire-contact-panel > p:not(.inspire-kicker) { color: #cfc9d1; font-size: 18px; }
 .inspire-contact-panel > div { display: grid; gap: 10px; margin-top: 36px; }
@@ -95,21 +107,86 @@
 .inspire-page-events .inspire-event-slideshow { aspect-ratio: 16 / 9; min-height: 0 !important; max-height: none !important; background: rgba(5, 5, 11, .72) !important; }
 .inspire-page-events .inspire-event-slideshow > button img { object-fit: contain !important; }
 
+/* The about page is made of horizontal chapters.  Their content keeps a
+   generous reading measure, but their colour fields always reach the browser
+   edge so no dark vertical "stage" is revealed at wide sizes. */
+.inspire-page-about .inspire-depth,
+.inspire-page-about .inspire-student-galleries {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
 /* A muted piece of the real working palette gives the adult approach a tactile
-   pause without turning the panel into an illustrated poster. */
+   pause. It deliberately escapes the crop rather than sitting like an icon. */
 .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof > div:first-child { position: relative; }
 .inspire-adult-palette {
   position: absolute;
-  z-index: -1;
-  top: -58px;
-  right: -84px;
-  width: clamp(220px, 22vw, 390px);
-  max-height: 390px;
+  z-index: 0;
+  top: -220px;
+  right: -180px;
+  width: clamp(460px, 45vw, 790px);
+  max-height: none;
   object-fit: contain;
-  opacity: .54;
+  opacity: .18;
   mix-blend-mode: screen;
-  filter: saturate(.58) brightness(.68) contrast(.95) hue-rotate(8deg);
+  filter: saturate(.62) brightness(.7) contrast(.94) hue-rotate(8deg);
+  transform: rotate(-23deg);
   pointer-events: none;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after,
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  z-index: 0;
+  right: -9vw;
+  top: -10vw;
+  bottom: auto;
+  width: min(930px, 65vw);
+  height: min(750px, 56vw);
+  opacity: .36;
+  background: center / contain no-repeat;
+  mix-blend-mode: screen;
+  transform: rotate(-5deg);
+}
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after {
+  background-image: url('/art/inspire-adult-watercolor-atmosphere.webp');
+}
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  top: -7vw;
+  right: -12vw;
+  width: min(1000px, 70vw);
+  height: min(780px, 60vw);
+  opacity: .43;
+  background-image: url('/art/inspire-youth-watercolor-atmosphere.webp');
+  transform: rotate(3deg);
+}
+.inspire-page-about .inspire-proof > div { position: relative; z-index: 1; }
+.inspire-page-about .inspire-proof > div > .inspire-kicker,
+.inspire-page-about .inspire-proof > div > h2,
+.inspire-page-about .inspire-proof > div > p,
+.inspire-page-about .inspire-proof > div > blockquote { position: relative; z-index: 1; }
+.inspire-page-about .inspire-youth-visual { display: none; }
+.inspire-page-about .inspire-capabilities::before {
+  inset: auto -10vw -26vw auto;
+  width: min(920px, 62vw);
+  height: min(720px, 55vw);
+  background: url('/art/inspire-adult-watercolor-atmosphere.webp') center / contain no-repeat;
+  opacity: .27;
+  transform: rotate(-8deg);
+}
+
+/* Sandra's portrait composition is a three-piece photograph, not a set of
+   equal cards: let the full portrait anchor the two natural companion frames. */
+@media (min-width: 901px) {
+  .inspire-page-about .inspire-host-gallery {
+    min-height: 660px !important;
+    max-height: none !important;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr) !important;
+    grid-template-rows: 1.35fr .65fr .65fr !important;
+  }
+  .inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+    grid-row: span 3 !important;
+    object-position: center 25% !important;
+  }
 }
 
 /* Landing page: every part owns a fixed segment. The masthead stays as the
@@ -123,7 +200,7 @@
   height: clamp(250px, 22vw, 360px) !important;
   min-height: clamp(250px, 22vw, 360px) !important;
   margin: 0;
-  padding: clamp(28px, 3.5vw, 58px) clamp(24px, 6vw, 100px) !important;
+  padding: clamp(28px, 3.5vw, 58px) max(24px, 10vw) !important;
   grid-template-columns: minmax(280px, 1fr) minmax(300px, .9fr) !important;
   align-items: center !important;
   overflow: hidden;
@@ -136,20 +213,174 @@
   isolation: isolate;
   display: block !important;
   min-width: 0;
-  max-width: 1280px;
-  min-height: 690px;
-  margin: 0 auto;
-  padding: clamp(72px, 8vw, 118px) clamp(26px, 7vw, 100px) !important;
+  width: 100%;
+  max-width: none;
+  min-height: clamp(700px, 48vw, 880px);
+  margin: 0;
+  padding: clamp(72px, 8vw, 118px) clamp(26px, 10vw, 200px) !important;
   overflow: hidden;
   background: linear-gradient(90deg, rgba(6, 4, 14, .9) 0%, rgba(7, 6, 18, .72) 47%, rgba(8, 12, 21, .28) 100%), url('/art/inspire-landing-studio-poster.webp') center / cover no-repeat;
 }
-.inspire-page-home .inspire-statement-copy { position: relative; z-index: 1; max-width: 860px; min-width: 0; }
-.inspire-page-home .inspire-statement h2 { max-width: 820px; margin: 0 0 clamp(34px, 4vw, 52px) !important; font-size: clamp(44px, 5vw, 76px) !important; }
-.inspire-page-home .inspire-statement-copy > div { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px) !important; max-width: 860px; }
+.inspire-page-home .inspire-statement::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(90deg, rgba(5,4,13,.92) 0%, rgba(8,6,18,.78) 46%, rgba(8,9,22,.28) 100%),
+    url('/art/inspire-statement-studio-0770.jpeg') right center / auto 118% no-repeat,
+    url('/art/inspire-statement-studio-8309.jpeg') 88% 78% / auto 72% no-repeat;
+  animation: inspire-statement-photo-pause 42s ease-in-out infinite;
+}
+.inspire-page-home .inspire-statement-copy { position: relative; z-index: 1; width: min(1180px, 74vw); max-width: 1180px; min-width: 0; text-align: left !important; }
+.inspire-page-home .inspire-statement h2 { max-width: 900px; margin: 0 0 clamp(34px, 4vw, 52px) !important; font-size: clamp(44px, 5vw, 76px) !important; text-align: left !important; }
+.inspire-page-home .inspire-statement-copy > div { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 52px) !important; max-width: 1080px; }
 .inspire-page-home .inspire-statement-copy > div p { min-width: 0; padding-left: 26px !important; font-size: clamp(16px, 1.2vw, 19px) !important; }
 .inspire-page-home .inspire-statement blockquote { max-width: 620px; margin-top: clamp(38px, 5vw, 64px) !important; }
 .inspire-page-home .inspire-statement-slideshow { display: none !important; }
-.inspire-page-home .inspire-mood-strip { max-width: 1280px; margin: 0 auto; }
+.inspire-page-home .inspire-mood-strip { width: 100%; max-width: none; margin: 0; }
+@keyframes inspire-statement-photo-pause {
+  0%, 24%, 76%, 100% { opacity: 0; }
+  34%, 66% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inspire-page-home .inspire-statement::before { animation: none; opacity: .65; }
+  .inspire-mood-strip p, .inspire-mood-strip p.is-leaving { animation: none !important; }
+}
+
+.inspire-mood-strip p.is-leaving { animation: inspire-mood-leave .38s ease both !important; }
+@keyframes inspire-mood-leave {
+  to { opacity: 0; transform: translateY(-4px); }
+}
+
+/* Home copy is content-led, never vertically centred inside an inherited fixed
+   frame. This preserves a reliable breathing gap below the navigation at every
+   browser scale and keeps text inside its own chapter. */
+.inspire-page-home .inspire-statement-copy {
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+
+/* A single readable events chapter: the photo has a deliberate portrait frame,
+   the choices retain generous type, and no row becomes a miniature gallery. */
+.inspire-page-events .inspire-events {
+  width: 100%;
+  align-self: stretch;
+  box-sizing: border-box;
+  padding: clamp(64px, 7vw, 112px) max(24px, 10vw) !important;
+}
+.inspire-page-events .inspire-events-top {
+  display: grid !important;
+  width: min(1280px, 100%);
+  max-width: 1280px !important;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, .52fr) !important;
+  gap: clamp(42px, 7vw, 112px) !important;
+  align-items: start !important;
+}
+.inspire-page-events .inspire-events-intro { max-width: 700px; }
+.inspire-page-events .inspire-events h2 {
+  max-width: 740px;
+  margin: 12px 0 22px !important;
+  font-size: clamp(42px, 4.25vw, 68px) !important;
+  line-height: .96 !important;
+}
+.inspire-page-events .inspire-events-intro > p:last-child {
+  max-width: 60ch;
+  margin: 0 !important;
+  font-size: clamp(17px, 1.25vw, 20px) !important;
+  line-height: 1.6 !important;
+}
+.inspire-page-events .inspire-event-slideshow {
+  width: min(320px, 100%) !important;
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5;
+  max-height: none !important;
+  margin-left: auto !important;
+  background: rgba(5, 5, 12, .55) !important;
+}
+.inspire-page-events .inspire-event-slideshow > button img { object-fit: cover !important; }
+.inspire-page-events .inspire-event-rates {
+  width: min(880px, 100%);
+  max-width: 880px !important;
+  margin: clamp(38px, 5vw, 68px) 0 0 !important;
+}
+.inspire-page-events .inspire-events-top + .inspire-event-rates article {
+  min-height: 112px !important;
+  padding: 18px 20px !important;
+}
+.inspire-page-events .inspire-event-rates p { font-size: 12px !important; line-height: 1.35 !important; }
+.inspire-page-events .inspire-event-rates b { font-size: clamp(26px, 2.15vw, 34px) !important; }
+.inspire-page-events .inspire-event-highlights {
+  width: min(1280px, 100%);
+  max-width: 1280px !important;
+  margin-top: clamp(34px, 5vw, 62px) !important;
+}
+.inspire-page-events .inspire-event-highlights li { min-height: 96px !important; padding: 17px 18px !important; }
+.inspire-page-events .inspire-event-highlights b { font-size: 11px !important; }
+.inspire-page-events .inspire-event-highlights span { font-size: 16px !important; line-height: 1.4 !important; }
+.inspire-page-events .inspire-event-formats-label { width: min(1280px, 100%); margin-top: clamp(42px, 5vw, 62px) !important; }
+.inspire-page-events .inspire-event-grid {
+  width: min(1280px, 100%);
+  max-width: 1280px !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 1px !important;
+  background: rgba(126,239,249,.28);
+}
+.inspire-page-events .inspire-event-grid details {
+  min-height: 142px !important;
+  padding: 0 22px !important;
+  background: linear-gradient(145deg, rgba(17,50,75,.56), rgba(30,13,55,.62)) !important;
+}
+.inspire-page-events .inspire-event-grid h3 { font-size: clamp(19px, 1.55vw, 25px) !important; }
+.inspire-page-events .inspire-event-grid details p { font-size: 16px !important; line-height: 1.62 !important; }
+.inspire-page-events .inspire-event-custom,
+.inspire-page-events .inspire-event-faq-inline { width: min(1280px, 100%); max-width: 1280px !important; }
+
+@media (min-width: 801px) {
+  .inspire-icon-nav { grid-template-columns: repeat(6, minmax(0, 1fr)) !important; }
+}
+
+/* One masthead geometry everywhere: the home page is the reference and every
+   route uses its fixed logo and studio-copy gutters rather than inheriting
+   whatever proportions the following page happens to have. */
+@media (min-width: 801px) {
+  .inspire-masthead {
+    position: relative;
+    isolation: isolate;
+    display: grid !important;
+    width: 100%;
+    height: clamp(250px, 22vw, 360px) !important;
+    min-height: clamp(250px, 22vw, 360px) !important;
+    margin: 0;
+    padding: clamp(28px, 3.5vw, 58px) max(24px, 10vw) !important;
+    grid-template-columns: minmax(280px, 1fr) minmax(300px, .9fr) !important;
+    align-items: center !important;
+    overflow: hidden;
+  }
+  .inspire-masthead-brand {
+    z-index: 1;
+    grid-column: 1;
+    align-self: center;
+    width: min(540px, 100%) !important;
+    max-width: 100% !important;
+    margin: 0;
+  }
+  .inspire-masthead-copy {
+    z-index: 1 !important;
+    grid-column: 2;
+    align-self: center;
+    width: 100%;
+    max-width: 620px !important;
+    min-width: 0;
+    margin: 0;
+    padding: 0 !important;
+  }
+}
 
 @media (max-width: 800px) {
   .inspire-masthead { min-height: 0 !important; }
@@ -160,7 +391,14 @@
   .inspire-page-home .inspire-masthead-copy { grid-column: 1; align-self: end; max-width: 100% !important; }
   .inspire-page-home .inspire-masthead-copy p, .inspire-page-home .inspire-masthead-copy > span { max-width: 330px; }
   .inspire-page-home .inspire-statement { min-height: 0; padding: 68px 24px 78px !important; background-position: 66% center; }
+  .inspire-page-home .inspire-statement-copy { width: 100%; }
   .inspire-page-home .inspire-statement h2 { font-size: clamp(40px, 11vw, 54px) !important; }
   .inspire-page-home .inspire-statement-copy > div { grid-template-columns: 1fr; gap: 18px !important; }
   .inspire-page-home .inspire-statement-copy > div p { padding-left: 22px !important; }
+  .inspire-page-events .inspire-events { padding: 58px 24px 72px !important; }
+  .inspire-page-events .inspire-events-top { grid-template-columns: 1fr !important; gap: 34px !important; }
+  .inspire-page-events .inspire-event-slideshow { width: min(360px, 100%) !important; margin-left: 0 !important; }
+  .inspire-page-events .inspire-event-rates { margin-top: 38px !important; }
+  .inspire-page-events .inspire-event-highlights { grid-template-columns: 1fr 1fr !important; }
+  .inspire-page-events .inspire-event-grid { grid-template-columns: 1fr !important; }
 }

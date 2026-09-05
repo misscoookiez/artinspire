@@ -1010,7 +1010,7 @@ const words = {
       "Bērniem un pieaugušajiem — individualitāte šeit vienmēr ir galvenā vērtība.",
       "Mākslu apgūstam pašā radīšanas procesā — teoriju pieslēdzam tur, kur tā kļūst vajadzīga.",
     ],
-    regular: "KATRU NEDĒĻU",
+    regular: "KATRU NEDĒĻU ATVĒRTĀS",
     group: "GRUPU NODARBĪBAS",
     reserve: "PIETEIKTIES",
     booking: "PIETEIKŠANĀS",
@@ -1067,7 +1067,7 @@ const words = {
       "For children and adults alike, individuality is always the central value here.",
       "We learn art while making it — bringing in theory only when it becomes useful.",
     ],
-    regular: "EVERY WEEK",
+    regular: "OPEN EVERY WEEK",
     group: "GROUP CLASSES",
     reserve: "BOOK A PLACE",
     booking: "BOOKING",
@@ -1124,7 +1124,7 @@ const words = {
       "Для детей и взрослых индивидуальность здесь всегда остаётся главной ценностью.",
       "Искусству учимся в самом процессе создания — теорию подключаем тогда, когда она действительно нужна.",
     ],
-    regular: "КАЖДУЮ НЕДЕЛЮ",
+    regular: "ОТКРЫТЫЕ КАЖДУЮ НЕДЕЛЮ",
     group: "ГРУППОВЫЕ ЗАНЯТИЯ",
     reserve: "ЗАПИСАТЬСЯ",
     booking: "БРОНИРОВАНИЕ",
@@ -1242,6 +1242,7 @@ export default function InspirePage({ page = "home" }) {
   const [studioSlide, setStudioSlide] = useState(0);
   const [eventSlide, setEventSlide] = useState(0);
   const [moodQuote, setMoodQuote] = useState(0);
+  const [moodQuoteLeaving, setMoodQuoteLeaving] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [editableContent, setEditableContent] = useState({});
   const [availability, setAvailability] = useState({});
@@ -1367,6 +1368,14 @@ export default function InspirePage({ page = "home" }) {
     return () => window.clearInterval(timer);
   }, []);
   useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return undefined;
+    const timer = window.setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({ block: "start" });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [page]);
+  useEffect(() => {
     try {
       setSavedEmail(window.localStorage.getItem("inspire-booking-email") || "");
     } catch {}
@@ -1398,11 +1407,19 @@ export default function InspirePage({ page = "home" }) {
   }, []);
   useEffect(() => {
     setMoodQuote(0);
-    const timer = window.setInterval(
-      () => setMoodQuote((current) => (current + 1) % moodQuotes[lang].length),
-      8200,
-    );
-    return () => window.clearInterval(timer);
+    setMoodQuoteLeaving(false);
+    let swapTimer;
+    const timer = window.setInterval(() => {
+      setMoodQuoteLeaving(true);
+      swapTimer = window.setTimeout(() => {
+        setMoodQuote((current) => (current + 1) % moodQuotes[lang].length);
+        setMoodQuoteLeaving(false);
+      }, 380);
+    }, 8200);
+    return () => {
+      window.clearInterval(timer);
+      window.clearTimeout(swapTimer);
+    };
   }, [lang]);
   useEffect(() => {
     let active = true;
@@ -1513,14 +1530,14 @@ export default function InspirePage({ page = "home" }) {
   );
   const sessionName = (session) => {
     const title = lang === "lv"
-      ? session.titleLv
+      ? session.titleLv?.replace(/jaukta\s+gleznošanas\s+grupa/i, "Jaukta grupa")
       : lang === "ru"
         ? session.title?.includes("Youth")
           ? "Группа живописи для детей и подростков"
           : session.title?.includes("Adult")
             ? "Группа живописи для взрослых"
-            : "Смешанная группа живописи"
-        : session.title;
+            : "Смешанная группа"
+        : session.title?.replace(/mixed\s+painting\s+group/i, "Mixed group");
     return title?.replace(/\s*\((?:ages?\s*)?8[–-]16(?:\s*(?:gadi|years))?\)/gi, "") || "";
   };
   const dateKeyInRiga = (dateValue) => {
@@ -1811,7 +1828,7 @@ export default function InspirePage({ page = "home" }) {
           <img src="/art/inspire-icon-easel.png" alt="" />
           <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
         </a>
-        <a href="/contact">
+        <a href="/contact#sazinies">
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </a>
@@ -1876,7 +1893,7 @@ export default function InspirePage({ page = "home" }) {
         </div>
       </section>
       <section className="inspire-mood-strip" aria-live="polite">
-        <p key={`${lang}-${moodQuote}`}>{moodQuotes[lang][moodQuote]}</p>
+        <p className={moodQuoteLeaving ? "is-leaving" : ""} key={`${lang}-${moodQuote}`}>{moodQuotes[lang][moodQuote]}</p>
       </section>
       <section id="nodarbibas" className="inspire-section">
         <p className="inspire-kicker">{t.regular}</p>
@@ -2059,7 +2076,7 @@ export default function InspirePage({ page = "home" }) {
         </div>
         <p className="inspire-cancellation">
           {lang === "lv"
-            ? "PIETEIKUMIEM APMAKSA NETIEK PRASĪTA UZREIZ. Apmaksāta rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms nodarbības; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
+            ? "PIETEIKUMIEM APMAKSA NETIEK PRASĪTA UZREIZ. Jebkura rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms nodarbības; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
             : lang === "ru"
               ? "ДЛЯ ЗАЯВОК ПРЕДОПЛАТА НЕ НУЖНА. Оплаченную бронь нужно отменить или перенести не позднее чем за 24 часа до занятия; до этого возможны бесплатная отмена и автоматический возврат."
               : "APPLICATIONS DO NOT REQUIRE PAYMENT UPFRONT. A paid booking must be cancelled or rescheduled at least 24 hours before the class; until then, cancellation is free and the refund is automatic."}
@@ -2249,7 +2266,7 @@ export default function InspirePage({ page = "home" }) {
             </strong>
             <b>+</b>
           </summary>
-          <section id="studentu-darbi" className="inspire-proof inspire-youth-proof">
+          <section id="berni-un-jauniesi" className="inspire-proof inspire-youth-proof">
             <div>
               <p className="inspire-kicker">
                 {lang === "lv"
@@ -2287,7 +2304,7 @@ export default function InspirePage({ page = "home" }) {
           </section>
         </details>
       </section>
-      <section className="inspire-student-galleries">
+      <section id="studentu-darbi" className="inspire-student-galleries">
         <div className="inspire-student-galleries-intro">
           <p className="inspire-kicker">
             {lang === "lv"
@@ -2479,7 +2496,7 @@ export default function InspirePage({ page = "home" }) {
           </details>
         </div>
       </section>{" "}
-      <section className="inspire-contact-panel" aria-labelledby="inspire-contact-title">
+      <section id="sazinies" className="inspire-contact-panel" aria-labelledby="inspire-contact-title">
         <p className="inspire-kicker">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</p>
         <h2 id="inspire-contact-title">{lang === "lv" ? "Satiekamies Miera ielā." : lang === "ru" ? "Встретимся на улице Миера." : "Meet us on Miera iela."}</h2>
         <p>{t.address}</p>
@@ -2868,7 +2885,7 @@ export default function InspirePage({ page = "home" }) {
                     {calendarKind !== "gift" && calendarKind !== "pass" && (
                       <p className="inspire-cancellation inspire-modal-policy">
                         {lang === "lv"
-                          ? "Apmaksāta rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
+                          ? "Jebkura rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
                           : lang === "ru"
                             ? "Оплаченную бронь нужно отменить или перенести не позднее чем за 24 часа до начала; до этого возможны бесплатная отмена и автоматический возврат."
                             : "A paid booking must be cancelled or rescheduled at least 24 hours before it starts; until then, cancellation is free and the refund is automatic."}
