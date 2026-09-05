@@ -15,7 +15,7 @@
   bottom: -17vw;
   width: min(530px, 42vw);
   height: 520px;
-  background: url("/art/inspire-inkwell-swash.png") center/contain no-repeat;
+  background: url("/art/inspire-inkwell-swash.webp") center/contain no-repeat;
   opacity: 0.1;
   mix-blend-mode: screen;
   pointer-events: none;

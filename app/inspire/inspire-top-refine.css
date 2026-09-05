@@ -50,7 +50,7 @@
       rgba(9, 8, 24, 0.08),
       rgba(7, 5, 20, 0.42)
     ),
-    url("/art/inspire-mood-strip.png") center 52% / cover;
+    url("/art/inspire-mood-strip.webp") center 52% / cover;
   color: #fff;
   text-align: center;
 }
@@ -446,7 +446,7 @@
   bottom: -170px;
   width: min(600px, 50vw);
   height: 520px;
-  background: url("/art/inspire-inkwell-swash.png") center / contain no-repeat;
+  background: url("/art/inspire-inkwell-swash.webp") center / contain no-repeat;
   opacity: .085;
   filter: hue-rotate(128deg) saturate(1.5);
   mix-blend-mode: screen;
@@ -854,7 +854,7 @@
 
 .inspire-philosophy:before,
 .inspire-capabilities:before {
-  background-image: url("/art/inspire-inkwell-swash.png") !important;
+  background-image: url("/art/inspire-inkwell-swash.webp") !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   mix-blend-mode: screen;
@@ -865,7 +865,7 @@
 .inspire-events {
   background:
     linear-gradient(112deg, rgba(24, 14, 52, .66), rgba(17, 31, 68, .48)),
-    url("/art/inspire-cosmic-strip.png") center/cover !important;
+    url("/art/inspire-cosmic-strip.webp") center/cover !important;
 }
 
 .inspire-events:before {
@@ -952,7 +952,7 @@
   top: -78px !important;
   width: 235px !important;
   height: 235px !important;
-  background: url("/art/inspire-inkwell-swash.png") center/contain no-repeat !important;
+  background: url("/art/inspire-inkwell-swash.webp") center/contain no-repeat !important;
   opacity: .16 !important;
   filter: hue-rotate(145deg) saturate(1.65) brightness(1.25);
   transform: rotate(-12deg) !important;
@@ -1068,7 +1068,7 @@
 .inspire-masthead {
   background:
     linear-gradient(90deg, rgba(7, 4, 27, 0.03), rgba(3, 8, 22, 0.15)),
-    url("/art/inspire-masthead-wide.png") center/cover no-repeat !important;
+    url("/art/inspire-masthead-wide.webp") center/cover no-repeat !important;
 }
 .inspire-masthead-brand {
   display: none !important;
@@ -1128,7 +1128,7 @@
   .inspire-masthead {
     background-image:
       linear-gradient(90deg, rgba(7, 4, 27, 0.07), rgba(3, 8, 22, 0.2)),
-      url("/art/inspire-masthead-locked.png") !important;
+      url("/art/inspire-masthead-locked.webp") !important;
     background-size: auto 100% !important;
     background-position: left center !important;
   }

@@ -1,9 +1,9 @@
 /* A little cosmic material, not a shiny app-dashboard look. */
 .inspire-weekly-columns{gap:14px}
-.inspire-weekly-columns>div{border-radius:0;border-color:rgba(227,224,231,.32);box-shadow:none;background:linear-gradient(135deg,rgba(13,13,18,.94),rgba(19,17,32,.9)),url('/art/inspire-nebula.jpg') center/cover}
-.inspire-weekly-columns>div:nth-child(2){border-color:rgba(227,224,231,.32);background:linear-gradient(135deg,rgba(17,12,23,.94),rgba(27,14,39,.9)),url('/art/inspire-nebula.jpg') 50% center/cover}
-.inspire-weekly-columns>div:nth-child(3){border-color:rgba(227,224,231,.32);background:linear-gradient(135deg,rgba(12,16,24,.94),rgba(25,16,35,.9)),url('/art/inspire-nebula.jpg') 76% center/cover}
-.inspire-weekly-columns>div:before{content:"";right:-62px;top:-68px;width:210px;height:210px;background:url('/art/inspire-visual-elements.png') center/contain no-repeat;opacity:.1;filter:saturate(.8);transform:rotate(-12deg)}
+.inspire-weekly-columns>div{border-radius:0;border-color:rgba(227,224,231,.32);box-shadow:none;background:linear-gradient(135deg,rgba(13,13,18,.94),rgba(19,17,32,.9)),url('/art/inspire-nebula.webp') center/cover}
+.inspire-weekly-columns>div:nth-child(2){border-color:rgba(227,224,231,.32);background:linear-gradient(135deg,rgba(17,12,23,.94),rgba(27,14,39,.9)),url('/art/inspire-nebula.webp') 50% center/cover}
+.inspire-weekly-columns>div:nth-child(3){border-color:rgba(227,224,231,.32);background:linear-gradient(135deg,rgba(12,16,24,.94),rgba(25,16,35,.9)),url('/art/inspire-nebula.webp') 76% center/cover}
+.inspire-weekly-columns>div:before{content:"";right:-62px;top:-68px;width:210px;height:210px;background:url('/art/inspire-visual-elements.webp') center/contain no-repeat;opacity:.1;filter:saturate(.8);transform:rotate(-12deg)}
 .inspire-weekly-columns>div:after{display:none}
 .inspire-weekly-columns h3{padding:24px 27px 20px;font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(21px,1.65vw,27px);font-weight:400;letter-spacing:-.055em;line-height:1.02;text-transform:none}
 .inspire-weekly-columns button{min-height:148px;background:rgba(5,5,9,.34)!important;border-top-color:rgba(227,224,231,.22)!important}

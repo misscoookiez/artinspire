@@ -15,5 +15,8 @@
     "react-dom": "^19.0.0",
     "stripe": "^17.7.0",
     "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4"
   }
 }

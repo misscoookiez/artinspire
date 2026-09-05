@@ -15,8 +15,8 @@ const art = [
   {src:"/art/prism.jpg",title:"Prism",category:"ABSTRACT",medium:"Oil on canvas",year:"STUDIO ARCHIVE"},
   {src:"/art/dark-souls-ii.jpg",title:"Dark Souls II",category:"GAME INSPIRED",medium:"Ink on paper",year:"STUDIO ARCHIVE"},
   {src:"/art/ciri.jpg",title:"Ciri",category:"GAME INSPIRED",medium:"Charcoal on paper",year:"STUDIO ARCHIVE"},
-  {src:"/art/inspire-student-work.jpeg",title:"Wing study",category:"OTHER",medium:"Mixed media",year:"STUDIO ARCHIVE"},
-  {src:"/art/inspire-studio.jpeg",title:"In the studio",category:"OTHER",medium:"Studio archive",year:"STUDIO ARCHIVE"}
+  {src:"/art/inspire-student-work.webp",title:"Wing study",category:"OTHER",medium:"Mixed media",year:"STUDIO ARCHIVE"},
+  {src:"/art/inspire-studio.webp",title:"In the studio",category:"OTHER",medium:"Studio archive",year:"STUDIO ARCHIVE"}
 ];
 const categories=["PORTFOLIO","PAINTINGS","DRAWINGS","ABSTRACT","GAME INSPIRED","OTHER"];
 

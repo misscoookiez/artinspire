@@ -11,6 +11,7 @@ import "./inspire-rent.css";
 import "./inspire-schedule.css";
 import "./inspire-proportions.css";
 import "./inspire-weekly-cards.css";
+import "./inspire-upcoming-classes.css";
 import "./inspire-masthead-fix.css";
 import "./inspire-accents.css";
 import "./inspire-host.css";
@@ -26,57 +27,57 @@ import "./inspire-about-continuity.css";
 import "./inspire-art-direction.css";
 
 const statementSlides = [
-  ["/art/inspire-studio.jpeg", "Krāsaina gleznošanas vieta Art Studio Inspire"],
-  ["/art/studio-slide-room.jpeg", "Gleznošanas telpa Art Studio Inspire"],
-  ["/art/studio-slide-garden.jpeg", "Darbs uz molberta Art Studio Inspire"],
-  ["/art/inspire-slide-02.jpeg", "Student work at Art Studio Inspire"],
-  ["/art/inspire-slide-03.jpeg", "Student work at Art Studio Inspire"],
-  ["/art/inspire-slide-06.jpeg", "Student work at Art Studio Inspire"],
-  ["/art/inspire-slide-07.jpeg", "Student work at Art Studio Inspire"],
-  ["/art/inspire-slide-08.jpeg", "Student work at Art Studio Inspire"],
-  ["/art/studio-neutral-01.jpg", "Art Studio Inspire gleznošanas telpa"],
-  ["/art/studio-neutral-02.jpg", "Art Studio Inspire gleznošanas telpa"],
+  ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
+  ["/art/studio-slide-room.webp", "Gleznošanas telpa Art Studio Inspire"],
+  ["/art/studio-slide-garden.webp", "Darbs uz molberta Art Studio Inspire"],
+  ["/art/inspire-slide-02.webp", "Student work at Art Studio Inspire"],
+  ["/art/inspire-slide-03.webp", "Student work at Art Studio Inspire"],
+  ["/art/inspire-slide-06.webp", "Student work at Art Studio Inspire"],
+  ["/art/inspire-slide-07.webp", "Student work at Art Studio Inspire"],
+  ["/art/inspire-slide-08.webp", "Student work at Art Studio Inspire"],
+  ["/art/studio-neutral-01.webp", "Art Studio Inspire gleznošanas telpa"],
+  ["/art/studio-neutral-02.webp", "Art Studio Inspire gleznošanas telpa"],
 ];
 const youthGallerySlides = [
-  ["/art/inspire-student-work.jpeg", "Skolēna darbs Art Studio Inspire"],
-  ["/art/studio-slide-easel.jpeg", "Darbs uz molberta Art Studio Inspire"],
+  ["/art/inspire-student-work.webp", "Skolēna darbs Art Studio Inspire"],
+  ["/art/studio-slide-easel.webp", "Darbs uz molberta Art Studio Inspire"],
   [
-    "/art/studio-slide-garden.jpeg",
+    "/art/studio-slide-garden.webp",
     "Gleznojums uz molberta Art Studio Inspire",
   ],
-  ["/art/studio-slide-eyes.jpeg", "Skolēna darbs Art Studio Inspire"],
+  ["/art/studio-slide-eyes.webp", "Skolēna darbs Art Studio Inspire"],
 ];
 const studioSlides = [
-  ["/art/inspire-studio.jpeg", "Inside Art Studio Inspire"],
-  ["/art/studio-slide-room.jpeg", "A room in Art Studio Inspire"],
-  ["/art/studio-slide-easel.jpeg", "Painting space at Art Studio Inspire"],
-  ["/art/studio-slide-garden.jpeg", "A quiet corner of Art Studio Inspire"],
+  ["/art/inspire-studio.webp", "Inside Art Studio Inspire"],
+  ["/art/studio-slide-room.webp", "A room in Art Studio Inspire"],
+  ["/art/studio-slide-easel.webp", "Painting space at Art Studio Inspire"],
+  ["/art/studio-slide-garden.webp", "A quiet corner of Art Studio Inspire"],
 ];
 const studioPreviewImages = [
-  ["/art/studio-preview-room.jpg", "Art Studio Inspire galvenā telpa"],
-  ["/art/studio-preview-easel.jpg", "Molberti un darbi Art Studio Inspire"],
-  ["/art/studio-preview-wall.jpg", "Mākslas darbi studijas sienā"],
+  ["/art/studio-preview-room.webp", "Art Studio Inspire galvenā telpa"],
+  ["/art/studio-preview-easel.webp", "Molberti un darbi Art Studio Inspire"],
+  ["/art/studio-preview-wall.webp", "Mākslas darbi studijas sienā"],
 ];
 const tattooPreviewImages = [
-  ["/art/tattoo-room-main.jpeg", "Tattoo telpa ar izlietni un darba vietu"],
-  ["/art/tattoo-room-detail.jpeg", "Tattoo telpas darba aprīkojums"],
+  ["/art/tattoo-room-main.webp", "Tattoo telpa ar izlietni un darba vietu"],
+  ["/art/tattoo-room-detail.webp", "Tattoo telpas darba aprīkojums"],
 ];
 const eventSlides = [
-  ["/art/studio-slide-room.jpeg", "The studio prepared for a creative event"],
+  ["/art/studio-slide-room.webp", "The studio prepared for a creative event"],
   [
-    "/art/studio-slide-garden.jpeg",
+    "/art/studio-slide-garden.webp",
     "A bright studio corner ready for a creative event",
   ],
   [
-    "/art/event-slide-student-work.jpeg",
+    "/art/event-slide-student-work.webp",
     "Student work and a welcoming studio atmosphere at Art Studio Inspire",
   ],
   [
-    "/art/event-slide-student-work-02.jpeg",
+    "/art/event-slide-student-work-02.webp",
     "A colourful creative moment at Art Studio Inspire",
   ],
   [
-    "/art/event-slide-lecture.jpg",
+    "/art/event-slide-lecture.webp",
     "A social lecture evening at Art Studio Inspire",
   ],
 ];
@@ -745,7 +746,7 @@ const russianProducts = [
     "Ключ и доступ к студии для собственных живописных проектов вне занятий. Здесь можно работать с большими холстами, экспериментировать без спешки и не бояться краски на полу.",
   ],
   [
-    "ЧАСТНАЯ TATTOO-КОМНАТА",
+    "ЧАСТНАЯ ТАТУ-КОМНАТА",
     "1 день",
     "€20",
     "Оборудованная приватная комната для тату, пирсинга и других независимых мастеров с собственной раковиной, кушеткой, подлокотниками для тату и базовым оборудованием.",
@@ -959,7 +960,7 @@ const eventFormats = {
       ],
       [
         "ПРОСТРАНСТВО ДЛЯ ВАШЕЙ ИДЕИ",
-        "В студии уже проходили события до 30 человек — с караоке, небольшими tattoo-сессиями во время мероприятия и одним большим общим полотном для гостей. За отдельную цену можно организовать декор пространства. Если у вас другой формат, напишите — вместе придумаем, как его осуществить.",
+        "В студии уже проходили события до 30 человек — с караоке, небольшими тату-сессиями во время мероприятия и одним большим общим полотном для гостей. За отдельную цену можно организовать декор пространства. Если у вас другой формат, напишите — вместе придумаем, как его осуществить.",
       ],
     ],
     cta: "НАПИСАТЬ О СВОЁМ СОБЫТИИ →",
@@ -1226,9 +1227,9 @@ export default function InspirePage() {
       studio:
         "Площадь студии — 72 м², из них около 50 м² занимает главный зал для рисования. Есть 9 полноразмерных мольбертов, складные столы 80–180 см, до 20 стульев, чай и кофе. Комфортно работаем с группами до 16–20 человек.",
       hire: "Арендаторы по часам могут провести здесь своё занятие разово или регулярно. Можно использовать мольберты, столы и кисти студии; краски добавляются отдельно.",
-      tattooTitle: "О ПРИВАТНОЙ TATTOO-КОМНАТЕ",
+      tattooTitle: "О ПРИВАТНОЙ ТАТУ-КОМНАТЕ",
       tattoo:
-        "Отдельная tattoo-комната около 12 м² с собственной раковиной, кушеткой, подлокотниками для тату и базовым оборудованием. Подходит для тату- и пирсинг-мастеров, а также для ресниц, массажа или другой частной услуги. Аренда на день от €20 — напишите, чтобы обсудить время и формат.",
+        "Отдельная тату-комната около 12 м² с собственной раковиной, кушеткой, подлокотниками для тату и базовым оборудованием. Подходит для тату- и пирсинг-мастеров, а также для ресниц, массажа или другой частной услуги. Аренда на день от €20 — напишите, чтобы обсудить время и формат.",
     },
   }[lang];
   const artistBio = {
@@ -1505,7 +1506,18 @@ export default function InspirePage() {
     (slot) => privateIsAvailable(slot.id) && slot.price_cents === 1000,
   );
   const sessionName = (session) =>
-    lang === "lv" ? session.titleLv : session.title;
+    lang === "lv"
+      ? session.titleLv
+      : lang === "ru"
+        ? session.title?.includes("Youth")
+          ? "Группа живописи для детей и подростков"
+          : session.title?.includes("Adult")
+            ? "Группа живописи для взрослых"
+            : "Смешанная группа живописи"
+        : session.title;
+  const upcomingClasses = liveClasses
+    .filter((item) => remaining(item.id, item.seats) > 0)
+    .slice(0, 5);
   const openBooking = (kind, itemId, label) => {
     setBooking({ kind, itemId, label });
     setSelection(`${kind}:${itemId}`);
@@ -1696,7 +1708,7 @@ export default function InspirePage() {
       <section className="inspire-masthead">
         <img
           className="inspire-masthead-art"
-          src="/art/inspire-masthead-artwork.png"
+          src="/art/inspire-masthead-artwork.webp"
           alt=""
           aria-hidden="true"
         />
@@ -1820,6 +1832,50 @@ export default function InspirePage() {
           ))}
         </div>
         <p className="inspire-prices">{t.price}</p>
+        <div className="inspire-upcoming-classes" aria-live="polite">
+          <div>
+            <p className="inspire-kicker">
+              {lang === "lv"
+                ? "TUVĀKIE DATUMI"
+                : lang === "ru"
+                  ? "БЛИЖАЙШИЕ ДАТЫ"
+                  : "UPCOMING DATES"}
+            </p>
+            <p>
+              {lang === "lv"
+                ? "Vietu skaits atjaunojas automātiski."
+                : lang === "ru"
+                  ? "Количество мест обновляется автоматически."
+                  : "Availability updates automatically."}
+            </p>
+          </div>
+          <div className="inspire-upcoming-track">
+            {upcomingClasses.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() =>
+                  openBooking(
+                    "class",
+                    item.id,
+                    `${sessionName(item)} · ${item.date} · ${item.time}`,
+                  )
+                }
+              >
+                <time>{item.date}</time>
+                <strong>{item.time}</strong>
+                <span>{sessionName(item)}</span>
+                <small>
+                  {lang === "lv"
+                    ? `${remaining(item.id, item.seats)} vietas`
+                    : lang === "ru"
+                      ? `${remaining(item.id, item.seats)} мест`
+                      : `${remaining(item.id, item.seats)} places`}
+                </small>
+              </button>
+            ))}
+          </div>
+        </div>
       </section>
       <section className="inspire-section inspire-booking">
         <h2>{t.format}</h2>
@@ -2036,21 +2092,21 @@ export default function InspirePage() {
                   className="inspire-host-portrait"
                   src={image(
                     "inspire.image.host.0",
-                    "/art/sandra-profile-lead.jpeg",
+                    "/art/sandra-profile-lead.webp",
                   )}
                   alt="Sandra Rudzīte in her painting studio"
                 />
                 <img
                   src={image(
                     "inspire.image.host.1",
-                    "/art/sandra-studio-tea-upright.jpg",
+                    "/art/sandra-studio-tea-upright.webp",
                   )}
                   alt="Sandra Rudzīte enjoying tea in her sunlit studio"
                 />
                 <img
                   src={image(
                     "inspire.image.host.2",
-                    "/art/sandra-studio-07.jpg",
+                    "/art/sandra-studio-07.webp",
                   )}
                   alt="Sandra Rudzīte painting a dramatic studio work"
                 />
@@ -2069,35 +2125,35 @@ export default function InspirePage() {
               </summary>
               <div>
                 <img
-                  src="/art/sandra-art-red-eyes.jpg"
+                  src="/art/sandra-art-red-eyes.webp"
                   alt="Red Eyes, original painting by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-eye.jpg"
+                  src="/art/sandra-art-eye.webp"
                   alt="Eye, original painting by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-raven.jpg"
+                  src="/art/sandra-art-raven.webp"
                   alt="Raven, original painting by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-drips.jpg"
+                  src="/art/sandra-art-drips.webp"
                   alt="Abstract painting with layered drips by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-sea.jpg"
+                  src="/art/sandra-art-sea.webp"
                   alt="Dreamy seascape painting by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-lakeside.jpg"
+                  src="/art/sandra-art-lakeside.webp"
                   alt="Lakeside landscape painting by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-canal.jpg"
+                  src="/art/sandra-art-canal.webp"
                   alt="Canal landscape painting by Sandra Rudzīte"
                 />
                 <img
-                  src="/art/sandra-art-raven-drawing.jpg"
+                  src="/art/sandra-art-raven-drawing.webp"
                   alt="Raven drawing by Sandra Rudzīte"
                 />
               </div>
@@ -2172,7 +2228,7 @@ export default function InspirePage() {
                 <em>{content("inspire.youth.emphasis", t.youthEm)}</em>
               </h2>
               <div className="inspire-youth-visual" aria-hidden="true">
-                <img src="/art/inspire-visual-elements.png" alt="" />
+                <img src="/art/inspire-visual-elements.webp" alt="" />
               </div>
               <p>{content("inspire.youth.body", t.youthBody)}</p>
             </div>
@@ -2220,7 +2276,7 @@ export default function InspirePage() {
             {[
               ...statementSlides.slice(0, 4),
               [
-                "/art/student-process-adult.jpg",
+                "/art/student-process-adult.webp",
                 "Pieaugušā studenta gleznošanas process Art Studio Inspire",
               ],
             ].map(([src, alt]) => (
@@ -2456,7 +2512,7 @@ export default function InspirePage() {
           <img
             src={image(
               "inspire.image.directions",
-              "/art/inspire-door-directions.jpg",
+              "/art/inspire-door-directions.webp",
             )}
             alt="The entrance door to Art Studio Inspire"
           />
