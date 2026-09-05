@@ -1,9 +1,10 @@
 # Next.js deploy uz ISPConfig vietni artinspire.lv (client5/web63) caur jailkit shell useri.
 #
-# Plūsma: build CI konteinerā (node:22) -> rsync standalone izvadu uz /web/app jail iekšā
-#         -> nokauj Node procesu, PM2 uz hosta to paceļ ar jauno kodu.
+# Plūsma vienā jobā: build CI konteinerā (node:22) -> rsync standalone izvadu uz /web/app jail iekšā
+#                    -> nokauj Node procesu, PM2 uz hosta to paceļ ar jauno kodu.
+# Viens jobs, jo artefaktu augšupielāde uz šo GitLab atdod 405 (vecs runner pret GitLab 18).
 #
-# Prasība projektam: next.config.(js|mjs|ts) ar  output: 'standalone'
+# Prasība projektam: next.config.mjs ar  output: 'standalone'  (jau ir)
 #
 # GitLab CI/CD mainīgie:
 #   grupas līmenī (jau ir): SSH_PRIVATE_KEY, SSH_KNOWN_HOSTS, SSH_USER, DEPLOY_IPADDRESS, DEPLOY_PATH=/web/app
@@ -13,14 +14,13 @@
 #   serverī failā /web/app/.env, rsync to neaiztiek.
 
 stages:
-  - build
   - deploy
 
 variables:
   NEXT_TELEMETRY_DISABLED: "1"
 
-build:
-  stage: build
+deploy_prod:
+  stage: deploy
   image: node:22-alpine
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
@@ -32,33 +32,6 @@ build:
         - package-lock.json
     paths:
       - .npm/
-  script:
-    - npm ci --cache .npm --prefer-offline
-    - npm run build
-    - |
-      if [ ! -f .next/standalone/server.js ]; then
-        echo "KĻŪDA: .next/standalone/server.js nav. next.config vajag  output: 'standalone'"
-        exit 1
-      fi
-    # Saliek visu, kas serverim vajadzīgs, vienā mapē
-    - mkdir -p deploy
-    - cp -r .next/standalone/. deploy/
-    - mkdir -p deploy/.next/static && cp -r .next/static/. deploy/.next/static/
-    - if [ -d public ]; then mkdir -p deploy/public && cp -r public/. deploy/public/; fi
-    - du -sh deploy
-  artifacts:
-    paths:
-      - deploy/
-    expire_in: 1 hour
-
-deploy_prod:
-  stage: deploy
-  image: alpine:latest
-  needs: [build]
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      exists:
-        - package.json
   environment:
     name: production
     url: https://artinspire.lv
@@ -71,7 +44,20 @@ deploy_prod:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    # .env paliek serverī, viss pārējais tiek aizstāts ar jauno build
+    # --- build ---
+    - npm ci --cache .npm --prefer-offline
+    - npm run build
+    - |
+      if [ ! -f .next/standalone/server.js ]; then
+        echo "KĻŪDA: .next/standalone/server.js nav. next.config vajag  output: 'standalone'"
+        exit 1
+      fi
+    - mkdir -p deploy
+    - cp -r .next/standalone/. deploy/
+    - mkdir -p deploy/.next/static && cp -r .next/static/. deploy/.next/static/
+    - if [ -d public ]; then mkdir -p deploy/public && cp -r public/. deploy/public/; fi
+    - du -sh deploy
+    # --- deploy: .env paliek serverī, viss pārējais tiek aizstāts ar jauno build ---
     - |
       rsync -az --delete \
         --exclude '.env' \
