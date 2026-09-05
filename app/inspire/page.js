@@ -1017,6 +1017,7 @@ const words = {
     format: "IZVĒLIES SAVU FORMĀTU",
     book: "REZERVĒT VIETU",
     price: "€15 PIRMAIS APMEKLĒJUMS · €25 VIENA NODARBĪBA · ABONEMENTS 4× €80",
+    materialsIncluded: "VISI MATERIĀLI IEKĻAUTI",
     scheduleNote:
       "JAUNIEŠU GRUPA — BĒRNI NO 8 GADU VECUMA · CETURTDIEN UN SESTDIEN\nPIEAUGUŠIE · CETURTDIEN, SESTDIEN UN SVĒTDIEN",
     approach: "STUDIJAS PIEEJA",
@@ -1074,6 +1075,7 @@ const words = {
     format: "CHOOSE YOUR FORMAT",
     book: "RESERVE A PLACE",
     price: "€15 TRIAL · €25 SINGLE CLASS · €80 FOUR-CLASS PASS",
+    materialsIncluded: "ALL MATERIALS INCLUDED",
     scheduleNote:
       "YOUTH GROUP — CHILDREN AGED 8+ · THURSDAY & SATURDAY\nADULTS · THURSDAY, SATURDAY & SUNDAY",
     approach: "OUR APPROACH",
@@ -1131,6 +1133,7 @@ const words = {
     format: "ВЫБЕРИ СВОЙ ФОРМАТ",
     book: "ЗАБРОНИРОВАТЬ",
     price: "€15 ПРОБНОЕ · €25 ОДНО ЗАНЯТИЕ · €80 АБОНЕМЕНТ НА 4 ЗАНЯТИЯ",
+    materialsIncluded: "ВСЕ МАТЕРИАЛЫ ВКЛЮЧЕНЫ",
     scheduleNote:
       "МОЛОДЁЖНАЯ ГРУППА — ДЕТИ ОТ 8 ЛЕТ · ЧЕТВЕРГ И СУББОТА\nВЗРОСЛЫЕ · ЧЕТВЕРГ, СУББОТА И ВОСКРЕСЕНЬЕ",
     approach: "ПОДХОД СТУДИИ",
@@ -1941,7 +1944,10 @@ export default function InspirePage({ page = "home" }) {
             </div>
           ))}
         </div>
-        <p className="inspire-prices">{t.price}</p>
+        <p className="inspire-prices">
+          <span>{t.price}</span>
+          <small>{t.materialsIncluded}</small>
+        </p>
       </section>
       <section className="inspire-section inspire-booking">
         <h2>{t.format}</h2>
