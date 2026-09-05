@@ -1,6 +1,6 @@
 # Next.js deploy uz ISPConfig vietni artinspire.lv (client5/web63) caur jailkit shell useri.
 #
-# Plūsma: build CI konteinerā (node:20) -> rsync standalone izvadu uz /web/app jail iekšā
+# Plūsma: build CI konteinerā (node:22) -> rsync standalone izvadu uz /web/app jail iekšā
 #         -> nokauj Node procesu, PM2 uz hosta to paceļ ar jauno kodu.
 #
 # Prasība projektam: next.config.(js|mjs|ts) ar  output: 'standalone'
@@ -21,7 +21,7 @@ variables:
 
 build:
   stage: build
-  image: node:20-alpine
+  image: node:22-alpine
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       exists:
