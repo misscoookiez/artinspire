@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { rateLimit } from "@/lib/rate-limit";
-import { sendReservationNotification } from "@/lib/booking-email";
+import { sendBookingConfirmation, sendReservationNotification } from "@/lib/booking-email";
 import { reserveBookingNow } from "@/lib/bookings";
 import { isTrustedBrowserRequest } from "@/lib/request-security";
 
@@ -29,7 +29,33 @@ export async function POST(request) {
     }
     try { await sendReservationNotification({ name: cleanName, email: cleanEmail, label: cleanLabel, kind }); }
     catch (emailError) { console.error("Reservation notification email failed", emailError); }
-    return NextResponse.json({ ok: true, reservationId });
+    let confirmationSent = false;
+    try {
+      const { data: confirmedBooking, error: bookingError } = await supabaseAdmin
+        .from("bookings")
+        .select("kind,manage_token,class_session_id,private_slot_id")
+        .eq("id", reservationId)
+        .maybeSingle();
+      if (bookingError) throw bookingError;
+      if (confirmedBooking) {
+        const table = confirmedBooking.kind === "private" ? "private_slots" : "class_sessions";
+        const resourceId = confirmedBooking.kind === "private" ? confirmedBooking.private_slot_id : confirmedBooking.class_session_id;
+        const fields = confirmedBooking.kind === "private" ? "starts_at,ends_at" : "starts_at,ends_at,title_en";
+        const { data: session, error: sessionError } = await supabaseAdmin.from(table).select(fields).eq("id", resourceId).maybeSingle();
+        if (sessionError) throw sessionError;
+        if (session) {
+          confirmationSent = await sendBookingConfirmation({
+            email: cleanEmail,
+            name: cleanName,
+            title: confirmedBooking.kind === "private" ? "Art Studio Inspire session" : session.title_en,
+            startsAt: session.starts_at,
+            endsAt: session.ends_at,
+            token: confirmedBooking.manage_token,
+          });
+        }
+      }
+    } catch (emailError) { console.error("Reservation confirmation email failed", emailError); }
+    return NextResponse.json({ ok: true, reservationId, confirmationSent });
   } catch (error) {
     console.error("Reservation failed", error);
     return NextResponse.json({ error: "Could not reserve this place. Please try again." }, { status: 500 });

@@ -14,7 +14,19 @@ export async function POST(request, { params }) {
   const id=booking.kind === "private" ? booking.private_slot_id : booking.class_session_id;
   const { data:session }=await supabaseAdmin.from(table).select("starts_at").eq("id",id).maybeSingle();
   if (!session || new Date(session.starts_at).getTime()-Date.now() < 24*60*60*1000) return NextResponse.json({error:"Online cancellation closes 24 hours before the session."},{status:400});
-  if (!booking.stripe_payment_intent_id) return NextResponse.json({error:"This booking cannot be refunded automatically. Please contact the studio."},{status:400});
+  if (!booking.stripe_payment_intent_id) {
+    const { error: cancelError } = await supabaseAdmin
+      .from("bookings")
+      .update({ status:"cancelled", cancelled_at:new Date().toISOString() })
+      .eq("id", booking.id)
+      .eq("status", "confirmed");
+    if (cancelError) return NextResponse.json({error:"We could not cancel this reservation. Please contact the studio."},{status:500});
+    if (booking.kind === "private") {
+      const { error: slotError } = await supabaseAdmin.from("private_slots").update({ status:"open" }).eq("id", booking.private_slot_id);
+      if (slotError) return NextResponse.json({error:"Your reservation was cancelled, but the time could not be reopened yet. Please contact the studio."},{status:500});
+    }
+    return NextResponse.json({message:"Your reservation has been cancelled and the place is available again."});
+  }
   try {
     await stripe.refunds.create({payment_intent:booking.stripe_payment_intent_id});
     await refundBookingPayment(booking.stripe_payment_intent_id);

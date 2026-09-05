@@ -1170,6 +1170,7 @@ const words = {
 export default function InspirePage({ page = "home" }) {
   const [form, setForm] = useState(false);
   const [sent, setSent] = useState(false);
+  const [confirmationEmailSent, setConfirmationEmailSent] = useState(false);
   const [selection, setSelection] = useState("");
   const [booking, setBooking] = useState(null);
   const [status, setStatus] = useState("");
@@ -1178,6 +1179,7 @@ export default function InspirePage({ page = "home" }) {
   const [checkoutOption, setCheckoutOption] = useState("");
   const [giftClasses, setGiftClasses] = useState(2);
   const [scheduleWeek, setScheduleWeek] = useState(0);
+  const [bookingDay, setBookingDay] = useState("");
   const [lang, setLang] = useState("lv");
   const t = words[lang],
     activeGroups =
@@ -1529,9 +1531,6 @@ export default function InspirePage({ page = "home" }) {
         : session.title;
     return title?.replace(/\s*\((?:ages?\s*)?8[–-]16(?:\s*(?:gadi|years))?\)/gi, "") || "";
   };
-  const upcomingClasses = liveClasses
-    .filter((item) => remaining(item.id, item.seats) > 0)
-    .slice(0, 5);
   const weekKey = (dateValue) => {
     if (!dateValue) return "";
     const date = new Date(dateValue);
@@ -1542,13 +1541,40 @@ export default function InspirePage({ page = "home" }) {
   };
   const scheduleWeeks = [...new Set(liveClasses.map((item) => weekKey(item.startsAt)).filter(Boolean))];
   const visibleWeek = scheduleWeeks[Math.min(scheduleWeek, Math.max(0, scheduleWeeks.length - 1))];
+  const locale = lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB";
+  const weekDays = visibleWeek
+    ? Array.from({ length: 7 }, (_, index) => {
+        const date = new Date(`${visibleWeek}T12:00:00`);
+        date.setDate(date.getDate() + index);
+        const hasClass = liveClasses.some(
+          (item) => weekKey(item.startsAt) === visibleWeek && new Date(item.startsAt).getDay() === date.getDay(),
+        );
+        return {
+          key: date.toISOString().slice(0, 10),
+          label: new Intl.DateTimeFormat(locale, { weekday: "short" }).format(date),
+          date: new Intl.DateTimeFormat(locale, { day: "numeric" }).format(date),
+          hasClass,
+        };
+      })
+    : [];
   const dateForColumn = (columnIndex) => {
     const day = [4, 6, 0][columnIndex];
     const session = liveClasses.find((item) => weekKey(item.startsAt) === visibleWeek && new Date(item.startsAt).getDay() === day);
     if (!session) return "";
     return new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { day: "numeric", month: "short" }).format(new Date(session.startsAt));
   };
+  const sameCalendarDay = (dateValue, dateKey) =>
+    Boolean(dateValue && dateKey) && new Date(dateValue).toISOString().slice(0, 10) === dateKey;
+  const bookingClasses = bookingDay
+    ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
+    : liveClasses;
   const openBooking = (kind, itemId, label) => {
+    const selectedSession = kind === "class" ? liveClasses.find((item) => item.id === itemId) : null;
+    if (selectedSession) {
+      const week = scheduleWeeks.indexOf(weekKey(selectedSession.startsAt));
+      if (week >= 0) setScheduleWeek(week);
+      setBookingDay(new Date(selectedSession.startsAt).toISOString().slice(0, 10));
+    } else setBookingDay("");
     setBooking({ kind, itemId, label });
     setSelection(`${kind}:${itemId}`);
     setCalendarKind(kind);
@@ -1556,6 +1582,7 @@ export default function InspirePage({ page = "home" }) {
     setFormMode("pay");
     setStatus("");
     setSent(false);
+    setConfirmationEmailSent(false);
     setForm(true);
   };
   const openCalendar = (kind, option) => {
@@ -1564,8 +1591,10 @@ export default function InspirePage({ page = "home" }) {
     setCalendarKind(kind);
     setCheckoutOption(option);
     setFormMode("pay");
+    setBookingDay("");
     setStatus("");
     setSent(false);
+    setConfirmationEmailSent(false);
     setForm(true);
   };
   const openGiftCard = (initialClasses = 2) => {
@@ -1575,8 +1604,10 @@ export default function InspirePage({ page = "home" }) {
     setCheckoutOption("gift");
     setGiftClasses(initialClasses);
     setFormMode("pay");
+    setBookingDay("");
     setStatus("");
     setSent(false);
+    setConfirmationEmailSent(false);
     setForm(true);
   };
   const openClassPass = () => {
@@ -1586,8 +1617,10 @@ export default function InspirePage({ page = "home" }) {
     setCheckoutOption("pass");
     setGiftClasses(4);
     setFormMode("pay");
+    setBookingDay("");
     setStatus("");
     setSent(false);
+    setConfirmationEmailSent(false);
     setForm(true);
   };
   const openApplication = (label, groupKey) => {
@@ -1596,8 +1629,10 @@ export default function InspirePage({ page = "home" }) {
     setCalendarKind("all");
     setCheckoutOption("");
     setFormMode("apply");
+    setBookingDay("");
     setStatus(label);
     setSent(false);
+    setConfirmationEmailSent(false);
     setForm(true);
   };
   const submit = async (e) => {
@@ -1655,6 +1690,7 @@ export default function InspirePage({ page = "home" }) {
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || "Could not reserve this place.");
+        setConfirmationEmailSent(Boolean(result.confirmationSent));
         setSent(true);
       } catch (error) {
         setStatus(error.message);
@@ -1703,7 +1739,7 @@ export default function InspirePage({ page = "home" }) {
             name: "Art Studio Inspire",
             description:
               "Artist-led painting classes, workshops and creative events in Riga.",
-            url: "https://www.sandrarudzite.com/inspire",
+            url: "https://artinspire.lv",
             sameAs: ["https://www.instagram.com/artstudio.inspire"],
             priceRange: "€15–€200+",
             availableLanguage: ["lv", "en", "ru"],
@@ -1781,13 +1817,6 @@ export default function InspirePage({ page = "home" }) {
           <span>
             {t.hero} {t.hero2} {t.hero3}
           </span>
-          <a className="inspire-masthead-cta" href="/classes">
-            {lang === "lv"
-              ? "SKATĪT TUVĀKĀS NODARBĪBAS →"
-              : lang === "ru"
-                ? "ПОСМОТРЕТЬ БЛИЖАЙШИЕ ЗАНЯТИЯ →"
-                : "SEE THE NEXT CLASSES →"}
-          </a>
           <div className="inspire-language inspire-masthead-language" aria-label="Language">
             <button className={lang === "lv" ? "active" : ""} onClick={() => setLang("lv")}>LV</button>
             <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
@@ -1871,33 +1900,16 @@ export default function InspirePage({ page = "home" }) {
       <section className="inspire-mood-strip" aria-live="polite">
         <p key={`${lang}-${moodQuote}`}>{moodQuotes[lang][moodQuote]}</p>
       </section>
-      {page === "home" && (
-        <section className="inspire-home-class-preview" aria-label={lang === "lv" ? "Tuvākās nodarbības" : lang === "ru" ? "Ближайшие занятия" : "Next classes"}>
-          <div>
-            <p className="inspire-kicker">{lang === "lv" ? "TUVĀKĀS NODARBĪBAS" : lang === "ru" ? "БЛИЖАЙШИЕ ЗАНЯТИЯ" : "NEXT CLASSES"}</p>
-            <h2>{lang === "lv" ? "Izvēlies savu laiku. Vietu rezervē uzreiz." : lang === "ru" ? "Выберите своё время. Место бронируется сразу." : "Choose a time. Reserve your place straight away."}</h2>
-          </div>
-          <div className="inspire-home-class-preview-list">
-            {upcomingClasses.slice(0, 3).map((item) => (
-              <a key={item.id} href="/classes">
-                <time>{item.date}</time>
-                <strong>{item.time}</strong>
-                <span>{sessionName(item)}</span>
-                <i>{lang === "lv" ? "REZERVĒT →" : lang === "ru" ? "ЗАБРОНИРОВАТЬ →" : "RESERVE →"}</i>
-              </a>
-            ))}
-          </div>
-          <a className="inspire-home-class-preview-cta" href="/classes">{lang === "lv" ? "SKATĪT VISAS NODARBĪBAS →" : lang === "ru" ? "ВСЕ ЗАНЯТИЯ →" : "VIEW ALL CLASSES →"}</a>
-        </section>
-      )}
       <section id="nodarbibas" className="inspire-section">
         <p className="inspire-kicker">{t.regular}</p>
         <div className="inspire-schedule-heading">
           <h2>{t.group}</h2>
-          {scheduleWeeks.length > 1 && <div className="inspire-week-switcher" aria-label={lang === "lv" ? "Mainīt nedēļu" : lang === "ru" ? "Выбрать неделю" : "Change week"}>
-            <button type="button" onClick={() => setScheduleWeek((week) => Math.max(0, week - 1))} disabled={scheduleWeek === 0}>←</button>
-            <span>{new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { day: "numeric", month: "short" }).format(new Date(`${visibleWeek}T12:00:00`))}</span>
-            <button type="button" onClick={() => setScheduleWeek((week) => Math.min(scheduleWeeks.length - 1, week + 1))} disabled={scheduleWeek >= scheduleWeeks.length - 1}>→</button>
+          {scheduleWeeks.length > 0 && <div className="inspire-week-switcher" aria-label={lang === "lv" ? "Nedēļas grafiks" : lang === "ru" ? "Расписание недели" : "Weekly schedule"}>
+            <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => setScheduleWeek((week) => Math.max(0, week - 1))} disabled={scheduleWeek === 0}>‹</button>
+            <div className="inspire-week-strip" aria-label={new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(new Date(`${visibleWeek}T12:00:00`))}>
+              {weekDays.map((day) => <span key={day.key} className={day.hasClass ? "available" : ""}><small>{day.label}</small><b>{day.date}</b></span>)}
+            </div>
+            <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => setScheduleWeek((week) => Math.min(scheduleWeeks.length - 1, week + 1))} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
           </div>}
         </div>
         <div className="inspire-weekly-columns">
@@ -1923,46 +1935,6 @@ export default function InspirePage({ page = "home" }) {
           ))}
         </div>
         <p className="inspire-prices">{t.price}</p>
-        <div className="inspire-upcoming-classes" aria-live="polite">
-          <div>
-            <p className="inspire-kicker">
-              {lang === "lv"
-                ? "TUVĀKIE DATUMI"
-                : lang === "ru"
-                  ? "БЛИЖАЙШИЕ ДАТЫ"
-                  : "UPCOMING DATES"}
-            </p>
-            <p>
-              {lang === "lv"
-                ? "Datumi atjaunojas automātiski."
-                : lang === "ru"
-                  ? "Даты обновляются автоматически."
-                  : "Dates update automatically."}
-            </p>
-          </div>
-          <div className="inspire-upcoming-track">
-            {upcomingClasses.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() =>
-                  openBooking(
-                    "class",
-                    item.id,
-                    `${sessionName(item)} · ${item.date} · ${item.time}`,
-                  )
-                }
-              >
-                <time>{item.date}</time>
-                <strong>{item.time}</strong>
-                <span>{sessionName(item)}</span>
-                <small>
-                  {lang === "lv" ? "PIEEJAMA VIETA" : lang === "ru" ? "ЕСТЬ МЕСТО" : "AVAILABLE"}
-                </small>
-              </button>
-            ))}
-          </div>
-        </div>
       </section>
       <section className="inspire-section inspire-booking">
         <h2>{t.format}</h2>
@@ -2685,6 +2657,7 @@ export default function InspirePage({ page = "home" }) {
                         ? "Место забронировано. Скоро свяжемся с практической информацией."
                         : "Your place is reserved. We will be in touch shortly with the practical details."}
                 </p>
+                {confirmationEmailSent ? <p className="inspire-confirmation-email">{lang === "lv" ? "Uz e-pastu nosūtījām apstiprinājumu ar kalendāra un rezervācijas pārvaldības saiti." : lang === "ru" ? "Мы отправили на эл. почту подтверждение со ссылками на календарь и управление бронированием." : "We have emailed your confirmation, calendar link and booking-management link."}</p> : null}
                 <button
                   type="button"
                   onClick={() => {
@@ -2805,8 +2778,16 @@ export default function InspirePage({ page = "home" }) {
                         </strong>
                       </div>
                     ) : calendarKind === "class" ? (
-                      <div className="inspire-booking-calendar" role="group" aria-label={t.choose}>
-                        {liveClasses.map((item) => {
+                      <div className="inspire-booking-calendar-wrap">
+                        {scheduleWeeks.length > 0 && <div className="inspire-booking-week" aria-label={lang === "lv" ? "Izvēlies nodarbības dienu" : lang === "ru" ? "Выберите день занятия" : "Choose a class day"}>
+                          <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => setScheduleWeek((week) => Math.max(0, week - 1))} disabled={scheduleWeek === 0}>‹</button>
+                          <div>
+                            {weekDays.map((day) => <button key={day.key} type="button" disabled={!day.hasClass} className={`${day.hasClass ? "available" : ""} ${bookingDay === day.key ? "active" : ""}`} onClick={() => { setBookingDay(day.key); setBooking(null); setSelection(""); }}><small>{day.label}</small><b>{day.date}</b></button>)}
+                          </div>
+                          <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => setScheduleWeek((week) => Math.min(scheduleWeeks.length - 1, week + 1))} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
+                        </div>}
+                        <div className="inspire-booking-calendar" role="group" aria-label={t.choose}>
+                        {bookingClasses.map((item) => {
                           const seats = remaining(item.id, item.seats);
                           const selected = selection === `class:${item.id}`;
                           return <button
@@ -2825,6 +2806,7 @@ export default function InspirePage({ page = "home" }) {
                             <small>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : lang === "lv" ? "PIEEJAMA VIETA" : lang === "ru" ? "ЕСТЬ МЕСТО" : "AVAILABLE"}</small>
                           </button>;
                         })}
+                        </div>
                       </div>
                     ) : (
                       <select

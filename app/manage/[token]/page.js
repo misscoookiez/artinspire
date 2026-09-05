@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export default async function ManageBookingPage({ params }) {
   const { token } = await params;
   if (!supabaseAdmin) return <Unavailable />;
-  const { data:booking } = await supabaseAdmin.from("bookings").select("id,kind,status,class_session_id,private_slot_id,manage_token").eq("manage_token",token).maybeSingle();
+  const { data:booking } = await supabaseAdmin.from("bookings").select("id,kind,status,class_session_id,private_slot_id,manage_token,stripe_payment_intent_id").eq("manage_token",token).maybeSingle();
   if (!booking) return <Unavailable />;
   const table=booking.kind === "private" ? "private_slots" : "class_sessions";
   const id=booking.kind === "private" ? booking.private_slot_id : booking.class_session_id;
@@ -14,7 +14,7 @@ export default async function ManageBookingPage({ params }) {
   if (!session) return <Unavailable />;
   const startsAt=session.starts_at;
   const canCancel=booking.status === "confirmed" && new Date(startsAt).getTime()-Date.now() >= 24*60*60*1000;
-  return <BookingManagement token={token} canCancel={canCancel} booking={{kind:booking.kind,status:booking.status,startsAt,title:booking.kind === "private" ? "Private studio session" : session.title_en}}/>;
+  return <BookingManagement token={token} canCancel={canCancel} booking={{kind:booking.kind,status:booking.status,startsAt,title:booking.kind === "private" ? "Private studio session" : session.title_en,paid:Boolean(booking.stripe_payment_intent_id)}}/>;
 }
 
-function Unavailable(){return <main className="manage-page"><header><a href="/">SANDRA RUDZĪTE</a><a href="/inspire">ART STUDIO INSPIRE</a></header><section><p>BOOKING MANAGEMENT</p><h1>This link is not<br/><em>available.</em></h1><div className="manage-action"><p>It may have expired, already been used, or the booking service is not connected yet. Contact the studio and we will help.</p><a href="mailto:misscoookiez@gmail.com">CONTACT THE STUDIO →</a></div></section></main>}
+function Unavailable(){return <main className="manage-page"><header><a href="/">ART STUDIO INSPIRE</a><a href="/classes">CLASSES</a></header><section><p>BOOKING MANAGEMENT</p><h1>This link is not<br/><em>available.</em></h1><div className="manage-action"><p>It may have expired, already been used, or the booking service is not connected yet. Contact the studio and we will help.</p><a href="mailto:misscoookiez@gmail.com">CONTACT THE STUDIO →</a></div></section></main>}

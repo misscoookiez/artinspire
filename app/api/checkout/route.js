@@ -20,7 +20,7 @@ const privatePurchases={
   private:{name:"Private studio session",amount:4500},
   rental:{name:"Studio work session",amount:1000}
 };
-const paymentMethodTypes=(process.env.STRIPE_PAYMENT_METHOD_TYPES || "card,sepa_debit")
+const paymentMethodTypes=(process.env.STRIPE_PAYMENT_METHOD_TYPES || "card")
   .split(",")
   .map((type)=>type.trim())
   .filter(Boolean);

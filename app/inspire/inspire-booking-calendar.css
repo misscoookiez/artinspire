@@ -1,4 +1,14 @@
 .inspire-booking-calendar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: 330px; overflow: auto; padding: 2px; }
+.inspire-booking-calendar-wrap { display: grid; gap: 16px; }
+.inspire-booking-week { display: grid; grid-template-columns: 30px minmax(0, 1fr) 30px; gap: 8px; align-items: center; }
+.inspire-booking-week > button { width: 30px; height: 30px; padding: 0; border: 1px solid rgba(130, 227, 236, .42); background: transparent; color: #a7f4f9; font-size: 22px; line-height: 1; cursor: pointer; }
+.inspire-booking-week > button:disabled { opacity: .3; cursor: default; }
+.inspire-booking-week > div { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
+.inspire-booking-week > div button { min-width: 0; min-height: 42px; display: grid; place-items: center; gap: 2px; padding: 3px 1px; border: 0; background: transparent; color: rgba(230, 237, 240, .3); cursor: default; }
+.inspire-booking-week > div button.available { color: #9df3f8; cursor: pointer; }
+.inspire-booking-week > div button.available:hover, .inspire-booking-week > div button.active { border-radius: 50%; background: rgba(102, 231, 240, .16); outline: 1px solid rgba(150, 244, 250, .58); }
+.inspire-booking-week small { font: 700 8px/1 Arial, sans-serif; letter-spacing: .03em; text-transform: uppercase; }
+.inspire-booking-week b { font: 500 15px/1 Arial, sans-serif; }
 .inspire-modal { align-items: start; overflow-y: auto; }
 .inspire-modal form { max-height: calc(100dvh - 32px); overflow-y: auto; overscroll-behavior: contain; }
 .inspire-email-memory{display:block;margin:-4px 0 13px;color:rgba(229,246,248,.68);font-size:11px;line-height:1.4}
@@ -13,4 +23,4 @@
 .inspire-booking-calendar span { font-size: 13px; line-height: 1.25; }
 .inspire-booking-calendar small { margin-top: auto; }
 .inspire-customer-name { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-@media (max-width: 540px) { .inspire-booking-calendar { grid-template-columns: 1fr; max-height: 300px; }.inspire-booking-calendar button { min-height: 110px; }.inspire-customer-name { grid-template-columns: 1fr; } }
+@media (max-width: 540px) { .inspire-booking-calendar { grid-template-columns: 1fr; max-height: 300px; }.inspire-booking-calendar button { min-height: 110px; }.inspire-booking-week > div button { min-height: 40px; }.inspire-customer-name { grid-template-columns: 1fr; } }
