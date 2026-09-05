@@ -66,8 +66,9 @@ deploy_prod:
     # Jail iekšā nav /proc, tāpēc nevis pkill, bet PID no faila, ko raksta PM2. PM2 procesu paceļ no jauna.
     - |
       ssh "$SSH_USER@$DEPLOY_IPADDRESS" '
-        if [ -f /private/artinspire.pid ]; then
-          kill "$(cat /private/artinspire.pid)" && echo "Node process nokauts, PM2 restartē"
+        set -- /private/artinspire*.pid
+        if [ -f "$1" ]; then
+          kill "$(cat "$1")" && echo "Node process $(cat "$1") nokauts, PM2 restartē"
         else
           echo "PID fails nav: pirmais deploy, PM2 vēl jāstartē kā root (sk. README 4.4)"
         fi'
