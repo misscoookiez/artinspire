@@ -1,16 +1,42 @@
-# Next.js production deploy.
-# Required protected CI/CD variables (configured by the host):
-# SSH_PRIVATE_KEY, SSH_KNOWN_HOSTS, SSH_USER, DEPLOY_IPADDRESS, DEPLOY_PATH.
-# Optional: APP_PORT (defaults to 3000), APP_NAME (defaults to art-studio-inspire).
+# Next.js deploy uz ISPConfig vietni artinspire.lv (client5/web63) caur jailkit shell useri.
+#
+# Plūsma vienā jobā: build CI konteinerā (node:22) -> rsync standalone izvadu uz /web/app jail iekšā
+#                    -> nokauj Node procesu, PM2 uz hosta to paceļ ar jauno kodu.
+# Viens jobs, jo artefaktu augšupielāde uz šo GitLab atdod 405 (vecs runner pret GitLab 18).
+#
+# Prasība projektam: next.config.mjs ar  output: 'standalone'  (jau ir)
+#
+# GitLab CI/CD mainīgie:
+#   grupas līmenī (jau ir): SSH_PRIVATE_KEY, SSH_KNOWN_HOSTS, SSH_USER, DEPLOY_IPADDRESS, DEPLOY_PATH=/web/app
+#   projekta līmenī (jāpieliek, tie ir publiski un tiek iekompilēti klienta JS):
+#     NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
+#   Servera noslēpumi (STRIPE_*, SUPABASE_SERVICE_ROLE_KEY, RESEND_*, ADMIN_EMAIL) dzīvo tikai
+#   serverī failā /web/app/.env, rsync to neaiztiek.
 
-image: node:20-alpine
+stages:
+  - deploy
+
+variables:
+  NEXT_TELEMETRY_DISABLED: "1"
 
 deploy_prod:
   stage: deploy
+  image: node:22-alpine
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      exists:
+        - package.json
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+  environment:
+    name: production
+    url: https://artinspire.lv
   before_script:
-    - apk add --no-cache openssh-client git
+    - apk add --no-cache openssh-client rsync
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -18,23 +44,31 @@ deploy_prod:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
+    # --- build ---
+    - npm ci --cache .npm --prefer-offline
+    - npm run build
     - |
-      ssh "$SSH_USER@$DEPLOY_IPADDRESS" "DEPLOY_PATH='$DEPLOY_PATH' APP_PORT='${APP_PORT:-3000}' APP_NAME='${APP_NAME:-art-studio-inspire}' sh -s" <<'REMOTE'
-      set -eu
-      umask 002
-      cd "$DEPLOY_PATH"
-      git pull --ff-only
-      export NEXT_TELEMETRY_DISABLED=1
-      npm ci
-      npm run build
-      if ! command -v pm2 >/dev/null 2>&1; then
-        echo "PM2 is required on the hosting account to keep Next.js running."
+      if [ ! -f .next/standalone/server.js ]; then
+        echo "KĻŪDA: .next/standalone/server.js nav. next.config vajag  output: 'standalone'"
         exit 1
       fi
-      if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
-        PORT="$APP_PORT" pm2 restart "$APP_NAME" --update-env
-      else
-        PORT="$APP_PORT" pm2 start npm --name "$APP_NAME" -- start
-      fi
-      pm2 save
-      REMOTE
+    - mkdir -p deploy
+    - cp -r .next/standalone/. deploy/
+    - mkdir -p deploy/.next/static && cp -r .next/static/. deploy/.next/static/
+    - if [ -d public ]; then mkdir -p deploy/public && cp -r public/. deploy/public/; fi
+    - du -sh deploy
+    # --- deploy: .env paliek serverī, viss pārējais tiek aizstāts ar jauno build ---
+    - |
+      rsync -az --delete \
+        --exclude '.env' \
+        --chmod=Du=rwx,Dg=rx,Do=x,Fu=rw,Fg=r,Fo= \
+        deploy/ "$SSH_USER@$DEPLOY_IPADDRESS:$DEPLOY_PATH/"
+    # Jail iekšā nav /proc, tāpēc nevis pkill, bet PID no faila, ko raksta PM2. PM2 procesu paceļ no jauna.
+    - |
+      ssh "$SSH_USER@$DEPLOY_IPADDRESS" '
+        set -- /private/artinspire*.pid
+        if [ -f "$1" ]; then
+          kill "$(cat "$1")" && echo "Node process $(cat "$1") nokauts, PM2 restartē"
+        else
+          echo "PID fails nav: pirmais deploy, PM2 vēl jāstartē kā root (sk. README 4.4)"
+        fi'
