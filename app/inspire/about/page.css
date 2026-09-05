@@ -1,0 +1,19 @@
+.inspire-about-page { min-height: 100vh; background: #111013; color: #f6f4f6; }
+.inspire-about-page header { display: flex; align-items: center; justify-content: space-between; padding: 22px clamp(24px, 5vw, 76px); border-bottom: 1px solid rgba(184, 236, 242, .42); }
+.inspire-about-page header > a, .inspire-about-page header button, .inspire-about-hero > div > p:first-child { color: #a8f4fb; font: 700 11px/1 Arial, sans-serif; letter-spacing: .13em; text-decoration: none; }
+.inspire-about-page header div { display: flex; gap: 12px; }
+.inspire-about-page header button { padding: 0 0 4px; border: 0; border-bottom: 1px solid transparent; background: transparent; opacity: .55; cursor: pointer; }
+.inspire-about-page header button.active { border-color: #a8f4fb; opacity: 1; }
+.inspire-about-hero { display: grid; grid-template-columns: minmax(340px, .9fr) minmax(420px, 1.1fr); gap: clamp(48px, 8vw, 130px); max-width: 1500px; margin: 0 auto; padding: clamp(62px, 9vw, 140px) clamp(24px, 6vw, 100px); }
+.inspire-about-hero h1 { margin: 18px 0 10px; font-family: Georgia, serif; font-size: clamp(58px, 7vw, 108px); font-weight: 400; letter-spacing: -.075em; line-height: .82; }
+.inspire-about-hero h2 { max-width: 610px; margin: 0 0 38px; color: #8ee9f0; font-family: Georgia, serif; font-size: clamp(29px, 3vw, 50px); font-weight: 400; letter-spacing: -.055em; line-height: .95; }
+.inspire-about-copy { max-width: 590px; }
+.inspire-about-copy p { margin: 0; padding: 19px 0; border-top: 1px solid rgba(218, 214, 220, .26); color: #e1dde4; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.6; }
+.inspire-about-copy p:last-child { border-bottom: 1px solid rgba(218, 214, 220, .26); }
+.inspire-about-hero blockquote { max-width: 520px; margin: 38px 0; color: #fff; font: 400 clamp(24px, 2.4vw, 39px)/1.02 Georgia, serif; letter-spacing: -.055em; }
+.inspire-about-cta { display: inline-block; padding: 15px 18px; border: 1px solid #96f1f9; color: #071016; background: #b5f7fc; font: 700 11px Arial, sans-serif; letter-spacing: .12em; text-decoration: none; }
+.inspire-about-images { display: grid; grid-template-columns: 1.05fr .95fr; grid-template-rows: 1fr 1fr; gap: 10px; min-height: min(760px, 69vw); }
+.inspire-about-images img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; }
+.inspire-about-images img:first-child { grid-row: span 2; object-position: center; }
+.inspire-about-images img:nth-child(2) { object-position: center 30%; }
+@media (max-width: 850px) { .inspire-about-hero { grid-template-columns: 1fr; gap: 42px; padding-top: 65px; }.inspire-about-images { min-height: 460px; max-width: 650px; }.inspire-about-hero h1 { font-size: 70px; }.inspire-about-hero h2 { font-size: 33px; } }

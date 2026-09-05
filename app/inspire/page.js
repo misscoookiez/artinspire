@@ -12,6 +12,8 @@ import "./inspire-schedule.css";
 import "./inspire-proportions.css";
 import "./inspire-weekly-cards.css";
 import "./inspire-upcoming-classes.css";
+import "./inspire-booking-calendar.css";
+import "./inspire-page-split.css";
 import "./inspire-masthead-fix.css";
 import "./inspire-accents.css";
 import "./inspire-host.css";
@@ -1244,6 +1246,7 @@ export default function InspirePage() {
   const [imagePreview, setImagePreview] = useState(null);
   const [editableContent, setEditableContent] = useState({});
   const [availability, setAvailability] = useState({});
+  const [savedEmail, setSavedEmail] = useState("");
   const approach = proofCopy[lang],
     faq = seoFaq[lang];
   const youthPrinciples =
@@ -1376,6 +1379,11 @@ export default function InspirePage() {
       6200,
     );
     return () => window.clearInterval(timer);
+  }, []);
+  useEffect(() => {
+    try {
+      setSavedEmail(window.localStorage.getItem("inspire-booking-email") || "");
+    } catch {}
   }, []);
   useEffect(() => {
     const timer = window.setInterval(
@@ -1573,6 +1581,15 @@ export default function InspirePage() {
   const submit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const customerName = [data.get("firstName"), data.get("surname")]
+      .map((value) => String(value || "").trim())
+      .filter(Boolean)
+      .join(" ");
+    const customerEmail = String(data.get("email") || "").trim().toLowerCase();
+    try {
+      window.localStorage.setItem("inspire-booking-email", customerEmail);
+      setSavedEmail(customerEmail);
+    } catch {}
     if (formMode === "apply") {
       const group = status;
       setStatus(
@@ -1587,8 +1604,8 @@ export default function InspirePage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            name: data.get("name"),
-            email: data.get("email"),
+            name: customerName,
+            email: customerEmail,
             group,
             groupKey: booking?.groupKey,
           }),
@@ -1623,8 +1640,8 @@ export default function InspirePage() {
             booking.kind === "gift" || booking.kind === "pass"
               ? giftClasses
               : undefined,
-          name: data.get("name"),
-          email: data.get("email"),
+          name: customerName,
+          email: customerEmail,
         }),
       });
       const result = await response.json();
@@ -1735,9 +1752,9 @@ export default function InspirePage() {
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </a>
-        <a href="#par-sandru">
+        <a href="/inspire/about">
           <img src="/art/inspire-icon-easel.png" alt="" />
-          <span>{t.studio}</span>
+          <span>{lang === "lv" ? "PAR SANDRU" : lang === "ru" ? "О САНДРЕ" : "ABOUT SANDRA"}</span>
         </a>
         <a href="#kontakti">
           <img src="/art/inspire-icon-pin.png" alt="" />
@@ -2714,6 +2731,28 @@ export default function InspirePage() {
                           {giftClasses * (giftClasses >= 4 ? 20 : 25)}
                         </strong>
                       </div>
+                    ) : calendarKind === "class" ? (
+                      <div className="inspire-booking-calendar" role="group" aria-label={t.choose}>
+                        {liveClasses.map((item) => {
+                          const seats = remaining(item.id, item.seats);
+                          const selected = selection === `class:${item.id}`;
+                          return <button
+                            key={item.id}
+                            type="button"
+                            className={selected ? "active" : ""}
+                            disabled={seats < 1}
+                            onClick={() => {
+                              setBooking({ kind:"class", itemId:item.id, label:`${sessionName(item)} · ${item.date} · ${item.time}` });
+                              setSelection(`class:${item.id}`);
+                            }}
+                          >
+                            <time>{item.date}</time>
+                            <strong>{item.time}</strong>
+                            <span>{sessionName(item)}</span>
+                            <small>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : lang === "lv" ? `${seats} vietas` : lang === "ru" ? `${seats} мест` : `${seats} places`}</small>
+                          </button>;
+                        })}
+                      </div>
                     ) : (
                       <select
                         required
@@ -2802,11 +2841,16 @@ export default function InspirePage() {
                     )}
                   </>
                 )}
-                <input required name="name" placeholder={t.name} />
+                <div className="inspire-customer-name">
+                  <input required name="firstName" autoComplete="given-name" placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "First name"} />
+                  <input required name="surname" autoComplete="family-name" placeholder={lang === "lv" ? "Uzvārds" : lang === "ru" ? "Фамилия" : "Last name"} />
+                </div>
                 <input
                   required
                   name="email"
                   type="email"
+                  autoComplete="email"
+                  defaultValue={savedEmail}
                   placeholder={t.email}
                 />
                 <button>

@@ -1,0 +1,10 @@
+.inspire-booking-calendar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: 330px; overflow: auto; padding: 2px; }
+.inspire-booking-calendar button { display: grid; min-height: 126px; align-content: start; gap: 6px; padding: 15px; border: 1px solid rgba(178, 241, 247, .42); background: rgba(9, 14, 28, .7); color: #fff; text-align: left; cursor: pointer; }
+.inspire-booking-calendar button:hover, .inspire-booking-calendar button.active { border-color: #a5f3fb; background: rgba(27, 69, 84, .7); }
+.inspire-booking-calendar button:disabled { cursor: not-allowed; opacity: .43; }
+.inspire-booking-calendar time, .inspire-booking-calendar small { color: #a4edf4; font: 700 10px/1.2 Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.inspire-booking-calendar strong { font: 500 28px/1 Arial, sans-serif; letter-spacing: -.055em; }
+.inspire-booking-calendar span { font-size: 13px; line-height: 1.25; }
+.inspire-booking-calendar small { margin-top: auto; }
+.inspire-customer-name { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 540px) { .inspire-booking-calendar { grid-template-columns: 1fr; max-height: 300px; }.inspire-booking-calendar button { min-height: 110px; }.inspire-customer-name { grid-template-columns: 1fr; } }
