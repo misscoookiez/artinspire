@@ -24,7 +24,10 @@ export async function POST(request) {
     let reservationId;
     try { reservationId = await reserveBookingNow({ kind, resourceId: itemId, customerName: cleanName, email: cleanEmail }); }
     catch (error) {
-      const unavailable = /unavailable|full|reserved/i.test(error.message || "");
+      // A session can disappear or fill between the catalogue refresh and the
+      // final submit. Treat every stale resource as an availability conflict,
+      // never as a server failure shown to a customer.
+      const unavailable = /unavailable|full|reserved|not found|does not exist|invalid session|not active/i.test(error.message || "");
       return NextResponse.json({ error: unavailable ? "That place has just become unavailable." : "Could not reserve this place. Please try again." }, { status: unavailable ? 409 : 500 });
     }
     try { await sendReservationNotification({ name: cleanName, email: cleanEmail, label: cleanLabel, kind }); }
