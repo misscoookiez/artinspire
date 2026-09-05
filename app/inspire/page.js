@@ -1907,7 +1907,7 @@ export default function InspirePage({ page = "home" }) {
                   <i>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : `${t.reserve} →`}</i>
                 </button>
                 );
-              }) : <span className="inspire-empty-session" aria-label={lang === "lv" ? "Šajā dienā nodarbība nenotiek" : lang === "ru" ? "В этот день занятия нет" : "No class on this day"}>—</span>}
+              }) : <span className="inspire-empty-session" aria-label={lang === "lv" ? "Šajā dienā nodarbība nenotiek" : lang === "ru" ? "В этот день занятия нет" : "No class on this day"}>{lang === "lv" ? "NODARBĪBU NAV" : lang === "ru" ? "ЗАНЯТИЙ НЕТ" : "NO CLASS"}</span>}
             </div>
           ))}
         </div>
