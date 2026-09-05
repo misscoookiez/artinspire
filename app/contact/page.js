@@ -1,1 +1,5 @@
-export default function ContactPage(){return <main className="artist-page"><header><a href="/portfolio">SANDRA RUDZĪTE</a><nav><a href="/portfolio">PORTFOLIO</a><a href="/inspire">INSPIRE ART STUDIO</a><a href="/about">ABOUT</a></nav></header><section><p className="artist-kicker">CONTACT</p><h1>Let’s make<br/><em>something real.</em></h1><div className="artist-copy"><p>For original artwork, exhibitions, collaborations, art coaching, or studio enquiries.</p><p><a className="artist-email" href="mailto:misscoookiez@gmail.com">misscoookiez@gmail.com</a></p><p>For Art Studio Inspire bookings and questions:</p><p><a className="artist-email" href="https://www.instagram.com/artstudio.inspire">@artstudio.inspire</a><br/><a className="artist-email" href="https://wa.me/37128809550">WhatsApp +371 28809550</a></p></div></section></main>}
+import InspirePage from "../inspire/page";
+
+export default function ContactPage() {
+  return <InspirePage page="contact" />;
+}

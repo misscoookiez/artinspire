@@ -28,6 +28,7 @@ import "./inspire-top-refine.css";
 import "./inspire-about-continuity.css";
 import "./inspire-art-direction.css";
 import "./inspire-navigation.css";
+import "./inspire-structure.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1371,6 +1372,17 @@ export default function InspirePage({ page = "home" }) {
     } catch {}
   }, []);
   useEffect(() => {
+    if (!form) return undefined;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [form]);
+  useEffect(() => {
     const timer = window.setInterval(
       () => setStudioSlide((current) => (current + 1) % studioSlides.length),
       6800,
@@ -1549,14 +1561,18 @@ export default function InspirePage({ page = "home" }) {
   const bookingClasses = bookingDay
     ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
     : liveClasses;
-  const weeklyColumns = [4, 6, 0]
-    .map((day) =>
-      liveClasses.filter(
+  const weeklyColumns = visibleWeek ? [4, 6, 0].map((day) => {
+    const date = new Date(`${visibleWeek}T12:00:00Z`);
+    date.setUTCDate(date.getUTCDate() + ((day + 6) % 7));
+    return {
+      key: date.toISOString().slice(0, 10),
+      date,
+      sessions: liveClasses.filter(
         (item) =>
           weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === day,
       ),
-    )
-    .filter((column) => column.length);
+    };
+  }) : [];
   const weeklyDayLabel = (session) =>
     new Intl.DateTimeFormat(locale, {
       timeZone: "Europe/Riga",
@@ -1770,7 +1786,7 @@ export default function InspirePage({ page = "home" }) {
         />
         <a className="inspire-masthead-brand" href="/" aria-label="Art Studio Inspire sākumlapa">
           <img
-            src="/art/inspire-logo-lockup-fixed.png"
+            src="/art/inspire-logo-white-clean.webp"
             alt="Art Studio Inspire"
           />
         </a>
@@ -1795,11 +1811,11 @@ export default function InspirePage({ page = "home" }) {
           <img src="/art/inspire-icon-easel.png" alt="" />
           <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
         </a>
-        <a href="/#kontakti">
+        <a href="/contact">
           <img src="/art/inspire-icon-pin.png" alt="" />
-          <span>{t.find}</span>
+          <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </a>
-        <a href="/#studentu-darbi">
+        <a href="/about#studentu-darbi">
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
@@ -1823,7 +1839,7 @@ export default function InspirePage({ page = "home" }) {
                 : "PRIVATE EVENTS"}
           </span>
         </a>
-        <a href="/#biezakie-jautajumi">
+        <a href="/contact#biezakie-jautajumi">
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
         </a>
       </nav>
@@ -1876,9 +1892,9 @@ export default function InspirePage({ page = "home" }) {
         </div>
         <div className="inspire-weekly-columns">
           {weeklyColumns.map((column) => (
-            <div key={dateKeyInRiga(column[0].startsAt)}>
-              <h3>{weeklyDayLabel(column[0])}</h3>
-              {column.map((session) => {
+            <div key={column.key}>
+              <h3>{weeklyDayLabel({ startsAt: column.date.toISOString() })}</h3>
+              {column.sessions.length ? column.sessions.map((session) => {
                 const seats = remaining(session.id, session.seats);
                 return (
                 <button
@@ -1891,7 +1907,7 @@ export default function InspirePage({ page = "home" }) {
                   <i>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : `${t.reserve} →`}</i>
                 </button>
                 );
-              })}
+              }) : <span className="inspire-empty-session" aria-label={lang === "lv" ? "Šajā dienā nodarbība nenotiek" : lang === "ru" ? "В этот день занятия нет" : "No class on this day"}>—</span>}
             </div>
           ))}
         </div>
@@ -2201,6 +2217,12 @@ export default function InspirePage({ page = "home" }) {
                   {content("inspire.adults.quote", approach.quote)}
                 </blockquote>
               ) : null}
+              <img
+                className="inspire-adult-palette"
+                src="/art/inspire-palette-atmosphere.webp"
+                alt=""
+                aria-hidden="true"
+              />
             </div>
             <div className="inspire-proof-list">
               {approach.items.map(([title, body], index) => (
@@ -2328,6 +2350,11 @@ export default function InspirePage({ page = "home" }) {
             ))}
           </div>
         </details>
+        {page === "about" && (
+          <a className="inspire-about-classes-cta" href="/classes">
+            {lang === "lv" ? "SKATĪT NODARBĪBAS →" : lang === "ru" ? "ПОСМОТРЕТЬ ЗАНЯТИЯ →" : "VIEW CLASSES →"}
+          </a>
+        )}
       </section>
       <section id="pasakumi" className="inspire-events">
         <div className="inspire-events-top">
@@ -2452,6 +2479,16 @@ export default function InspirePage({ page = "home" }) {
           </details>
         </div>
       </section>{" "}
+      <section className="inspire-contact-panel" aria-labelledby="inspire-contact-title">
+        <p className="inspire-kicker">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</p>
+        <h2 id="inspire-contact-title">{lang === "lv" ? "Satiekamies Miera ielā." : lang === "ru" ? "Встретимся на улице Миера." : "Meet us on Miera iela."}</h2>
+        <p>{t.address}</p>
+        <div>
+          <a href="mailto:misscoookiez@gmail.com">misscoookiez@gmail.com</a>
+          <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp +371 28809550</a>
+          <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">@artstudio.inspire</a>
+        </div>
+      </section>
       <section id="kontakti" className="inspire-directions">
         <div className="inspire-directions-copy">
           <p className="inspire-kicker">{t.find}</p>

@@ -23,7 +23,7 @@ const copy={
 
 export function InspireFooter({lang}){
   const footer=lang==="lv"?{location:"RĪGA · MIERA IELA 17",contact:"KONTAKTI",instagram:"INSTAGRAM",questions:"JAUTĀJUMI"}:lang==="ru"?{location:"РИГА · УЛИЦА МИЕРА 17",contact:"КОНТАКТЫ",instagram:"INSTAGRAM",questions:"ВОПРОСЫ"}:{location:"RIGA · MIERA IELA 17",contact:"CONTACT",instagram:"INSTAGRAM",questions:"QUESTIONS"};
-  return <footer className="inspire-site-footer"><p>© {new Date().getFullYear()} ART STUDIO INSPIRE</p><span>{footer.location}</span><nav><a href="mailto:misscoookiez@gmail.com">{footer.contact}</a><a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">{footer.instagram}</a><a href="#biezakie-jautajumi">{footer.questions}</a></nav></footer>;
+  return <footer className="inspire-site-footer"><p>© {new Date().getFullYear()} ART STUDIO INSPIRE</p><span>{footer.location}</span><nav><a href="/contact">{footer.contact}</a><a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">{footer.instagram}</a><a href="/contact#biezakie-jautajumi">{footer.questions}</a></nav></footer>;
 }
 
 export default function InspireLocalGuide({lang}){
