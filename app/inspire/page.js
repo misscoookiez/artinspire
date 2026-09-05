@@ -1170,7 +1170,6 @@ export default function InspirePage({ page = "home" }) {
   const [selection, setSelection] = useState("");
   const [booking, setBooking] = useState(null);
   const [status, setStatus] = useState("");
-  const [formMode, setFormMode] = useState("pay");
   const [calendarKind, setCalendarKind] = useState("all");
   const [checkoutOption, setCheckoutOption] = useState("");
   const [giftClasses, setGiftClasses] = useState(2);
@@ -1178,8 +1177,6 @@ export default function InspirePage({ page = "home" }) {
   const [bookingDay, setBookingDay] = useState("");
   const [lang, setLang] = useState("lv");
   const t = words[lang],
-    activeGroups =
-      lang === "lv" ? groups : lang === "ru" ? russianGroups : englishGroups,
     activeProducts =
       lang === "lv"
         ? products
@@ -1361,19 +1358,6 @@ export default function InspirePage({ page = "home" }) {
             ["EXTRA ACTIVITIES", "decor, karaoke, games, tattoo and piercing"],
             ["AT YOUR PLACE", "a travelling format by arrangement"],
           ];
-  const weeklyColumns = [
-    activeGroups.slice(0, 2),
-    activeGroups.slice(2, 4),
-    activeGroups.slice(4, 6),
-  ];
-  const weeklyGroupKeys = [
-    "thu-youth",
-    "thu-adult",
-    "sat-youth",
-    "sat-adult",
-    "sun-mixed-am",
-    "sun-mixed-pm",
-  ];
   useEffect(() => {
     const timer = window.setInterval(
       () => setSlide((current) => (current + 1) % statementSlides.length),
@@ -1560,17 +1544,26 @@ export default function InspirePage({ page = "home" }) {
         };
       })
     : [];
-  const dateForColumn = (columnIndex) => {
-    const day = [4, 6, 0][columnIndex];
-    const session = liveClasses.find((item) => weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === day);
-    if (!session) return "";
-    return new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { day: "numeric", month: "short" }).format(new Date(session.startsAt));
-  };
   const sameCalendarDay = (dateValue, dateKey) =>
     Boolean(dateValue && dateKey) && dateKeyInRiga(dateValue) === dateKey;
   const bookingClasses = bookingDay
     ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
     : liveClasses;
+  const weeklyColumns = [4, 6, 0]
+    .map((day) =>
+      liveClasses.filter(
+        (item) =>
+          weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === day,
+      ),
+    )
+    .filter((column) => column.length);
+  const weeklyDayLabel = (session) =>
+    new Intl.DateTimeFormat(locale, {
+      timeZone: "Europe/Riga",
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+    }).format(new Date(session.startsAt));
   const changeScheduleWeek = (direction) => {
     const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, scheduleWeek + direction));
     if (nextWeek === scheduleWeek) return;
@@ -1593,7 +1586,6 @@ export default function InspirePage({ page = "home" }) {
     setSelection(`${kind}:${itemId}`);
     setCalendarKind(kind);
     setCheckoutOption("");
-    setFormMode("pay");
     setStatus("");
     setSent(false);
     setConfirmationEmailSent(false);
@@ -1604,7 +1596,6 @@ export default function InspirePage({ page = "home" }) {
     setSelection("");
     setCalendarKind(kind);
     setCheckoutOption(option);
-    setFormMode("pay");
     setBookingDay(kind === "class" ? weekDays.find((day) => day.hasClass)?.key || "" : "");
     setStatus("");
     setSent(false);
@@ -1617,7 +1608,6 @@ export default function InspirePage({ page = "home" }) {
     setCalendarKind("gift");
     setCheckoutOption("gift");
     setGiftClasses(initialClasses);
-    setFormMode("pay");
     setBookingDay("");
     setStatus("");
     setSent(false);
@@ -1630,21 +1620,8 @@ export default function InspirePage({ page = "home" }) {
     setCalendarKind("pass");
     setCheckoutOption("pass");
     setGiftClasses(4);
-    setFormMode("pay");
     setBookingDay("");
     setStatus("");
-    setSent(false);
-    setConfirmationEmailSent(false);
-    setForm(true);
-  };
-  const openApplication = (label, groupKey) => {
-    setBooking({ kind: "weekly", groupKey });
-    setSelection("");
-    setCalendarKind("all");
-    setCheckoutOption("");
-    setFormMode("apply");
-    setBookingDay("");
-    setStatus(label);
     setSent(false);
     setConfirmationEmailSent(false);
     setForm(true);
@@ -1662,35 +1639,6 @@ export default function InspirePage({ page = "home" }) {
       window.localStorage.setItem("inspire-booking-email", customerEmail);
       setSavedEmail(customerEmail);
     } catch {}
-    if (formMode === "apply") {
-      const group = status;
-      setStatus(
-        lang === "lv"
-          ? "Rezervējam vietu…"
-          : lang === "ru"
-            ? "Бронируем место…"
-            : "Reserving your place…",
-      );
-      try {
-        const response = await fetch("/api/applications", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: customerName,
-            email: customerEmail,
-            group,
-            groupKey: booking?.groupKey,
-          }),
-        });
-        const result = await response.json();
-        if (!response.ok)
-          throw new Error(result.error || "Could not send application.");
-        setSent(true);
-      } catch (error) {
-        setStatus(error.message);
-      }
-      return;
-    }
     if (!booking) return;
     if (action === "reserve") {
       setStatus(
@@ -1927,24 +1875,23 @@ export default function InspirePage({ page = "home" }) {
           </div>}
         </div>
         <div className="inspire-weekly-columns">
-          {weeklyColumns.map((column, columnIndex) => (
-            <div key={column[0][0]}>
-              <h3>{column[0][0]} {dateForColumn(columnIndex) && <small>· {dateForColumn(columnIndex)}</small>}</h3>
-              {column.map(([day, time, audience], index) => (
+          {weeklyColumns.map((column) => (
+            <div key={dateKeyInRiga(column[0].startsAt)}>
+              <h3>{weeklyDayLabel(column[0])}</h3>
+              {column.map((session) => {
+                const seats = remaining(session.id, session.seats);
+                return (
                 <button
-                  key={`${day}-${time}`}
-                  onClick={() =>
-                    openApplication(
-                      `${day} · ${time} · ${audience}`,
-                      weeklyGroupKeys[columnIndex * 2 + index],
-                    )
-                  }
+                  key={session.id}
+                  disabled={seats < 1}
+                  onClick={() => openBooking("class", session.id, `${session.date} · ${session.time} · ${sessionName(session)}`)}
                 >
-                  <b>{time}</b>
-                  <small>{audience}</small>
-                  <i>{t.reserve} →</i>
+                  <b>{session.time}</b>
+                  <small>{sessionName(session)}</small>
+                  <i>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : `${t.reserve} →`}</i>
                 </button>
-              ))}
+                );
+              })}
             </div>
           ))}
         </div>
@@ -2659,13 +2606,7 @@ export default function InspirePage({ page = "home" }) {
               <>
                 <h2>{t.thanks}</h2>
                 <p>
-                  {formMode === "apply"
-                    ? lang === "lv"
-                      ? "Vieta regulārajā grupā ir rezervēta. Drīzumā sazināsimies par pirmo datumu un praktiskajām detaļām."
-                      : lang === "ru"
-                        ? "Место в регулярной группе забронировано. Скоро свяжемся о первой дате и организационных деталях."
-                        : "Your place in the weekly group is reserved. We will be in touch about the first date and practical details."
-                    : lang === "lv"
+                  {lang === "lv"
                       ? "Vieta ir rezervēta. Drīzumā sazināsimies ar praktisko informāciju."
                       : lang === "ru"
                         ? "Место забронировано. Скоро свяжемся с практической информацией."
@@ -2684,20 +2625,7 @@ export default function InspirePage({ page = "home" }) {
               </>
             ) : (
               <>
-                {formMode === "apply" ? (
-                  <>
-                    <p className="inspire-kicker">{t.booking}</p>
-                    <h2>
-                      {lang === "lv"
-                        ? "Rezervē vietu regulārajā grupā"
-                        : lang === "ru"
-                          ? "Забронируйте место в регулярной группе"
-                          : "Reserve a place in the weekly group"}
-                    </h2>
-                    <p>{status}</p>
-                  </>
-                ) : (
-                  <>
+                <>
                     <p className="inspire-kicker">
                       {calendarKind === "gift" || calendarKind === "pass"
                         ? lang === "lv"
@@ -2909,7 +2837,6 @@ export default function InspirePage({ page = "home" }) {
                       </p>
                     )}
                   </>
-                )}
                 <div className="inspire-customer-name">
                   <input required name="firstName" autoComplete="given-name" placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "First name"} />
                   <input required name="surname" autoComplete="family-name" placeholder={lang === "lv" ? "Uzvārds" : lang === "ru" ? "Фамилия" : "Last name"} />
@@ -2925,19 +2852,13 @@ export default function InspirePage({ page = "home" }) {
                 <small className="inspire-email-memory">
                   {lang === "lv" ? "E-pastu atceramies tikai šajā ierīcē, lai nākamreiz būtu ātrāk." : lang === "ru" ? "Мы запоминаем email только на этом устройстве, чтобы в следующий раз было быстрее." : "We remember your email only on this device, to make the next booking faster."}
                 </small>
-                {formMode !== "apply" && calendarKind !== "gift" && calendarKind !== "pass" ? (
+                {calendarKind !== "gift" && calendarKind !== "pass" ? (
                   <div className="inspire-reservation-actions">
                     <button name="bookingAction" value="reserve">{lang === "lv" ? "REZERVĒT VIETU" : lang === "ru" ? "ЗАБРОНИРОВАТЬ МЕСТО" : "RESERVE A PLACE"}</button>
                     <button className="inspire-pay-option" name="bookingAction" value="pay">{lang === "lv" ? "VAI MAKSĀT TIEŠSAISTĒ" : lang === "ru" ? "ИЛИ ОПЛАТИТЬ ОНЛАЙН" : "OR PAY ONLINE"}</button>
                   </div>
                 ) : <button name="bookingAction" value="pay">
-                  {formMode === "apply"
-                    ? lang === "lv"
-                      ? "REZERVĒT VIETU"
-                      : lang === "ru"
-                        ? "ЗАБРОНИРОВАТЬ МЕСТО"
-                        : "RESERVE A PLACE"
-                    : calendarKind === "gift" || calendarKind === "pass"
+                  {calendarKind === "gift" || calendarKind === "pass"
                       ? lang === "lv"
                         ? "IEGĀDĀTIES"
                         : lang === "ru"
@@ -2946,7 +2867,7 @@ export default function InspirePage({ page = "home" }) {
                       : t.submit}
                 </button>}
                 <small className="inspire-checkout-status">
-                  {formMode === "apply" ? "" : status}
+                  {status}
                 </small>
               </>
             )}
