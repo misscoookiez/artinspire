@@ -1,5 +1,1 @@
-import { redirect } from "next/navigation";
-
-export default function Home() {
-  redirect("/inspire");
-}
+export { default } from "./inspire/page";

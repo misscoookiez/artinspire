@@ -1,10 +1,10 @@
 export const metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.sandrarudzite.com",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://artinspire.lv",
   ),
   title: "Gleznošanas nodarbības Rīgā | Art Studio Inspire",
   description:
-    "Gleznošanas nodarbības Rīgā bērniem, jauniešiem un pieaugušajiem: akvarelis, akrils, eļļa, zīmēšana un individuālas sesijas. Materiāli ir uz vietas · Miera iela 17.",
+    "Paņem otu. Uztaisi kaut ko savu. Gleznošana, drosmīgas idejas un radoši vakari Rīgā.",
   keywords: [
     "gleznošanas nodarbības Rīgā",
     "mākslas studija Rīga",
@@ -19,13 +19,18 @@ export const metadata = {
     "Klusais centrs",
     "Rīgas centrs",
   ],
-  alternates: { canonical: "/inspire" },
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Art Studio Inspire — gleznošanas nodarbības Rīgā",
     description:
-      "Mākslas nodarbības, radoši pasākumi un individuālas sesijas Rīgas centrā.",
+      "Paņem otu. Uztaisi kaut ko savu. Gleznošana, drosmīgas idejas un radoši vakari Rīgā.",
+    url: "/",
+    siteName: "Art Studio Inspire",
+    locale: "lv_LV",
+    type: "website",
     images: ["/art/inspire-masthead-wide.png"],
   },
+  twitter: { card: "summary_large_image", title: "Art Studio Inspire — gleznošanas nodarbības Rīgā", description: "Paņem otu. Uztaisi kaut ko savu. Gleznošana, drosmīgas idejas un radoši vakari Rīgā.", images: ["/art/inspire-masthead-wide.png"] },
 };
 
 export default function InspireLayout({ children }) {

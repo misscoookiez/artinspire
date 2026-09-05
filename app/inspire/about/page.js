@@ -3,70 +3,29 @@ import { useState } from "react";
 import "./page.css";
 
 const copy = {
-  lv: {
-    back: "← UZ STUDIJU",
-    kicker: "KAS VADA STUDIJU",
-    title: "Sandra Rudzīte",
-    lead: "Glezniecībā jau 18 gadus — un mīlestība pret mākslu joprojām neļauj apstāties.",
-    body: [
-      "Sandra vada Art Studio Inspire nevis no malas, bet no darbnīcas — ar eļļu, akvareli, zīmējumu, akrilu un lielām idejām uz audekla. Viņa ir strādājusi ar Adobe, rādījusi savu darbu un mācīšanu tiešsaistē, bet studijā svarīgākais paliek dzīvs, praktisks process: paskatīties, izmēģināt, kļūdīties, pamanīt un turpināt.",
-      "Viņas glezniecībā figurālais un simboliskais bieži kļūst par iekšēju ainavu. Tēls, dzīvnieks, klusā daba vai tumšāka gaisma nav tikai dekorācija, bet veids, kā noturēt skatienu pie sajūtas.",
-      "Lai gan darbos reizēm ienāk tumšāki vai simboliski motīvi, studijā ir vieta vieglumam: smiekliem, tējai, ziņkārībai un arī gleznai par mīļu kaķi. Mācīšanā svarīgākais ir palīdzēt cilvēkam ieraudzīt, ko viņš pats mēģina pateikt attēlā.",
-    ],
-    note: "Mēs sākam ar to, ko vēlies radīt, nevis ar to, ko jau proti.",
-    cta: "SKATĪT NODARBĪBAS →",
-  },
-  en: {
-    back: "← BACK TO THE STUDIO",
-    kicker: "WHO RUNS THE STUDIO",
-    title: "Sandra Rudzīte",
-    lead: "Painting has been part of her life for 18 years — and her love of art still refuses to let go.",
-    body: [
-      "Sandra runs Art Studio Inspire from inside the work itself: oils, watercolour, drawing, acrylics and ambitious canvases. She has worked with Adobe and shared painting and teaching online, but the studio stays rooted in a real hands-on process: looking, trying, getting something wrong, noticing, and continuing.",
-      "In her painting, the figurative and symbolic often become an inner landscape. A figure, animal, still life or darker light is not decoration, but a way of holding attention on a feeling.",
-      "Even when the work carries darker or symbolic subjects, the studio has room for lightness: laughter, tea, curiosity, and a painting of a sweet cat. In teaching, the essential thing is helping someone see what they are already trying to say in an image.",
-    ],
-    note: "We begin with what you want to create, not with what you already know how to do.",
-    cta: "VIEW CLASSES →",
-  },
-  ru: {
-    back: "← В СТУДИЮ",
-    kicker: "КТО ВЕДЁТ СТУДИЮ",
-    title: "Сандра Рудзите",
-    lead: "В живописи уже 18 лет — и любовь к искусству по-прежнему не даёт ей останавливаться.",
-    body: [
-      "Сандра ведёт Art Studio Inspire изнутри самой работы: масло, акварель, рисунок, акрил и большие идеи на холсте. Она работала с Adobe и показывала живопись и обучение онлайн, но основа студии остаётся живой и практичной: смотреть, пробовать, ошибаться, замечать и продолжать.",
-      "В её живописи фигуративное и символическое часто становятся внутренним пейзажем. Персонаж, животное, натюрморт или более тёмный свет — не просто декор, а способ удержать внимание на ощущении.",
-      "Даже когда в работах появляются более тёмные или символические мотивы, в студии есть место лёгкости: смеху, чаю, любопытству и картине с милым котом. В преподавании главное — помочь человеку увидеть, что именно он уже пытается сказать своим изображением.",
-    ],
-    note: "Мы начинаем с того, что вы хотите создать, а не с того, что уже умеете.",
-    cta: "ПОСМОТРЕТЬ ЗАНЯТИЯ →",
-  },
+  lv: { back:"← UZ SĀKUMLAPU", kicker:"PAR ART STUDIO INSPIRE", title:"Telpa idejām, krāsai un savam ritmam.", lead:"Mākslas studija Rīgas centrā bērniem, jauniešiem un pieaugušajiem.", body:["Inspire ir dzīva darbnīca Miera ielā 17 — vieta, kur var atnākt ar skici, domu vai vienkārši ziņkāri. Uz vietas ir materiāli, darba vieta un atbalsts, lai sāktu bez steigas.","Regulārajās grupās, individuālajās nodarbībās un radošajos vakaros mēs savienojam brīvību ar praktisku palīdzību. Tehnika, krāsa un kompozīcija parādās tad, kad tās palīdz idejai kļūt stiprākai.","Studiju vada māksliniece Sandra Rudzīte. Te ir vieta nopietnam darbam, eksperimentiem, tējai, kļūdām un arī idejām, kas sākumā vēl neizklausās līdz galam skaidras."], note:"Te nevajag ierasties gatavam. Pietiek ar vēlmi kaut ko radīt.", cta:"SKATĪT NODARBĪBAS →" },
+  en: { back:"← BACK TO HOME", kicker:"ABOUT ART STUDIO INSPIRE", title:"Room for ideas, colour and your own rhythm.", lead:"A painting studio in central Riga for children, young people and adults.", body:["Inspire is a working studio at Miera iela 17: come with a sketch, an idea, or simply curiosity. Materials, a place to work and thoughtful support are all here, so there is no need to arrive fully prepared.","In weekly groups, private sessions and creative evenings, freedom sits beside practical help. Technique, colour and composition enter the conversation when they make an idea stronger.","The studio is led by artist Sandra Rudzīte. There is room for serious work, experiments, tea, mistakes and ideas that do not yet have a fully clear shape."], note:"You do not need to arrive ready. Wanting to make something is enough.", cta:"VIEW CLASSES →" },
+  ru: { back:"← НА ГЛАВНУЮ", kicker:"О ART STUDIO INSPIRE", title:"Пространство для идей, цвета и своего ритма.", lead:"Художественная студия в центре Риги для детей, молодёжи и взрослых.", body:["Inspire — живая мастерская на улице Миера, 17. Можно прийти с эскизом, мыслью или просто любопытством. Здесь есть материалы, рабочее место и поддержка, чтобы начать без спешки.","В регулярных группах, индивидуальных занятиях и творческих вечерах свобода сочетается с практической помощью. Техника, цвет и композиция появляются тогда, когда помогают идее стать сильнее.","Студию ведёт художница Сандра Рудзите. Здесь есть место для серьёзной работы, экспериментов, чая, ошибок и идей, которые пока ещё не обрели ясную форму."], note:"Не нужно приходить готовым. Достаточно желания что-то создать.", cta:"ПОСМОТРЕТЬ ЗАНЯТИЯ →" },
 };
 
 export default function InspireAboutPage() {
   const [lang, setLang] = useState("lv");
   const t = copy[lang];
-  return <main className="inspire-about-page">
+  return <main className="inspire-about-page" lang={lang}>
     <header>
-      <a href="/inspire">{t.back}</a>
-      <div aria-label="Language">
-        {Object.keys(copy).map((code) => <button key={code} className={lang === code ? "active" : ""} onClick={() => setLang(code)}>{code.toUpperCase()}</button>)}
-      </div>
+      <a href="/">{t.back}</a>
+      <div aria-label="Language">{Object.keys(copy).map((code) => <button key={code} className={lang === code ? "active" : ""} onClick={() => setLang(code)}>{code.toUpperCase()}</button>)}</div>
     </header>
     <section className="inspire-about-hero">
       <div>
-        <p>{t.kicker}</p>
-        <h1>{t.title}</h1>
-        <h2>{t.lead}</h2>
+        <p>{t.kicker}</p><h1>{t.title}</h1><h2>{t.lead}</h2>
         <div className="inspire-about-copy">{t.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
-        <blockquote>{t.note}</blockquote>
-        <a className="inspire-about-cta" href="/inspire#nodarbibas">{t.cta}</a>
+        <blockquote>{t.note}</blockquote><a className="inspire-about-cta" href="/#nodarbibas">{t.cta}</a>
       </div>
       <div className="inspire-about-images">
-        <img src="/art/sandra-profile-lead.webp" alt="Sandra Rudzīte in the studio" />
-        <img src="/art/sandra-studio-tea-upright.webp" alt="Sandra Rudzīte in Art Studio Inspire" />
-        <img src="/art/sandra-studio-07.webp" alt="Sandra Rudzīte painting" />
+        <img src="/art/inspire-studio.webp" alt="Art Studio Inspire" />
+        <img src="/art/inspire-slide-02.webp" alt="Art Studio Inspire" />
+        <img src="/art/inspire-slide-03.webp" alt="Art Studio Inspire" />
       </div>
     </section>
   </main>;

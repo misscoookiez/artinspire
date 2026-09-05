@@ -1,0 +1,9 @@
+/* One visual cue per disclosure: an aligned arrow, never a redundant plus and arrow. */
+.inspire details > summary b { font-size: 0 !important; line-height: 1 !important; }
+.inspire details > summary b::before { font-size: 11px !important; }
+.inspire details > summary b::after { font-size: 19px !important; line-height: 1 !important; }
+
+/* The approaches are editorial prompts, not a corporate numbered process. */
+.inspire-depth-panel > summary > span { display: none !important; }
+.inspire-depth-panel > summary { grid-template-columns: minmax(0, 1fr) auto !important; }
+.inspire-depth-panel > summary b { align-self: center; }

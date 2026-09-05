@@ -4,8 +4,13 @@ import { artwork, classes } from "@/lib/catalog";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { attachStripeSession, createBookingHold } from "@/lib/bookings";
 import { attachArtworkCheckoutSession, createArtworkHold } from "@/lib/fulfillment";
+import { rateLimit } from "@/lib/rate-limit";
+import { isTrustedBrowserRequest } from "@/lib/request-security";
 
-const site = () => process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const site = () => {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  return new URL(configured).origin;
+};
 const classPurchases={
   trial:{name:"Trial class",amount:1500},
   group:{name:"Group class",amount:2500},
@@ -21,10 +26,13 @@ const paymentMethodTypes=(process.env.STRIPE_PAYMENT_METHOD_TYPES || "card,sepa_
   .filter(Boolean);
 
 export async function POST(request) {
+  if (!isTrustedBrowserRequest(request)) return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+  const throttle = rateLimit(request, "checkout", { limit: 8, windowMs: 60_000 });
+  if (!throttle.allowed) return NextResponse.json({ error: "Please wait a moment and try again." }, { status: 429, headers: { "Retry-After": String(throttle.retryAfter) } });
   let bookingHoldId, artworkHoldId;
   try {
     const body = await request.json();
-    const origin = request.headers.get("origin") || new URL(request.url).origin || site();
+    const origin = site();
     const business = Boolean(body.invoice);
     // This can only be enabled in local development to verify that Stripe Checkout
     // itself is wired correctly before the Supabase booking database is connected.

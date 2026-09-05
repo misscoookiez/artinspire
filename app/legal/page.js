@@ -1,5 +1,5 @@
 export default function Legal(){return <main className="legal-page">
-  <header><a href="/inspire">ART STUDIO INSPIRE</a><nav><a href="/inspire">STUDIJA</a><a href="/inspire#kontakti">KONTAKTI</a></nav></header>
+  <header><a href="/">ART STUDIO INSPIRE</a><nav><a href="/">STUDIJA</a><a href="/#kontakti">KONTAKTI</a></nav></header>
   <section className="legal-hero"><p>STUDIO POLICIES</p><h1>Clear terms,<br/><em>so you can make plans.</em></h1><div><span>ARTWORK · CLASSES · PRIVATE SESSIONS</span><span>LAST REVIEWED · PRE-LAUNCH DRAFT</span></div></section>
   <section className="legal-grid">
     <article><span>01</span><h2>Original artwork</h2><p>Every listed painting is a unique original. A work is only secured when payment has completed successfully. Colours can differ slightly between a screen and the original artwork.</p><p>Artwork dimensions, condition and availability are confirmed on the artwork page or directly by email before purchase.</p></article>

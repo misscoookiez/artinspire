@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { sendGroupApplication } from "@/lib/booking-email";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { rateLimit } from "@/lib/rate-limit";
+import { isTrustedBrowserRequest } from "@/lib/request-security";
 
 const weeklyGroupKeys = new Set([
   "thu-youth",
@@ -12,6 +14,9 @@ const weeklyGroupKeys = new Set([
 ]);
 
 export async function POST(request) {
+  if (!isTrustedBrowserRequest(request)) return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
+  const throttle = rateLimit(request, "weekly-signup", { limit: 5, windowMs: 60_000 });
+  if (!throttle.allowed) return NextResponse.json({ error: "Please wait a moment and try again." }, { status: 429, headers: { "Retry-After": String(throttle.retryAfter) } });
   try {
     const { name, email, group, groupKey } = await request.json();
     const cleanName = String(name || "").trim();
