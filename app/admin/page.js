@@ -220,6 +220,7 @@ export default function OwnerDashboard() {
   });
   const [slotDraft, setSlotDraft] = useState(emptySlot);
   const [addingSlot, setAddingSlot] = useState(false);
+  const [closureRange, setClosureRange] = useState({ from: "", to: "" });
   const [artworks, setArtworks] = useState([]);
   const [editingArtwork, setEditingArtwork] = useState(null);
   const supabase = useMemo(() => getSupabaseBrowser(), []);
@@ -360,6 +361,27 @@ export default function OwnerDashboard() {
       setSlotDraft(emptySlot);
       setAddingSlot(false);
       setNotice("Availability published.");
+      loadSchedule();
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
+  const closeRegularDates = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await fetch("/api/admin/schedule", {
+        method: "POST",
+        headers: { "content-type": "application/json", ...auth },
+        body: JSON.stringify({ kind: "class-block", values: closureRange }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setNotice(
+        data.closed
+          ? `${data.closed} regular class slots marked unavailable.`
+          : "No open regular classes fell on those dates.",
+      );
+      setClosureRange({ from: "", to: "" });
       loadSchedule();
     } catch (error) {
       setNotice(error.message);
@@ -613,6 +635,40 @@ export default function OwnerDashboard() {
                 + ADD CLASS OR SLOT
               </button>
             </div>
+            <form className="admin-closure-form" onSubmit={closeRegularDates}>
+              <div>
+                <p>BUSY / VACATION</p>
+                <span>
+                  Close every regular group class in a date range. Existing
+                  booked sessions stay visible in your schedule but no longer
+                  accept new bookings.
+                </span>
+              </div>
+              <label>
+                From
+                <input
+                  required
+                  type="date"
+                  value={closureRange.from}
+                  onChange={(event) =>
+                    setClosureRange((old) => ({ ...old, from: event.target.value }))
+                  }
+                />
+              </label>
+              <label>
+                Until
+                <input
+                  required
+                  type="date"
+                  min={closureRange.from || undefined}
+                  value={closureRange.to}
+                  onChange={(event) =>
+                    setClosureRange((old) => ({ ...old, to: event.target.value }))
+                  }
+                />
+              </label>
+              <button>MARK UNAVAILABLE</button>
+            </form>
             {addingSlot && (
               <form className="admin-slot-form" onSubmit={createSlot}>
                 <select

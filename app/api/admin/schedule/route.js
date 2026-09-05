@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireOwner } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { ensureRollingClassSessions, rigaDateFromTimestamp } from "@/lib/regular-class-schedule";
 
 const classFields=new Set(["title_en","title_lv","starts_at","ends_at","capacity","price_cents","status"]);
 const privateFields=new Set(["starts_at","ends_at","price_cents","status"]);
@@ -9,10 +10,12 @@ const validPrivateStatus=new Set(["open","held","booked","closed"]);
 
 function pick(source,allowed) { return Object.fromEntries(Object.entries(source||{}).filter(([key,value])=>allowed.has(key)&&value!==undefined)); }
 function validTimes(row) { return !row.starts_at || !row.ends_at || new Date(row.starts_at).getTime()<new Date(row.ends_at).getTime(); }
+function validDateRange(from,to) { return /^\d{4}-\d{2}-\d{2}$/.test(from||"") && /^\d{4}-\d{2}-\d{2}$/.test(to||"") && from<=to; }
 
 export async function GET(request) {
   const auth=await requireOwner(request);
   if(auth.error) return NextResponse.json({error:auth.error},{status:auth.status});
+  try { await ensureRollingClassSessions(supabaseAdmin); } catch(error) { console.error("Could not extend recurring class sessions",error); }
   const [classes,slots,bookings,weeklySignups]=await Promise.all([
     supabaseAdmin.from("class_sessions").select("*").order("starts_at"),
     supabaseAdmin.from("private_slots").select("*").order("starts_at"),
@@ -29,6 +32,19 @@ export async function POST(request) {
   if(auth.error) return NextResponse.json({error:auth.error},{status:auth.status});
   try {
     const {kind,values}=await request.json();
+    if(kind==="class-block") {
+      const from=String(values?.from||"");
+      const to=String(values?.to||"");
+      if(!validDateRange(from,to)) throw new Error("Choose a valid first and last unavailable date.");
+      const {data:sessions,error:findError}=await supabaseAdmin.from("class_sessions").select("id,starts_at,status").eq("status","open");
+      if(findError) throw findError;
+      const ids=(sessions||[]).filter((session)=>{const date=rigaDateFromTimestamp(session.starts_at);return date>=from&&date<=to;}).map((session)=>session.id);
+      if(ids.length) {
+        const {error:updateError}=await supabaseAdmin.from("class_sessions").update({status:"closed"}).in("id",ids);
+        if(updateError) throw updateError;
+      }
+      return NextResponse.json({closed:ids.length});
+    }
     const isClass=kind==="class";
     const row=pick(values,isClass?classFields:privateFields);
     if(!validTimes(row) || !row.starts_at || !row.ends_at || !Number.isInteger(row.price_cents) || row.price_cents<1 || (isClass&&(!Number.isInteger(row.capacity)||row.capacity<1))) throw new Error("Please provide a valid date, time, capacity and price.");

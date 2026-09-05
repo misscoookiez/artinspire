@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
 import { artwork } from "@/lib/catalog";
 import { supabaseAdmin } from "@/lib/supabase-admin";
+import { ensureRollingClassSessions } from "@/lib/regular-class-schedule";
 
 export async function GET() {
   if (!supabaseAdmin) return NextResponse.json({ availableIds:artwork.map(item=>item.id), mode:"demo" });
+  try {
+    await ensureRollingClassSessions(supabaseAdmin);
+  } catch (error) {
+    // Booking availability remains usable if the background maintenance ever
+    // needs attention; the owner can still manage individual dated classes.
+    console.error("Could not extend recurring class sessions", error);
+  }
   const now = new Date().toISOString();
   const [artworkResult, classesResult, bookingsResult, holdsResult, slotsResult] = await Promise.all([
     supabaseAdmin.from("artworks").select("id,title_en,title_lv,description_en,description_lv,medium,dimensions,price_cents,image_path").eq("status","available").order("created_at",{ascending:false}),

@@ -223,7 +223,9 @@
   margin: 0;
   padding: clamp(72px, 8vw, 118px) clamp(26px, 10vw, 200px) !important;
   overflow: hidden;
-  background: linear-gradient(90deg, rgba(6, 4, 14, .9) 0%, rgba(7, 6, 18, .72) 47%, rgba(8, 12, 21, .28) 100%), url('/art/inspire-landing-studio-poster.webp') center / cover no-repeat;
+  background:
+    linear-gradient(90deg, rgba(5, 3, 13, .97) 0%, rgba(6, 4, 15, .88) 29%, rgba(7, 6, 18, .6) 55%, rgba(8, 12, 21, .19) 100%),
+    url('/art/inspire-landing-studio-poster.webp') 62% center / cover no-repeat;
 }
 .inspire-page-home .inspire-statement::before {
   content: "";
@@ -233,9 +235,8 @@
   pointer-events: none;
   opacity: 0;
   background:
-    linear-gradient(90deg, rgba(5,4,13,.92) 0%, rgba(8,6,18,.78) 46%, rgba(8,9,22,.28) 100%),
-    url('/art/inspire-statement-studio-0770.jpeg') right center / auto 118% no-repeat,
-    url('/art/inspire-statement-studio-8309.jpeg') 88% 78% / auto 72% no-repeat;
+    linear-gradient(90deg, rgba(5,4,13,.96) 0%, rgba(8,6,18,.85) 30%, rgba(8,7,20,.56) 57%, rgba(8,9,22,.18) 100%),
+    url('/art/inspire-statement-studio-0770.jpeg') 62% center / cover no-repeat;
   animation: inspire-statement-photo-pause 42s ease-in-out infinite;
 }
 .inspire-page-home .inspire-statement-copy { position: relative; z-index: 1; width: min(1180px, 74vw); max-width: 1180px; min-width: 0; text-align: left !important; }
@@ -258,6 +259,25 @@
 @keyframes inspire-mood-leave {
   to { opacity: 0; transform: translateY(-4px); }
 }
+
+/* Clickable rows receive a quiet invitation, without sacrificing contrast. */
+.inspire details > summary {
+  position: relative;
+  transition: color .22s ease, background-color .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.inspire details > summary:hover,
+.inspire details > summary:focus-visible {
+  color: #b8fbff !important;
+  background: linear-gradient(90deg, rgba(77, 226, 240, .1), rgba(178, 94, 234, .055), transparent 74%);
+  box-shadow: inset 2px 0 0 rgba(125, 239, 247, .9), 0 0 22px rgba(88, 225, 239, .09);
+  outline: none;
+}
+.inspire details[open] > summary {
+  color: #aef7fb !important;
+  background: linear-gradient(90deg, rgba(72, 215, 231, .13), rgba(179, 85, 229, .07), transparent 76%);
+  box-shadow: inset 2px 0 0 #8cf1f7, 0 0 28px rgba(135, 74, 229, .1);
+}
+.inspire details > summary:focus-visible { outline: 1px solid #92f4f8; outline-offset: 3px; }
 
 /* Home copy is content-led, never vertically centred inside an inherited fixed
    frame. This preserves a reliable breathing gap below the navigation at every

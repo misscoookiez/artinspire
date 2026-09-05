@@ -284,6 +284,49 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.admin-closure-form {
+  display: grid;
+  grid-template-columns: minmax(250px, 1.4fr) minmax(130px, 0.55fr) minmax(130px, 0.55fr) auto;
+  gap: 14px;
+  align-items: end;
+  margin: 0 0 26px;
+  padding: 18px;
+  border: 1px solid #4a4054;
+  background: linear-gradient(105deg, rgba(74, 43, 75, 0.46), rgba(12, 19, 29, 0.7));
+}
+.admin-closure-form p {
+  margin: 0 0 7px;
+  color: #5be0ec;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+.admin-closure-form span {
+  display: block;
+  max-width: 440px;
+  color: #c6bfca;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.admin-closure-form label {
+  display: grid;
+  gap: 7px;
+  color: #c9c0d0;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+}
+.admin-closure-form input {
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #62556c;
+  background: #0a0910;
+  color: #fff;
+  font: 13px Arial, sans-serif;
+}
+.admin-closure-form button {
+  border-color: #d56bed !important;
+  white-space: nowrap;
+}
 .admin-list article {
   display: grid;
   grid-template-columns: 140px 1fr 1fr auto;
@@ -490,6 +533,10 @@
   .admin-list article {
     grid-template-columns: 1fr;
     gap: 7px;
+  }
+  .admin-closure-form {
+    grid-template-columns: 1fr;
+    align-items: stretch;
   }
   .admin-list article button {
     justify-self: start;
