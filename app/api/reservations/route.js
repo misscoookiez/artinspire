@@ -20,7 +20,23 @@ export async function POST(request) {
     if (cleanName.length > 120 || cleanEmail.length > 254 || cleanLabel.length > 180) {
       return NextResponse.json({ error: "Please shorten the reservation details." }, { status: 400 });
     }
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(itemId))) {
+      return NextResponse.json({ error: "Please choose an available time." }, { status: 400 });
+    }
     if (!supabaseAdmin) return NextResponse.json({ error: "Reservations are temporarily unavailable. Please try again shortly." }, { status: 503 });
+    const resourceTable = kind === "class" ? "class_sessions" : "private_slots";
+    const { data: resource, error: resourceError } = await supabaseAdmin
+      .from(resourceTable)
+      .select("id")
+      .eq("id", itemId)
+      .eq("status", "open")
+      .gte("ends_at", new Date().toISOString())
+      .maybeSingle();
+    if (resourceError) {
+      console.error("Reservation resource lookup failed", resourceError);
+      return NextResponse.json({ error: "Reservations are temporarily unavailable. Please try again shortly." }, { status: 503 });
+    }
+    if (!resource) return NextResponse.json({ error: "That place has just become unavailable." }, { status: 409 });
     let reservationId;
     try { reservationId = await reserveBookingNow({ kind, resourceId: itemId, customerName: cleanName, email: cleanEmail }); }
     catch (error) {
