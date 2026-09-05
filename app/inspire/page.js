@@ -28,6 +28,7 @@ import "./inspire-local-guide.css";
 import "./inspire-top-refine.css";
 import "./inspire-about-continuity.css";
 import "./inspire-art-direction.css";
+import "./inspire-navigation.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1166,7 +1167,7 @@ const words = {
   },
 };
 
-export default function InspirePage() {
+export default function InspirePage({ page = "home" }) {
   const [form, setForm] = useState(false);
   const [sent, setSent] = useState(false);
   const [selection, setSelection] = useState("");
@@ -1692,7 +1693,7 @@ export default function InspirePage() {
     }
   };
   return (
-    <main className="inspire" lang={lang}>
+    <main className={`inspire inspire-page-${page}`} lang={lang}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -1769,17 +1770,24 @@ export default function InspirePage() {
           alt=""
           aria-hidden="true"
         />
-        <div className="inspire-masthead-brand">
+        <a className="inspire-masthead-brand" href="/" aria-label="Art Studio Inspire sākumlapa">
           <img
             src="/art/inspire-logo-lockup-fixed.png"
             alt="Art Studio Inspire"
           />
-        </div>
+        </a>
         <div className="inspire-masthead-copy">
           <p>{t.sub}</p>
           <span>
             {t.hero} {t.hero2} {t.hero3}
           </span>
+          <a className="inspire-masthead-cta" href="/classes">
+            {lang === "lv"
+              ? "SKATĪT TUVĀKĀS NODARBĪBAS →"
+              : lang === "ru"
+                ? "ПОСМОТРЕТЬ БЛИЖАЙШИЕ ЗАНЯТИЯ →"
+                : "SEE THE NEXT CLASSES →"}
+          </a>
           <div className="inspire-language inspire-masthead-language" aria-label="Language">
             <button className={lang === "lv" ? "active" : ""} onClick={() => setLang("lv")}>LV</button>
             <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
@@ -1788,7 +1796,7 @@ export default function InspirePage() {
         </div>
       </section>
       <nav className="inspire-icon-nav" aria-label="Inspire sections">
-        <a href="#nodarbibas">
+        <a href="/classes">
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </a>
@@ -1796,11 +1804,11 @@ export default function InspirePage() {
           <img src="/art/inspire-icon-easel.png" alt="" />
           <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
         </a>
-        <a href="#kontakti">
+        <a href="/#kontakti">
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{t.find}</span>
         </a>
-        <a href="#studentu-darbi">
+        <a href="/#studentu-darbi">
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
@@ -1810,7 +1818,7 @@ export default function InspirePage() {
                 : "STUDENT WORK"}
           </span>
         </a>
-        <a href="#pasakumi">
+        <a href="/events">
           <img
             className="inspire-gift-icon"
             src="/art/inspire-icon-gift.png"
@@ -1824,7 +1832,7 @@ export default function InspirePage() {
                 : "PRIVATE EVENTS"}
           </span>
         </a>
-        <a href="#biezakie-jautajumi">
+        <a href="/#biezakie-jautajumi">
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
         </a>
       </nav>
@@ -1863,6 +1871,25 @@ export default function InspirePage() {
       <section className="inspire-mood-strip" aria-live="polite">
         <p key={`${lang}-${moodQuote}`}>{moodQuotes[lang][moodQuote]}</p>
       </section>
+      {page === "home" && (
+        <section className="inspire-home-class-preview" aria-label={lang === "lv" ? "Tuvākās nodarbības" : lang === "ru" ? "Ближайшие занятия" : "Next classes"}>
+          <div>
+            <p className="inspire-kicker">{lang === "lv" ? "TUVĀKĀS NODARBĪBAS" : lang === "ru" ? "БЛИЖАЙШИЕ ЗАНЯТИЯ" : "NEXT CLASSES"}</p>
+            <h2>{lang === "lv" ? "Izvēlies savu laiku. Vietu rezervē uzreiz." : lang === "ru" ? "Выберите своё время. Место бронируется сразу." : "Choose a time. Reserve your place straight away."}</h2>
+          </div>
+          <div className="inspire-home-class-preview-list">
+            {upcomingClasses.slice(0, 3).map((item) => (
+              <a key={item.id} href="/classes">
+                <time>{item.date}</time>
+                <strong>{item.time}</strong>
+                <span>{sessionName(item)}</span>
+                <i>{lang === "lv" ? "REZERVĒT →" : lang === "ru" ? "ЗАБРОНИРОВАТЬ →" : "RESERVE →"}</i>
+              </a>
+            ))}
+          </div>
+          <a className="inspire-home-class-preview-cta" href="/classes">{lang === "lv" ? "SKATĪT VISAS NODARBĪBAS →" : lang === "ru" ? "ВСЕ ЗАНЯТИЯ →" : "VIEW ALL CLASSES →"}</a>
+        </section>
+      )}
       <section id="nodarbibas" className="inspire-section">
         <p className="inspire-kicker">{t.regular}</p>
         <div className="inspire-schedule-heading">
@@ -2589,7 +2616,7 @@ export default function InspirePage() {
         />
       </section>
       <InspireLocalGuide lang={lang} />
-      <section id="biezakie-jautajumi" className="inspire-faq">
+      <section id="biezakie-jautajumi" className="inspire-faq" tabIndex={-1}>
         <div>
           {faq.title && <p className="inspire-kicker">{faq.title}</p>}
           <h2>{faq.lead}</h2>
