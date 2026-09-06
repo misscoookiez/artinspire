@@ -31,7 +31,11 @@
 .inspire-masthead-mood {
   width: 100%;
   max-width: 520px;
+  /* A fixed two-line slot prevents a longer rotating phrase from moving the
+     language controls or changing the masthead's perceived height. */
+  height: 2.45em;
   min-height: 2.45em;
+  overflow: hidden;
   margin: 13px 0 0 !important;
   color: #b9f8fb !important;
   font-family: Georgia, "Times New Roman", serif !important;
@@ -74,9 +78,12 @@
   }
 
   .inspire-masthead-mood {
-    min-height: 0;
+    height: 2.45em;
+    min-height: 2.45em;
     margin-top: 10px !important;
-    font-size: clamp(16px, 4.7vw, 20px) !important;
+    font-size: clamp(14px, 3.9vw, 18px) !important;
+    line-height: 1.2 !important;
+    text-wrap: pretty;
   }
 }
 
