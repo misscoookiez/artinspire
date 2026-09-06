@@ -455,16 +455,14 @@
 .inspire-page-events .inspire-event-custom,
 .inspire-page-events .inspire-event-faq-inline { width: min(1280px, 100%); max-width: 1280px !important; }
 
-/* The contact page deliberately keeps its complete question library and the
-   expandable local-search guide visible. Page-specific hiding rules on the
-   other routes must never leak into this route. */
-.inspire-page-contact > .inspire-local-guide,
-.inspire-page-contact > .inspire-faq {
+/* Contact ends with practical studio information.  The full question library
+   has its own page, so the contact route stays focused and easy to scan. */
+.inspire-page-contact > .inspire-local-guide {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
-.inspire-page-contact > .inspire-faq { max-width: none !important; }
+.inspire-page-contact > .inspire-faq { display: none !important; }
 
 .inspire-inquiry-message { display: grid; gap: 9px; margin: 16px 0; color: #9cf1f6; font-size: 11px; letter-spacing: .12em; }
 .inspire-inquiry-message textarea { width: 100%; min-height: 120px; resize: vertical; box-sizing: border-box; padding: 14px; border: 1px solid rgba(130,236,245,.5); background: rgba(6,8,15,.78); color: #f7f5f9; font: inherit; line-height: 1.5; }

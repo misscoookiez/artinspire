@@ -2089,7 +2089,7 @@ export default function InspirePage({ page = "home" }) {
           }),
         }}
       />
-      <script
+      {page === "questions" && <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -2102,7 +2102,7 @@ export default function InspirePage({ page = "home" }) {
             })),
           }),
         }}
-      />
+      />}
       <section className="inspire-masthead">
         <img
           className="inspire-masthead-art"
@@ -2996,7 +2996,7 @@ export default function InspirePage({ page = "home" }) {
         />
       </section>
       <InspireLocalGuide lang={lang} />
-      <section id="biezakie-jautajumi" className="inspire-faq" tabIndex={-1}>
+      {page !== "contact" && <section id="biezakie-jautajumi" className="inspire-faq" tabIndex={-1}>
         <div>
           {faq.title && <p className="inspire-kicker">{faq.title}</p>}
           <h2>{faq.lead}</h2>
@@ -3013,7 +3013,7 @@ export default function InspirePage({ page = "home" }) {
             </details>
           ))}
         </div>
-      </section>
+      </section>}
       <section className="inspire-energy-strip" aria-hidden="true">
         <span>✦</span>
       </section>
