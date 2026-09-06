@@ -2686,10 +2686,10 @@ export default function InspirePage({ page = "home" }) {
         <details>
           <summary>
             {lang === "lv"
-              ? "SKATĪT PIEAUGUŠO UN JAUNIEŠU DARBUS"
+              ? "SKATĪT PIEAUGUŠO DARBUS"
               : lang === "ru"
-                ? "ПОСМОТРЕТЬ РАБОТЫ ВЗРОСЛЫХ И ПОДРОСТКОВ"
-                : "VIEW ADULT & YOUTH WORK"}
+                ? "ПОСМОТРЕТЬ РАБОТЫ ВЗРОСЛЫХ"
+                : "VIEW ADULT WORK"}
             <b>+</b>
           </summary>
           <div>

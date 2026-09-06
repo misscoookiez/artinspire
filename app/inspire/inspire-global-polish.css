@@ -90,7 +90,7 @@
    story is deliberately below it, so the first visual row remains a single,
    calm rectangle instead of becoming taller as copy is added. */
 @media (min-width: 901px) {
-  .inspire-page-about .inspire-host { align-items: stretch !important; }
+.inspire-page-about .inspire-host { align-items: stretch !important; }
   .inspire-page-about .inspire-host-gallery {
     min-height: 0 !important;
     height: 100% !important;
@@ -101,6 +101,20 @@
     margin: 0 auto;
     padding: clamp(48px, 7vw, 96px) 0 0;
   }
+}
+
+/* Long explanatory copy is still complete, but it now reads like publishing:
+   a modest first-line indent, generous line-height and deliberate paragraph
+   breaks instead of an unbroken block. */
+.inspire-page-about .inspire-host-bio p,
+.inspire-page-about .inspire-host-stories details > p,
+.inspire-page-about .inspire-proof-list details > p {
+  text-indent: 1.15em;
+  text-wrap: pretty;
+}
+.inspire-page-about .inspire-host-stories details > p::first-letter {
+  color: #aaf8fb;
+  font-weight: 700;
 }
 
 @media (max-width: 800px) {
