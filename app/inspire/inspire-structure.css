@@ -90,7 +90,7 @@
 .inspire-page-classes .inspire-schedule-title > small { display: block; margin-top: 9px; color: #9cf1f6; font: 700 10px/1 Arial, sans-serif; letter-spacing: .16em; }
 .inspire-page-classes .inspire-weekly-columns { width: min(1280px, 100%); margin-inline: auto; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 .inspire-weekly-columns > div { min-height: 244px; }
-.inspire-prices { line-height: 1.45; }
+.inspire-page-classes .inspire-prices { width: min(1280px, 100%); margin: clamp(26px, 3vw, 38px) auto 0 !important; line-height: 1.45; }
 .inspire-prices > span,
 .inspire-prices > small { display: block; }
 .inspire-prices > small { margin-top: 7px; color: rgba(172,246,250,.72); font-size: .82em; letter-spacing: .14em; }
