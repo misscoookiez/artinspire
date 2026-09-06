@@ -212,6 +212,28 @@
   .inspire-student-galleries details > div { gap: 8px !important; }
 }
 
+/* Accordion controls read as one compact action: the plus stays with its
+   title instead of occupying a detached right-hand column.  This also keeps
+   the control stable when a title wraps on a narrow screen. */
+.inspire-proof .inspire-proof-list > details > summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+}
+
+.inspire-proof .inspire-proof-list > details > summary strong {
+  flex: 0 1 auto;
+}
+
+.inspire-proof .inspire-proof-list > details > summary b {
+  flex: 0 0 auto;
+  width: 1em;
+  margin: 0 !important;
+  line-height: 1;
+  text-align: center;
+}
+
 @media (max-width: 800px) {
   .inspire-masthead {
     min-height: 0 !important;
