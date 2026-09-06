@@ -1,0 +1,38 @@
+/* The wordmark is a real foreground element, so it can grow independently
+   of the nebula backdrop while its left gutter stays locked in place. */
+.inspire-masthead {
+  background:
+    linear-gradient(90deg, rgba(7, 4, 27, .04), rgba(3, 8, 22, .16)),
+    url("/art/inspire-masthead-background.webp") center / cover no-repeat !important;
+}
+
+.inspire-masthead-brand {
+  display: block !important;
+  z-index: 2 !important;
+  width: min(860px, 48vw) !important;
+  max-width: none !important;
+  line-height: 0;
+}
+
+.inspire-masthead-brand img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 235px;
+  object-fit: contain !important;
+}
+
+@media (min-width: 801px) {
+  .inspire-masthead {
+    /* Give the now-chunkier mark room to grow rightward without changing its
+       established left edge or crowding the studio descriptor. */
+    grid-template-columns: minmax(0, 1.28fr) minmax(330px, .72fr) !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .inspire-masthead-brand {
+    width: min(470px, 88vw) !important;
+    max-width: 88vw !important;
+  }
+}
