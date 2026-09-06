@@ -483,7 +483,9 @@
      the full browser width as a text box. The artwork retains its own space. */
   .inspire-page-home .inspire-statement {
     padding: clamp(84px, 8vw, 138px) max(32px, 8vw) !important;
-    background-position: 60% center;
+    /* Pull the artwork inward from the right edge: its painted focal point
+       sits in the second third, while the left remains calm for copy. */
+    background-position: 68% center;
   }
   .inspire-page-home .inspire-statement-copy {
     width: min(920px, 58vw) !important;
@@ -509,7 +511,7 @@
   .inspire-page-home .inspire-masthead-brand { grid-column: 1; align-self: start; width: min(370px, 88vw) !important; }
   .inspire-page-home .inspire-masthead-copy { grid-column: 1; align-self: end; max-width: 100% !important; }
   .inspire-page-home .inspire-masthead-copy p, .inspire-page-home .inspire-masthead-copy > span { max-width: 330px; }
-  .inspire-page-home .inspire-statement { min-height: 0; padding: 68px 24px 78px !important; background-position: 66% center; }
+  .inspire-page-home .inspire-statement { min-height: 0; padding: 68px 24px 78px !important; background-position: 72% center; }
   .inspire-page-home .inspire-statement-copy { width: 100%; }
   .inspire-page-home .inspire-statement h2 { font-size: clamp(40px, 11vw, 54px) !important; }
   .inspire-page-home .inspire-statement-copy > div { grid-template-columns: 1fr; gap: 18px !important; }
