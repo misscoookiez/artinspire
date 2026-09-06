@@ -10,6 +10,7 @@ const assets = [
   "inspire-door-directions.jpg",
   "inspire-cosmic-strip.png",
   "inspire-inkwell-swash.png",
+  "inspire-landing-studio-poster-hq.png",
   "inspire-masthead-artwork.png",
   "inspire-masthead-locked.png",
   "inspire-masthead-wide.png",

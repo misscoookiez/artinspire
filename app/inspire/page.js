@@ -1182,6 +1182,12 @@ export default function InspirePage({ page = "home" }) {
   const [rentalWeek, setRentalWeek] = useState(0);
   const [bookingDay, setBookingDay] = useState("");
   const [lang, setLang] = useState("lv");
+  const chooseLanguage = (nextLanguage) => {
+    setLang(nextLanguage);
+    try {
+      window.localStorage.setItem("inspire-language", nextLanguage);
+    } catch {}
+  };
   const t = words[lang],
     activeProducts =
       lang === "lv"
@@ -1391,6 +1397,12 @@ export default function InspirePage({ page = "home" }) {
   useEffect(() => {
     try {
       setSavedEmail(window.localStorage.getItem("inspire-booking-email") || "");
+    } catch {}
+  }, []);
+  useEffect(() => {
+    try {
+      const savedLanguage = window.localStorage.getItem("inspire-language");
+      if (["lv", "en", "ru"].includes(savedLanguage)) setLang(savedLanguage);
     } catch {}
   }, []);
   useEffect(() => {
@@ -1892,9 +1904,9 @@ export default function InspirePage({ page = "home" }) {
             {t.hero} {t.hero2} {t.hero3}
           </span>
           <div className="inspire-language inspire-masthead-language" aria-label="Language">
-            <button className={lang === "lv" ? "active" : ""} onClick={() => setLang("lv")}>LV</button>
-            <button className={lang === "en" ? "active" : ""} onClick={() => setLang("en")}>EN</button>
-            <button className={lang === "ru" ? "active" : ""} onClick={() => setLang("ru")}>RU</button>
+            <button className={lang === "lv" ? "active" : ""} onClick={() => chooseLanguage("lv")}>LV</button>
+            <button className={lang === "en" ? "active" : ""} onClick={() => chooseLanguage("en")}>EN</button>
+            <button className={lang === "ru" ? "active" : ""} onClick={() => chooseLanguage("ru")}>RU</button>
           </div>
         </div>
       </section>
