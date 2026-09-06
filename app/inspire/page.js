@@ -1989,9 +1989,10 @@ export default function InspirePage({ page = "home" }) {
       <section id="nodarbibas" className="inspire-section">
         <div className="inspire-schedule-heading">
           <div className="inspire-schedule-title">
-            <p className="inspire-kicker">{lang === "lv" ? "ATVĒRTĀS" : t.regular}</p>
+            <p className="inspire-kicker">
+              {lang === "lv" ? <><span>ATVĒRTĀS</span><span>KATRU NEDĒĻU</span></> : t.regular}
+            </p>
             <h2>{t.group}</h2>
-            {lang === "lv" && <small>KATRU NEDĒĻU</small>}
           </div>
           {scheduleWeeks.length > 0 && <div className="inspire-week-switcher" aria-label={lang === "lv" ? "Nedēļas grafiks" : lang === "ru" ? "Расписание недели" : "Weekly schedule"}>
             <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={activeScheduleWeek === 0}>‹</button>

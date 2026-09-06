@@ -85,9 +85,9 @@
 }
 .inspire-page-classes .inspire-schedule-heading { width: min(1280px, 100%); margin: 0 auto clamp(30px, 3vw, 44px); align-items: center; }
 .inspire-page-classes .inspire-schedule-title { text-align: left; }
-.inspire-page-classes .inspire-schedule-title .inspire-kicker { margin: 0 0 8px !important; }
+.inspire-page-classes .inspire-schedule-title .inspire-kicker { display: flex; align-items: center; gap: 14px; margin: 0 0 8px !important; }
+.inspire-page-classes .inspire-schedule-title .inspire-kicker span + span { color: #9cf1f6; font-size: .9em; }
 .inspire-page-classes .inspire-schedule-heading h2 { margin: 0 !important; text-align: left !important; }
-.inspire-page-classes .inspire-schedule-title > small { display: block; margin-top: 9px; color: #9cf1f6; font: 700 10px/1 Arial, sans-serif; letter-spacing: .16em; }
 .inspire-page-classes .inspire-weekly-columns { width: min(1280px, 100%); margin-inline: auto; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 .inspire-weekly-columns > div { min-height: 244px; }
 .inspire-page-classes .inspire-prices { width: min(1280px, 100%); margin: clamp(26px, 3vw, 38px) auto 0 !important; line-height: 1.45; }
