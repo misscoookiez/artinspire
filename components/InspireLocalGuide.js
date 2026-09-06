@@ -4,7 +4,7 @@ const copy={
   lv:{summary:"PRAKTISKA INFORMĀCIJA PAR STUDIJU",items:[
     ["KUR UN KAM","Art Studio Inspire ir mākslas studija Rīgas centrā, Miera ielā 17 — ērti no Klusā centra, Skanstes un Brīvības ielas puses. Te ir gleznošanas nodarbības bērniem, pusaudžiem un pieaugušajiem, arī tad, ja meklē pirmo hobiju vai gribi atgriezties pie mākslas pēc ilga pārtraukuma."],
     ["KO VAR DARĪT","Akvarelis, akrils, eļļa, zīmējums, kompozīcija, krāsu teorija, darbs no dabas, akadēmiskie pamati un intuitīva vai sirreāla gleznošana. Vari nākt uz profesionālāku gleznošanas kursu, mierīgu hobija nodarbību, individuālu sesiju vai vienkārši izmēģināt īstus materiālus bez spiediena uz rezultātu."],
-    ["KAS IR IEKĻAUTS","Krāsas, otas, papīrs, audekļi un darba vieta ir studijā. Akvareļu nodarbība parasti ilgst 2 stundas, gleznošanas nodarbība — 3 stundas. Regulārai grupai var pieteikties bez tūlītējas apmaksas; apmaksātu rezervāciju var atcelt bez maksas līdz 24 stundām pirms sākuma."],
+    ["KAS IR IEKĻAUTS","Krāsas, otas, papīrs, audekļi un darba vieta ir studijā. Akvareļu nodarbība parasti ilgst 2 stundas, gleznošanas nodarbība — 3 stundas. Jebkura rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."],
     ["GRUPAS UN PASĀKUMI","Privātām grupām veidojam gleznošanas vakarus, dzimšanas dienas, neona gleznošanu, draugu vakarus, komandu pasākumus un izbraukuma radošās aktivitātes. Tā nav konveijera meistarklase ar vienu obligātu bildi — pasākumu pielāgojam grupas vecumam, noskaņai un idejai."]
   ]},
   en:{summary:"PRACTICAL STUDIO INFORMATION",items:[

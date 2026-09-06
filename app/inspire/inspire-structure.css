@@ -83,8 +83,8 @@
   max-width: 1750px;
   padding-inline: max(24px, 4vw);
 }
-.inspire-page-classes .inspire-section > .inspire-kicker { margin: 0 0 15px !important; }
-.inspire-page-classes .inspire-schedule-heading { width: min(813px, 100%); margin: 0 auto clamp(30px, 3vw, 44px); }
+.inspire-page-classes .inspire-section > .inspire-kicker { width: min(1280px, 100%); margin: 0 auto 15px !important; }
+.inspire-page-classes .inspire-schedule-heading { width: min(1280px, 100%); margin: 0 auto clamp(30px, 3vw, 44px); }
 .inspire-page-classes .inspire-schedule-heading h2 { margin: 0 !important; }
 .inspire-page-classes .inspire-weekly-columns { width: min(1280px, 100%); margin-inline: auto; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 .inspire-weekly-columns > div { min-height: 244px; }
@@ -151,8 +151,55 @@
   mix-blend-mode: screen;
   transform: rotate(-5deg);
 }
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after,
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  transform: none !important;
+  background-size: auto !important;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after {
+  background-image:
+    radial-gradient(58% 92% at 95% 10%, rgba(48, 167, 184, .18), transparent 70%),
+    radial-gradient(47% 72% at 7% 92%, rgba(146, 61, 143, .12), transparent 72%) !important;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  background-image:
+    radial-gradient(56% 82% at 92% 8%, rgba(92, 190, 212, .2), transparent 70%),
+    radial-gradient(47% 76% at 4% 95%, rgba(222, 162, 85, .14), transparent 72%),
+    linear-gradient(118deg, rgba(16, 20, 54, .12), rgba(71, 36, 99, .14)) !important;
+}
 .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after {
   background-image: url('/art/inspire-adult-watercolor-atmosphere.webp');
+}
+
+/* Keep the hand-crafted three-photo composition legible: the lead portrait is
+   allowed to remain a portrait, while its two companion frames retain their
+   original proportions rather than being sliced into decorative tiles. */
+.inspire-page-about .inspire-host-gallery {
+  min-height: clamp(440px, 38vw, 620px) !important;
+  max-height: none !important;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, .86fr) !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 12px !important;
+  background: #111013;
+}
+.inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+  grid-row: span 2 !important;
+}
+.inspire-page-about .inspire-host-gallery img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #111013;
+}
+.inspire-page-about .inspire-student-galleries {
+  padding-top: clamp(32px, 4vw, 58px) !important;
 }
 .inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after {
   top: -7vw;
@@ -225,7 +272,7 @@
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(5, 3, 13, .97) 0%, rgba(6, 4, 15, .88) 29%, rgba(7, 6, 18, .6) 55%, rgba(8, 12, 21, .19) 100%),
-    url('/art/inspire-landing-studio-poster.webp') 62% center / cover no-repeat;
+    url('/art/inspire-landing-studio-poster-hq.png') 62% center / cover no-repeat;
 }
 .inspire-page-home .inspire-statement::before {
   content: "";
@@ -319,15 +366,15 @@
   line-height: 1.6 !important;
 }
 .inspire-page-events .inspire-event-slideshow {
-  width: min(320px, 100%) !important;
+  width: min(460px, 100%) !important;
   min-height: 0 !important;
   height: auto !important;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   max-height: none !important;
   margin-left: auto !important;
   background: rgba(5, 5, 12, .55) !important;
 }
-.inspire-page-events .inspire-event-slideshow > button img { object-fit: cover !important; }
+.inspire-page-events .inspire-event-slideshow > button img { object-fit: contain !important; }
 .inspire-page-events .inspire-event-rates {
   width: min(880px, 100%);
   max-width: 880px !important;
@@ -351,19 +398,39 @@
 .inspire-page-events .inspire-event-grid {
   width: min(1280px, 100%);
   max-width: 1280px !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
   gap: 1px !important;
   background: rgba(126,239,249,.28);
 }
 .inspire-page-events .inspire-event-grid details {
-  min-height: 142px !important;
-  padding: 0 22px !important;
+  min-height: 118px !important;
+  padding: 0 18px !important;
   background: linear-gradient(145deg, rgba(17,50,75,.56), rgba(30,13,55,.62)) !important;
 }
-.inspire-page-events .inspire-event-grid h3 { font-size: clamp(19px, 1.55vw, 25px) !important; }
+.inspire-page-events .inspire-event-grid h3 { font-size: clamp(16px, 1.25vw, 20px) !important; }
 .inspire-page-events .inspire-event-grid details p { font-size: 16px !important; line-height: 1.62 !important; }
 .inspire-page-events .inspire-event-custom,
 .inspire-page-events .inspire-event-faq-inline { width: min(1280px, 100%); max-width: 1280px !important; }
+
+/* The contact page deliberately keeps its complete question library and the
+   expandable local-search guide visible. Page-specific hiding rules on the
+   other routes must never leak into this route. */
+.inspire-page-contact > .inspire-local-guide,
+.inspire-page-contact > .inspire-faq {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.inspire-page-contact > .inspire-faq { max-width: none !important; }
+
+.inspire-inquiry-message { display: grid; gap: 9px; margin: 16px 0; color: #9cf1f6; font-size: 11px; letter-spacing: .12em; }
+.inspire-inquiry-message textarea { width: 100%; min-height: 120px; resize: vertical; box-sizing: border-box; padding: 14px; border: 1px solid rgba(130,236,245,.5); background: rgba(6,8,15,.78); color: #f7f5f9; font: inherit; line-height: 1.5; }
+.inspire-inquiry-message textarea:focus { outline: 1px solid #92f4f8; border-color: #92f4f8; }
+.inspire-rental-slot-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; max-height: 280px; overflow-y: auto; background: rgba(119,235,244,.28); }
+.inspire-rental-slot-list button { min-height: 100px; padding: 18px; border: 0; background: rgba(11,16,28,.94); color: #f7f5f9; text-align: left; }
+.inspire-rental-slot-list button:hover, .inspire-rental-slot-list button.active { background: linear-gradient(135deg, rgba(25,97,113,.88), rgba(35,18,79,.93)); box-shadow: inset 3px 0 #8cf1f7; }
+.inspire-rental-slot-list strong { display: block; font-size: 25px; font-weight: 400; }
+.inspire-rental-slot-list span { display: block; margin-top: 8px; color: #a8edf2; font-size: 11px; letter-spacing: .06em; }
 
 @media (min-width: 801px) {
   .inspire-icon-nav { display: block !important; }
@@ -392,9 +459,9 @@
     z-index: 1;
     grid-column: 1;
     align-self: center;
-    width: min(540px, 100%) !important;
+    width: min(620px, 100%) !important;
     max-width: 100% !important;
-    margin: 0;
+    margin: 0 0 0 clamp(92px, 12vw, 246px);
   }
   .inspire-masthead-copy {
     z-index: 1 !important;
@@ -405,6 +472,26 @@
     min-width: 0;
     margin: 0;
     padding: 0 !important;
+  }
+
+  /* The landing statement follows one quiet column system instead of treating
+     the full browser width as a text box. The artwork retains its own space. */
+  .inspire-page-home .inspire-statement {
+    padding: clamp(84px, 8vw, 138px) max(32px, 8vw) !important;
+    background-position: 60% center;
+  }
+  .inspire-page-home .inspire-statement-copy {
+    width: min(920px, 58vw) !important;
+    max-width: 920px !important;
+  }
+  .inspire-page-home .inspire-statement-copy h2 {
+    max-width: 800px !important;
+    font-size: clamp(50px, 4.7vw, 82px) !important;
+    line-height: .92 !important;
+  }
+  .inspire-page-home .inspire-statement-copy > div {
+    max-width: 900px;
+    gap: clamp(24px, 3vw, 54px) !important;
   }
 }
 
@@ -428,6 +515,7 @@
   .inspire-page-events .inspire-event-rates { margin-top: 38px !important; }
   .inspire-page-events .inspire-event-highlights { grid-template-columns: 1fr 1fr !important; }
   .inspire-page-events .inspire-event-grid { grid-template-columns: 1fr !important; }
+  .inspire-rental-slot-list { grid-template-columns: 1fr; max-height: 250px; }
   .inspire-icon-nav { display: block !important; padding: 0 !important; }
   .inspire-mobile-menu-toggle {
     display: flex !important;

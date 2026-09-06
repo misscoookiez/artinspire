@@ -1177,7 +1177,9 @@ export default function InspirePage({ page = "home" }) {
   const [calendarKind, setCalendarKind] = useState("all");
   const [checkoutOption, setCheckoutOption] = useState("");
   const [giftClasses, setGiftClasses] = useState(2);
+  const [inquiryTopic, setInquiryTopic] = useState("");
   const [scheduleWeek, setScheduleWeek] = useState(0);
+  const [rentalWeek, setRentalWeek] = useState(0);
   const [bookingDay, setBookingDay] = useState("");
   const [lang, setLang] = useState("lv");
   const t = words[lang],
@@ -1375,6 +1377,13 @@ export default function InspirePage({ page = "home" }) {
     const hash = window.location.hash.slice(1);
     if (!hash) return undefined;
     const timer = window.setTimeout(() => {
+      if (hash === "studentu-darbi") {
+        document
+          .querySelectorAll("#studentu-darbi > details")
+          .forEach((gallery) => {
+            gallery.open = true;
+          });
+      }
       document.getElementById(hash)?.scrollIntoView({ block: "start" });
     }, 80);
     return () => window.clearTimeout(timer);
@@ -1483,7 +1492,7 @@ export default function InspirePage({ page = "home" }) {
   const livePrivateSlots = availability.privateSlots?.length
     ? availability.privateSlots
     : privateSlots;
-  const liveClasses = availability.classSessions?.length
+  const allLiveClasses = availability.classSessions?.length
     ? availability.classSessions.map((item) => ({
         id: item.id,
         startsAt: item.starts_at,
@@ -1512,6 +1521,9 @@ export default function InspirePage({ page = "home" }) {
         level: "",
       }))
     : classes;
+  const isStudioWorkSession = (session) => /studio work session|patstāvīgs darbs studijā/i.test(session.title || session.titleLv || "");
+  const liveClasses = allLiveClasses.filter((item) => !isStudioWorkSession(item));
+  const liveStudioWorkSlots = allLiveClasses.filter((item) => isStudioWorkSession(item));
   const labelSlot = (slot) =>
     slot.label ||
     new Intl.DateTimeFormat(
@@ -1529,9 +1541,12 @@ export default function InspirePage({ page = "home" }) {
   const availablePrivateSlots = livePrivateSlots.filter(
     (slot) => privateIsAvailable(slot.id) && slot.price_cents === 4500,
   );
-  const availableRentalSlots = livePrivateSlots.filter(
-    (slot) => privateIsAvailable(slot.id) && slot.price_cents === 1000,
-  );
+  const availableRentalSlots = liveStudioWorkSlots.filter((slot) => slot.seats > 0);
+  const availablePrivateSessions = availablePrivateSlots.map((slot) => ({
+    ...slot,
+    startsAt: slot.starts_at,
+    time: new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { timeZone: "Europe/Riga", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(slot.starts_at)),
+  }));
   const sessionName = (session) => {
     const title = lang === "lv"
       ? session.titleLv?.replace(/jaukta\s+gleznošanas\s+grupa/i, "Jaukta grupa")
@@ -1582,6 +1597,19 @@ export default function InspirePage({ page = "home" }) {
   const bookingClasses = bookingDay
     ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
     : liveClasses;
+  const bookableStudioSlots = calendarKind === "private" ? availablePrivateSessions : availableRentalSlots;
+  const rentalWeeks = [...new Set(bookableStudioSlots.map((item) => weekKey(item.startsAt)).filter(Boolean))];
+  const visibleRentalWeek = rentalWeeks[Math.min(rentalWeek, Math.max(0, rentalWeeks.length - 1))];
+  const rentalDays = visibleRentalWeek
+    ? Array.from({ length: 7 }, (_, index) => {
+        const date = new Date(`${visibleRentalWeek}T12:00:00Z`);
+        date.setUTCDate(date.getUTCDate() + index);
+        const key = date.toISOString().slice(0, 10);
+        const hasSlots = bookableStudioSlots.some((item) => sameCalendarDay(item.startsAt, key));
+        return { key, label: new Intl.DateTimeFormat(locale, { weekday: "narrow", timeZone: "UTC" }).format(date), fullLabel: new Intl.DateTimeFormat(locale, { weekday: "long", timeZone: "UTC" }).format(date), date: new Intl.DateTimeFormat(locale, { day: "numeric", timeZone: "UTC" }).format(date), hasSlots };
+      })
+    : [];
+  const rentalSlotsForDay = bookingDay ? bookableStudioSlots.filter((item) => sameCalendarDay(item.startsAt, bookingDay)) : [];
   const weeklyColumns = visibleWeek ? [4, 6, 0].map((day) => {
     const date = new Date(`${visibleWeek}T12:00:00Z`);
     date.setUTCDate(date.getUTCDate() + ((day + 6) % 7));
@@ -1612,6 +1640,15 @@ export default function InspirePage({ page = "home" }) {
       setSelection("");
     }
   };
+  const changeRentalWeek = (direction) => {
+    const nextWeek = Math.max(0, Math.min(rentalWeeks.length - 1, rentalWeek + direction));
+    if (nextWeek === rentalWeek) return;
+    setRentalWeek(nextWeek);
+    const firstSlot = bookableStudioSlots.find((item) => weekKey(item.startsAt) === rentalWeeks[nextWeek]);
+    setBookingDay(firstSlot ? dateKeyInRiga(firstSlot.startsAt) : "");
+    setBooking(null);
+    setSelection("");
+  };
   const openBooking = (kind, itemId, label) => {
     const selectedSession = kind === "class" ? liveClasses.find((item) => item.id === itemId) : null;
     if (selectedSession) {
@@ -1633,7 +1670,11 @@ export default function InspirePage({ page = "home" }) {
     setSelection("");
     setCalendarKind(kind);
     setCheckoutOption(option);
-    setBookingDay(kind === "class" ? weekDays.find((day) => day.hasClass)?.key || "" : "");
+    if (kind === "rental" || kind === "private") {
+      setRentalWeek(0);
+      const firstSlot = kind === "private" ? availablePrivateSessions[0] : availableRentalSlots[0];
+      setBookingDay(dateKeyInRiga(firstSlot?.startsAt));
+    } else setBookingDay(kind === "class" ? weekDays.find((day) => day.hasClass)?.key || "" : "");
     setStatus("");
     setSent(false);
     setConfirmationEmailSent(false);
@@ -1663,20 +1704,50 @@ export default function InspirePage({ page = "home" }) {
     setConfirmationEmailSent(false);
     setForm(true);
   };
+  const openInquiry = (topic) => {
+    setBooking({ kind: "inquiry" });
+    setSelection("");
+    setCalendarKind("inquiry");
+    setCheckoutOption("");
+    setInquiryTopic(topic);
+    setBookingDay("");
+    setStatus("");
+    setSent(false);
+    setConfirmationEmailSent(false);
+    setForm(true);
+  };
   const submit = async (e) => {
     e.preventDefault();
     const action = e.nativeEvent.submitter?.value || "reserve";
     const data = new FormData(e.currentTarget);
-    const customerName = [data.get("firstName"), data.get("surname")]
-      .map((value) => String(value || "").trim())
-      .filter(Boolean)
-      .join(" ");
+    const customerName = String(data.get("firstName") || "").trim();
     const customerEmail = String(data.get("email") || "").trim().toLowerCase();
     try {
       window.localStorage.setItem("inspire-booking-email", customerEmail);
       setSavedEmail(customerEmail);
     } catch {}
     if (!booking) return;
+    if (booking.kind === "inquiry") {
+      setStatus(lang === "lv" ? "Nosūtām ziņu…" : lang === "ru" ? "Отправляем сообщение…" : "Sending your message…");
+      try {
+        const response = await fetch("/api/inquiries", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: customerName,
+            email: customerEmail,
+            topic: inquiryTopic,
+            message: String(data.get("message") || "").trim(),
+          }),
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Could not send your message.");
+        setSent(true);
+      } catch (error) {
+        setStatus(error.message);
+      }
+      return;
+    }
     if (action === "reserve") {
       setStatus(
         lang === "lv" ? "Rezervējam vietu…" : lang === "ru" ? "Бронируем место…" : "Reserving your place…",
@@ -1998,12 +2069,13 @@ export default function InspirePage({ page = "home" }) {
                 {price ? <b>{price}</b> : null}
                 <span>{productSummaries[lang]?.[index] || description}</span>
                 {personal ? (
-                  <a
+                  <button
+                    type="button"
                     className="inspire-rent-contact"
-                    href={`mailto:misscoookiez@gmail.com?subject=${encodeURIComponent(subject)}`}
+                    onClick={() => openInquiry(subject)}
                   >
                     {contactLabel}
-                  </a>
+                  </button>
                 ) : directPurchase ? (
                   <button
                     onClick={option === "pass" ? openClassPass : openGiftCard}
@@ -2386,11 +2458,6 @@ export default function InspirePage({ page = "home" }) {
             ))}
           </div>
         </details>
-        {page === "about" && (
-          <a className="inspire-about-classes-cta" href="/classes">
-            {lang === "lv" ? "SKATĪT NODARBĪBAS →" : lang === "ru" ? "ПОСМОТРЕТЬ ЗАНЯТИЯ →" : "VIEW CLASSES →"}
-          </a>
-        )}
       </section>
       <section id="pasakumi" className="inspire-events">
         <div className="inspire-events-top">
@@ -2745,10 +2812,10 @@ export default function InspirePage({ page = "home" }) {
                                 ? "Выберите 4, 6 или 8 занятий. Абонемент действует 4 недели с первого занятия."
                                 : "Choose 4, 6 or 8 classes. The pass is valid for four weeks from the first class."
                             : lang === "lv"
-                              ? "Izvēlies nodarbību skaitu — 2, 4, 6, 8 vai savu daudzumu."
+                              ? "Izvēlies 2, 4, 6 vai 8 nodarbības, vai ievadi savu daudzumu. 2 nodarbības — €25 katra; no 3 nodarbībām — €20 katra."
                               : lang === "ru"
-                                ? "Выберите количество занятий: 2, 4, 6, 8 или своё количество."
-                                : "Choose 2, 4, 6, 8 classes or your own amount."}
+                            ? "Выберите 2, 4, 6, 8 занятий или своё количество. 2 занятия — €25 за каждое; от 3 занятий — €20 за каждое."
+                                : "Choose 2, 4, 6 or 8 classes, or enter your own amount. 2 classes are €25 each; 3 or more are €20 each."}
                         </p>
                         <div>
                           {(calendarKind === "pass"
@@ -2789,8 +2856,8 @@ export default function InspirePage({ page = "home" }) {
                           </label>
                         )}
                         <strong>
-                          {giftClasses} × €{giftClasses >= 4 ? "20" : "25"} = €
-                          {giftClasses * (giftClasses >= 4 ? 20 : 25)}
+                          {giftClasses} × €{giftClasses > 2 ? "20" : "25"} = €
+                          {giftClasses * (giftClasses > 2 ? 20 : 25)}
                         </strong>
                       </div>
                     ) : calendarKind === "class" ? (
@@ -2822,6 +2889,23 @@ export default function InspirePage({ page = "home" }) {
                             <small>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : lang === "lv" ? "PIEEJAMA VIETA" : lang === "ru" ? "ЕСТЬ МЕСТО" : "AVAILABLE"}</small>
                           </button>;
                         })}
+                        </div>
+                      </div>
+                    ) : calendarKind === "rental" || calendarKind === "private" ? (
+                      <div className="inspire-booking-calendar-wrap inspire-rental-calendar-wrap">
+                        {rentalWeeks.length > 0 ? <div className="inspire-booking-week" aria-label={lang === "lv" ? "Izvēlies dienu" : lang === "ru" ? "Выберите день" : "Choose a day"}>
+                          <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeRentalWeek(-1)} disabled={rentalWeek === 0}>‹</button>
+                          <div>{rentalDays.map((day) => <button key={day.key} type="button" disabled={!day.hasSlots} className={`${day.hasSlots ? "available" : ""} ${bookingDay === day.key ? "active" : ""}`} onClick={() => { setBookingDay(day.key); setBooking(null); setSelection(""); }}><small>{day.label}</small><b>{day.date}</b></button>)}</div>
+                          <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeRentalWeek(1)} disabled={rentalWeek >= rentalWeeks.length - 1}>›</button>
+                        </div> : null}
+                        <div className="inspire-rental-slot-list" role="group" aria-label={lang === "lv" ? "Pieejamie divu stundu laiki" : lang === "ru" ? "Доступное двухчасовое время" : "Available two-hour times"}>
+                          {rentalSlotsForDay.map((item) => {
+                            const isPrivate = calendarKind === "private";
+                            const kind = isPrivate ? "private" : "class";
+                            const selected = selection === `${kind}:${item.id}`;
+                            const title = isPrivate ? (lang === "lv" ? "Individuāla nodarbība" : lang === "ru" ? "Индивидуальное занятие" : "Individual class") : (lang === "lv" ? "Patstāvīgs darbs studijā" : lang === "ru" ? "Самостоятельная работа в студии" : "Studio work");
+                            return <button key={item.id} type="button" className={selected ? "active" : ""} onClick={() => { setBooking({ kind, itemId: item.id, label: `${title} · ${weeklyDayLabel(item)} · ${item.time}` }); setSelection(`${kind}:${item.id}`); }}><strong>{item.time}</strong><span>{isPrivate ? (lang === "lv" ? "2 stundas · individuāls laiks" : lang === "ru" ? "2 часа · индивидуальное время" : "2 hours · private time") : (lang === "lv" ? "2 stundas · vieta studijā" : lang === "ru" ? "2 часа · место в студии" : "2 hours · a studio place")}</span></button>;
+                          })}
                         </div>
                       </div>
                     ) : (
@@ -2879,26 +2963,6 @@ export default function InspirePage({ page = "home" }) {
                             ))}
                           </optgroup>
                         )}
-                        {calendarKind === "rental" && (
-                          <optgroup
-                            label={
-                              lang === "lv"
-                                ? "STUDIJAS NOMA · €10/STUNDĀ"
-                                : lang === "ru"
-                                  ? "АРЕНДА СТУДИИ · €10/ЧАС"
-                                  : "STUDIO RENT · €10/HOUR"
-                            }
-                          >
-                            {availableRentalSlots.map((item) => (
-                              <option
-                                key={item.id}
-                                value={`private:${item.id}`}
-                              >
-                                {labelSlot(item)}
-                              </option>
-                            ))}
-                          </optgroup>
-                        )}
                       </select>
                     )}
                     {calendarKind !== "gift" && calendarKind !== "pass" && (
@@ -2912,8 +2976,7 @@ export default function InspirePage({ page = "home" }) {
                     )}
                   </>
                 <div className="inspire-customer-name">
-                  <input required name="firstName" autoComplete="given-name" placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "First name"} />
-                  <input required name="surname" autoComplete="family-name" placeholder={lang === "lv" ? "Uzvārds" : lang === "ru" ? "Фамилия" : "Last name"} />
+                  <input required name="firstName" autoComplete="name" placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} />
                 </div>
                 <input
                   required
@@ -2926,7 +2989,15 @@ export default function InspirePage({ page = "home" }) {
                 <small className="inspire-email-memory">
                   {lang === "lv" ? "E-pastu atceramies tikai šajā ierīcē, lai nākamreiz būtu ātrāk." : lang === "ru" ? "Мы запоминаем email только на этом устройстве, чтобы в следующий раз было быстрее." : "We remember your email only on this device, to make the next booking faster."}
                 </small>
-                {calendarKind !== "gift" && calendarKind !== "pass" ? (
+                {calendarKind === "inquiry" ? (
+                  <>
+                    <label className="inspire-inquiry-message">
+                      {lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"}
+                      <textarea name="message" required rows="5" placeholder={lang === "lv" ? "Pastāsti, kas Tev interesē…" : lang === "ru" ? "Расскажите, что вас интересует…" : "Tell us what you would like to discuss…"} />
+                    </label>
+                    <button name="bookingAction" value="inquiry">{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE"}</button>
+                  </>
+                ) : calendarKind !== "gift" && calendarKind !== "pass" ? (
                   <div className="inspire-reservation-actions">
                     <button name="bookingAction" value="reserve">{lang === "lv" ? "REZERVĒT VIETU" : lang === "ru" ? "ЗАБРОНИРОВАТЬ МЕСТО" : "RESERVE A PLACE"}</button>
                     <button className="inspire-pay-option" name="bookingAction" value="pay">{lang === "lv" ? "VAI MAKSĀT TIEŠSAISTĒ" : lang === "ru" ? "ИЛИ ОПЛАТИТЬ ОНЛАЙН" : "OR PAY ONLINE"}</button>

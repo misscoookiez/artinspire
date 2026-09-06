@@ -60,7 +60,10 @@ export async function POST(request) {
         session={id:liveSession.id,title:liveSession.title_en,titleLv:liveSession.title_lv,date:new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Riga",weekday:"short",day:"numeric",month:"short"}).format(new Date(liveSession.starts_at)),time:new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Riga",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date(liveSession.starts_at)),price:liveSession.price_cents/100,seats:liveSession.capacity};
       }
       if(!session) return NextResponse.json({error:"That class is no longer available."},{status:400});
-      const purchase=body.purchase ? classPurchases[body.purchase] : null;
+      const isStudioWork=/^studio work session$/i.test(session.title||"");
+      const purchase=body.purchase === "rental"
+        ? isStudioWork ? {name:"Studio work session",amount:session.price*100} : null
+        : body.purchase ? classPurchases[body.purchase] : null;
       if(body.purchase==="pass") return NextResponse.json({error:"The four-class pass is being connected to its own class selector. Please contact the studio for the moment."},{status:503});
       if(body.purchase && !purchase) return NextResponse.json({error:"That class format is unavailable."},{status:400});
       if (stripe && !supabaseAdmin && !allowLocalStripeBookingTest) return NextResponse.json({error:"Bookings are not configured yet."},{status:503});
@@ -85,7 +88,7 @@ export async function POST(request) {
       if (!Number.isInteger(classes) || classes < 2 || classes > 40) {
         return NextResponse.json({error:"Please choose between 2 and 40 classes."},{status:400});
       }
-      const unitAmount = classes >= 4 ? 2000 : 2500;
+      const unitAmount = classes > 2 ? 2000 : 2500;
       const amount = classes * unitAmount;
       line_items=[{price_data:{currency:"eur",product_data:{name:`Art Studio Inspire gift card · ${classes} classes`,description:`${classes} painting class${classes === 1 ? "" : "es"} · €${unitAmount / 100} per class`},unit_amount:amount},quantity:1}];
       metadata={type:"gift_card", gift_classes:String(classes), customer_name:body.name||"", customer_email:body.email||""};
