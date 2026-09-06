@@ -1958,7 +1958,7 @@ export default function InspirePage({ page = "home" }) {
                 : "PRIVATE EVENTS"}
           </span>
         </a>
-        <a href="/contact#sazinies" onClick={() => setMobileMenuOpen(false)}>
+        <a href="/contact" onClick={() => setMobileMenuOpen(false)}>
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </a>
