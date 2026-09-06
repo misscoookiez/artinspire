@@ -1193,6 +1193,7 @@ export default function InspirePage({ page = "home" }) {
   const [eventDuration, setEventDuration] = useState(5);
   const [eventFormat, setEventFormat] = useState("watercolor");
   const [lang, setLang] = useState("lv");
+  const [showContactsFromMenu, setShowContactsFromMenu] = useState(false);
   const chooseLanguage = (nextLanguage) => {
     setLang(nextLanguage);
     try {
@@ -1390,6 +1391,14 @@ export default function InspirePage({ page = "home" }) {
     );
     return () => window.clearInterval(timer);
   }, []);
+  useEffect(() => {
+    const updateContactView = () => {
+      setShowContactsFromMenu(page === "home" && window.location.hash === "#kontakti");
+    };
+    updateContactView();
+    window.addEventListener("hashchange", updateContactView);
+    return () => window.removeEventListener("hashchange", updateContactView);
+  }, [page]);
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (!hash) return undefined;
@@ -1902,7 +1911,7 @@ export default function InspirePage({ page = "home" }) {
     }
   };
   return (
-    <main className={`inspire inspire-page-${page}`} lang={lang}>
+    <main className={`inspire inspire-page-${showContactsFromMenu ? "contact" : page}`} lang={lang}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -2042,11 +2051,11 @@ export default function InspirePage({ page = "home" }) {
           </span>
         </a>
         <a
-          href="https://artinspire.lv/contact"
+          href="https://artinspire.lv/#kontakti"
           onClick={(event) => {
             event.preventDefault();
             setMobileMenuOpen(false);
-            window.location.assign("https://artinspire.lv/contact");
+            window.location.assign("https://artinspire.lv/#kontakti");
           }}
         >
           <img src="/art/inspire-icon-pin.png" alt="" />
