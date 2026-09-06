@@ -63,6 +63,21 @@
     linear-gradient(90deg, rgba(11, 20, 39, .82) 0%, rgba(15, 18, 48, .72) 44%, rgba(17, 17, 47, .35) 72%, rgba(18, 13, 40, .58) 100%),
     url('/art/inspire-youth-watercolor-atmosphere-hq.webp') !important;
 }
+/* Keep both full-width artwork backgrounds anchored to their own panels.
+   This prevents the children’s artwork from reverting to its intrinsic size
+   or drifting when the accordions change the panel height. */
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after,
+.inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-proof::after,
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after,
+.inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  transform: none !important;
+}
 .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-adult-palette,
 .inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-adult-palette { display: none !important; }
 

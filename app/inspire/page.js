@@ -802,19 +802,23 @@ const studioCapabilities = {
     items: [
       [
         "MATERIĀLI",
-        "Eļļa, akrils, guaša, akvarelis, zīmuļi un citi mākslas materiāli ir pieejami uz vietas. Standarta 30 × 40 cm audekls vai akvareļu/zīmēšanas papīrs ir iekļauts nodarbības cenā; lielāku audeklu var iegādāties studijā par aptuveni €10–15 vai atnest līdzi savu.",
+        "Viss nepieciešamais ir studijā — vari ierasties arī tikai ar ideju.",
+        ["Eļļa, akrils, guaša, akvarelis, zīmuļi un papīrs", "Nodarbībā iekļauts 30 × 40 cm audekls vai papīrs", "Lielāki audekli: apmēram €10–15 vai savs līdzi"],
       ],
       [
         "PAMATI",
-        "Kad darbam tas vajadzīgs, pieslēdzam plašu mākslas teorijas un prakses arsenālu: zīmējuma, kompozīcijas un krāsu teoriju; pievēršamies sejas un ķermeņa uzbūvei, telpai, ainai un citam, ko prasa konkrētais darbs. Sandras akadēmiskās mākslas zināšanas ļauj noteikumus sadalīt saprotamos soļos — nevis uzspiest tos tur, kur tie traucē radīt.",
+        "Zināšanas pieslēdzam tieši tad, kad tās palīdz Tavam darbam.",
+        ["Zīmējums, kompozīcija un krāsu teorija", "Cilvēks, telpa, ainava un novērojums", "Noteikumi saprotamos soļos — lai ar tiem varētu spēlēties"],
       ],
       [
         "BRĪVĀK",
-        "Te ir nepiespiesta mākslinieciska atmosfēra, kur Tava gaume ir mēraukla, nevis kaut kas, kas jālabo. Pasniedzējs palīdz pamanīt, izmēģināt un atrast risinājumus, bet neuzspiež vienu stilu. Eksperimentējam ar simboliem, materiāliem, krāsām, formām un meklējam Tavu personisko vizuālo valodu.",
+        "Tava gaume ir mēraukla, nevis kaut kas, kas jālabo.",
+        ["Meklējam risinājumus, nevis vienu pareizo stilu", "Eksperimentējam ar simboliem, krāsām, formām un materiāliem", "Veidojam Tavu personisko vizuālo valodu"],
       ],
       [
         "LIELĀKI DARBI",
-        "Ambīcija šeit nav jāsamazina. Var sākt ar vienu darbu un izaugt līdz lielam audeklam, darbu sērijai, interjera gleznai vai portfolio. Palīdzam lielu ieceri sadalīt reālos posmos, izvēlēties formātu un turpināt arī tad, kad darbam vajag vairāk laika, vietas vai drosmes.",
+        "Ambīcija šeit nav jāsamazina.",
+        ["No viena darba līdz lielam audeklam, sērijai vai portfolio", "Lielu ieceri sadalām reālos, paveicamos posmos", "Palīdzam izvēlēties formātu, laiku un nākamo soli"],
       ],
     ],
   },
@@ -825,20 +829,35 @@ const studioCapabilities = {
     items: [
       [
         "MATERIALS",
-        "Oils, acrylics, gouache, watercolour, pencils and other drawing materials are on site, together with watercolour and drawing paper. A standard 30 × 40 cm canvas is included; larger canvases can be bought at the studio for around €10–15 or brought from home.",
+        "Everything you need is at the studio — you can arrive with just an idea.",
+        ["Oils, acrylics, gouache, watercolour, pencils and paper", "A 30 × 40 cm canvas or paper is included", "Larger canvases: around €10–15, or bring your own"],
       ],
       [
         "FOUNDATIONS",
-        "When a work needs it, we draw on drawing, composition, colour theory, scene and space, observation, art books and academic knowledge. Sandra’s academic art studies make it possible to break rules into useful, understandable steps—without forcing them where they do not serve the work.",
+        "Knowledge comes in precisely when it helps your work.",
+        ["Drawing, composition and colour theory", "The figure, space, landscape and observation", "Rules in usable steps — so you can play with them"],
       ],
       [
         "FREER WORK",
-        "This is an unforced artistic atmosphere where your taste is the compass, not something to correct. Sandra helps you notice, test and solve problems without putting everyone into one style. We experiment with symbols, atmosphere and materials while looking for your own visual language.",
+        "Your taste is the compass, not something to correct.",
+        ["We look for solutions, not a single correct style", "Experiment with symbols, colour, form and materials", "Build a personal visual language"],
       ],
       [
         "LARGER WORKS",
-        "Ambition does not need to be reduced here. A first work can grow into a larger canvas, a series, an interior painting or a portfolio. We help split a big intention into real stages, choose the right format and continue when a work needs more time, space or courage.",
+        "Ambition does not need to be reduced here.",
+        ["From one work to a larger canvas, series or portfolio", "Break a big intention into real, manageable stages", "Choose the format, time and next step together"],
       ],
+    ],
+  },
+  ru: {
+    kicker: "ПРАКТИЧЕСКАЯ СТОРОНА",
+    title: "Вся студия — в вашем распоряжении.",
+    lead: "Не нужно приходить с полным пакетом материалов или готовым планом. Всё необходимое и поддержка художницы уже здесь — идею, технику и темп найдём вместе.",
+    items: [
+      ["МАТЕРИАЛЫ", "Всё необходимое есть в студии — можно прийти только с идеей.", ["Масло, акрил, гуашь, акварель, карандаши и бумага", "Холст 30 × 40 см или бумага включены", "Большие холсты: около €10–15 или свой с собой"]],
+      ["ОСНОВЫ", "Знания появляются именно тогда, когда помогают вашей работе.", ["Рисунок, композиция и теория цвета", "Фигура, пространство, пейзаж и наблюдение", "Правила понятными шагами — чтобы с ними можно было играть"]],
+      ["СВОБОДНЕЕ", "Ваш вкус — ориентир, а не то, что нужно исправлять.", ["Ищем решения, а не единственный правильный стиль", "Экспериментируем с символами, цветом, формой и материалами", "Создаём личный визуальный язык"]],
+      ["БОЛЬШИЕ РАБОТЫ", "Амбиции здесь не нужно уменьшать.", ["От одной работы к большому холсту, серии или портфолио", "Разделяем большую идею на реальные, выполнимые этапы", "Вместе выбираем формат, время и следующий шаг"]],
     ],
   },
 };
@@ -1322,6 +1341,51 @@ export default function InspirePage({ page = "home" }) {
   const [savedEmail, setSavedEmail] = useState("");
   const approach = proofCopy[lang],
     faq = seoFaq[lang];
+  const audienceOverview =
+    lang === "lv"
+      ? [
+          {
+            title: "PIEEJA PIEAUGUŠAJIEM",
+            body: "Prasme un brīvība aug reizē: vari sākt ar pirmo ideju, atgriezties pie mākslas vai padziļināt savu praksi. Tehnika ir instruments, nevis pārbaude.",
+            href: "/method#studija",
+            cta: "SKATĪT PIEEJU PIEAUGUŠAJIEM →",
+          },
+          {
+            title: "PIEEJA BĒRNIEM UN JAUNIEŠIEM",
+            body: "Bērna gaume ir sākumpunkts. Īsti materiāli, izvēle un uzmanīgs atbalsts palīdz augt bez viena parauga.",
+            href: "/method#berni-un-jauniesi",
+            cta: "SKATĪT PIEEJU BĒRNIEM UN JAUNIEŠIEM →",
+          },
+        ]
+      : lang === "ru"
+        ? [
+            {
+              title: "ПОДХОД ДЛЯ ВЗРОСЛЫХ",
+              body: "Навык и свобода растут вместе: можно начать с первой идеи, вернуться к искусству или углубить свою практику. Техника здесь — инструмент, а не проверка.",
+              href: "/method#studija",
+              cta: "ПОСМОТРЕТЬ ПОДХОД ДЛЯ ВЗРОСЛЫХ →",
+            },
+            {
+              title: "ПОДХОД ДЛЯ ДЕТЕЙ И ПОДРОСТКОВ",
+              body: "Вкус ребёнка — отправная точка. Настоящие материалы, выбор и внимательная поддержка помогают расти без единственного образца.",
+              href: "/method#berni-un-jauniesi",
+              cta: "ПОСМОТРЕТЬ ПОДХОД ДЛЯ ДЕТЕЙ И ПОДРОСТКОВ →",
+            },
+          ]
+        : [
+            {
+              title: "AN APPROACH FOR ADULTS",
+              body: "Skill and freedom grow together: begin with a first idea, return to art, or deepen an existing practice. Technique is a tool here, not a test.",
+              href: "/method#studija",
+              cta: "SEE THE ADULT APPROACH →",
+            },
+            {
+              title: "AN APPROACH FOR CHILDREN & TEENS",
+              body: "A child’s taste is the starting point. Real materials, choice and attentive guidance help them grow without a single prescribed model.",
+              href: "/method#berni-un-jauniesi",
+              cta: "SEE THE CHILDREN & TEENS APPROACH →",
+            },
+          ];
   const youthPrinciples =
     lang === "lv"
       ? [
@@ -2420,17 +2484,35 @@ export default function InspirePage({ page = "home" }) {
           </p>
           <h2>{capabilities.title}</h2>
           <p>{capabilities.lead}</p>
-          <nav className="inspire-about-chapter-nav" aria-label={lang === "lv" ? "Par studiju sadaļas" : lang === "ru" ? "Разделы о студии" : "About the studio sections"}>
-            {aboutChapterLinks.map(([targetId, label]) => (
-              <button key={targetId} type="button" onClick={() => openAboutChapter(targetId)}>
-                <span>{label}</span>
-                <b aria-hidden="true">↘</b>
-              </button>
-            ))}
-          </nav>
+          {page !== "home" && (
+            <nav className="inspire-about-chapter-nav" aria-label={lang === "lv" ? "Par studiju sadaļas" : lang === "ru" ? "Разделы о студии" : "About the studio sections"}>
+              {aboutChapterLinks.map(([targetId, label]) => (
+                <button key={targetId} type="button" onClick={() => openAboutChapter(targetId)}>
+                  <span>{label}</span>
+                  <b aria-hidden="true">↘</b>
+                </button>
+              ))}
+            </nav>
+          )}
         </div>
         <div className="inspire-capability-grid">
-          {capabilities.items.map(([title, body], index) => (
+          {page === "home" && (
+            <div className="inspire-capability-audiences" aria-label={lang === "lv" ? "Studijas pieejas" : lang === "ru" ? "Подходы студии" : "Studio approaches"}>
+              {audienceOverview.map((item) => (
+                <details key={item.title} className="inspire-capability-audience" open>
+                  <summary>
+                    <span>{item.title}</span>
+                    <b aria-hidden="true">+</b>
+                  </summary>
+                  <div>
+                    <p>{item.body}</p>
+                    <a href={item.href}>{item.cta}</a>
+                  </div>
+                </details>
+              ))}
+            </div>
+          )}
+          {capabilities.items.map(([title, body, bullets], index) => (
             <article key={title}>
               <b>{title}</b>
               <p>
@@ -2444,6 +2526,11 @@ export default function InspirePage({ page = "home" }) {
                   body,
                 )}
               </p>
+              {bullets && (
+                <ul>
+                  {bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                </ul>
+              )}
             </article>
           ))}
         </div>
@@ -3037,7 +3124,13 @@ export default function InspirePage({ page = "home" }) {
               <>
                 <h2 id="inspire-booking-modal-title">{t.thanks}</h2>
                 <p>
-                  {lang === "lv"
+                  {booking?.kind === "inquiry"
+                    ? lang === "lv"
+                      ? "Ziņa ir nosūtīta. Drīzumā atbildēsim."
+                      : lang === "ru"
+                        ? "Сообщение отправлено. Скоро ответим."
+                        : "Your message has been sent. We will reply shortly."
+                    : lang === "lv"
                       ? "Vieta ir rezervēta. Drīzumā sazināsimies ar praktisko informāciju."
                       : lang === "ru"
                         ? "Место забронировано. Скоро свяжемся с практической информацией."
@@ -3060,6 +3153,8 @@ export default function InspirePage({ page = "home" }) {
                     <p className="inspire-kicker">
                       {calendarKind === "event" || calendarKind === "event-format"
                         ? (lang === "lv" ? "PRIVĀTAIS PASĀKUMS" : lang === "ru" ? "ЧАСТНОЕ СОБЫТИЕ" : "PRIVATE EVENT")
+                        : calendarKind === "inquiry"
+                          ? (lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT")
                         : calendarKind === "gift" || calendarKind === "pass"
                         ? lang === "lv"
                           ? calendarKind === "pass"
@@ -3079,6 +3174,8 @@ export default function InspirePage({ page = "home" }) {
                         ? eventOffer.label
                         : calendarKind === "event"
                           ? (lang === "lv" ? "Pārbaudi datumus" : lang === "ru" ? "Проверьте даты" : "Check available dates")
+                        : calendarKind === "inquiry"
+                          ? (lang === "lv" ? "Nosūtīt ziņu" : lang === "ru" ? "Отправить сообщение" : "Send a message")
                         : calendarKind === "gift"
                         ? lang === "lv"
                           ? "Dāvanu karte"
@@ -3098,7 +3195,7 @@ export default function InspirePage({ page = "home" }) {
                         {checkoutDetail}
                       </p>
                     ) : null}
-                    {calendarKind === "event-format" ? (
+                    {calendarKind === "inquiry" ? null : calendarKind === "event-format" ? (
                       <div className="inspire-event-format-dialog">
                         <p>{eventOffer.description}</p>
                         <small>{lang === "lv" ? `${eventOffer.duration} stundas radošajai daļai · 2 stundas brīvam laikam studijā ir iekļautas.` : lang === "ru" ? `${eventOffer.duration} часа творческой части · ещё 2 часа свободного времени в студии включены.` : `${eventOffer.duration} hours of creative activity · plus 2 included free hours in the studio.`}</small>
@@ -3310,9 +3407,9 @@ export default function InspirePage({ page = "home" }) {
                   defaultValue={savedEmail}
                   placeholder={t.email}
                 />
-                <small className="inspire-email-memory">
+                {calendarKind !== "inquiry" && <small className="inspire-email-memory">
                   {lang === "lv" ? "E-pastu atceramies tikai šajā ierīcē, lai nākamreiz būtu ātrāk." : lang === "ru" ? "Мы запоминаем email только на этом устройстве, чтобы в следующий раз было быстрее." : "We remember your email only on this device, to make the next booking faster."}
-                </small>
+                </small>}
                 {calendarKind === "inquiry" || calendarKind === "event" ? (
                   <>
                     <label className="inspire-inquiry-message">

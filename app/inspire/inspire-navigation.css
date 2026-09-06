@@ -48,7 +48,6 @@
 .inspire-week-strip .available b { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid rgba(154, 245, 251, .46); border-radius: 50%; background: rgba(87, 230, 240, .13); }
 /* Each route keeps only the part that answers its visitor's immediate question. */
 .inspire-page-home > .inspire-section,
-.inspire-page-home > .inspire-capabilities,
 .inspire-page-home > .inspire-depth,
 .inspire-page-home > .inspire-events { display: none !important; }
 .inspire-page-classes > .inspire-statement,
