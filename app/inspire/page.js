@@ -2914,13 +2914,15 @@ export default function InspirePage({ page = "home" }) {
         </div>
       </section>{" "}
       <section id="sazinies" className="inspire-contact-panel" aria-labelledby="inspire-contact-title">
-        <p className="inspire-kicker">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</p>
-        <h2 id="inspire-contact-title">{lang === "lv" ? "Satiekamies Miera ielā." : lang === "ru" ? "Встретимся на улице Миера." : "Meet us on Miera iela."}</h2>
-        <p>{t.address}</p>
+        <p id="inspire-contact-title" className="inspire-kicker">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</p>
+        <div className="inspire-contact-details">
+          <a href="tel:+37128809550"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></a>
+          <a href="mailto:misscoookiez@gmail.com"><span>{lang === "lv" ? "E-pasts" : lang === "ru" ? "Эл. почта" : "Email"}</span><strong>misscoookiez@gmail.com</strong></a>
+          <p><span>{lang === "lv" ? "Adrese" : lang === "ru" ? "Адрес" : "Address"}</span><strong>Miera iela 17, Rīga</strong></p>
+        </div>
         <div className="inspire-contact-quick-actions">
           <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram</a>
           <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp</a>
-          <a href="mailto:misscoookiez@gmail.com">E-pasts</a>
           <button type="button" onClick={() => openInquiry(lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page")}>{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND A MESSAGE"}</button>
         </div>
       </section>
@@ -2928,48 +2930,26 @@ export default function InspirePage({ page = "home" }) {
         <div className="inspire-directions-copy">
           <p className="inspire-kicker">{t.find}</p>
           <h2>{t.find}</h2>
-          <p className="inspire-address-lead">{t.address}</p>
-          <p>{t.directions}</p>
+          <p className="inspire-address-lead">{lang === "lv" ? "Studija atrodas pašā Rīgas sirdī — Miera ielā 17." : lang === "ru" ? "Студия находится в самом сердце Риги — на улице Миера, 17." : "The studio is in the very heart of Riga — at Miera iela 17."}</p>
+          <p>{lang === "lv" ? "Miera iela ir mākslinieku, mazu radošu veikalu un kultūras vietu rajons. Ieeja ir pie veikala M50; lejā pa kāpnēm redzēsi studijas durvis." : lang === "ru" ? "Улица Миера — район художников, небольших творческих магазинов и культурных мест. Вход находится рядом с магазином M50; спуститесь по лестнице — и увидите дверь студии." : "Miera iela is home to artists, small creative shops and cultural venues. The entrance is beside M50; go down the stairs to the studio door."}</p>
           <p>
             {lang === "lv" ? (
               <>
-                Parkings: uz ielas, C zona līdz 20:00.
-                <br />
-                Svētdienās: bezmaksas.
-                <br />
-                <br />
-                Ja brauc ar sabiedrisko transportu:
-                <br />
-                11. tramvajs: pietura Laima
-                <br />
-                Vai jebkurš transports, kas brauc pa Brīvības ielu: pietura
-                Matīsa iela
+                Autostāvvieta: C zona uz ielas līdz 20.00; svētdienās bez maksas.
+                <br /><br />
+                Ar 11. tramvaju — pietura Laima; ar transportu pa Brīvības ielu — pietura Matīsa iela.
               </>
             ) : lang === "ru" ? (
               <>
-                Парковка: на улице, зона C до 20:00.
-                <br />
-                По воскресеньям: бесплатно.
-                <br />
-                <br />
-                Общественный транспорт:
-                <br />
-                11-й трамвай: остановка Laima
-                <br />
-                Или транспорт по улице Brīvības: остановка Matīsa iela
+                Парковка: зона C на улице до 20:00; по воскресеньям бесплатно.
+                <br /><br />
+                Трамвай №11 — остановка Laima; транспорт по улице Brīvības — остановка Matīsa iela.
               </>
             ) : (
               <>
-                Parking: on the street, C zone until 20:00.
-                <br />
-                Sundays: free.
-                <br />
-                <br />
-                Public transport:
-                <br />
-                Tram 11: Laima stop
-                <br />
-                Or services along Brīvības iela: Matīsa iela stop
+                Parking: C zone on the street until 20:00; free on Sundays.
+                <br /><br />
+                Tram 11 — Laima stop; services along Brīvības iela — Matīsa iela stop.
               </>
             )}
           </p>
@@ -3014,9 +2994,9 @@ export default function InspirePage({ page = "home" }) {
           ))}
         </div>
       </section>}
-      <section className="inspire-energy-strip" aria-hidden="true">
+      {page !== "contact" && <section className="inspire-energy-strip" aria-hidden="true">
         <span>✦</span>
-      </section>
+      </section>}
       <InspireFooter lang={lang} />
       {imagePreview && (
         <div

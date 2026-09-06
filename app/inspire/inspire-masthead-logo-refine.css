@@ -98,8 +98,7 @@
   display: none;
 }
 
-.inspire-page-about .inspire-energy-strip,
-.inspire-page-contact .inspire-energy-strip {
+.inspire-page-about .inspire-energy-strip {
   min-height: clamp(108px, 9vw, 154px);
   display: grid;
   place-items: center;

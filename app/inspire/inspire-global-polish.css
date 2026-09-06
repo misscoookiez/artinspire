@@ -84,20 +84,23 @@
     url('/art/inspire-studio-supplies-backdrop.webp') center / cover no-repeat;
 }
 
-/* Contacts begins with a compact action bar; directions remain the focused,
-   roomy section that follows it. */
+/* Contacts starts with the information people need to act on: direct phone,
+   email and address, followed by social and message actions. */
 .inspire-page-contact .inspire-contact-panel {
   padding: clamp(34px, 4vw, 56px) max(24px, 10vw) !important;
   display: grid;
-  grid-template-columns: minmax(190px, .55fr) minmax(280px, 1fr) minmax(520px, 1.65fr);
+  grid-template-columns: minmax(100px, .35fr) minmax(440px, 1.25fr) minmax(360px, .8fr);
   align-items: center;
   gap: 26px;
   border-top: 1px solid rgba(108, 229, 240, .5);
   border-bottom: 1px solid rgba(108, 229, 240, .5);
 }
 .inspire-page-contact .inspire-contact-panel .inspire-kicker { margin: 0; }
-.inspire-page-contact .inspire-contact-panel h2 { max-width: 350px; margin: 0; font-size: clamp(31px, 3.4vw, 54px); }
-.inspire-page-contact .inspire-contact-panel > p:not(.inspire-kicker) { display: none; }
+.inspire-contact-details { display: flex; flex-wrap: wrap; gap: 12px clamp(22px, 3vw, 44px); }
+.inspire-contact-details a, .inspire-contact-details p { display: grid; gap: 5px; margin: 0; color: #efffff; text-decoration: none; }
+.inspire-contact-details span { color: #86eaf1; font: 800 9px/1 Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.inspire-contact-details strong { font: 600 clamp(13px, 1vw, 16px)/1.35 Arial, sans-serif; letter-spacing: .01em; }
+.inspire-contact-details a:hover strong, .inspire-contact-details a:focus-visible strong { color: #89f5fb; text-decoration: underline; text-underline-offset: 5px; }
 .inspire-contact-quick-actions { display: flex !important; flex-wrap: wrap; justify-content: flex-end; gap: 10px !important; margin: 0 !important; }
 .inspire-contact-quick-actions a,
 .inspire-contact-quick-actions button {
@@ -118,8 +121,14 @@
 
 @media (max-width: 960px) {
   .inspire-page-contact .inspire-contact-panel { grid-template-columns: 1fr; gap: 18px; }
-  .inspire-page-contact .inspire-contact-panel h2 { max-width: none; }
   .inspire-contact-quick-actions { justify-content: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .inspire-contact-details { display: grid; grid-template-columns: 1fr; gap: 17px; }
+  .inspire-contact-quick-actions { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .inspire-contact-quick-actions button { grid-column: 1 / -1; }
+  .inspire-contact-quick-actions a, .inspire-contact-quick-actions button { justify-content: center; text-align: center; }
 }
 
 /* The portrait collage belongs to Sandra's short introduction.  The fuller
