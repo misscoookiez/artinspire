@@ -1534,6 +1534,20 @@ export default function InspirePage({ page = "home" }) {
   const content = (id, fallback) =>
     typeof editableContent[id] === "string" ? editableContent[id] : fallback;
   const image = (id, fallback) => content(id, fallback);
+  const openAboutChapter = (targetId) => {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const chapter = target.closest("details.inspire-depth-panel");
+    if (chapter) chapter.open = true;
+    const gallery = targetId === "studentu-darbi" ? target.querySelector("details") : null;
+    if (gallery) gallery.open = true;
+    window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+  };
+  const aboutChapterLinks = lang === "lv"
+    ? [["studentu-darbi", "STUDENTU DARBI"], ["par-sandru", "KAS VADA STUDIJU"], ["studija", "PIEEJA PIEAUGUŠAJIEM"], ["berni-un-jauniesi", "PIEEJA BĒRNIEM UN JAUNIEŠIEM"]]
+    : lang === "ru"
+      ? [["studentu-darbi", "РАБОТЫ УЧЕНИКОВ"], ["par-sandru", "КТО ВЕДЁТ СТУДИЮ"], ["studija", "ПОДХОД ДЛЯ ВЗРОСЛЫХ"], ["berni-un-jauniesi", "ПОДХОД К ДЕТЯМ И ПОДРОСТКАМ"]]
+      : [["studentu-darbi", "STUDENT WORK"], ["par-sandru", "WHO RUNS THE STUDIO"], ["studija", "APPROACH FOR ADULTS"], ["berni-un-jauniesi", "APPROACH FOR CHILDREN & YOUTH"]];
   const checkoutDetail = (() => {
     const productIndex = [
       "trial",
@@ -2339,6 +2353,14 @@ export default function InspirePage({ page = "home" }) {
           </p>
           <h2>{capabilities.title}</h2>
           <p>{capabilities.lead}</p>
+          <nav className="inspire-about-chapter-nav" aria-label={lang === "lv" ? "Par studiju sadaļas" : lang === "ru" ? "Разделы о студии" : "About the studio sections"}>
+            {aboutChapterLinks.map(([targetId, label]) => (
+              <button key={targetId} type="button" onClick={() => openAboutChapter(targetId)}>
+                <span>{label}</span>
+                <b aria-hidden="true">↘</b>
+              </button>
+            ))}
+          </nav>
         </div>
         <div className="inspire-capability-grid">
           {capabilities.items.map(([title, body], index) => (

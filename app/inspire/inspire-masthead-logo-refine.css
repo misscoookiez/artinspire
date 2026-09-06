@@ -123,3 +123,47 @@
 .inspire-page-about > .inspire-energy-strip {
   order: 6.5;
 }
+
+/* The spare space beside the practical notes becomes a small table of
+   contents: every link reveals its destination before smoothly taking you to it. */
+.inspire-about-chapter-nav {
+  display: none;
+}
+
+.inspire-page-about .inspire-about-chapter-nav {
+  display: grid;
+  width: min(100%, 430px);
+  margin-top: clamp(30px, 4vw, 48px);
+  border-top: 1px solid rgba(137, 237, 245, .42);
+}
+
+.inspire-about-chapter-nav button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  padding: 13px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(137, 237, 245, .25);
+  background: transparent;
+  color: #aaf7fb;
+  cursor: pointer;
+  font: 700 10px/1.3 Arial, sans-serif;
+  letter-spacing: .13em;
+  text-align: left;
+  transition: color .2s ease, padding-left .2s ease;
+}
+
+.inspire-about-chapter-nav button b {
+  color: #d77fec;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.inspire-about-chapter-nav button:hover,
+.inspire-about-chapter-nav button:focus-visible {
+  padding-left: 8px;
+  color: #fff;
+  outline: none;
+}
