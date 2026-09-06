@@ -11,6 +11,9 @@
 .inspire-page-events .inspire-events-title span:nth-child(2)::before { background: #d77fec; box-shadow: 7px 0 0 #f0c36a; }
 .inspire-page-events .inspire-events-title span:nth-child(3)::before { background: #f0c36a; box-shadow: 7px 0 0 #8ceef5; }
 .inspire-page-events .inspire-event-slideshow { width: min(100%, 500px) !important; height: auto !important; min-height: 510px !important; max-height: none !important; aspect-ratio: auto !important; margin-left: auto !important; overflow: hidden; background: #13101b !important; }
+/* A shared experience is the emotional reason to choose an event. */
+.inspire-page-events .inspire-events-shared-phrase { display: block; max-width: 46ch; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(140, 238, 245, .45); color: #9bf1f6; font-family: Georgia, serif; font-size: 1.08em; font-style: italic; line-height: 1.4; }
+
 /* Cover removes letterboxing; the portrait frame remains tall and intentional. */
 .inspire-page-events .inspire-event-slideshow > button img { object-fit: cover !important; object-position: center !important; }
 

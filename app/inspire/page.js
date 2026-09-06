@@ -1040,7 +1040,7 @@ const words = {
     youthBody:
       "Mūsu pieeju iedvesmo Montessori domāšana: sagatavota vide, īsti materiāli, iespēja izvēlēties un pieaugušais, kurš vēro, nevis steidzas pārņemt darbu savās rokās. Bērnam nav jāiekļaujas vienā paraugā. Viņa gaume, ritms un neparastā ideja ir vērta laika; mūsu darbs ir dot prasmes un telpu, lai tā var augt.",
     events: "PRIVĀTIE PASĀKUMI",
-    eventTitle: "Dzimšanas dienas\ndraugu vakari\nkomandu pasākumi",
+    eventTitle: "Dzimšanas dienas\nDraugu vakari\nKomandu pasākumi",
     eventCta: "UZRAKSTĪT PAR PASĀKUMU →",
     find: "KĀ MŪS ATRAST?",
     address: "📍 Ienāc citā pasaulē tepat Rīgas centrā, Miera ielā 17",
@@ -2583,10 +2583,19 @@ export default function InspirePage({ page = "home" }) {
                 .replace(/\s*·\s*/g, "\n")
                 .split("\n")
                 .map((line, index) => (
-                  <span key={`${line}-${index}`}>{line}</span>
+                  <span key={`${line}-${index}`}>{line.charAt(0).toLocaleUpperCase(locale)}{line.slice(1)}</span>
                 ))}
             </h2>
-            <p>{content("inspire.events.lead", events.lead)}</p>
+            <p>
+              {content("inspire.events.lead", events.lead)}
+              <span className="inspire-events-shared-phrase">
+                {lang === "lv"
+                  ? "Kopīgi radīta pieredze kļūst par atmiņu, kas satuvina."
+                  : lang === "ru"
+                    ? "Совместно созданный опыт становится воспоминанием, которое сближает."
+                    : "A shared creative experience becomes a memory that brings people closer."}
+              </span>
+            </p>
           </div>
           <div
             className="inspire-event-gallery inspire-event-slideshow"
