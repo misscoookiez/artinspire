@@ -540,7 +540,7 @@ const seoFaq = {
       ],
       [
         "Как работают оплата и отмена?",
-        "Для заявок предоплата не нужна. Оплаченную индивидуальную бронь можно отменить не позднее чем за 24 часа до начала — возврат производится автоматически.",
+        "Для заявок предоплата не нужна. Любую бронь можно отменить или перенести не позднее чем за 24 часа до начала — до этого отмена бесплатна, а возврат производится автоматически.",
       ],
       [
         "Можно арендовать студию для своего проекта или занятия?",
@@ -2086,7 +2086,7 @@ export default function InspirePage({ page = "home" }) {
                   </button>
                 ) : directPurchase ? (
                   <button
-                    onClick={option === "pass" ? openClassPass : openGiftCard}
+                    onClick={option === "pass" ? openClassPass : () => openGiftCard()}
                   >
                     {option === "pass"
                       ? lang === "lv"
@@ -2177,8 +2177,8 @@ export default function InspirePage({ page = "home" }) {
           {lang === "lv"
             ? "PIETEIKUMIEM APMAKSA NETIEK PRASĪTA UZREIZ. Jebkura rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms nodarbības; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
             : lang === "ru"
-              ? "ДЛЯ ЗАЯВОК ПРЕДОПЛАТА НЕ НУЖНА. Оплаченную бронь нужно отменить или перенести не позднее чем за 24 часа до занятия; до этого возможны бесплатная отмена и автоматический возврат."
-              : "APPLICATIONS DO NOT REQUIRE PAYMENT UPFRONT. A paid booking must be cancelled or rescheduled at least 24 hours before the class; until then, cancellation is free and the refund is automatic."}
+              ? "ДЛЯ ЗАЯВОК ПРЕДОПЛАТА НЕ НУЖНА. Любую бронь нужно отменить или перенести не позднее чем за 24 часа до занятия; до этого возможны бесплатная отмена и автоматический возврат."
+              : "APPLICATIONS DO NOT REQUIRE PAYMENT UPFRONT. Any reservation must be cancelled or rescheduled at least 24 hours before the class; until then, cancellation is free and the refund is automatic."}
         </p>
       </section>
       <section className="inspire-capabilities">
@@ -2978,8 +2978,8 @@ export default function InspirePage({ page = "home" }) {
                         {lang === "lv"
                           ? "Jebkura rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
                           : lang === "ru"
-                            ? "Оплаченную бронь нужно отменить или перенести не позднее чем за 24 часа до начала; до этого возможны бесплатная отмена и автоматический возврат."
-                            : "A paid booking must be cancelled or rescheduled at least 24 hours before it starts; until then, cancellation is free and the refund is automatic."}
+                            ? "Любую бронь нужно отменить или перенести не позднее чем за 24 часа до начала; до этого возможны бесплатная отмена и автоматический возврат."
+                            : "Any reservation must be cancelled or rescheduled at least 24 hours before it starts; until then, cancellation is free and the refund is automatic."}
                       </p>
                     )}
                   </>

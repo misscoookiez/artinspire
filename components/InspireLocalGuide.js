@@ -10,13 +10,13 @@ const copy={
   en:{summary:"PRACTICAL STUDIO INFORMATION",items:[
     ["WHERE & FOR WHOM","Art Studio Inspire is an art studio in central Riga at Miera iela 17, easy to reach from Klusais centrs, Skanste and Brīvības iela. It offers painting classes for children, teenagers and adults — whether you are looking for a first hobby or returning to art after a long break."],
     ["WHAT YOU CAN MAKE","Watercolour, acrylic, oil, drawing, composition, colour theory, observation, academic foundations, intuitive and surreal painting are all possible here. Come for a more serious painting course, a relaxed hobby class, a private session, or simply to try real materials without pressure to produce a perfect result."],
-    ["WHAT IS INCLUDED","Paint, brushes, paper, canvases and a working place are at the studio. A watercolour evening is usually 2 hours; a painting evening is 3. A weekly-group application does not require immediate payment; paid bookings can be cancelled free of charge up to 24 hours before they start."],
+    ["WHAT IS INCLUDED","Paint, brushes, paper, canvases and a working place are at the studio. A watercolour evening is usually 2 hours; a painting evening is 3. Any reservation can be cancelled or rescheduled free of charge up to 24 hours before it starts."],
     ["GROUPS & EVENTS","For private groups we create painting evenings, birthdays, children’s neon painting, girls’ nights, team events and travel-to-you creative activities. This is not a production-line workshop with one compulsory painting: each event follows the group’s age, mood and idea."]
   ]},
   ru:{summary:"ПРАКТИЧЕСКАЯ ИНФОРМАЦИЯ О СТУДИИ",items:[
     ["ГДЕ И ДЛЯ КОГО","Art Studio Inspire — художественная студия в центре Риги, на Miera iela 17, удобная из Тихого центра, Скансте и с улицы Brīvības. Здесь есть занятия живописью для детей, подростков и взрослых — как для первого хобби, так и для возвращения к искусству после перерыва."],
     ["ЧЕМ МОЖНО ЗАНЯТЬСЯ","Акварель, акрил, масло, рисунок, композиция, теория цвета, работа с натуры, академические основы, интуитивная и сюрреалистичная живопись. Можно прийти на более профессиональный курс, спокойное хобби-занятие, индивидуальную сессию или просто попробовать настоящие материалы без давления на результат."],
-    ["ЧТО ВКЛЮЧЕНО","Краски, кисти, бумага, холсты и рабочее место есть в студии. Вечер акварели обычно длится 2 часа, вечер живописи — 3. На регулярную группу можно подать заявку без немедленной оплаты; платную бронь можно отменить бесплатно не позднее чем за 24 часа до начала."],
+    ["ЧТО ВКЛЮЧЕНО","Краски, кисти, бумага, холсты и рабочее место есть в студии. Вечер акварели обычно длится 2 часа, вечер живописи — 3. Любую бронь можно бесплатно отменить или перенести не позднее чем за 24 часа до начала."],
     ["ГРУППЫ И СОБЫТИЯ","Для частных групп мы делаем вечера творческие вечера живописи, дни рождения, неоновую живопись для детей, вечера с подругами, командные события и выездные творческие активности. Это не конвейерный мастер-класс с одной обязательной картиной: формат подбирается под возраст, настроение и идею группы."]
   ]}
 };
