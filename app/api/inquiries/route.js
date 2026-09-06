@@ -7,6 +7,9 @@ export async function POST(request) {
   if (!isTrustedBrowserRequest(request)) return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
   const throttle = rateLimit(request, "inquiry", { limit: 5, windowMs: 60_000 });
   if (!throttle.allowed) return NextResponse.json({ error: "Please wait a moment and try again." }, { status: 429, headers: { "Retry-After": String(throttle.retryAfter) } });
+  if (!process.env.RESEND_API_KEY || !process.env.RESEND_FROM_EMAIL) {
+    return NextResponse.json({ error: "Messaging is temporarily unavailable. Please use email or WhatsApp instead." }, { status: 503 });
+  }
   try {
     const { name, email, topic, message } = await request.json();
     const cleanName = String(name || "").trim();
