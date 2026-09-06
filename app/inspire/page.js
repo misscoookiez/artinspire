@@ -31,6 +31,7 @@ import "./inspire-navigation.css";
 import "./inspire-structure.css";
 import "./inspire-events-layout-v2.css";
 import "./inspire-proof-gallery-refine.css";
+import "./inspire-capabilities-rhythm.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],

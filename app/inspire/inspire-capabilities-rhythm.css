@@ -1,0 +1,67 @@
+/* Small visual rests make the practical studio information easier to enter
+   without changing its calm, two-column composition. */
+.inspire-capability-grid { counter-reset: studio-capability; }
+.inspire-capability-grid article {
+  position: relative;
+  padding-top: 48px !important;
+  transition: background .2s ease;
+}
+.inspire-capability-grid article::before {
+  counter-increment: studio-capability;
+  content: "0" counter(studio-capability) "  /";
+  position: absolute;
+  top: 19px;
+  left: 0;
+  color: rgba(141, 239, 247, .56);
+  font: 700 9px/1 Arial, sans-serif;
+  letter-spacing: .18em;
+}
+.inspire-capability-grid article:nth-child(even)::before { left: 25px; }
+.inspire-capability-grid article b {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.inspire-capability-grid article b::before {
+  content: "✦";
+  color: #8ceef5;
+  font-size: 12px;
+  line-height: 1;
+}
+.inspire-capability-grid article:nth-child(2) b::before { color: #d593f0; }
+.inspire-capability-grid article:nth-child(3) b::before { color: #e9cb7c; }
+.inspire-capability-grid article:nth-child(4) b::before { color: #99e0a8; }
+.inspire-capability-grid article p {
+  position: relative;
+  margin-top: 18px !important;
+  padding-top: 15px;
+  border-top: 1px solid rgba(149, 231, 240, .16);
+}
+.inspire-capability-grid article:hover { background: linear-gradient(120deg, rgba(55, 86, 112, .13), transparent 72%); }
+.inspire-capabilities > div:first-child h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin-top: 26px;
+  background: linear-gradient(90deg, #80edf5, #c77ee8);
+}
+.inspire-capabilities > div:first-child > p:not(.inspire-kicker) {
+  position: relative;
+  padding-left: 19px;
+}
+.inspire-capabilities > div:first-child > p:not(.inspire-kicker)::before {
+  content: "";
+  position: absolute;
+  top: .48em;
+  bottom: .48em;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(#83eefa, rgba(199, 126, 232, .1));
+}
+@media (max-width: 800px) {
+  .inspire-capability-grid article,
+  .inspire-capability-grid article:nth-child(odd),
+  .inspire-capability-grid article:nth-child(even) { padding-top: 46px !important; }
+  .inspire-capability-grid article:nth-child(even)::before { left: 0; }
+}
