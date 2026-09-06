@@ -20,7 +20,7 @@ export default function InspireAboutPage() {
       <div>
         <p>{t.kicker}</p><h1>{t.title}</h1><h2>{t.lead}</h2>
         <div className="inspire-about-copy">{t.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
-        <blockquote>{t.note}</blockquote><a className="inspire-about-cta" href="/#nodarbibas">{t.cta}</a>
+        <blockquote>{t.note}</blockquote><a className="inspire-about-cta" href="/classes">{t.cta}</a>
       </div>
       <div className="inspire-about-images">
         <img src="/art/inspire-studio.webp" alt="Art Studio Inspire" />
