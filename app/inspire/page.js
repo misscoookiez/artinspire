@@ -2041,7 +2041,14 @@ export default function InspirePage({ page = "home" }) {
                 : "PRIVATE EVENTS"}
           </span>
         </a>
-        <a href="/contact" onClick={() => setMobileMenuOpen(false)}>
+        <a
+          href="https://artinspire.lv/contact"
+          onClick={(event) => {
+            event.preventDefault();
+            setMobileMenuOpen(false);
+            window.location.assign("https://artinspire.lv/contact");
+          }}
+        >
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </a>
