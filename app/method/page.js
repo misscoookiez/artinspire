@@ -7,4 +7,5 @@ export default function MethodPage() {
 export const metadata = {
   title: "Mācību metode | Art Studio Inspire",
   description: "Mākslas studijas pieeja bērniem, jauniešiem un pieaugušajiem Rīgā — brīvība, tehnika un uzmanīgs atbalsts.",
+  alternates: { canonical: "/method" },
 };
