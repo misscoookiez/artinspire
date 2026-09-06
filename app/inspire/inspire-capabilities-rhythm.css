@@ -3,18 +3,11 @@
 .inspire-capability-grid { counter-reset: studio-capability; }
 .inspire-capability-grid article {
   position: relative;
-  padding-top: 48px !important;
+  padding-top: 30px !important;
   transition: background .2s ease;
 }
 .inspire-capability-grid article::before {
-  counter-increment: studio-capability;
-  content: "0" counter(studio-capability) "  /";
-  position: absolute;
-  top: 19px;
-  left: 0;
-  color: rgba(141, 239, 247, .56);
-  font: 700 9px/1 Arial, sans-serif;
-  letter-spacing: .18em;
+  display: none;
 }
 .inspire-capability-grid article:nth-child(even)::before { left: 25px; }
 .inspire-capability-grid article b {
@@ -62,6 +55,6 @@
 @media (max-width: 800px) {
   .inspire-capability-grid article,
   .inspire-capability-grid article:nth-child(odd),
-  .inspire-capability-grid article:nth-child(even) { padding-top: 46px !important; }
+  .inspire-capability-grid article:nth-child(even) { padding-top: 30px !important; }
   .inspire-capability-grid article:nth-child(even)::before { left: 0; }
 }
