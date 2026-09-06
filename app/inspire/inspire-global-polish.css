@@ -48,6 +48,42 @@
 .inspire-about-chapter-nav button b { display: none; }
 .inspire-about-chapter-nav button { grid-template-columns: 1fr; }
 
+/* Full-width section images use high-quality WebP renditions of the original
+   1536px artwork: crisp at desktop scale, but still light enough for a page
+   background. The palette is intentionally absent from the adult chapter. */
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after,
+.inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-proof::after {
+  background-image:
+    linear-gradient(90deg, rgba(8, 8, 13, .94) 0%, rgba(8, 9, 16, .78) 35%, rgba(8, 10, 17, .24) 68%, rgba(6, 9, 13, .36) 100%),
+    url('/art/inspire-adult-watercolor-atmosphere-hq.webp') !important;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after,
+.inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  background-image:
+    linear-gradient(90deg, rgba(11, 20, 39, .82) 0%, rgba(15, 18, 48, .72) 44%, rgba(17, 17, 47, .35) 72%, rgba(18, 13, 40, .58) 100%),
+    url('/art/inspire-youth-watercolor-atmosphere-hq.webp') !important;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-adult-palette,
+.inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-adult-palette { display: none !important; }
+
+/* The practical-studio promise gets its own quiet material atmosphere. */
+.inspire-page-about .inspire-capabilities,
+.inspire-page-method .inspire-capabilities {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.inspire-page-about .inspire-capabilities::before,
+.inspire-page-method .inspire-capabilities::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(10, 10, 18, .95) 0%, rgba(10, 11, 20, .86) 37%, rgba(9, 13, 20, .55) 67%, rgba(8, 11, 16, .72) 100%),
+    url('/art/inspire-studio-supplies-backdrop.webp') center / cover no-repeat;
+}
+
 /* Contacts begins with a compact action bar; directions remain the focused,
    roomy section that follows it. */
 .inspire-page-contact .inspire-contact-panel {
