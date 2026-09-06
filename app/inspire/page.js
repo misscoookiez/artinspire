@@ -2533,7 +2533,7 @@ export default function InspirePage({ page = "home" }) {
         ) : null}
         <div className="inspire-event-grid">
           {events.formats.map(([title, body]) => (
-            <details key={title}>
+            <details key={title} open>
               <summary>
                 <h3>{title}</h3>
                 <b>+</b>

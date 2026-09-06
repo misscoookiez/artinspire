@@ -417,17 +417,20 @@
 .inspire-page-events .inspire-event-grid {
   width: min(1280px, 100%);
   max-width: 1280px !important;
-  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  /* Formats are mini invitations, not an accordion of hidden copy. Three
+     readable cards per row give every description room to be understood. */
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   gap: 1px !important;
   background: rgba(126,239,249,.28);
 }
 .inspire-page-events .inspire-event-grid details {
-  min-height: 118px !important;
-  padding: 0 18px !important;
+  min-height: 214px !important;
+  padding: 0 22px !important;
   background: linear-gradient(145deg, rgba(17,50,75,.56), rgba(30,13,55,.62)) !important;
 }
-.inspire-page-events .inspire-event-grid h3 { font-size: clamp(16px, 1.25vw, 20px) !important; }
-.inspire-page-events .inspire-event-grid details p { font-size: 16px !important; line-height: 1.62 !important; }
+.inspire-page-events .inspire-event-grid summary { padding: 21px 0 12px !important; }
+.inspire-page-events .inspire-event-grid h3 { font-size: clamp(19px, 1.45vw, 23px) !important; }
+.inspire-page-events .inspire-event-grid details p { margin: 0 0 24px !important; font-size: 16px !important; line-height: 1.58 !important; }
 .inspire-page-events .inspire-event-custom,
 .inspire-page-events .inspire-event-faq-inline { width: min(1280px, 100%); max-width: 1280px !important; }
 
@@ -506,13 +509,16 @@
     background-position: 68% center;
   }
   .inspire-page-home .inspire-statement-copy {
-    width: min(920px, 58vw) !important;
-    max-width: 920px !important;
+    width: min(960px, 61vw) !important;
+    max-width: 960px !important;
   }
   .inspire-page-home .inspire-statement-copy h2 {
-    max-width: 800px !important;
-    font-size: clamp(50px, 4.7vw, 82px) !important;
-    line-height: .92 !important;
+    /* A stable measure makes the landing-page thesis read as a composed
+       statement rather than a wall of oversized type. */
+    max-width: 880px !important;
+    font-size: clamp(50px, 4.25vw, 76px) !important;
+    line-height: .94 !important;
+    letter-spacing: -.055em !important;
   }
   .inspire-page-home .inspire-statement-copy > div {
     max-width: 900px;
@@ -546,6 +552,7 @@
   .inspire-page-events .inspire-event-rates { margin-top: 38px !important; }
   .inspire-page-events .inspire-event-highlights { grid-template-columns: 1fr 1fr !important; }
   .inspire-page-events .inspire-event-grid { grid-template-columns: 1fr !important; }
+  .inspire-page-events .inspire-event-grid details { min-height: 0 !important; padding: 0 18px !important; }
   .inspire-rental-slot-list { grid-template-columns: 1fr; max-height: 250px; }
   .inspire-icon-nav { display: block !important; padding: 0 !important; }
   .inspire-mobile-menu-toggle {
