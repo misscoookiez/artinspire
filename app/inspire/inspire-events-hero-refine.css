@@ -28,3 +28,40 @@
 .inspire-page-events .inspire-event-room-details .inspire-space-preview button { background: #131027; }
 @media (max-width: 900px) { .inspire-page-events .inspire-events-top { grid-template-columns: minmax(0, 1fr) !important; } .inspire-page-events .inspire-event-slideshow { width: min(100%, 560px) !important; min-height: 440px !important; margin-left: 0 !important; } }
 @media (max-width: 560px) { .inspire-page-events .inspire-events-title { gap: 8px; } .inspire-page-events .inspire-events-title span { gap: 11px; } .inspire-page-events .inspire-events-title span::before { width: 14px; } .inspire-page-events .inspire-event-slideshow { min-height: 360px !important; } }
+
+/* Event planning has more choices, so it gets a calm, larger white canvas. */
+.inspire-modal:has(.inspire-event-booking-flow) form,
+.inspire-modal:has(.inspire-event-format-dialog) form { width: min(920px, calc(100% - 32px)) !important; max-width: 920px !important; }
+.inspire-modal .inspire-inquiry-message textarea { background: #f4fafb !important; color: #111723 !important; border-color: #8edee7 !important; }
+.inspire-event-format-dialog { display: grid; gap: 18px; margin: 12px 0 4px; padding: 28px; background: #f3fafb; border: 1px solid #9ceaf0; color: #101923; }
+.inspire-event-format-dialog p { margin: 0; max-width: 60ch; font-size: 20px; line-height: 1.55; }
+.inspire-event-format-dialog small { color: #3b5260; font-size: 13px; line-height: 1.5; }
+.inspire-event-format-dialog button { width: fit-content; margin-top: 4px; }
+.inspire-event-booking-flow { display: grid; gap: 20px; margin: 10px 0 22px; padding: 24px; border: 1px solid #b5e7eb; background: #f6fbfc; color: #111923; }
+.inspire-event-format-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.inspire-event-format-picker button { min-height: 72px; margin: 0 !important; padding: 12px !important; border: 1px solid #b2dbe1 !important; background: #fff !important; color: #17202a !important; text-align: left; box-shadow: none !important; }
+.inspire-event-format-picker button.active { border-color: #147682 !important; background: #dff9fb !important; box-shadow: inset 3px 0 #4bd9e4 !important; }
+.inspire-event-format-picker b,.inspire-event-format-picker span { display: block; }
+.inspire-event-format-picker b { font-size: 11px; letter-spacing: .09em; }
+.inspire-event-format-picker span { margin-top: 7px; color: #406171; font-size: 12px; }
+.inspire-event-month-switcher { display: grid; grid-template-columns: 42px 1fr 42px; align-items: center; border-top: 1px solid #b8e0e5; border-bottom: 1px solid #b8e0e5; }
+.inspire-event-month-switcher button { min-width: 0 !important; height: 42px; margin: 0 !important; padding: 0 !important; border: 0 !important; background: transparent !important; color: #112b37 !important; font-size: 25px !important; box-shadow: none !important; }
+.inspire-event-month-switcher strong { text-align: center; text-transform: uppercase; font-size: 13px; letter-spacing: .1em; }
+.inspire-event-calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+.inspire-event-calendar small { padding: 4px 0; color: #54717a; text-align: center; font-size: 10px; font-weight: 700; }
+.inspire-event-calendar button { min-width: 0 !important; min-height: 38px; margin: 0 !important; padding: 0 !important; border: 1px solid #d1e7e9 !important; background: #fff !important; color: #122731 !important; box-shadow: none !important; }
+.inspire-event-calendar button:not(:disabled):hover,.inspire-event-calendar button.active { border-color: #238c98 !important; background: #dff9fb !important; color: #08212a !important; }
+.inspire-event-calendar button:disabled { opacity: .28; cursor: not-allowed; }
+.inspire-event-calendar-note { margin: -8px 0 0; color: #536771; font-size: 12px; line-height: 1.45; }
+.inspire-event-time-controls { display: grid; grid-template-columns: 180px 1fr; gap: 24px; align-items: start; }
+.inspire-event-time-controls > label { display: grid; gap: 8px; color: #1b3541; font-size: 12px; letter-spacing: .07em; }
+.inspire-event-time-controls select { min-height: 42px; padding: 8px; border: 1px solid #afdbe0; background: #fff; color: #11212b; }
+.inspire-event-time-controls > div > b { display: block; margin-bottom: 8px; color: #1b3541; font-size: 12px; letter-spacing: .07em; }
+.inspire-event-hour-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.inspire-event-hour-grid button { min-width: 0 !important; min-height: 42px; margin: 0 !important; padding: 7px !important; border: 1px solid #b8e0e5 !important; background: #fff !important; color: #13262f !important; box-shadow: none !important; }
+.inspire-event-hour-grid button.active { border-color: #218c98 !important; background: #dff9fb !important; }
+.inspire-event-time-summary { display: grid; gap: 5px; padding: 16px 0 0; border-top: 1px solid #b8e0e5; }
+.inspire-event-time-summary b { font-size: 13px; letter-spacing: .08em; }
+.inspire-event-time-summary span { font-size: 17px; }
+.inspire-event-time-summary small { color: #49636d; font-size: 12px; line-height: 1.5; }
+@media (max-width: 650px) { .inspire-event-format-picker { grid-template-columns: 1fr; } .inspire-event-time-controls { grid-template-columns: 1fr; gap: 16px; } .inspire-event-hour-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .inspire-event-booking-flow,.inspire-event-format-dialog { padding: 18px; } }

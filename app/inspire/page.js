@@ -855,7 +855,7 @@ const eventFormats = {
       "TELPA TAVAI IDEJAI",
       "Dekorācijas, karaoke, galda spēles, tattoo, pīrsings, kopīgs audekls un citas trakas idejas — saliksim tieši Tavu kombināciju.",
     ],
-    cta: "PIESAKI SAVU PASĀKUMU — ĪSTENOSIM TO KOPĀ →",
+    cta: "PĀRBAUDI PIEEJAMOS DATUMUS UN PIESAKI SAVU PASĀKUMU →",
     emailSubject: "Pasākums Art Studio Inspire",
     faqTitle: "PASĀKUMU ORGANIZĀCIJAS KĀRTĪBA",
     faq: [
@@ -1187,6 +1187,11 @@ export default function InspirePage({ page = "home" }) {
   const [scheduleWeek, setScheduleWeek] = useState(-1);
   const [rentalWeek, setRentalWeek] = useState(0);
   const [bookingDay, setBookingDay] = useState("");
+  const [eventMonth, setEventMonth] = useState(0);
+  const [eventDate, setEventDate] = useState("");
+  const [eventStartHour, setEventStartHour] = useState(11);
+  const [eventDuration, setEventDuration] = useState(5);
+  const [eventFormat, setEventFormat] = useState("watercolor");
   const [lang, setLang] = useState("lv");
   const chooseLanguage = (nextLanguage) => {
     setLang(nextLanguage);
@@ -1514,6 +1519,7 @@ export default function InspirePage({ page = "home" }) {
     ? availability.classSessions.map((item) => ({
         id: item.id,
         startsAt: item.starts_at,
+        endsAt: item.ends_at,
         date: new Intl.DateTimeFormat(
           lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB",
           {
@@ -1632,6 +1638,57 @@ export default function InspirePage({ page = "home" }) {
       })
     : [];
   const rentalSlotsForDay = bookingDay ? bookableStudioSlots.filter((item) => sameCalendarDay(item.startsAt, bookingDay)) : [];
+  const eventOffers = {
+    watercolor: {
+      label: lang === "lv" ? "AKVARELIS" : lang === "ru" ? "АКВАРЕЛЬ" : "WATERCOLOUR",
+      duration: 2,
+      description: lang === "lv" ? "Visi sēž pie galda un 2 stundas glezno ar akvareli — mierīgs, sarunām piemērots formāts." : lang === "ru" ? "Все сидят за столом и 2 часа рисуют акварелью — спокойный формат для общения." : "Everyone sits around the table and paints in watercolour for two relaxed hours.",
+    },
+    acrylic: {
+      label: lang === "lv" ? "GLEZNOŠANA AR AKRILU" : lang === "ru" ? "АКРИЛОВАЯ ЖИВОПИСЬ" : "ACRYLIC PAINTING",
+      duration: 3,
+      description: lang === "lv" ? "Katrs glezno savu darbu ar akrila krāsām 3 stundas — ar materiāliem un vadību uz vietas." : lang === "ru" ? "Каждый создаёт свою работу акрилом в течение 3 часов — материалы и сопровождение включены." : "Everyone creates their own acrylic painting over three hours, with materials and guidance included.",
+    },
+    canvas: {
+      label: lang === "lv" ? "LIELAIS KOPĪGAIS AUDĒKLS" : lang === "ru" ? "ОБЩИЙ БОЛЬШОЙ ХОЛСТ" : "LARGE SHARED CANVAS",
+      duration: 3,
+      description: lang === "lv" ? "Visi viesi kopā glezno vienu lielu komandas darbu — paliekošu kopīgu mākslas darbu pēc pasākuma." : lang === "ru" ? "Все гости вместе создают одну большую командную работу — общее произведение искусства на память." : "All guests paint one large shared teamwork piece to keep as a lasting memory of the event.",
+    },
+  };
+  const eventOffer = eventOffers[eventFormat];
+  const eventMonthStarts = Array.from({ length: 3 }, (_, index) => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth() + index, 1, 12);
+  });
+  const activeEventMonth = eventMonthStarts[eventMonth] || eventMonthStarts[0];
+  const eventMonthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(activeEventMonth);
+  const eventDayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  const eventMinimumHour = Math.max(11, 24 - eventDuration);
+  const eventHours = Array.from({ length: Math.max(0, 24 - eventDuration - 11 + 1) }, (_, index) => 11 + index);
+  const eventOverlapsClass = (day, hour) => {
+    const start = new Date(`${day}T${String(hour).padStart(2, "0")}:00:00+03:00`).getTime();
+    const end = start + eventDuration * 60 * 60 * 1000;
+    return liveClasses.some((item) => {
+      const classStart = new Date(item.startsAt).getTime();
+      const classEnd = new Date(item.endsAt || item.startsAt).getTime();
+      return start < classEnd && end > classStart;
+    });
+  };
+  const eventCalendarCells = (() => {
+    const first = new Date(activeEventMonth.getFullYear(), activeEventMonth.getMonth(), 1);
+    const leading = (first.getDay() + 6) % 7;
+    const total = new Date(activeEventMonth.getFullYear(), activeEventMonth.getMonth() + 1, 0).getDate();
+    return Array.from({ length: leading + total }, (_, index) => {
+      if (index < leading) return null;
+      const date = new Date(activeEventMonth.getFullYear(), activeEventMonth.getMonth(), index - leading + 1, 12);
+      const key = eventDayKey(date);
+      const isPast = key < eventDayKey(new Date());
+      const hasTime = eventHours.some((hour) => !eventOverlapsClass(key, hour));
+      return { key, day: date.getDate(), isPast, hasTime };
+    });
+  })();
+  const selectedEventExtraHours = Math.max(0, eventDuration - (eventOffer.duration + 2));
+  const selectedEventExtraPrice = selectedEventExtraHours * 15;
   const weeklyColumns = visibleWeek ? [4, 6, 0].map((day) => {
     const date = new Date(`${visibleWeek}T12:00:00Z`);
     date.setUTCDate(date.getUTCDate() + ((day + 6) % 7));
@@ -1738,6 +1795,30 @@ export default function InspirePage({ page = "home" }) {
     setConfirmationEmailSent(false);
     setForm(true);
   };
+  const openEventFormat = (format) => {
+    setEventFormat(format);
+    setBooking(null);
+    setSelection("");
+    setCalendarKind("event-format");
+    setInquiryTopic(events.emailSubject);
+    setStatus("");
+    setSent(false);
+    setForm(true);
+  };
+  const openEventInquiry = (format = eventFormat) => {
+    setEventFormat(format);
+    setBooking({ kind: "inquiry" });
+    setSelection("");
+    setCalendarKind("event");
+    setInquiryTopic(events.emailSubject);
+    setEventMonth(0);
+    setEventDate("");
+    setEventStartHour(11);
+    setEventDuration(5);
+    setStatus("");
+    setSent(false);
+    setForm(true);
+  };
   const submit = async (e) => {
     e.preventDefault();
     const action = e.nativeEvent.submitter?.value || "reserve";
@@ -1759,7 +1840,7 @@ export default function InspirePage({ page = "home" }) {
             name: customerName,
             email: customerEmail,
             topic: inquiryTopic,
-            message: String(data.get("message") || "").trim(),
+            message: `${String(data.get("message") || "").trim()}${calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nPapildu studijas laiks: ${selectedEventExtraHours} h · €${selectedEventExtraPrice}` : ""}`,
           }),
         });
         const result = await response.json();
@@ -2516,13 +2597,8 @@ export default function InspirePage({ page = "home" }) {
                 key={src}
                 type="button"
                 className={index === eventSlide ? "active" : ""}
-                aria-label={`${alt}. Skatīt lielākā izmērā`}
-                onClick={() =>
-                  setImagePreview({
-                    src: image(`inspire.image.event.${index}`, src),
-                    alt,
-                  })
-                }
+                aria-label={`Rādīt foto ${index + 1}`}
+                onClick={() => setEventSlide(index)}
               >
                 <img
                   src={image(`inspire.image.event.${index}`, src)}
@@ -2544,11 +2620,11 @@ export default function InspirePage({ page = "home" }) {
           </div>
         </div>
         <div className="inspire-event-rates" aria-label={lang === "lv" ? "Pasākuma sākuma cenas" : lang === "ru" ? "Стартовые цены события" : "Event starting prices"}>
-          {events.rates.map(([title, price, meta]) => (
+          {events.rates.map(([title, price, meta], index) => (
             <button
               type="button"
               key={title}
-              onClick={() => openInquiry(`${events.emailSubject} — ${title}`)}
+              onClick={() => openEventFormat(["watercolor", "acrylic", "canvas"][index])}
               aria-label={`${title}: ${price}`}
             >
               <p>{title}</p>
@@ -2639,7 +2715,7 @@ export default function InspirePage({ page = "home" }) {
         <button
           type="button"
           className="inspire-event-primary-cta"
-          onClick={() => openInquiry(events.emailSubject)}
+          onClick={() => openEventInquiry()}
         >
           {events.cta}
         </button>
@@ -2865,7 +2941,9 @@ export default function InspirePage({ page = "home" }) {
               <>
                 <>
                     <p className="inspire-kicker">
-                      {calendarKind === "gift" || calendarKind === "pass"
+                      {calendarKind === "event" || calendarKind === "event-format"
+                        ? (lang === "lv" ? "PRIVĀTAIS PASĀKUMS" : lang === "ru" ? "ЧАСТНОЕ СОБЫТИЕ" : "PRIVATE EVENT")
+                        : calendarKind === "gift" || calendarKind === "pass"
                         ? lang === "lv"
                           ? calendarKind === "pass"
                             ? "IEGĀDĀTIES ABONEMENTU"
@@ -2880,7 +2958,11 @@ export default function InspirePage({ page = "home" }) {
                         : t.booking}
                     </p>
                     <h2 id="inspire-booking-modal-title">
-                      {calendarKind === "gift"
+                      {calendarKind === "event-format"
+                        ? eventOffer.label
+                        : calendarKind === "event"
+                          ? (lang === "lv" ? "Pārbaudi datumus" : lang === "ru" ? "Проверьте даты" : "Check available dates")
+                        : calendarKind === "gift"
                         ? lang === "lv"
                           ? "Dāvanu karte"
                           : lang === "ru"
@@ -2899,7 +2981,34 @@ export default function InspirePage({ page = "home" }) {
                         {checkoutDetail}
                       </p>
                     ) : null}
-                    {calendarKind === "gift" || calendarKind === "pass" ? (
+                    {calendarKind === "event-format" ? (
+                      <div className="inspire-event-format-dialog">
+                        <p>{eventOffer.description}</p>
+                        <small>{lang === "lv" ? `${eventOffer.duration} stundas radošajai daļai · 2 stundas brīvam laikam studijā ir iekļautas.` : lang === "ru" ? `${eventOffer.duration} часа творческой части · ещё 2 часа свободного времени в студии включены.` : `${eventOffer.duration} hours of creative activity · plus 2 included free hours in the studio.`}</small>
+                        <button type="button" onClick={() => openEventInquiry(eventFormat)}>{lang === "lv" ? "IZVĒLĒTIES ŠO FORMĀTU UN DATUMU →" : lang === "ru" ? "ВЫБРАТЬ ЭТОТ ФОРМАТ И ДАТУ →" : "CHOOSE THIS FORMAT & DATE →"}</button>
+                      </div>
+                    ) : calendarKind === "event" ? (
+                      <div className="inspire-event-booking-flow">
+                        <div className="inspire-event-format-picker" role="group" aria-label={lang === "lv" ? "Pasākuma formāts" : "Event format"}>
+                          {Object.entries(eventOffers).map(([key, offer]) => <button key={key} type="button" className={eventFormat === key ? "active" : ""} onClick={() => setEventFormat(key)}><b>{offer.label}</b><span>{offer.duration} h</span></button>)}
+                        </div>
+                        <div className="inspire-event-month-switcher" aria-label={lang === "lv" ? "Pasākuma mēnesis" : "Event month"}>
+                          <button type="button" disabled={eventMonth === 0} onClick={() => setEventMonth((month) => Math.max(0, month - 1))}>‹</button>
+                          <strong>{eventMonthLabel}</strong>
+                          <button type="button" disabled={eventMonth === eventMonthStarts.length - 1} onClick={() => setEventMonth((month) => Math.min(eventMonthStarts.length - 1, month + 1))}>›</button>
+                        </div>
+                        <div className="inspire-event-calendar" role="group" aria-label={lang === "lv" ? "Pieejamie datumi" : "Available dates"}>
+                          {["P", "O", "T", "C", "P", "S", "Sv"].map((day, index) => <small key={`${day}-${index}`}>{day}</small>)}
+                          {eventCalendarCells.map((day, index) => day ? <button key={day.key} type="button" disabled={day.isPast || !day.hasTime} className={eventDate === day.key ? "active" : ""} onClick={() => setEventDate(day.key)}>{day.day}</button> : <span key={`blank-${index}`} />)}
+                        </div>
+                        <p className="inspire-event-calendar-note">{lang === "lv" ? "Pieejamība ir pārbaudīta pret publisko nodarbību grafiku. Datumu galīgi apstiprināsim e-pastā." : lang === "ru" ? "Доступность сверяется с публичным расписанием занятий; окончательно подтвердим дату по email." : "Availability is checked against the public class timetable; your date is confirmed by email."}</p>
+                        <div className="inspire-event-time-controls">
+                          <label>{lang === "lv" ? "Ilgums" : lang === "ru" ? "Длительность" : "Duration"}<select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); setEventDuration(duration); setEventStartHour((hour) => Math.min(hour, 24 - duration)); }}><option value="5">5 h</option><option value="6">6 h</option><option value="7">7 h</option><option value="8">8 h</option><option value="9">9 h</option><option value="10">10 h</option></select></label>
+                          <div><b>{lang === "lv" ? "Sākuma laiks" : lang === "ru" ? "Время начала" : "Start time"}</b><div className="inspire-event-hour-grid">{eventHours.map((hour) => <button key={hour} type="button" disabled={!eventDate || eventOverlapsClass(eventDate, hour)} className={eventStartHour === hour ? "active" : ""} onClick={() => setEventStartHour(hour)}>{String(hour).padStart(2, "0")}:00</button>)}</div></div>
+                        </div>
+                        <div className="inspire-event-time-summary"><b>{eventOffer.label}</b><span>{eventDate ? `${eventDate} · ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00` : (lang === "lv" ? "Izvēlies datumu" : "Choose a date")}</span><small>{lang === "lv" ? `Iekļauts: ${eventOffer.duration} h radošā daļa + 2 h brīvam laikam. Papildu laiks: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}.` : `Included: ${eventOffer.duration} h creative time + 2 h free studio time. Extra time: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}.`}</small></div>
+                      </div>
+                    ) : calendarKind === "gift" || calendarKind === "pass" ? (
                       <div className="inspire-gift-options">
                         <p>
                           {calendarKind === "pass"
@@ -3072,6 +3181,7 @@ export default function InspirePage({ page = "home" }) {
                       </p>
                     )}
                   </>
+                {calendarKind !== "event-format" && <>
                 <div className="inspire-customer-name">
                   <input required name="firstName" autoComplete="name" placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} />
                 </div>
@@ -3086,13 +3196,13 @@ export default function InspirePage({ page = "home" }) {
                 <small className="inspire-email-memory">
                   {lang === "lv" ? "E-pastu atceramies tikai šajā ierīcē, lai nākamreiz būtu ātrāk." : lang === "ru" ? "Мы запоминаем email только на этом устройстве, чтобы в следующий раз было быстрее." : "We remember your email only on this device, to make the next booking faster."}
                 </small>
-                {calendarKind === "inquiry" ? (
+                {calendarKind === "inquiry" || calendarKind === "event" ? (
                   <>
                     <label className="inspire-inquiry-message">
                       {lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"}
-                      <textarea name="message" required rows="5" placeholder={lang === "lv" ? "Pastāsti, kas Tev interesē…" : lang === "ru" ? "Расскажите, что вас интересует…" : "Tell us what you would like to discuss…"} />
+                      <textarea name="message" required rows="5" placeholder={calendarKind === "event" ? (lang === "lv" ? "Cilvēku skaits, svinību ideja, īpašas vēlmes…" : "Guest count, your idea and any special wishes…") : (lang === "lv" ? "Pastāsti, kas Tev interesē…" : lang === "ru" ? "Расскажите, что вас интересует…" : "Tell us what you would like to discuss…")} />
                     </label>
-                    <button name="bookingAction" value="inquiry">{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE"}</button>
+                    <button name="bookingAction" value="inquiry" disabled={calendarKind === "event" && !eventDate}>{calendarKind === "event" ? (lang === "lv" ? "NOSŪTĪT PASĀKUMA PIEPRASĪJUMU" : "SEND EVENT REQUEST") : (lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE")}</button>
                   </>
                 ) : calendarKind !== "gift" && calendarKind !== "pass" ? (
                   <div className="inspire-reservation-actions">
@@ -3111,6 +3221,7 @@ export default function InspirePage({ page = "home" }) {
                 <small className="inspire-checkout-status">
                   {status}
                 </small>
+                </>}
               </>
             )}
           </form>
