@@ -34,6 +34,7 @@ import "./inspire-proof-gallery-refine.css";
 import "./inspire-capabilities-rhythm.css";
 import "./inspire-questions-layout.css";
 import "./inspire-space-layout.css";
+import "./inspire-events-hero-refine.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1039,7 +1040,7 @@ const words = {
     youthBody:
       "Mūsu pieeju iedvesmo Montessori domāšana: sagatavota vide, īsti materiāli, iespēja izvēlēties un pieaugušais, kurš vēro, nevis steidzas pārņemt darbu savās rokās. Bērnam nav jāiekļaujas vienā paraugā. Viņa gaume, ritms un neparastā ideja ir vērta laika; mūsu darbs ir dot prasmes un telpu, lai tā var augt.",
     events: "PRIVĀTIE PASĀKUMI",
-    eventTitle: "Dzimšanas dienas · draugu vakari · komandu pasākumi",
+    eventTitle: "Dzimšanas dienas\ndraugu vakari\nkomandu pasākumi",
     eventCta: "UZRAKSTĪT PAR PASĀKUMU →",
     find: "KĀ MŪS ATRAST?",
     address: "📍 Ienāc citā pasaulē tepat Rīgas centrā, Miera ielā 17",
@@ -1097,7 +1098,7 @@ const words = {
     youthBody:
       "We work through attention, choice and materials that are within reach — an approach related in many ways to Montessori principles. A child does not need to fit one model. Their taste, pace and strange idea are worth time; our job is to offer skills and room for them to grow.",
     events: "BIRTHDAYS & PRIVATE EVENTS",
-    eventTitle: "Birthdays · evenings with friends · team events",
+    eventTitle: "Birthdays\nevenings with friends\nteam events",
     eventCta: "ASK ABOUT AN EVENT →",
     find: "HOW TO FIND US",
     address: "📍 Step into another world in central Riga, at Miera iela 17",
@@ -1155,7 +1156,7 @@ const words = {
     youthBody:
       "Мы работаем через внимание, выбор и материалы, которые всегда под рукой — подход, во многом близкий принципам Монтессори. Ребёнку не нужно помещаться в один шаблон. Его вкус, темп и странная идея достойны времени; наша задача — дать навыки и пространство, чтобы это росло.",
     events: "ПРАЗДНИКИ",
-    eventTitle: "Дни рождения · вечера с друзьями · события для команд",
+    eventTitle: "Дни рождения\nвечера с друзьями\nсобытия для команд",
     eventCta: "НАПИСАТЬ О СОБЫТИИ →",
     find: "КАК НАС НАЙТИ?",
     address: "📍 Другой мир в самом центре Риги, Miera iela 17",
@@ -2496,7 +2497,14 @@ export default function InspirePage({ page = "home" }) {
         <div className="inspire-events-top">
           <div className="inspire-events-intro">
             <p className="inspire-kicker">{t.events}</p>
-            <h2>{content("inspire.events.title", t.eventTitle)}</h2>
+            <h2 className="inspire-events-title">
+              {content("inspire.events.title", t.eventTitle)
+                .replace(/\s*·\s*/g, "\n")
+                .split("\n")
+                .map((line, index) => (
+                  <span key={`${line}-${index}`}>{line}</span>
+                ))}
+            </h2>
             <p>{content("inspire.events.lead", events.lead)}</p>
           </div>
           <div

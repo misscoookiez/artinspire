@@ -1,0 +1,17 @@
+/* Event introduction and image form one balanced, tall composition. */
+.inspire-page-events .inspire-events-top {
+  align-items: stretch !important;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, .62fr) !important;
+  gap: clamp(40px, 6vw, 96px) !important;
+}
+.inspire-page-events .inspire-events-intro { display: flex; flex-direction: column; justify-content: flex-start; }
+.inspire-page-events .inspire-events-title { display: grid; gap: 5px; margin: 14px 0 26px !important; }
+.inspire-page-events .inspire-events-title span { display: flex; align-items: center; gap: 16px; }
+.inspire-page-events .inspire-events-title span::before { content: ""; width: 22px; height: 1px; flex: 0 0 auto; background: #8ceef5; box-shadow: 7px 0 0 #d77fec; }
+.inspire-page-events .inspire-events-title span:nth-child(2)::before { background: #d77fec; box-shadow: 7px 0 0 #f0c36a; }
+.inspire-page-events .inspire-events-title span:nth-child(3)::before { background: #f0c36a; box-shadow: 7px 0 0 #8ceef5; }
+.inspire-page-events .inspire-event-slideshow { width: min(100%, 500px) !important; height: auto !important; min-height: 510px !important; max-height: none !important; aspect-ratio: auto !important; margin-left: auto !important; overflow: hidden; background: #13101b !important; }
+/* Cover removes letterboxing; the portrait frame remains tall and intentional. */
+.inspire-page-events .inspire-event-slideshow > button img { object-fit: cover !important; object-position: center !important; }
+@media (max-width: 900px) { .inspire-page-events .inspire-events-top { grid-template-columns: minmax(0, 1fr) !important; } .inspire-page-events .inspire-event-slideshow { width: min(100%, 560px) !important; min-height: 440px !important; margin-left: 0 !important; } }
+@media (max-width: 560px) { .inspire-page-events .inspire-events-title { gap: 8px; } .inspire-page-events .inspire-events-title span { gap: 11px; } .inspire-page-events .inspire-events-title span::before { width: 14px; } .inspire-page-events .inspire-event-slideshow { min-height: 360px !important; } }
