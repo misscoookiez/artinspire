@@ -91,3 +91,29 @@
     text-align: center !important;
   }
 }
+
+/* A small wash of the original neon strip gives the longer informational
+   chapters a colour breath just before the footer. */
+.inspire-energy-strip {
+  display: none;
+}
+
+.inspire-page-about .inspire-energy-strip,
+.inspire-page-contact .inspire-energy-strip {
+  min-height: clamp(108px, 9vw, 154px);
+  display: grid;
+  place-items: center;
+  margin: 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(125, 242, 248, .88);
+  border-bottom: 1px solid rgba(125, 242, 248, .72);
+  background:
+    linear-gradient(90deg, rgba(7, 5, 20, .12), rgba(9, 8, 24, .03), rgba(7, 5, 20, .17)),
+    url("/art/inspire-mood-strip.webp") center 52% / cover;
+}
+
+.inspire-energy-strip span {
+  color: rgba(214, 255, 255, .92);
+  font-size: 18px;
+  text-shadow: 0 0 18px rgba(137, 245, 251, .74);
+}

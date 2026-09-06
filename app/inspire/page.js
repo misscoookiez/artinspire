@@ -2917,6 +2917,9 @@ export default function InspirePage({ page = "home" }) {
           ))}
         </div>
       </section>
+      <section className="inspire-energy-strip" aria-hidden="true">
+        <span>✦</span>
+      </section>
       <InspireFooter lang={lang} />
       {imagePreview && (
         <div
