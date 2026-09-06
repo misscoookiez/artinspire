@@ -1,0 +1,64 @@
+/* Questions page: one continuous, full-width reading flow. */
+.inspire-page-questions > .inspire-faq {
+  order: 10;
+  width: 100%;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: clamp(64px, 8vw, 112px) max(24px, 10vw);
+  box-sizing: border-box;
+}
+
+.inspire-page-questions > .inspire-local-guide {
+  order: 11;
+  width: 100%;
+  padding: clamp(44px, 6vw, 76px) max(24px, 10vw) clamp(58px, 8vw, 96px);
+  border-top: 0;
+  box-sizing: border-box;
+}
+
+.inspire-page-questions .inspire-faq > div:first-child,
+.inspire-page-questions .inspire-faq-list,
+.inspire-page-questions .inspire-local-guide > details {
+  width: min(100%, 1380px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inspire-page-questions .inspire-faq > div:first-child {
+  max-width: none;
+  margin-bottom: 38px;
+}
+
+/* A single horizontal list keeps every question equally easy to scan. */
+.inspire-page-questions .inspire-faq-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) !important;
+  column-gap: 0;
+}
+
+.inspire-page-questions .inspire-faq details:nth-child(odd),
+.inspire-page-questions .inspire-faq details:nth-child(even) {
+  border-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.inspire-page-questions .inspire-faq summary {
+  min-height: 0;
+  padding: 20px 0 !important;
+}
+
+.inspire-page-questions .inspire-faq details p {
+  max-width: 840px;
+  padding-bottom: 6px;
+}
+
+@media (max-width: 700px) {
+  .inspire-page-questions > .inspire-faq {
+    padding: 58px 20px;
+  }
+
+  .inspire-page-questions > .inspire-local-guide {
+    padding: 40px 20px 58px;
+  }
+}
