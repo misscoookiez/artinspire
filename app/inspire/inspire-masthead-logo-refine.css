@@ -36,3 +36,15 @@
     max-width: 88vw !important;
   }
 }
+
+/* On the landing page the thesis shares the three-panel grid below it.  Its
+   measured width and line breaks stay intact; only the composition is centred. */
+@media (min-width: 801px) {
+  .inspire-page-home .inspire-statement-copy h2 {
+    width: min(900px, 100%);
+    max-width: 900px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+}
