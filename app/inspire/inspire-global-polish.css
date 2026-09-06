@@ -153,6 +153,65 @@
   font-weight: 700;
 }
 
+/* Gallery rule: each expandable gallery is a deliberate, complete rectangle.
+   Frames may have different shapes, but the contained work is never cropped. */
+.inspire-wide-artworks .inspire-host-artworks > div {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px !important;
+  columns: unset !important;
+  aspect-ratio: 2 / 1;
+  padding: 0 0 18px !important;
+}
+.inspire-wide-artworks .inspire-host-artworks > div img,
+.inspire-student-gallery-item img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0;
+  margin: 0 !important;
+  object-fit: contain !important;
+  background: #111013;
+}
+.inspire-student-galleries details > div {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px !important;
+  columns: unset !important;
+  aspect-ratio: 3 / 2;
+  padding: 0 0 22px !important;
+}
+.inspire-student-gallery-item {
+  display: grid !important;
+  place-items: center;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+  break-inside: unset !important;
+  background: #111013 !important;
+}
+/* Five adult/student images fill a 3 × 2 rectangle with one intentionally
+   wider first frame; the four children images use a balanced 2 × 2 grid. */
+.inspire-student-galleries details:nth-of-type(1) > div > :first-child { grid-column: span 2; }
+.inspire-student-galleries details:nth-of-type(2) > div {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 800px) {
+  .inspire-wide-artworks .inspire-host-artworks > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    aspect-ratio: 1 / 2;
+    gap: 8px !important;
+  }
+  .inspire-student-galleries details > div { gap: 8px !important; }
+}
+
 @media (max-width: 800px) {
   .inspire-masthead {
     min-height: 0 !important;
