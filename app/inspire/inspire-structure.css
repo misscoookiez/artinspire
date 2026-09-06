@@ -55,6 +55,23 @@
 .inspire-page-about > .inspire-faq,
 .inspire-page-about > .inspire-local-guide { display: none !important; }
 
+/* "Mācību metode" is its own destination. It leads with the practical
+   promise, then shows work, children, adults, and finally Sandra's story. */
+.inspire-page-method > .inspire-statement,
+.inspire-page-method > .inspire-mood-strip,
+.inspire-page-method > .inspire-section,
+.inspire-page-method > .inspire-events,
+.inspire-page-method > .inspire-contact-panel,
+.inspire-page-method > .inspire-directions,
+.inspire-page-method > .inspire-faq,
+.inspire-page-method > .inspire-local-guide { display: none !important; }
+.inspire-page-method > .inspire-capabilities { order: 6; }
+.inspire-page-method > .inspire-student-galleries { order: 7; }
+.inspire-page-method > .inspire-depth { order: 8; display: flex; flex-direction: column; }
+.inspire-page-method .inspire-depth-panel:nth-child(1) { order: 3; }
+.inspire-page-method .inspire-depth-panel:nth-child(2) { order: 2; }
+.inspire-page-method .inspire-depth-panel:nth-child(3) { order: 1; }
+
 .inspire-page-contact > .inspire-statement,
 .inspire-page-contact > .inspire-mood-strip,
 .inspire-page-contact > .inspire-section,

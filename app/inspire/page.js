@@ -2147,7 +2147,7 @@ export default function InspirePage({ page = "home" }) {
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </a>
-        <a href="/about#berni-un-jauniesi" onClick={() => setMobileMenuOpen(false)}>
+        <a href="/method" onClick={() => setMobileMenuOpen(false)}>
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
@@ -2171,14 +2171,7 @@ export default function InspirePage({ page = "home" }) {
                 : "PRIVATE EVENTS"}
           </span>
         </a>
-        <a
-          href="https://artinspire.lv/#kontakti"
-          onClick={(event) => {
-            event.preventDefault();
-            setMobileMenuOpen(false);
-            window.location.assign("https://artinspire.lv/#kontakti");
-          }}
-        >
+        <a href="/contact" onClick={() => setMobileMenuOpen(false)}>
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </a>
