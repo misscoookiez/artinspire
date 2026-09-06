@@ -410,7 +410,8 @@
 
 @media (max-width: 800px) {
   .inspire-masthead { min-height: 0 !important; }
-  .inspire-weekly-columns { grid-template-columns: 1fr !important; }
+  .inspire-page-classes .inspire-weekly-columns { grid-template-columns: 1fr !important; }
+  .inspire-page-classes .inspire-products { grid-template-columns: 1fr !important; }
   .inspire-empty-session { min-height: 96px; padding: 20px 22px; }
   .inspire-page-home .inspire-masthead { height: 470px !important; min-height: 470px !important; padding: 28px 24px 38px !important; grid-template-columns: 1fr !important; align-items: end !important; }
   .inspire-page-home .inspire-masthead-brand { grid-column: 1; align-self: start; width: min(370px, 88vw) !important; }

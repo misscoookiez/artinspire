@@ -5,7 +5,6 @@ const redirects = new Map([
   ["/inspire/about", "/about"],
   ["/portfolio", "/"],
   ["/shop", "/"],
-  ["/contact", "/"],
 ]);
 
 export function proxy(request) {
@@ -16,5 +15,5 @@ export function proxy(request) {
 }
 
 export const config = {
-  matcher: ["/inspire", "/inspire/about", "/portfolio", "/shop", "/contact"],
+  matcher: ["/inspire", "/inspire/about", "/portfolio", "/shop"],
 };
