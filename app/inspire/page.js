@@ -2588,6 +2588,51 @@ export default function InspirePage({ page = "home" }) {
           <div className="inspire-event-custom">
             <p>{events.custom[0]}</p>
             <span>{events.custom[1]}</span>
+            <div className="inspire-event-room-details inspire-space-details">
+              <details>
+                <summary>
+                  {host.details}
+                  <b>+</b>
+                </summary>
+                <div>
+                  <p>{content("inspire.host.space", host.studio)}</p>
+                  <p>{host.hire}</p>
+                  <div className="inspire-space-preview" aria-label={host.details}>
+                    {studioPreviewImages.map(([src, alt]) => (
+                      <button
+                        key={src}
+                        type="button"
+                        aria-label={`${alt}. Skatīt lielākā izmērā`}
+                        onClick={() => setImagePreview({ src, alt })}
+                      >
+                        <img src={src} alt={alt} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </details>
+              <details>
+                <summary>
+                  {host.tattooTitle}
+                  <b>+</b>
+                </summary>
+                <div>
+                  <p>{content("inspire.host.tattoo", host.tattoo)}</p>
+                  <div className="inspire-space-preview inspire-tattoo-preview" aria-label={host.tattooTitle}>
+                    {tattooPreviewImages.map(([src, alt]) => (
+                      <button
+                        key={src}
+                        type="button"
+                        aria-label={`${alt}. Skatīt lielākā izmērā`}
+                        onClick={() => setImagePreview({ src, alt })}
+                      >
+                        <img src={src} alt={alt} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </details>
+            </div>
           </div>
         ) : null}
         <p className="inspire-event-support">{host.event}</p>

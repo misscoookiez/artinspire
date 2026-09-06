@@ -13,5 +13,18 @@
 .inspire-page-events .inspire-event-slideshow { width: min(100%, 500px) !important; height: auto !important; min-height: 510px !important; max-height: none !important; aspect-ratio: auto !important; margin-left: auto !important; overflow: hidden; background: #13101b !important; }
 /* Cover removes letterboxing; the portrait frame remains tall and intentional. */
 .inspire-page-events .inspire-event-slideshow > button img { object-fit: cover !important; object-position: center !important; }
+
+/* The event idea can lead directly into a proper, visual room guide. */
+.inspire-page-events .inspire-event-room-details {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 28px 0 0 !important;
+  border-top-color: rgba(140, 238, 245, .48) !important;
+}
+.inspire-page-events .inspire-event-room-details details { border-bottom-color: rgba(140, 238, 245, .32) !important; }
+.inspire-page-events .inspire-event-room-details summary { color: #f7f3f8 !important; }
+.inspire-page-events .inspire-event-room-details details > div > p { color: #e2dbe6 !important; }
+.inspire-page-events .inspire-event-room-details .inspire-space-preview { border: 1px solid rgba(140, 238, 245, .24); }
+.inspire-page-events .inspire-event-room-details .inspire-space-preview button { background: #131027; }
 @media (max-width: 900px) { .inspire-page-events .inspire-events-top { grid-template-columns: minmax(0, 1fr) !important; } .inspire-page-events .inspire-event-slideshow { width: min(100%, 560px) !important; min-height: 440px !important; margin-left: 0 !important; } }
 @media (max-width: 560px) { .inspire-page-events .inspire-events-title { gap: 8px; } .inspire-page-events .inspire-events-title span { gap: 11px; } .inspire-page-events .inspire-events-title span::before { width: 14px; } .inspire-page-events .inspire-event-slideshow { min-height: 360px !important; } }
