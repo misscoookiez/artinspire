@@ -1,0 +1,113 @@
+/* Private events: a single reading column, with every idea immediately
+   discoverable and the description revealed directly beneath its title. */
+.inspire-page-events .inspire-events { --event-column: min(1280px, 100%); }
+.inspire-page-events .inspire-events-top,
+.inspire-page-events .inspire-event-rates,
+.inspire-page-events .inspire-event-included,
+.inspire-page-events .inspire-event-formats-label,
+.inspire-page-events .inspire-event-grid,
+.inspire-page-events .inspire-event-custom,
+.inspire-page-events .inspire-event-primary-cta,
+.inspire-page-events .inspire-event-faq-inline {
+  width: var(--event-column) !important;
+  max-width: var(--event-column) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box;
+}
+.inspire-page-events .inspire-event-rates {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(38px, 5vw, 62px) !important;
+  border: 1px solid rgba(176, 239, 247, .38) !important;
+}
+.inspire-page-events .inspire-event-rates button {
+  min-height: 132px;
+  margin: 0 !important;
+  padding: 22px !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(176, 239, 247, .38) !important;
+  background: linear-gradient(135deg, rgba(19, 15, 39, .62), rgba(12, 38, 53, .42)) !important;
+  color: #fff !important;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.inspire-page-events .inspire-event-rates button:last-child { border-right: 0 !important; }
+.inspire-page-events .inspire-event-rates button:hover,
+.inspire-page-events .inspire-event-rates button:focus-visible {
+  background: linear-gradient(135deg, rgba(35, 70, 84, .86), rgba(54, 23, 78, .84)) !important;
+  box-shadow: inset 0 0 0 1px #a8f6fb, 0 0 24px rgba(117, 234, 245, .16);
+  outline: 0;
+}
+.inspire-page-events .inspire-event-rates p { margin: 0 0 17px !important; }
+.inspire-page-events .inspire-event-rates b { display: block; margin: 0 !important; }
+.inspire-event-included { margin-top: clamp(38px, 5vw, 62px) !important; }
+.inspire-event-section-label,
+.inspire-page-events .inspire-event-formats-label {
+  display: block !important;
+  margin-bottom: 13px !important;
+  color: #a7f7ff !important;
+  font-size: 11px !important;
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+.inspire-page-events .inspire-event-highlights {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.inspire-page-events .inspire-event-highlights li { min-height: 108px !important; }
+.inspire-page-events .inspire-event-formats-label { margin-top: clamp(48px, 6vw, 76px) !important; }
+.inspire-page-events .inspire-event-grid {
+  display: block !important;
+  margin-top: 0 !important;
+  border-top: 1px solid rgba(176, 239, 247, .42) !important;
+  background: transparent !important;
+}
+.inspire-page-events .inspire-event-grid details,
+.inspire-page-events .inspire-event-grid details:nth-child(odd),
+.inspire-page-events .inspire-event-grid details:nth-child(4) {
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(176, 239, 247, .32) !important;
+  background: rgba(8, 10, 22, .28) !important;
+}
+.inspire-page-events .inspire-event-grid summary {
+  display: grid !important;
+  grid-template-columns: 1fr 32px !important;
+  min-height: 0 !important;
+  padding: 24px 26px !important;
+  background: linear-gradient(90deg, rgba(31, 65, 82, .37), rgba(28, 19, 55, .28)) !important;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+.inspire-page-events .inspire-event-grid summary:hover,
+.inspire-page-events .inspire-event-grid summary:focus-visible,
+.inspire-page-events .inspire-event-grid details[open] summary {
+  background: linear-gradient(90deg, rgba(44, 101, 116, .53), rgba(63, 31, 93, .44)) !important;
+  box-shadow: inset 3px 0 0 #a5f3fb;
+  outline: 0;
+}
+.inspire-page-events .inspire-event-grid h3 { font-size: clamp(23px, 2vw, 32px) !important; }
+.inspire-page-events .inspire-event-grid details p {
+  max-width: 850px;
+  margin: 0 !important;
+  padding: 0 26px 27px !important;
+  font-size: clamp(16px, 1.18vw, 19px) !important;
+  line-height: 1.62 !important;
+}
+.inspire-page-events .inspire-event-custom { margin-top: 34px !important; }
+.inspire-page-events .inspire-event-primary-cta { display: flex !important; justify-content: center; align-items: center; min-height: 54px; margin-top: 30px !important; padding: 14px 24px !important; border: 1px solid #62f0ff !important; background: linear-gradient(100deg, #dffcff, #9cecf8) !important; color: #071116 !important; font-size: 12px; font-weight: 700; letter-spacing: .11em; cursor: pointer; box-shadow: 0 0 28px rgba(67, 233, 251, .35), inset 0 0 0 1px rgba(255,255,255,.65); }
+.inspire-page-events .inspire-event-primary-cta:hover { background: #4cecff !important; transform: translateY(-1px); }
+.inspire-page-events .inspire-event-faq-inline { margin-top: 48px !important; }
+@media (max-width: 800px) {
+  .inspire-page-events .inspire-event-rates { grid-template-columns: 1fr; }
+  .inspire-page-events .inspire-event-rates button { min-height: 98px; border-right: 0 !important; border-bottom: 1px solid rgba(176, 239, 247, .38) !important; }
+  .inspire-page-events .inspire-event-rates button:last-child { border-bottom: 0 !important; }
+  .inspire-page-events .inspire-event-highlights { grid-template-columns: 1fr; }
+  .inspire-page-events .inspire-event-highlights li { min-height: 0 !important; }
+  .inspire-page-events .inspire-event-grid summary { padding: 20px !important; }
+  .inspire-page-events .inspire-event-grid details p { padding: 0 20px 23px !important; }
+}

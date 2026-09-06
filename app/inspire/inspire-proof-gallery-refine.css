@@ -1,0 +1,71 @@
+/* The approach chapters are rooms rather than cards: their image atmosphere
+   reaches the screen edge, while real studio material stays crisp in front. */
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof::after {
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  transform: none !important;
+  background:
+    linear-gradient(90deg, rgba(8, 8, 13, .94) 0%, rgba(8, 9, 16, .78) 35%, rgba(8, 10, 17, .24) 68%, rgba(6, 9, 13, .36) 100%),
+    url('/art/inspire-adult-watercolor-atmosphere.webp') center / cover no-repeat !important;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-adult-palette {
+  z-index: 2 !important;
+  top: auto !important;
+  right: clamp(24px, 7vw, 130px) !important;
+  bottom: clamp(40px, 5vw, 92px) !important;
+  width: clamp(260px, 28vw, 500px) !important;
+  opacity: .88 !important;
+  mix-blend-mode: normal !important;
+  filter: saturate(1.08) contrast(1.04) drop-shadow(0 24px 36px rgba(0, 0, 0, .32)) !important;
+  transform: rotate(-7deg) !important;
+}
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof > div:first-child { max-width: min(780px, 62%); }
+.inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof-list { position: relative; z-index: 3; }
+.inspire-page-about .inspire-depth-panel:nth-child(3) .inspire-proof::after {
+  inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  transform: none !important;
+  background:
+    linear-gradient(90deg, rgba(11, 20, 39, .82) 0%, rgba(15, 18, 48, .72) 44%, rgba(17, 17, 47, .35) 72%, rgba(18, 13, 40, .58) 100%),
+    url('/art/inspire-youth-watercolor-atmosphere.webp') center / cover no-repeat !important;
+}
+.inspire-page-about .inspire-youth-proof > div:first-child { max-width: min(770px, 58%); }
+.inspire-youth-process-gallery {
+  position: absolute;
+  z-index: 2;
+  top: clamp(76px, 8vw, 135px);
+  right: clamp(24px, 9vw, 160px);
+  display: grid;
+  width: min(430px, 28vw);
+  aspect-ratio: 1.25;
+  grid-template-columns: 1.18fr .82fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+}
+.inspire-youth-process-gallery button {
+  min-width: 0;
+  min-height: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid rgba(157, 241, 247, .48) !important;
+  background: #101326 !important;
+  cursor: pointer;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .22);
+}
+.inspire-youth-process-gallery button:first-child { grid-row: span 2; }
+.inspire-youth-process-gallery img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.inspire-youth-process-gallery button:hover img,
+.inspire-youth-process-gallery button:focus-visible img { transform: scale(1.045); }
+.inspire-youth-process-gallery button:focus-visible { outline: 2px solid #a9f7fb; outline-offset: 3px; }
+.inspire-page-about .inspire-youth-proof .inspire-proof-list { position: relative; z-index: 3; }
+@media (max-width: 900px) {
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof > div:first-child,
+  .inspire-page-about .inspire-youth-proof > div:first-child { max-width: none; }
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-adult-palette { right: 20px !important; width: min(340px, 56vw) !important; opacity: .68 !important; }
+  .inspire-youth-process-gallery { position: relative; top: auto; right: auto; width: min(520px, 100%); margin: 30px 0 0; }
+}

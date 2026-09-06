@@ -29,6 +29,8 @@ import "./inspire-about-continuity.css";
 import "./inspire-art-direction.css";
 import "./inspire-navigation.css";
 import "./inspire-structure.css";
+import "./inspire-events-layout-v2.css";
+import "./inspire-proof-gallery-refine.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -822,7 +824,7 @@ const eventFormats = {
     ],
     hangout:
       "Aptuvenais nepieciešamais laiks gleznas pabeigšanai — 3 stundas.\n\nKatram pasākuma formātam studijā pievienojam vēl 2–3 stundas brīvai būšanai kopā — lai var mierīgi ierasties, pakavēties un nesteigties prom pēc pēdējā otas vilciena. Drīkst ņemt līdzi savu ēdienu un dzērienus.\n\nVisus pasākuma formātus varam noorganizēt izbraukuma formātā — pie Jums!",
-    formatsLabel: "GATAVIE PASĀKUMU FORMĀTI, KO VAR PASŪTĪT",
+    formatsLabel: "PASĀKUMU IDEJAS — IZVĒLIES VIENU VAI APVIENO VAIRĀKAS",
     formats: [
       [
         "NEONA GLEZNOŠANA",
@@ -2401,6 +2403,13 @@ export default function InspirePage({ page = "home" }) {
                 <img src="/art/inspire-visual-elements.webp" alt="" />
               </div>
               <p>{content("inspire.youth.body", t.youthBody)}</p>
+              <div className="inspire-youth-process-gallery" aria-label={lang === "lv" ? "Bērnu un jauniešu darbi studijā" : lang === "ru" ? "Работы детей и подростков в студии" : "Children and young people making work at the studio"}>
+                {youthGallerySlides.slice(0, 3).map(([src, alt]) => (
+                  <button key={src} type="button" onClick={() => setImagePreview({ src, alt })}>
+                    <img src={src} alt={alt} />
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="inspire-proof-list">
               {youthPrinciples.map(([title, body], index) => (
@@ -2523,29 +2532,39 @@ export default function InspirePage({ page = "home" }) {
             </div>
           </div>
         </div>
-        <div className="inspire-event-rates">
+        <div className="inspire-event-rates" aria-label={lang === "lv" ? "Pasākuma sākuma cenas" : lang === "ru" ? "Стартовые цены события" : "Event starting prices"}>
           {events.rates.map(([title, price, meta]) => (
-            <article key={title}>
+            <button
+              type="button"
+              key={title}
+              onClick={() => openInquiry(`${events.emailSubject} — ${title}`)}
+              aria-label={`${title}: ${price}`}
+            >
               <p>{title}</p>
               <b>{price}</b>
               {meta ? <span>{meta}</span> : null}
-            </article>
+            </button>
           ))}
         </div>
-        <ul className="inspire-event-highlights">
+        <section className="inspire-event-included" aria-labelledby="event-included-title">
+          <p id="event-included-title" className="inspire-event-section-label">
+            {lang === "lv" ? "KAS PIEEJAMS TAVAM PASĀKUMAM" : lang === "ru" ? "ЧТО МОЖНО ДОБАВИТЬ К ВАШЕМУ СОБЫТИЮ" : "WHAT YOUR EVENT CAN INCLUDE"}
+          </p>
+          <ul className="inspire-event-highlights">
           {eventHighlights.map(([label, value]) => (
             <li key={label}>
               <b>{label}</b>
               <span>{value}</span>
             </li>
           ))}
-        </ul>
+          </ul>
+        </section>
         {events.formatsLabel ? (
           <p className="inspire-event-formats-label">{events.formatsLabel}</p>
         ) : null}
         <div className="inspire-event-grid">
-          {events.formats.map(([title, body]) => (
-            <details key={title} open>
+          {events.formats.map(([title, body], index) => (
+            <details key={title} open={index === 0}>
               <summary>
                 <h3>{title}</h3>
                 <b>+</b>
@@ -2561,12 +2580,13 @@ export default function InspirePage({ page = "home" }) {
           </div>
         ) : null}
         <p className="inspire-event-support">{host.event}</p>
-        <a
+        <button
+          type="button"
           className="inspire-event-primary-cta"
-          href={`mailto:misscoookiez@gmail.com?subject=${encodeURIComponent(events.emailSubject)}`}
+          onClick={() => openInquiry(events.emailSubject)}
         >
           {events.cta}
-        </a>
+        </button>
         <div className="inspire-event-faq-inline">
           <details>
             <summary>
