@@ -117,3 +117,9 @@
   font-size: 18px;
   text-shadow: 0 0 18px rgba(137, 245, 251, .74);
 }
+
+/* Between the studio capabilities and the student-work chapter, this has the
+   same reset effect as the original strip rather than becoming a footer trim. */
+.inspire-page-about > .inspire-energy-strip {
+  order: 6.5;
+}
