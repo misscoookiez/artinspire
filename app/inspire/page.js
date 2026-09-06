@@ -1946,7 +1946,7 @@ export default function InspirePage({ page = "home" }) {
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </a>
-        <a href="/contact#biezakie-jautajumi" onClick={() => setMobileMenuOpen(false)}>
+        <a href="/questions" onClick={() => setMobileMenuOpen(false)}>
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
         </a>
         </div>

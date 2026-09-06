@@ -64,6 +64,22 @@
 .inspire-page-contact > .inspire-events { display: none !important; }
 .inspire-page-contact > .inspire-local-guide { display: block !important; }
 
+/* Questions are a real destination, rather than a fragile jump down another
+   page.  The practical local guide stays with the FAQ as its expandable SEO
+   footer; the contact invitation remains on its own page. */
+.inspire-page-questions > .inspire-statement,
+.inspire-page-questions > .inspire-mood-strip,
+.inspire-page-questions > .inspire-section,
+.inspire-page-questions > .inspire-capabilities,
+.inspire-page-questions > .inspire-depth,
+.inspire-page-questions > .inspire-student-galleries,
+.inspire-page-questions > .inspire-events,
+.inspire-page-questions > .inspire-contact-panel,
+.inspire-page-questions > .inspire-directions { display: none !important; }
+.inspire-page-questions > .inspire-local-guide,
+.inspire-page-questions > .inspire-faq { display: block !important; visibility: visible !important; opacity: 1 !important; }
+.inspire-page-questions > .inspire-faq { max-width: none !important; }
+
 .inspire-page-about .inspire-depth-panel:first-child { display: block; }
 .inspire-page-about > .inspire-capabilities { order: 6; }
 .inspire-page-about > .inspire-student-galleries { order: 7; }
@@ -505,7 +521,13 @@
 }
 
 @media (max-width: 800px) {
-  .inspire-masthead { min-height: 0 !important; }
+  /* Keep every route on the same calm, colourful masthead.  Earlier chapter
+     styles used a dark fallback here, which made the events page look blank
+     on phones. */
+  .inspire-masthead {
+    min-height: 0 !important;
+    background: linear-gradient(90deg, rgba(6, 4, 27, .16), rgba(3, 8, 22, .08)), url('/art/inspire-masthead-background.webp') center / cover no-repeat !important;
+  }
   .inspire-page-classes .inspire-weekly-columns { grid-template-columns: 1fr !important; }
   .inspire-page-classes .inspire-products { grid-template-columns: 1fr !important; }
   .inspire-empty-session { min-height: 96px; padding: 20px 22px; }
