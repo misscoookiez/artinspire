@@ -3171,7 +3171,7 @@ export default function InspirePage({ page = "home" }) {
                         )}
                       </select>
                     )}
-                    {calendarKind !== "gift" && calendarKind !== "pass" && (
+                    {calendarKind !== "gift" && calendarKind !== "pass" && calendarKind !== "event" && calendarKind !== "event-format" && (
                       <p className="inspire-cancellation inspire-modal-policy">
                         {lang === "lv"
                           ? "Jebkura rezervācija jāatceļ vai jāpārceļ vismaz 24 stundas pirms sākuma; līdz tam — bezmaksas atcelšana un automātiska atmaksa."
