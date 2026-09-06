@@ -4,7 +4,6 @@ export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://artinspire.lv"),
   title: "Art Studio Inspire — gleznošanas nodarbības Rīgā",
   description: "Paņem otu. Uztaisi kaut ko savu. Gleznošana, drosmīgas idejas un radoši vakari Rīgā.",
-  alternates: { canonical: "/" },
   openGraph: {
     title: "Art Studio Inspire — gleznošanas nodarbības Rīgā",
     description: "Paņem otu. Uztaisi kaut ko savu. Gleznošana, drosmīgas idejas un radoši vakari Rīgā.",
