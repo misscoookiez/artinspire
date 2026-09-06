@@ -37,6 +37,7 @@ import "./inspire-space-layout.css";
 import "./inspire-events-hero-refine.css";
 import "./inspire-masthead-logo-refine.css";
 import "./inspire-about-panel-refine.css";
+import "./inspire-global-polish.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1383,6 +1384,30 @@ export default function InspirePage({ page = "home" }) {
               "Голос подростка важен",
               "Здесь есть место для больших работ, идей портфолио и смелых тем. Их взгляд заслуживает времени, внимания и серьёзного разговора.",
             ],
+            [
+              "От эскиза к большой работе",
+              "Идея может начаться с маленького рисунка и вырасти в картину, серию или работу для портфолио. Мы помогаем заметить момент, когда работу стоит развивать, а не сразу начинать следующую.",
+            ],
+            [
+              "Настоящие материалы, настоящие решения",
+              "Дети знакомятся с краской, карандашом, углём, акварелью, акрилом и коллажем — не с единственной «правильной» техникой. Иногда именно материал подсказывает идее направление.",
+            ],
+            [
+              "Смотрим на искусство, а не только делаем",
+              "Мы рассматриваем книги по искусству, художников и образы, которые цепляют. Это учит смотреть внимательнее и находить слова для собственных идей.",
+            ],
+            [
+              "Безопасное место для ошибок",
+              "Неудачная линия, случайный цвет или изменившийся план — не повод всё выбрасывать. Учимся замечать, что сама работа предлагает сделать дальше.",
+            ],
+            [
+              "Портфолио и художественная школа",
+              "Когда подростку нужен более серьёзный вектор, работаем с портфолио, заданиями, рисунком с натуры и уверенностью в своей работе — без лишнего соревнования.",
+            ],
+            [
+              "Родители видят процесс",
+              "Важен не только готовый результат. Мы рассказываем, над чем ребёнок работает и что уже умеет замечать, выбирать и доводить до конца.",
+            ],
           ]
         : [
             [
@@ -1400,6 +1425,30 @@ export default function InspirePage({ page = "home" }) {
             [
               "Young people’s voices are taken seriously",
               "There is room here for bigger works, portfolio ideas and bold themes. Their point of view deserves time, attention and a thoughtful conversation.",
+            ],
+            [
+              "From a sketch to a larger work",
+              "An idea can begin as a small drawing and grow into a painting, series or portfolio work. We help students see when it is worth developing a work rather than immediately starting another one.",
+            ],
+            [
+              "Real materials, real choices",
+              "Children meet paint, pencil, charcoal, watercolour, acrylic and collage—not one supposedly correct technique. A material can give an idea its direction.",
+            ],
+            [
+              "We look at art, not only make it",
+              "We look through art books, artists and images that catch our attention. This teaches closer looking and gives students words for their own ideas.",
+            ],
+            [
+              "A kind place for mistakes",
+              "An awkward line, accidental colour or changed plan is not a reason to throw a work away. We learn to notice what the work itself suggests doing next.",
+            ],
+            [
+              "Portfolio and art school",
+              "When a young person needs a more focused direction, we can work on portfolios, assignments, observational drawing and confidence in their work—without needless competition.",
+            ],
+            [
+              "Parents can see the process",
+              "The finished work is not the only thing that matters. We share what a child is working on and what they are learning to notice, choose and complete.",
             ],
           ];
   const youthMeta =
@@ -2098,18 +2147,14 @@ export default function InspirePage({ page = "home" }) {
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </a>
-        <a href="/about" onClick={() => setMobileMenuOpen(false)}>
-          <img src="/art/inspire-icon-easel.png" alt="" />
-          <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
-        </a>
-        <a href="/about#studentu-darbi" onClick={() => setMobileMenuOpen(false)}>
+        <a href="/about#berni-un-jauniesi" onClick={() => setMobileMenuOpen(false)}>
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
-              ? "STUDENTU DARBI"
+              ? "MĀCĪBU METODE"
               : lang === "ru"
-                ? "РАБОТЫ УЧЕНИКОВ"
-                : "STUDENT WORK"}
+                ? "МЕТОД ОБУЧЕНИЯ"
+                : "HOW WE WORK"}
           </span>
         </a>
         <a href="/events" onClick={() => setMobileMenuOpen(false)}>
@@ -2136,6 +2181,10 @@ export default function InspirePage({ page = "home" }) {
         >
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
+        </a>
+        <a href="/about" onClick={() => setMobileMenuOpen(false)}>
+          <img src="/art/inspire-icon-easel.png" alt="" />
+          <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
         </a>
         <a href="/questions" onClick={() => setMobileMenuOpen(false)}>
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
@@ -2215,6 +2264,7 @@ export default function InspirePage({ page = "home" }) {
         <p className="inspire-prices">
           <span>{t.price}</span>
           <small>{t.materialsIncluded}</small>
+          <small>{lang === "lv" ? "NODARBĪBAS ILGUMS — 2 STUNDAS" : lang === "ru" ? "ДЛИТЕЛЬНОСТЬ ЗАНЯТИЯ — 2 ЧАСА" : "CLASS DURATION — 2 HOURS"}</small>
         </p>
       </section>
       <section className="inspire-section inspire-booking">
@@ -2433,20 +2483,6 @@ export default function InspirePage({ page = "home" }) {
                     <p key={`${index}-${paragraph.slice(0, 16)}`}>{paragraph}</p>
                   ))}
               </div>
-              <div className="inspire-host-stories">
-                <p className="inspire-kicker">
-                  {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
-                </p>
-                {hostStories.map(([title, body]) => (
-                  <details key={title}>
-                    <summary>
-                      <strong>{title}</strong>
-                      <b>+</b>
-                    </summary>
-                    <p>{body}</p>
-                  </details>
-                ))}
-              </div>
             </div>
             <div className="inspire-host-visuals">
               <div className="inspire-host-gallery">
@@ -2475,8 +2511,23 @@ export default function InspirePage({ page = "home" }) {
               </div>
             </div>
           </section>
-          <div className="inspire-wide-artworks">
-            <details className="inspire-host-artworks">
+          <section className="inspire-host-story-section">
+            <div className="inspire-host-stories">
+              <p className="inspire-kicker">
+                {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
+              </p>
+              {hostStories.map(([title, body]) => (
+                <details key={title}>
+                  <summary>
+                    <strong>{title}</strong>
+                    <b>+</b>
+                  </summary>
+                  <p>{body}</p>
+                </details>
+              ))}
+            </div>
+            <div className="inspire-wide-artworks">
+              <details className="inspire-host-artworks">
               <summary>
                 {lang === "lv"
                   ? "SKATĪT SANDRAS DARBUS"
@@ -2519,8 +2570,9 @@ export default function InspirePage({ page = "home" }) {
                   alt="Raven drawing by Sandra Rudzīte"
                 />
               </div>
-            </details>
-          </div>
+              </details>
+            </div>
+          </section>
         </details>
         <details className="inspire-depth-panel">
           <summary>
@@ -2599,13 +2651,6 @@ export default function InspirePage({ page = "home" }) {
                 <img src="/art/inspire-visual-elements.webp" alt="" />
               </div>
               <p>{content("inspire.youth.body", t.youthBody)}</p>
-              <div className="inspire-youth-process-gallery" aria-label={lang === "lv" ? "Bērnu un jauniešu darbi studijā" : lang === "ru" ? "Работы детей и подростков в студии" : "Children and young people making work at the studio"}>
-                {youthGallerySlides.slice(0, 3).map(([src, alt]) => (
-                  <button key={src} type="button" onClick={() => setImagePreview({ src, alt })}>
-                    <img src={src} alt={alt} />
-                  </button>
-                ))}
-              </div>
             </div>
             <div className="inspire-proof-list">
               {youthPrinciples.map(([title, body], index) => (
@@ -2879,10 +2924,11 @@ export default function InspirePage({ page = "home" }) {
         <p className="inspire-kicker">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</p>
         <h2 id="inspire-contact-title">{lang === "lv" ? "Satiekamies Miera ielā." : lang === "ru" ? "Встретимся на улице Миера." : "Meet us on Miera iela."}</h2>
         <p>{t.address}</p>
-        <div>
-          <a href="mailto:misscoookiez@gmail.com">misscoookiez@gmail.com</a>
-          <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp +371 28809550</a>
-          <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">@artstudio.inspire</a>
+        <div className="inspire-contact-quick-actions">
+          <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a href="mailto:misscoookiez@gmail.com">E-pasts</a>
+          <button type="button" onClick={() => openInquiry(lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page")}>{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND A MESSAGE"}</button>
         </div>
       </section>
       <section id="kontakti" className="inspire-directions">
@@ -2934,31 +2980,6 @@ export default function InspirePage({ page = "home" }) {
               </>
             )}
           </p>
-          <span className="inspire-directions-rule" />
-          <p className="inspire-contact-label">
-            {lang === "lv"
-              ? "Saziņai izmanto sev ērtu veidu:"
-              : lang === "ru"
-                ? "Выберите удобный способ связи:"
-                : "Choose the contact method that suits you:"}
-          </p>
-          <div className="inspire-contact-buttons">
-            <a
-              href="https://www.instagram.com/artstudio.inspire"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://wa.me/37128809550"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Whatsapp
-            </a>
-            <a href="mailto:misscoookiez@gmail.com">E-mail</a>
-          </div>
         </div>
         <figure>
           <img
