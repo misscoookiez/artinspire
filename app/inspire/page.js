@@ -3020,8 +3020,8 @@ export default function InspirePage({ page = "home" }) {
                   </>
                 ) : calendarKind !== "gift" && calendarKind !== "pass" ? (
                   <div className="inspire-reservation-actions">
-                    <button name="bookingAction" value="reserve">{lang === "lv" ? "REZERVĒT VIETU" : lang === "ru" ? "ЗАБРОНИРОВАТЬ МЕСТО" : "RESERVE A PLACE"}</button>
-                    <button className="inspire-pay-option" name="bookingAction" value="pay">{lang === "lv" ? "VAI MAKSĀT TIEŠSAISTĒ" : lang === "ru" ? "ИЛИ ОПЛАТИТЬ ОНЛАЙН" : "OR PAY ONLINE"}</button>
+                    <button className="inspire-reserve-option" name="bookingAction" value="reserve">{lang === "lv" ? "REZERVĒT VIETU" : lang === "ru" ? "ЗАБРОНИРОВАТЬ МЕСТО" : "RESERVE A PLACE"}</button>
+                    <button className="inspire-pay-option" name="bookingAction" value="pay">{lang === "lv" ? "REZERVĒT UN MAKSĀT TIEŠSAISTĒ" : lang === "ru" ? "ЗАБРОНИРОВАТЬ И ОПЛАТИТЬ ОНЛАЙН" : "RESERVE & PAY ONLINE"}</button>
                   </div>
                 ) : <button name="bookingAction" value="pay">
                   {calendarKind === "gift" || calendarKind === "pass"

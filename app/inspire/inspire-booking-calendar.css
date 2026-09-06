@@ -15,7 +15,7 @@
 .inspire-email-memory{display:block;margin:-4px 0 13px;color:rgba(229,246,248,.68);font-size:11px;line-height:1.4}
 .inspire-modal h2{margin:14px 0 18px!important;line-height:.96!important}
 .inspire-modal h2+p{margin-top:0!important;padding-top:2px!important}
-.inspire-reservation-actions{display:grid;gap:9px;margin-top:7px}.inspire-reservation-actions button{width:100%}.inspire-reservation-actions .inspire-pay-option{background:transparent!important;color:#1d2731!important;border:1px solid rgba(15,32,45,.45)!important;box-shadow:none!important}
+.inspire-reservation-actions{display:grid;gap:9px;margin-top:7px}.inspire-reservation-actions button{width:100%;margin-top:0!important}.inspire-reservation-actions .inspire-reserve-option{background:#152f36!important;border-color:#152f36!important;color:#fff!important;box-shadow:none!important}.inspire-reservation-actions .inspire-pay-option{background:transparent!important;color:#1d2731!important;border:1px solid rgba(15,32,45,.45)!important;box-shadow:none!important}.inspire-reservation-actions .inspire-reserve-option:hover{background:#205765!important;border-color:#205765!important}
 .inspire-booking-calendar button { display: grid; min-height: 126px; align-content: start; gap: 6px; padding: 15px; border: 1px solid rgba(178, 241, 247, .42); background: rgba(9, 14, 28, .7); color: #fff; text-align: left; cursor: pointer; }
 .inspire-booking-calendar button:hover, .inspire-booking-calendar button.active { border-color: #a5f3fb; background: rgba(27, 69, 84, .7); }
 .inspire-booking-calendar button:disabled { cursor: not-allowed; opacity: .43; }
