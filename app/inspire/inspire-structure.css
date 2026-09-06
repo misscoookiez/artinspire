@@ -83,9 +83,11 @@
   max-width: 1750px;
   padding-inline: max(24px, 4vw);
 }
-.inspire-page-classes .inspire-section > .inspire-kicker { width: min(1280px, 100%); margin: 0 auto 15px !important; }
-.inspire-page-classes .inspire-schedule-heading { width: min(1280px, 100%); margin: 0 auto clamp(30px, 3vw, 44px); }
-.inspire-page-classes .inspire-schedule-heading h2 { margin: 0 !important; }
+.inspire-page-classes .inspire-schedule-heading { width: min(1280px, 100%); margin: 0 auto clamp(30px, 3vw, 44px); align-items: center; }
+.inspire-page-classes .inspire-schedule-title { text-align: left; }
+.inspire-page-classes .inspire-schedule-title .inspire-kicker { margin: 0 0 8px !important; }
+.inspire-page-classes .inspire-schedule-heading h2 { margin: 0 !important; text-align: left !important; }
+.inspire-page-classes .inspire-schedule-title > small { display: block; margin-top: 9px; color: #9cf1f6; font: 700 10px/1 Arial, sans-serif; letter-spacing: .16em; }
 .inspire-page-classes .inspire-weekly-columns { width: min(1280px, 100%); margin-inline: auto; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 .inspire-weekly-columns > div { min-height: 244px; }
 .inspire-prices { line-height: 1.45; }
@@ -431,6 +433,8 @@
 .inspire-rental-slot-list button:hover, .inspire-rental-slot-list button.active { background: linear-gradient(135deg, rgba(25,97,113,.88), rgba(35,18,79,.93)); box-shadow: inset 3px 0 #8cf1f7; }
 .inspire-rental-slot-list strong { display: block; font-size: 25px; font-weight: 400; }
 .inspire-rental-slot-list span { display: block; margin-top: 8px; color: #a8edf2; font-size: 11px; letter-spacing: .06em; }
+.inspire-weekly-columns button.is-past { opacity: .42; filter: grayscale(.35); cursor: default; }
+.inspire-weekly-columns button.is-past:hover { transform: none; box-shadow: none; }
 
 @media (min-width: 801px) {
   .inspire-icon-nav { display: block !important; }

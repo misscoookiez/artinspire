@@ -13,9 +13,10 @@ export async function GET() {
     console.error("Could not extend recurring class sessions", error);
   }
   const now = new Date().toISOString();
+  const recentHistory = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
   const [artworkResult, classesResult, bookingsResult, holdsResult, slotsResult] = await Promise.all([
     supabaseAdmin.from("artworks").select("id,title_en,title_lv,description_en,description_lv,medium,dimensions,price_cents,image_path").eq("status","available").order("created_at",{ascending:false}),
-    supabaseAdmin.from("class_sessions").select("id,title_en,title_lv,starts_at,ends_at,capacity,price_cents,status").eq("status","open").gte("ends_at",now).order("starts_at"),
+    supabaseAdmin.from("class_sessions").select("id,title_en,title_lv,starts_at,ends_at,capacity,price_cents,status").eq("status","open").gte("ends_at",recentHistory).order("starts_at"),
     supabaseAdmin.from("bookings").select("class_session_id").eq("status","confirmed").not("class_session_id","is",null),
     supabaseAdmin.from("booking_holds").select("class_session_id,private_slot_id").gt("expires_at",now),
     supabaseAdmin.from("private_slots").select("id,starts_at,ends_at,price_cents").eq("status","open").gte("ends_at",now).order("starts_at")
@@ -25,7 +26,7 @@ export async function GET() {
   const countBy=(rows,key)=>rows.reduce((counts,row)=>{if(row[key]) counts[row[key]]=(counts[row[key]]||0)+1;return counts;},{});
   const booked=countBy(bookingsResult.data||[],"class_session_id");
   const held=countBy(holdsResult.data||[],"class_session_id");
-  const withAvailability=(session)=>({...session,available:Math.max(0,session.capacity-(booked[session.id]||0)-(held[session.id]||0))>0});
+  const withAvailability=(session)=>({...session,past:new Date(session.ends_at)<new Date(now),available:new Date(session.ends_at)>=new Date(now)&&Math.max(0,session.capacity-(booked[session.id]||0)-(held[session.id]||0))>0});
   const heldPrivate=new Set((holdsResult.data||[]).map(row=>row.private_slot_id).filter(Boolean));
   return NextResponse.json({
     availableIds:(artworkResult.data||[]).map(item=>item.id),
@@ -33,7 +34,7 @@ export async function GET() {
     // Never expose remaining counts or capacity publicly. The server still
     // performs the exact count inside its locked reservation operations.
     classAvailability:(classesResult.data||[]).map(session=>({id:session.id,available:withAvailability(session).available})),
-    classSessions:(classesResult.data||[]).map(session=>{const live=withAvailability(session);return {id:live.id,title_en:live.title_en,title_lv:live.title_lv,starts_at:live.starts_at,ends_at:live.ends_at,price_cents:live.price_cents,status:live.status,available:live.available};}),
+    classSessions:(classesResult.data||[]).map(session=>{const live=withAvailability(session);return {id:live.id,title_en:live.title_en,title_lv:live.title_lv,starts_at:live.starts_at,ends_at:live.ends_at,price_cents:live.price_cents,status:live.status,available:live.available,past:live.past};}),
     privateAvailableIds:(slotsResult.data||[]).map(slot=>slot.id).filter(id=>!heldPrivate.has(id)),
     privateSlots:(slotsResult.data||[]).filter(slot=>!heldPrivate.has(slot.id)),
     mode:"live"

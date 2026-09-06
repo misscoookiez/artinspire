@@ -1178,7 +1178,7 @@ export default function InspirePage({ page = "home" }) {
   const [checkoutOption, setCheckoutOption] = useState("");
   const [giftClasses, setGiftClasses] = useState(2);
   const [inquiryTopic, setInquiryTopic] = useState("");
-  const [scheduleWeek, setScheduleWeek] = useState(0);
+  const [scheduleWeek, setScheduleWeek] = useState(-1);
   const [rentalWeek, setRentalWeek] = useState(0);
   const [bookingDay, setBookingDay] = useState("");
   const [lang, setLang] = useState("lv");
@@ -1518,6 +1518,7 @@ export default function InspirePage({ page = "home" }) {
         ).format(new Date(item.starts_at)),
         price: item.price_cents / 100,
         seats: item.available ? 1 : 0,
+        past: Boolean(item.past),
         level: "",
       }))
     : classes;
@@ -1574,7 +1575,10 @@ export default function InspirePage({ page = "home" }) {
     return date.toISOString().slice(0, 10);
   };
   const scheduleWeeks = [...new Set(liveClasses.map((item) => weekKey(item.startsAt)).filter(Boolean))];
-  const visibleWeek = scheduleWeeks[Math.min(scheduleWeek, Math.max(0, scheduleWeeks.length - 1))];
+  const currentScheduleWeek = weekKey(new Date().toISOString());
+  const initialScheduleWeek = Math.max(0, scheduleWeeks.findIndex((week) => week >= currentScheduleWeek));
+  const activeScheduleWeek = scheduleWeek < 0 ? initialScheduleWeek : Math.min(scheduleWeek, Math.max(0, scheduleWeeks.length - 1));
+  const visibleWeek = scheduleWeeks[activeScheduleWeek];
   const locale = lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB";
   const weekDays = visibleWeek
     ? Array.from({ length: 7 }, (_, index) => {
@@ -1630,8 +1634,8 @@ export default function InspirePage({ page = "home" }) {
       month: "short",
     }).format(new Date(session.startsAt));
   const changeScheduleWeek = (direction) => {
-    const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, scheduleWeek + direction));
-    if (nextWeek === scheduleWeek) return;
+    const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, activeScheduleWeek + direction));
+    if (nextWeek === activeScheduleWeek) return;
     setScheduleWeek(nextWeek);
     if (form && calendarKind === "class") {
       const nextSession = liveClasses.find((item) => weekKey(item.startsAt) === scheduleWeeks[nextWeek]);
@@ -1983,15 +1987,18 @@ export default function InspirePage({ page = "home" }) {
         <p className={moodQuoteLeaving ? "is-leaving" : ""} key={`${lang}-${moodQuote}`}>{moodQuotes[lang][moodQuote]}</p>
       </section>
       <section id="nodarbibas" className="inspire-section">
-        <p className="inspire-kicker">{t.regular}</p>
         <div className="inspire-schedule-heading">
-          <h2>{t.group}</h2>
+          <div className="inspire-schedule-title">
+            <p className="inspire-kicker">{lang === "lv" ? "ATVĒRTĀS" : t.regular}</p>
+            <h2>{t.group}</h2>
+            {lang === "lv" && <small>KATRU NEDĒĻU</small>}
+          </div>
           {scheduleWeeks.length > 0 && <div className="inspire-week-switcher" aria-label={lang === "lv" ? "Nedēļas grafiks" : lang === "ru" ? "Расписание недели" : "Weekly schedule"}>
-            <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={scheduleWeek === 0}>‹</button>
+            <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={activeScheduleWeek === 0}>‹</button>
             <div className="inspire-week-strip" aria-label={new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(new Date(`${visibleWeek}T12:00:00`))}>
               {weekDays.map((day) => <span key={day.key} aria-label={`${day.fullLabel} ${day.date}`} className={day.hasClass ? "available" : ""}><small>{day.label}</small><b>{day.date}</b></span>)}
             </div>
-            <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeScheduleWeek(1)} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
+            <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeScheduleWeek(1)} disabled={activeScheduleWeek >= scheduleWeeks.length - 1}>›</button>
           </div>}
         </div>
         <div className="inspire-weekly-columns">
@@ -2003,12 +2010,13 @@ export default function InspirePage({ page = "home" }) {
                 return (
                 <button
                   key={session.id}
-                  disabled={seats < 1}
+                  className={session.past ? "is-past" : ""}
+                  disabled={seats < 1 || session.past}
                   onClick={() => openBooking("class", session.id, `${session.date} · ${session.time} · ${sessionName(session)}`)}
                 >
                   <b>{session.time}</b>
                   <small>{sessionName(session)}</small>
-                  <i>{seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : `${t.reserve} →`}</i>
+                  <i>{session.past ? (lang === "lv" ? "PAGĀJUSI" : lang === "ru" ? "ЗАВЕРШЕНО" : "PAST") : seats < 1 ? (lang === "lv" ? "PILNS" : lang === "ru" ? "НЕТ МЕСТ" : "FULL") : `${t.reserve} →`}</i>
                 </button>
                 );
               }) : <span className="inspire-empty-session" aria-label={lang === "lv" ? "Šajā dienā nodarbība nenotiek" : lang === "ru" ? "В этот день занятия нет" : "No class on this day"}>{lang === "lv" ? "NODARBĪBU NAV" : lang === "ru" ? "ЗАНЯТИЙ НЕТ" : "NO CLASS"}</span>}
@@ -2863,11 +2871,11 @@ export default function InspirePage({ page = "home" }) {
                     ) : calendarKind === "class" ? (
                       <div className="inspire-booking-calendar-wrap">
                         {scheduleWeeks.length > 0 && <div className="inspire-booking-week" aria-label={lang === "lv" ? "Izvēlies nodarbības dienu" : lang === "ru" ? "Выберите день занятия" : "Choose a class day"}>
-                          <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={scheduleWeek === 0}>‹</button>
+                          <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeScheduleWeek(-1)} disabled={activeScheduleWeek === 0}>‹</button>
                           <div>
                             {weekDays.map((day) => <button key={day.key} type="button" aria-label={`${day.fullLabel} ${day.date}`} disabled={!day.hasClass} className={`${day.hasClass ? "available" : ""} ${bookingDay === day.key ? "active" : ""}`} onClick={() => { setBookingDay(day.key); setBooking(null); setSelection(""); }}><small>{day.label}</small><b>{day.date}</b></button>)}
                           </div>
-                          <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeScheduleWeek(1)} disabled={scheduleWeek >= scheduleWeeks.length - 1}>›</button>
+                          <button type="button" aria-label={lang === "lv" ? "Nākamā nedēļa" : lang === "ru" ? "Следующая неделя" : "Next week"} onClick={() => changeScheduleWeek(1)} disabled={activeScheduleWeek >= scheduleWeeks.length - 1}>›</button>
                         </div>}
                         <div className="inspire-booking-calendar" role="group" aria-label={t.choose}>
                         {bookingClasses.map((item) => {
