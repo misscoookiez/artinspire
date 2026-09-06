@@ -36,6 +36,7 @@ import "./inspire-questions-layout.css";
 import "./inspire-space-layout.css";
 import "./inspire-events-hero-refine.css";
 import "./inspire-masthead-logo-refine.css";
+import "./inspire-about-panel-refine.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1285,6 +1286,29 @@ export default function InspirePage({ page = "home" }) {
     en: "Sandra Rudzīte’s paintings often let the figurative and symbolic become an inner landscape: a figure, animal, still life or darker light is not decoration, but a way of holding attention on a feeling. She works between close observation and invention — in oils, drawing, acrylics and watercolour — without rushing a work that needs time. Although her work often carries darker, heavier or symbolic subjects, Sandra herself is light-hearted, happy and curious: the studio has room for laughter, tea, and a painting of a sweet cat. She works freely across genres, and one of her small guilty pleasures is painting cute cats. Her experience spans Adobe, online art projects and the daily life of a working studio; in teaching, the essential thing is simpler: helping someone see what they are already trying to say in an image.",
     ru: "В живописи Сандры Рудзите фигуративное и символическое часто становятся внутренним пейзажем: персонаж, животное, натюрморт или более тёмный свет — не просто декор, а способ удержать внимание на ощущении. Она работает между внимательным наблюдением и воображением — маслом, рисунком, акрилом и акварелью — не торопя работу, которой нужно время. Хотя в её работах нередко появляются более тяжёлые, тёмные или символические мотивы, сама Сандра — лёгкий, радостный и любопытный человек: в студии есть место смеху, чаю и картине с милым котом. Она свободно работает в разных жанрах, а одно из её маленьких удовольствий — рисовать милых котиков. Её опыт включает Adobe, онлайн-проекты об искусстве и повседневную жизнь работающей студии; в преподавании главное проще: помочь человеку увидеть, что именно он уже пытается сказать своим изображением.",
   }[lang];
+  const hostStories = {
+    lv: [
+      ["NO GRŪTA SĀKUMA LĪDZ NEATLAIDĪBAI", "Sākumā zīmēšana Sandrai nebūt nenācās viegli — skolā māsa reizēm palīdzēja ar zīmējumiem, un pat viena konkursa balva patiesībā pienācās viņai. Taču mīlestība pret mākslu bija tik stipra, ka Sandra bija apņēmības pilna saprast, kā tā darbojas. Šī pieredze studijā paliek svarīga: iesācējs nav mazāks līmenis, bet cilvēks pašā sava ceļa sākumā."],
+      ["KUR MEKLĒJAM IEDVESMU", "Studijā bieži atveram mākslas grāmatas — no Rembranta un Vrubeļa līdz Pīteram Doigam un impresionistiem. Īpaši tuvs ir simbolisms un psiholoģiskais slānis darbā. Pētām lielo mākslinieku paņēmienus, par tiem runājam un, kad tas palīdz paša darbam, izmantojam kā dzīvu atsauci, nevis kā paraugu, ko kopēt."],
+      ["PRAKSE, KAS REDZAMA PASAULĒ", "Sandra daudzus gadus publiski dalījās ar savu procesu internetā un Twitch tiešraidēs. Viņas darbi regulāri nonāk kolekcijās Amerikā, Ziemeļeiropā un citviet pasaulē. Viņai bijušas personālizstādes Rīgā un Olainē, darbi rādīti arī TwitchCon Sanfrancisko — pieredze, kas studijā ienāk nevis kā distance, bet kā ļoti praktiska saruna par darbu."],
+      ["IZGLĪTĪBA, PAMATI UN BRĪVĪBA", "Keramikas dizains Rīgas Dizaina un mākslas vidusskolā deva precīzu formu, kompozīcijas un materiālu izjūtu; glezniecība Latvijas Mākslas akadēmijā paplašināja skatienu uz moderno mākslu; profesionālā zīmēšanas un gleznošanas studija pie Ludmilas Perecas nostiprināja akadēmiskos pamatus. Filozofijas studijas Latvijas Universitātē iedeva paradumu domāt, analizēt un skatīties uz radošo procesu psiholoģiski, filozofiski un praktiski. Noteikumus mācāmies, lai ar tiem varētu spēlēties."],
+      ["KĀPĒC IR ŠĪ STUDIJA", "Pēc gadiem pie datora Sandra gribēja vairāk dzīvas sarunas un iespēju cilvēkiem dot ko labu klātienē. Tāpēc šeit zināšanas satiekas ar brīvību: mākslai nav jābūt pareizai, glītai vai uzreiz saprotamai. Tai drīkst būt personisks motīvs, stipra individualitāte un kaut kas patiess, par ko rūp. Vienīgais noteikums — Tev pašam tai ir jāpatīk."],
+    ],
+    en: [
+      ["FROM A DIFFICULT START TO PERSISTENCE", "Drawing did not come easily to Sandra at first — at school her sister sometimes helped with drawings, and even one competition prize really belonged to her. But she loved art enough to be determined to understand how it works. That experience still matters here: a beginner is not a lower level, but someone at the beginning of their own path."],
+      ["WHERE WE LOOK FOR INSPIRATION", "The studio often opens art books — from Rembrandt and Vrubel to Peter Doig and the Impressionists. Symbolism and the psychological layer in a work are especially close to us. We study great artists’ methods, discuss them and, when they help a work, use them as a living reference rather than a template to copy."],
+      ["A PRACTICE SEEN AROUND THE WORLD", "Sandra has shared her process publicly online and through Twitch livestreams for many years. Her works regularly enter collections in America, Northern Europe and elsewhere in the world. She has held solo exhibitions in Riga and Olaine, and shown work at TwitchCon in San Francisco — experience that enters the studio not as distance, but as a very practical conversation about making work."],
+      ["EDUCATION, FOUNDATIONS AND FREEDOM", "Ceramics Design at Riga School of Design and Art developed a precise sense of form, composition and materials; Painting at the Art Academy of Latvia broadened Sandra’s view of modern art; and professional drawing and painting study with Ludmila Perec strengthened her academic foundations. Philosophy at the University of Latvia brought a habit of thinking about the creative process psychologically, philosophically and practically. We learn rules so that we can play with them."],
+      ["WHY THIS STUDIO EXISTS", "After years in front of a computer, Sandra wanted more live conversation and a way to do something good with people in person. This is why knowledge meets freedom here: art does not have to be correct, pretty or immediately easy to understand. It can carry a personal motive, strong individuality and something genuine that matters. The only rule is that you have to like it."],
+    ],
+    ru: [
+      ["ОТ ТРУДНОГО НАЧАЛА К УПОРСТВУ", "Поначалу рисование давалось Сандре совсем нелегко — в школе сестра иногда помогала ей с рисунками, и даже одна конкурсная награда по праву принадлежала сестре. Но любовь к искусству была настолько сильной, что Сандра решила понять, как оно работает. Этот опыт важен и в студии: начинающий — не низший уровень, а человек в начале собственного пути."],
+      ["ГДЕ МЫ ИЩЕМ ВДОХНОВЕНИЕ", "В студии мы часто открываем книги по искусству — от Рембрандта и Врубеля до Питера Дойга и импрессионистов. Нам особенно близки символизм и психологический слой работы. Мы изучаем методы больших художников, обсуждаем их и, когда это помогает собственной работе, используем как живую опору, а не образец для копирования."],
+      ["ПРАКТИКА, ВИДИМАЯ В МИРЕ", "Много лет Сандра публично делилась своим процессом онлайн и в прямых эфирах Twitch. Её работы регулярно попадают в коллекции Америки, Северной Европы и других стран. У неё были персональные выставки в Риге и Олайне, а также показ работ на TwitchCon в Сан-Франциско — опыт, который приходит в студию не как дистанция, а как очень практичный разговор о создании работы."],
+      ["ОБРАЗОВАНИЕ, ОСНОВЫ И СВОБОДА", "Дизайн керамики в Рижской школе дизайна и искусства дал точное чувство формы, композиции и материалов; живопись в Латвийской академии художеств расширила взгляд на современное искусство; профессиональная студия рисунка и живописи Людмилы Перец укрепила академические основы. Философия в Латвийском университете дала привычку рассматривать творческий процесс психологически, философски и практически. Мы учим правила, чтобы потом с ними играть."],
+      ["ПОЧЕМУ СУЩЕСТВУЕТ ЭТА СТУДИЯ", "После многих лет за компьютером Сандре захотелось больше живого общения и возможности делать что-то хорошее вместе с людьми. Здесь знание встречается со свободой: искусство не обязано быть правильным, красивым или сразу понятным. В нём может быть личный мотив, сильная индивидуальность и что-то настоящее, что важно именно вам. Единственное правило — вам самим оно должно нравиться."],
+    ],
+  }[lang];
   const [slide, setSlide] = useState(0);
   const [studioSlide, setStudioSlide] = useState(0);
   const [eventSlide, setEventSlide] = useState(0);
@@ -2408,6 +2432,20 @@ export default function InspirePage({ page = "home" }) {
                   .map((paragraph, index) => (
                     <p key={`${index}-${paragraph.slice(0, 16)}`}>{paragraph}</p>
                   ))}
+              </div>
+              <div className="inspire-host-stories">
+                <p className="inspire-kicker">
+                  {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
+                </p>
+                {hostStories.map(([title, body]) => (
+                  <details key={title}>
+                    <summary>
+                      <strong>{title}</strong>
+                      <b>+</b>
+                    </summary>
+                    <p>{body}</p>
+                  </details>
+                ))}
               </div>
             </div>
             <div className="inspire-host-visuals">

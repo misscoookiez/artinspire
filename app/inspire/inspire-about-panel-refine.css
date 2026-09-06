@@ -1,0 +1,98 @@
+/* The adult approach reads as two distinct paths: clear, stackable prompts on
+   the left and the larger point of view on the right. */
+@media (min-width: 901px) {
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof {
+    display: grid;
+    grid-template-columns: minmax(300px, .82fr) minmax(0, 1.18fr);
+    column-gap: clamp(58px, 8vw, 150px);
+    align-items: start;
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof > div:first-child {
+    z-index: 3;
+    grid-column: 2;
+    grid-row: 1;
+    max-width: none !important;
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof-list {
+    z-index: 3;
+    grid-column: 1;
+    grid-row: 1;
+    display: block;
+    margin: 0 !important;
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof-list details {
+    border-bottom: 1px solid rgba(137, 236, 243, .26) !important;
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof-list details:first-child {
+    border-top: 1px solid rgba(137, 236, 243, .42);
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof-list summary {
+    min-height: 58px;
+    padding: 18px 19px !important;
+    border-left: 2px solid #7cebf4;
+    background: linear-gradient(90deg, rgba(76, 202, 213, .13), rgba(10, 13, 25, .02));
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-proof-list details p {
+    margin: 0 20px 20px 21px !important;
+  }
+
+  .inspire-page-about .inspire-depth-panel:nth-child(2) .inspire-adult-palette {
+    z-index: 1 !important;
+    right: clamp(18px, 4vw, 82px) !important;
+    bottom: clamp(32px, 4vw, 72px) !important;
+    width: clamp(180px, 18vw, 310px) !important;
+    opacity: .3 !important;
+  }
+}
+
+/* Sandra's experience is available as a set of deliberately small, unmistakable
+   buttons rather than a long biography someone has to hunt through. */
+.inspire-host-stories {
+  max-width: 620px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(124, 235, 244, .48);
+}
+
+.inspire-host-stories > .inspire-kicker {
+  margin: 20px 0 10px !important;
+  color: #9ff4fa;
+}
+
+.inspire-host-stories details {
+  border-top: 0 !important;
+  border-bottom: 1px solid rgba(124, 235, 244, .26) !important;
+}
+
+.inspire-host-stories summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px;
+  gap: 14px;
+  align-items: center;
+  min-height: 54px;
+  padding: 14px 16px !important;
+  border-left: 2px solid #80ecf4;
+  background: linear-gradient(90deg, rgba(87, 210, 222, .1), transparent 76%);
+  color: #effeff;
+  cursor: pointer;
+  list-style: none;
+  transition: background .2s ease, padding-left .2s ease;
+}
+
+.inspire-host-stories summary::-webkit-details-marker { display: none; }
+.inspire-host-stories summary:hover,
+.inspire-host-stories summary:focus-visible { padding-left: 22px !important; background: linear-gradient(90deg, rgba(87, 210, 222, .2), transparent 80%); outline: none; }
+.inspire-host-stories summary strong { font: 700 11px/1.35 Arial, sans-serif; letter-spacing: .1em; }
+.inspire-host-stories summary b { color: #d987ef; font-size: 24px; font-weight: 300; transition: transform .2s ease; }
+.inspire-host-stories details[open] summary b { transform: rotate(45deg); }
+.inspire-host-stories details > p { margin: 0 !important; padding: 16px 18px 20px !important; border: 0 !important; border-left: 2px solid rgba(128, 236, 244, .28) !important; color: #d8d2dc; font-size: 16px !important; line-height: 1.64 !important; }
+
+@media (max-width: 900px) {
+  .inspire-host-stories { margin-top: 32px; }
+  .inspire-host-stories summary strong { font-size: 10px; }
+}
