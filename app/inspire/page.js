@@ -1452,13 +1452,24 @@ export default function InspirePage({ page = "home" }) {
     return () => window.clearInterval(timer);
   }, []);
   useEffect(() => {
-    setMoodQuote(0);
+    const quoteKey = `inspire-mood-quote-${lang}`;
+    const savedQuote = Number.parseInt(window.sessionStorage.getItem(quoteKey) || "", 10);
+    const firstQuote = Number.isInteger(savedQuote) && savedQuote >= 0 && savedQuote < moodQuotes[lang].length
+      ? savedQuote
+      : Math.floor(Math.random() * moodQuotes[lang].length);
+    window.sessionStorage.setItem(quoteKey, String(firstQuote));
+    setMoodQuote(firstQuote);
     setMoodQuoteLeaving(false);
     let swapTimer;
     const timer = window.setInterval(() => {
       setMoodQuoteLeaving(true);
       swapTimer = window.setTimeout(() => {
-        setMoodQuote((current) => (current + 1) % moodQuotes[lang].length);
+        setMoodQuote((current) => {
+          let next = current;
+          while (next === current) next = Math.floor(Math.random() * moodQuotes[lang].length);
+          window.sessionStorage.setItem(quoteKey, String(next));
+          return next;
+        });
         setMoodQuoteLeaving(false);
       }, 380);
     }, 8200);
@@ -2000,6 +2011,9 @@ export default function InspirePage({ page = "home" }) {
           <span>
             {t.hero} {t.hero2} {t.hero3}
           </span>
+          <p className={`inspire-masthead-mood ${moodQuoteLeaving ? "is-leaving" : ""}`} aria-live="polite" key={`${lang}-${moodQuote}`}>
+            {moodQuotes[lang][moodQuote]}
+          </p>
           <div className="inspire-language inspire-masthead-language" aria-label="Language">
             <button className={lang === "lv" ? "active" : ""} onClick={() => chooseLanguage("lv")}>LV</button>
             <button className={lang === "en" ? "active" : ""} onClick={() => chooseLanguage("en")}>EN</button>
@@ -2098,9 +2112,6 @@ export default function InspirePage({ page = "home" }) {
             />
           ))}
         </div>
-      </section>
-      <section className="inspire-mood-strip" aria-live="polite">
-        <p className={moodQuoteLeaving ? "is-leaving" : ""} key={`${lang}-${moodQuote}`}>{moodQuotes[lang][moodQuote]}</p>
       </section>
       <section id="nodarbibas" className="inspire-section">
         <div className="inspire-schedule-heading">

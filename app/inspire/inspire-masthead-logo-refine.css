@@ -22,11 +22,48 @@
   object-fit: contain !important;
 }
 
+.inspire-masthead-copy {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inspire-masthead-mood {
+  width: 100%;
+  max-width: 520px;
+  min-height: 2.45em;
+  margin: 13px 0 0 !important;
+  color: #b9f8fb !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: clamp(17px, 1.35vw, 23px) !important;
+  font-style: italic;
+  font-weight: 400 !important;
+  letter-spacing: -.025em !important;
+  line-height: 1.14 !important;
+  text-wrap: balance;
+  animation: inspire-masthead-mood-arrive .55s ease both;
+}
+
+.inspire-masthead-mood.is-leaving {
+  animation: inspire-masthead-mood-leave .38s ease both;
+}
+
+@keyframes inspire-masthead-mood-arrive {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes inspire-masthead-mood-leave {
+  to { opacity: 0; transform: translateY(-4px); }
+}
+
 @media (min-width: 801px) {
   .inspire-masthead {
     /* Give the now-chunkier mark room to grow rightward without changing its
        established left edge or crowding the studio descriptor. */
     grid-template-columns: minmax(0, 1.28fr) minmax(330px, .72fr) !important;
+    height: clamp(280px, 19vw, 360px) !important;
+    min-height: clamp(280px, 19vw, 360px) !important;
   }
 }
 
@@ -34,6 +71,12 @@
   .inspire-masthead-brand {
     width: min(470px, 88vw) !important;
     max-width: 88vw !important;
+  }
+
+  .inspire-masthead-mood {
+    min-height: 0;
+    margin-top: 10px !important;
+    font-size: clamp(16px, 4.7vw, 20px) !important;
   }
 }
 
