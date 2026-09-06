@@ -260,7 +260,7 @@
   overflow: hidden;
   background: linear-gradient(90deg, rgba(6, 4, 27, .16), rgba(3, 8, 22, .08)), url('/art/inspire-masthead-background.webp') center / cover no-repeat !important;
 }
-.inspire-page-home .inspire-masthead-brand { z-index: 1; grid-column: 1; width: min(540px, 100%) !important; max-width: 100% !important; }
+.inspire-page-home .inspire-masthead-brand { z-index: 1; grid-column: 1; width: min(680px, 100%) !important; max-width: 100% !important; }
 .inspire-page-home .inspire-masthead-copy { z-index: 1 !important; grid-column: 2; max-width: 620px !important; min-width: 0; padding: 0 !important; }
 .inspire-page-home .inspire-statement {
   position: relative;
@@ -464,7 +464,9 @@
     z-index: 1;
     grid-column: 1;
     align-self: center;
-    width: min(620px, 100%) !important;
+    /* The left edge stays locked to the shared gutter; the extra width grows
+       toward the centre of the masthead rather than toward the page edge. */
+    width: min(680px, 100%) !important;
     max-width: 100% !important;
     margin: 0 0 0 clamp(92px, 12vw, 246px);
   }

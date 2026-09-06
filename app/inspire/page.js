@@ -1550,7 +1550,7 @@ export default function InspirePage({ page = "home" }) {
   }));
   const sessionName = (session) => {
     const title = lang === "lv"
-      ? session.titleLv?.replace(/jaukta\s+gleznošanas\s+grupa/i, "Jaukta grupa")
+      ? session.titleLv?.replace(/\s*gleznošanas(?=\s+grupa)/i, "")
       : lang === "ru"
         ? session.title?.includes("Youth")
           ? "Группа живописи для детей и подростков"
