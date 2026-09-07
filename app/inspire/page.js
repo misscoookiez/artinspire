@@ -84,6 +84,10 @@ const tattooPreviewImages = [
   ["/art/tattoo-room-main.webp", "Tattoo telpa ar izlietni un darba vietu"],
   ["/art/tattoo-room-detail.webp", "Tattoo telpas darba aprīkojums"],
 ];
+// These deliberate repeats let the room galleries demonstrate the same
+// multi-row behaviour they will have once further studio photographs arrive.
+const studioPreviewGalleryImages = [...studioPreviewImages, ...studioPreviewImages];
+const tattooPreviewGalleryImages = [...tattooPreviewImages, ...tattooPreviewImages, ...tattooPreviewImages];
 const eventSlides = [
   ["/art/studio-slide-room.webp", "The studio prepared for a creative event"],
   [
@@ -2474,15 +2478,18 @@ export default function InspirePage({ page = "home" }) {
             <div>
               <p>{content("inspire.host.space", host.studio)}</p>
               <p>{host.hire}</p>
-              <div className="inspire-space-preview" aria-label={host.details}>
-                {studioPreviewImages.map(([src, alt]) => (
+              <div className="inspire-space-preview inspire-gallery-grid" aria-label={host.details}>
+                {studioPreviewGalleryImages.map(([src, alt], index) => (
                   <button
-                    key={src}
+                    key={`${src}-${index}`}
                     type="button"
                     aria-label={`${alt}. Skatīt lielākā izmērā`}
                     onClick={() => setImagePreview({ src, alt })}
                   >
-                    <img src={src} alt={alt} />
+                    <img src={src} alt={alt} onLoad={(event) => {
+                      const { naturalWidth, naturalHeight } = event.currentTarget;
+                      if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                    }} />
                   </button>
                 ))}
               </div>
@@ -2496,17 +2503,20 @@ export default function InspirePage({ page = "home" }) {
             <div>
               <p>{content("inspire.host.tattoo", host.tattoo)}</p>
               <div
-                className="inspire-space-preview inspire-tattoo-preview"
+                className="inspire-space-preview inspire-tattoo-preview inspire-gallery-grid"
                 aria-label={host.tattooTitle}
               >
-                {tattooPreviewImages.map(([src, alt]) => (
+                {tattooPreviewGalleryImages.map(([src, alt], index) => (
                   <button
-                    key={src}
+                    key={`${src}-${index}`}
                     type="button"
                     aria-label={`${alt}. Skatīt lielākā izmērā`}
                     onClick={() => setImagePreview({ src, alt })}
                   >
-                    <img src={src} alt={alt} />
+                    <img src={src} alt={alt} onLoad={(event) => {
+                      const { naturalWidth, naturalHeight } = event.currentTarget;
+                      if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                    }} />
                   </button>
                 ))}
               </div>
@@ -2705,7 +2715,7 @@ export default function InspirePage({ page = "home" }) {
                     : "VIEW SANDRA’S ARTWORK"}
                 <b>+</b>
               </summary>
-              <div>
+              <div className="inspire-gallery-grid">
                 {[
                   ["/art/sandra-art-red-eyes.webp", "Red Eyes, original painting by Sandra Rudzīte"],
                   ["/art/sandra-art-eye.webp", "Eye, original painting by Sandra Rudzīte"],
@@ -2858,7 +2868,7 @@ export default function InspirePage({ page = "home" }) {
                 : "VIEW ADULT WORK"}
             <b>+</b>
           </summary>
-          <div>
+          <div className="inspire-gallery-grid">
             {adultGallerySlides.map(([src, alt], index) => (
               <button
                 type="button"
@@ -2887,7 +2897,7 @@ export default function InspirePage({ page = "home" }) {
                 : "VIEW CHILDREN’S WORK"}
             <b>+</b>
           </summary>
-          <div>
+          <div className="inspire-gallery-grid">
             {youthGallerySlides.map(([src, alt], index) => (
               <button
                 type="button"
@@ -2999,15 +3009,18 @@ export default function InspirePage({ page = "home" }) {
                 <div>
                   <p>{content("inspire.host.space", host.studio)}</p>
                   <p>{host.hire}</p>
-                  <div className="inspire-space-preview" aria-label={host.details}>
-                    {studioPreviewImages.map(([src, alt]) => (
+                  <div className="inspire-space-preview inspire-gallery-grid" aria-label={host.details}>
+                    {studioPreviewGalleryImages.map(([src, alt], index) => (
                       <button
-                        key={src}
+                        key={`${src}-${index}`}
                         type="button"
                         aria-label={`${alt}. Skatīt lielākā izmērā`}
                         onClick={() => setImagePreview({ src, alt })}
                       >
-                        <img src={src} alt={alt} />
+                        <img src={src} alt={alt} onLoad={(event) => {
+                          const { naturalWidth, naturalHeight } = event.currentTarget;
+                          if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                        }} />
                       </button>
                     ))}
                   </div>
@@ -3020,15 +3033,18 @@ export default function InspirePage({ page = "home" }) {
                 </summary>
                 <div>
                   <p>{content("inspire.host.tattoo", host.tattoo)}</p>
-                  <div className="inspire-space-preview inspire-tattoo-preview" aria-label={host.tattooTitle}>
-                    {tattooPreviewImages.map(([src, alt]) => (
+                  <div className="inspire-space-preview inspire-tattoo-preview inspire-gallery-grid" aria-label={host.tattooTitle}>
+                    {tattooPreviewGalleryImages.map(([src, alt], index) => (
                       <button
-                        key={src}
+                        key={`${src}-${index}`}
                         type="button"
                         aria-label={`${alt}. Skatīt lielākā izmērā`}
                         onClick={() => setImagePreview({ src, alt })}
                       >
-                        <img src={src} alt={alt} />
+                        <img src={src} alt={alt} onLoad={(event) => {
+                          const { naturalWidth, naturalHeight } = event.currentTarget;
+                          if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                        }} />
                       </button>
                     ))}
                   </div>

@@ -1673,4 +1673,89 @@
   .inspire-page-contact .inspire-contact-details,
   .inspire-page-contact .inspire-contact-quick-actions { min-height: 0; }
 }
+
+/* Global gallery language.  Only explicitly marked galleries participate:
+   surrounding editorial images and slideshows remain completely independent.
+   Each thumbnail keeps its original ratio, opens in the existing lightbox,
+   and naturally starts a new row when additional work is added. */
+.inspire .inspire-gallery-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 9px !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 0 24px !important;
+  background: transparent !important;
+  border: 0 !important;
+  columns: unset !important;
+  aspect-ratio: auto !important;
+}
+.inspire .inspire-gallery-grid > button {
+  display: block !important;
+  flex: calc(var(--gallery-ratio, 1.25) * 100) 1 158px !important;
+  width: auto !important;
+  height: clamp(145px, 12.3vw, 205px) !important;
+  min-width: 112px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #111218 !important;
+  box-shadow: none !important;
+  cursor: zoom-in !important;
+}
+.inspire .inspire-gallery-grid > button img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  background: #111218 !important;
+  filter: none !important;
+  transition: transform .24s ease, filter .24s ease !important;
+}
+.inspire .inspire-gallery-grid > button:hover img,
+.inspire .inspire-gallery-grid > button:focus-visible img {
+  transform: scale(1.022) !important;
+  filter: brightness(1.06) saturate(1.04) !important;
+}
+.inspire .inspire-gallery-grid > button:focus-visible {
+  outline: 2px solid #aef8fb !important;
+  outline-offset: 3px !important;
+}
+
+/* Room galleries use the same thumbnail scale instead of the old oversized
+   mosaic; repeated existing photos demonstrate the future multi-row state. */
+.inspire .inspire-space-preview.inspire-gallery-grid,
+.inspire .inspire-tattoo-preview.inspire-gallery-grid {
+  display: flex !important;
+  grid-template-columns: none !important;
+  grid-template-rows: none !important;
+  grid-column: 2 !important;
+  grid-row: 1 / span 3 !important;
+  min-height: 0 !important;
+}
+.inspire .inspire-space-preview.inspire-gallery-grid > button,
+.inspire .inspire-tattoo-preview.inspire-gallery-grid > button,
+.inspire .inspire-space-preview.inspire-gallery-grid > button:first-child {
+  grid-row: auto !important;
+  flex-basis: 142px !important;
+  height: clamp(122px, 10vw, 168px) !important;
+}
+
+@media (max-width: 760px) {
+  .inspire .inspire-gallery-grid { gap: 6px !important; }
+  .inspire .inspire-gallery-grid > button { height: clamp(116px, 33vw, 170px) !important; min-width: 88px !important; }
+  .inspire .inspire-space-preview.inspire-gallery-grid,
+  .inspire .inspire-tattoo-preview.inspire-gallery-grid { grid-column: 1 !important; grid-row: auto !important; }
+  .inspire .inspire-space-preview.inspire-gallery-grid > button,
+  .inspire .inspire-tattoo-preview.inspire-gallery-grid > button,
+  .inspire .inspire-space-preview.inspire-gallery-grid > button:first-child { height: clamp(110px, 30vw, 148px) !important; }
+}
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
