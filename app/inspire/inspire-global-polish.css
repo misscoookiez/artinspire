@@ -856,9 +856,9 @@
 
 @media (min-width: 801px) {
   .inspire-masthead {
-    height: clamp(270px, 17vw, 290px) !important;
-    min-height: clamp(270px, 17vw, 290px) !important;
-    padding: clamp(24px, 2vw, 32px) var(--inspire-page-edge) !important;
+    height: clamp(238px, 14.5vw, 250px) !important;
+    min-height: clamp(238px, 14.5vw, 250px) !important;
+    padding: clamp(24px, 1.7vw, 30px) var(--inspire-page-edge) !important;
     box-sizing: border-box !important;
     grid-template-columns: minmax(0, 1.08fr) minmax(350px, .92fr) !important;
     column-gap: clamp(42px, 7vw, 140px) !important;
