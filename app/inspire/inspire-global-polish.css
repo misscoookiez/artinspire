@@ -1550,4 +1550,127 @@
   .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof { padding-top: 6px !important; }
   .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof > div:first-child { padding-top: 30px !important; }
 }
+
+/* The contact invitation is a pair of equal, calm studio cards—not a row of
+   disconnected controls.  One atmosphere ties the information and action
+   together, with the message action given a clear home of its own. */
+.inspire-page-contact .inspire-contact-panel {
+  grid-template-columns: minmax(340px, .94fr) minmax(340px, .94fr) !important;
+  grid-template-rows: auto auto !important;
+  justify-content: center !important;
+  max-width: none !important;
+  gap: clamp(18px, 2vw, 32px) !important;
+  padding: clamp(62px, 7vw, 104px) max(24px, 10vw) !important;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(124, 92, 232, .21), transparent 48%),
+    radial-gradient(ellipse at 82% 88%, rgba(26, 196, 214, .15), transparent 42%),
+    linear-gradient(145deg, #0d1021 0%, #131a35 47%, #0b1323 100%) !important;
+}
+.inspire-page-contact .inspire-contact-panel::before {
+  inset: clamp(18px, 2vw, 34px) max(24px, 6vw) !important;
+  border-color: rgba(190, 172, 255, .30) !important;
+  border-radius: 22px;
+  box-shadow: inset 0 1px rgba(235, 249, 255, .1), 0 0 48px rgba(93, 79, 229, .08);
+}
+.inspire-page-contact .inspire-contact-panel .inspire-kicker {
+  grid-column: 1 / -1;
+  justify-self: center;
+  padding: 0 0 5px !important;
+  color: #c9f9fc !important;
+  font-size: 11px !important;
+  letter-spacing: .2em !important;
+}
+.inspire-page-contact .inspire-contact-details,
+.inspire-page-contact .inspire-contact-quick-actions {
+  min-height: 230px;
+  margin: 0 !important;
+  padding: clamp(28px, 3.2vw, 46px) !important;
+  border: 1px solid rgba(203, 219, 255, .34) !important;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(119, 123, 181, .22), rgba(20, 28, 57, .54)) !important;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 18px 45px rgba(0, 0, 0, .22), 0 0 25px rgba(128, 102, 247, .09);
+  backdrop-filter: blur(10px);
+}
+.inspire-page-contact .inspire-contact-details {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  align-content: center;
+  gap: 0 !important;
+}
+.inspire-page-contact .inspire-contact-details > a,
+.inspire-page-contact .inspire-contact-details > p,
+.inspire-page-contact .inspire-contact-message {
+  min-height: 0 !important;
+  padding: 15px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(205, 225, 255, .18) !important;
+  background: transparent !important;
+}
+.inspire-page-contact .inspire-contact-details > :last-child { border-bottom: 0 !important; }
+.inspire-page-contact .inspire-contact-details strong { font-size: clamp(16px, 1.2vw, 20px) !important; }
+.inspire-page-contact .inspire-contact-quick-actions {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: 12px !important;
+}
+.inspire-page-contact .inspire-contact-quick-actions button {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 58px !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: linear-gradient(100deg, #7458ef 0%, #b461f0 48%, #55dfe8 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(162, 76, 236, .32), inset 0 1px rgba(255, 255, 255, .25) !important;
+  font-size: 11px !important;
+}
+.inspire-page-contact .inspire-contact-quick-actions a {
+  min-height: 46px !important;
+  border-color: rgba(211, 224, 255, .45) !important;
+  border-radius: 12px !important;
+  background: rgba(13, 21, 45, .46) !important;
+  color: #eaffff !important;
+}
+.inspire-page-contact .inspire-contact-quick-actions button:hover {
+  background: linear-gradient(100deg, #866cf8 0%, #c273f7 48%, #67ecf4 100%) !important;
+  color: #fff !important;
+}
+
+/* A location section is part of the page canvas, not a boxed-in card. */
+.inspire-page-contact .inspire-directions {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: #000 !important;
+}
+.inspire-page-contact .inspire-directions::before,
+.inspire-page-contact .inspire-directions::after { display: none !important; }
+.inspire-page-contact .inspire-directions figure {
+  height: auto !important;
+  align-self: start !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+.inspire-page-contact .inspire-directions figure img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+.inspire-page-contact .inspire-directions iframe {
+  height: clamp(300px, 28vw, 470px) !important;
+  border-color: rgba(117, 233, 242, .38) !important;
+}
+
+@media (max-width: 780px) {
+  .inspire-page-contact .inspire-contact-panel { grid-template-columns: 1fr !important; }
+  .inspire-page-contact .inspire-contact-details,
+  .inspire-page-contact .inspire-contact-quick-actions { min-height: 0; }
+}
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
