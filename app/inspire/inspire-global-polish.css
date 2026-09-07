@@ -219,6 +219,12 @@
   .inspire .inspire-space-preview.inspire-gallery-grid > button:first-child { height: clamp(104px, 28vw, 145px) !important; }
 }
 
+/* Sandra’s story follows the final biography paragraph directly; its own
+   compact label and first accordion already provide the necessary pause. */
+.inspire-page-about .inspire-host-story-section {
+  padding-top: 0 !important;
+}
+
 /* Long explanatory copy is still complete, but it now reads like publishing:
    a modest first-line indent, generous line-height and deliberate paragraph
    breaks instead of an unbroken block. */
