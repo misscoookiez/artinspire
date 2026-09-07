@@ -1913,18 +1913,6 @@ export default function InspirePage({ page = "home" }) {
   const eventMonthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(activeEventMonth);
   const eventDayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
   const eventHours = Array.from({ length: Math.max(0, 24 - eventDuration - 11 + 1) }, (_, index) => 11 + index);
-  const eventBusyTimes = availability.eventBusyTimes?.length
-    ? availability.eventBusyTimes
-    : liveClasses.map((item) => ({ starts_at: item.startsAt, ends_at: item.endsAt }));
-  const eventOverlapsClass = (day, hour) => {
-    const start = new Date(`${day}T${String(hour).padStart(2, "0")}:00:00+03:00`).getTime();
-    const end = start + eventDuration * 60 * 60 * 1000;
-    return eventBusyTimes.some((item) => {
-      const classStart = new Date(item.starts_at || item.startsAt).getTime();
-      const classEnd = new Date(item.ends_at || item.endsAt || item.starts_at || item.startsAt).getTime();
-      return start < classEnd && end > classStart;
-    });
-  };
   const eventCalendarCells = (() => {
     const first = new Date(activeEventMonth.getFullYear(), activeEventMonth.getMonth(), 1);
     const leading = (first.getDay() + 6) % 7;
@@ -1934,11 +1922,14 @@ export default function InspirePage({ page = "home" }) {
       const date = new Date(activeEventMonth.getFullYear(), activeEventMonth.getMonth(), index - leading + 1, 12);
       const key = eventDayKey(date);
       const isPast = key < eventDayKey(new Date());
-      const hasTime = eventHours.some((hour) => !eventOverlapsClass(key, hour));
-      return { key, day: date.getDate(), isPast, hasTime };
+      // Event dates are requests which the studio confirms personally. A
+      // longer duration must not make an entire month appear unavailable just
+      // because it overlaps a class or an individual session.
+      return { key, day: date.getDate(), isPast };
     });
   })();
-  const selectedEventExtraHours = Math.max(0, eventDuration - eventOffer.duration);
+  const includedEventHours = 4;
+  const selectedEventExtraHours = Math.max(0, eventDuration - includedEventHours);
   const selectedEventExtraPrice = selectedEventExtraHours * 15;
   const weeklyColumns = visibleWeek ? [4, 6, 0].map((day) => {
     const date = new Date(`${visibleWeek}T12:00:00Z`);
@@ -2091,7 +2082,7 @@ export default function InspirePage({ page = "home" }) {
             name: customerName,
             email: customerEmail,
             topic: String(data.get("topic") || inquiryTopic).trim(),
-            message: `${String(data.get("message") || "").trim()}${calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nPapildu studijas laiks: ${selectedEventExtraHours} h · €${selectedEventExtraPrice}` : ""}`,
+            message: `${String(data.get("message") || "").trim()}${calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nIekļauts pamataprēķinā: 2 h radošai aktivitātei + 2 h brīvai studijas izmantošanai\nPapildu studijas laiks: ${selectedEventExtraHours} h · €${selectedEventExtraPrice}` : ""}`,
           }),
         });
         const result = await response.json();
@@ -3354,17 +3345,16 @@ export default function InspirePage({ page = "home" }) {
                         </div>
                         <div className="inspire-event-calendar" role="group" aria-label={lang === "lv" ? "Pieejamie datumi" : "Available dates"}>
                           {["P", "O", "T", "C", "P", "S", "Sv"].map((day, index) => <small key={`${day}-${index}`}>{day}</small>)}
-                          {eventCalendarCells.map((day, index) => day ? <button key={day.key} type="button" disabled={day.isPast || !day.hasTime} className={eventDate === day.key ? "active" : ""} onClick={() => setEventDate(day.key)}>{day.day}</button> : <span key={`blank-${index}`} />)}
+                          {eventCalendarCells.map((day, index) => day ? <button key={day.key} type="button" disabled={day.isPast} className={eventDate === day.key ? "active" : ""} onClick={() => setEventDate(day.key)}>{day.day}</button> : <span key={`blank-${index}`} />)}
                         </div>
-                        <p className="inspire-event-calendar-note">{lang === "lv" ? "Pieejamība ir pārbaudīta pret nodarbību un individuālo sesiju grafiku. Datumu galīgi apstiprināsim e-pastā." : lang === "ru" ? "Доступность сверяется с расписанием занятий и индивидуальных сессий; окончательно подтвердим дату по email." : "Availability is checked against class and individual-session schedules; your date is confirmed by email."}</p>
                         <div className="inspire-event-time-controls">
-                          <label>{lang === "lv" ? "Vēlamais pasākuma ilgums" : lang === "ru" ? "Желаемая продолжительность события" : "Preferred event duration"}<select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); setEventDuration(duration); setEventStartHour((hour) => Math.min(hour, 24 - duration)); }}><option value="2">2 h</option><option value="3">3 h</option><option value="4">4 h</option><option value="5">5 h</option><option value="6">6 h</option><option value="7">7 h</option><option value="8">8 h</option><option value="9">9 h</option><option value="10">10 h</option></select></label>
-                          <div><b>{lang === "lv" ? "Vēlamais sākuma laiks" : lang === "ru" ? "Желаемое время начала" : "Preferred start time"}</b><div className="inspire-event-hour-grid">{eventHours.map((hour) => <button key={hour} type="button" disabled={!eventDate || eventOverlapsClass(eventDate, hour)} className={eventStartHour === hour ? "active" : ""} onClick={() => setEventStartHour(hour)}>{String(hour).padStart(2, "0")}:00</button>)}</div></div>
+                          <label><b>{lang === "lv" ? "Vēlamais pasākuma ilgums" : lang === "ru" ? "Желаемая продолжительность события" : "Preferred event duration"}</b><select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); setEventDuration(duration); setEventStartHour((hour) => Math.min(hour, 24 - duration)); }}><option value="2">2 h</option><option value="3">3 h</option><option value="4">4 h</option><option value="5">5 h</option><option value="6">6 h</option><option value="7">7 h</option><option value="8">8 h</option><option value="9">9 h</option><option value="10">10 h</option></select></label>
+                          <div><b>{lang === "lv" ? "Vēlamais sākuma laiks" : lang === "ru" ? "Желаемое время начала" : "Preferred start time"}</b><div className="inspire-event-hour-grid">{eventHours.map((hour) => <button key={hour} type="button" disabled={!eventDate} className={eventStartHour === hour ? "active" : ""} onClick={() => setEventStartHour(hour)}>{String(hour).padStart(2, "0")}:00</button>)}</div></div>
                         </div>
                         <div className="inspire-event-format-picker" role="group" aria-label={lang === "lv" ? "Pasākuma formāts" : "Event format"}>
                           {Object.entries(eventOffers).map(([key, offer]) => <button key={key} type="button" className={eventFormat === key ? "active" : ""} onClick={() => setEventFormat(key)}><b>{offer.label}</b><span>{key === "custom" && lang === "lv" ? "sākot no 2 h" : `${offer.duration} h`}</span></button>)}
                         </div>
-                        <div className="inspire-event-time-summary"><b>{eventOffer.label}</b><span>{eventDate ? `${eventDate} · ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00` : (lang === "lv" ? "Izvēlies datumu" : "Choose a date")}</span><small>{lang === "lv" ? `Radošā daļa: ${eventOffer.duration} h. Papildu laiks: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}.` : `Creative part: ${eventOffer.duration} h. Extra time: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}.`}</small></div>
+                        <div className="inspire-event-time-summary"><b>{eventOffer.label}</b><span>{eventDate ? `${eventDate} · ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00` : (lang === "lv" ? "Izvēlies datumu" : "Choose a date")}</span><small>{lang === "lv" ? `Iekļauts: 2 h radošai aktivitātei + 2 h brīvai studijas izmantošanai. Papildu laiks: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}.` : `Included: 2 h for creative activity + 2 h of free studio use. Extra time: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}.`}</small><em>{lang === "lv" ? "Šis ir aptuvens pamatcenas aprēķins. Gala cenu saskaņosim, ņemot vērā nepieciešamo sagatavošanu un pasākuma papildu iespējas." : "This is an approximate base-price calculation. The final price is agreed after discussing the setup and any extra event features."}</em></div>
                       </div>
                     ) : calendarKind === "gift" || calendarKind === "pass" ? (
                       <div className="inspire-gift-options">
