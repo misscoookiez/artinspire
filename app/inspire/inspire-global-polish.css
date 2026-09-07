@@ -239,6 +239,54 @@
   }
 }
 
+/* The room panels used a more specific legacy mosaic rule. Override it at
+   the source: paragraph first, then a transparent image wall—never a black
+   tile or a spare grid cell behind an uncropped photograph. */
+.inspire-page-home .inspire-space-details details > div,
+.inspire-page-events .inspire-space-details details > div {
+  display: block !important;
+}
+.inspire-page-home .inspire-space-details .inspire-space-preview.inspire-gallery-grid,
+.inspire-page-events .inspire-space-details .inspire-space-preview.inspire-gallery-grid,
+.inspire-page-home .inspire-space-details .inspire-tattoo-preview.inspire-gallery-grid,
+.inspire-page-events .inspire-space-details .inspire-tattoo-preview.inspire-gallery-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  grid-template-columns: none !important;
+  grid-template-rows: none !important;
+  min-height: 0 !important;
+  margin: 24px 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+.inspire-page-home .inspire-space-details .inspire-space-preview.inspire-gallery-grid > button,
+.inspire-page-events .inspire-space-details .inspire-space-preview.inspire-gallery-grid > button,
+.inspire-page-home .inspire-space-details .inspire-tattoo-preview.inspire-gallery-grid > button,
+.inspire-page-events .inspire-space-details .inspire-tattoo-preview.inspire-gallery-grid > button,
+.inspire-page-home .inspire-space-details .inspire-space-preview.inspire-gallery-grid > button:first-child,
+.inspire-page-events .inspire-space-details .inspire-space-preview.inspire-gallery-grid > button:first-child {
+  display: block !important;
+  grid-row: auto !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: clamp(140px, 11vw, 190px) !important;
+  min-width: 0 !important;
+  aspect-ratio: var(--gallery-ratio, 1.25) !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.inspire-page-home .inspire-space-details .inspire-gallery-grid > button img,
+.inspire-page-events .inspire-space-details .inspire-gallery-grid > button img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
 /* Long explanatory copy is still complete, but it now reads like publishing:
    a modest first-line indent, generous line-height and deliberate paragraph
    breaks instead of an unbroken block. */
