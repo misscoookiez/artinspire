@@ -1339,3 +1339,8 @@
     transform: none !important;
   }
 }
+
+/* Shared close language, matching the circled-X reference while staying
+   transparent around the circle and sharp on every popup background. */
+.inspire-x,.inspire-image-lightbox-close{display:grid!important;place-items:center!important;width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;padding:0!important;border:1px solid rgba(150,249,255,.8)!important;border-radius:50%!important;background:radial-gradient(circle at 35% 28%,#20243a 0%,#080a13 58%,#020308 100%)!important;color:transparent!important;font-size:0!important;line-height:1!important;box-shadow:0 0 0 2px rgba(5,7,13,.65),0 0 19px rgba(89,238,248,.54),0 0 34px rgba(218,90,250,.22)!important;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease!important}
+.inspire-x::before,.inspire-x::after,.inspire-image-lightbox-close::before,.inspire-image-lightbox-close::after{content:""!important;position:absolute;width:23px;height:3px;border-radius:20px;background:linear-gradient(90deg,#9df9ff,#eea5ff);box-shadow:0 0 8px rgba(123,241,250,.95)}.inspire-x::before,.inspire-image-lightbox-close::before{transform:rotate(45deg)}.inspire-x::after,.inspire-image-lightbox-close::after{transform:rotate(-45deg)}.inspire-x:hover,.inspire-x:focus-visible,.inspire-image-lightbox-close:hover,.inspire-image-lightbox-close:focus-visible{transform:scale(1.07)!important;filter:brightness(1.16);box-shadow:0 0 0 2px rgba(6,8,14,.7),0 0 26px rgba(94,240,249,.8),0 0 44px rgba(221,94,251,.42)!important;outline:0}
