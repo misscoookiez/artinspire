@@ -640,6 +640,44 @@
   padding: 9px;
   font-size: 12px;
 }
+.admin-booking-controls,
+.admin-reschedule {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.admin-booking-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+.admin-booking-filter button {
+  padding: 6px 8px !important;
+  font-size: 8px !important;
+}
+.admin-booking-filter button.active {
+  border-color: #60dfeb !important;
+  color: #60dfeb !important;
+}
+.admin-booking-controls button,
+.admin-reschedule button {
+  border: 1px solid #65566f;
+  background: transparent;
+  color: #fff;
+  padding: 9px 10px;
+  font-size: 9px;
+  letter-spacing: .1em;
+}
+.admin-booking-controls .admin-danger {
+  border-color: #e987a8;
+  color: #ffc3d5;
+}
+.admin-reschedule {
+  grid-column: 2 / -1;
+}
+.admin-reschedule select { flex: 1 1 230px; }
 .admin-editor label {
   padding: 18px;
   border-top: 1px solid #3e3746;

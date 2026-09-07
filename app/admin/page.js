@@ -254,6 +254,8 @@ export default function OwnerDashboard() {
   const [slotDraft, setSlotDraft] = useState(emptySlot);
   const [addingSlot, setAddingSlot] = useState(false);
   const [closureRange, setClosureRange] = useState({ from: "", to: "" });
+  const [rescheduleTargets, setRescheduleTargets] = useState({});
+  const [bookingView, setBookingView] = useState("upcoming");
   const [artworks, setArtworks] = useState([]);
   const [editingArtwork, setEditingArtwork] = useState(null);
   const supabase = useMemo(() => getSupabaseBrowser(), []);
@@ -456,6 +458,54 @@ export default function OwnerDashboard() {
       setNotice(error.message);
     }
   };
+  const bookingResource = (booking) =>
+    booking.kind === "private"
+      ? schedule.privateSlots.find((slot) => slot.id === booking.private_slot_id)
+      : schedule.classes.find((item) => item.id === booking.class_session_id);
+  const bookingTime = (booking) => {
+    const resource = bookingResource(booking);
+    return resource?.starts_at
+      ? new Date(resource.starts_at).toLocaleString("en-GB", {
+          day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
+        })
+      : "Scheduled time unavailable";
+  };
+  const availableRescheduleTimes = (booking) => {
+    const resources = booking.kind === "private" ? schedule.privateSlots : schedule.classes;
+    return resources.filter((item) =>
+      item.status === "open" && new Date(item.starts_at).getTime() > Date.now(),
+    );
+  };
+  const visibleBookings = schedule.bookings.filter((booking) => {
+    if (bookingView === "all") return true;
+    const resource = bookingResource(booking);
+    const isHistoric = booking.status !== "confirmed" || !resource?.starts_at || new Date(resource.starts_at).getTime() < Date.now();
+    return bookingView === "history" ? isHistoric : !isHistoric;
+  });
+  const rescheduleBooking = async (booking) => {
+    const resourceId = rescheduleTargets[booking.id];
+    if (!resourceId) return setNotice("Choose a new time first.");
+    try {
+      const res = await fetch("/api/admin/bookings", {
+        method: "PATCH",
+        headers: { "content-type": "application/json", ...auth },
+        body: JSON.stringify({ id: booking.id, action: "reschedule", resourceId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setSchedule((old) => ({
+        ...old,
+        bookings: old.bookings.map((item) =>
+          item.id === booking.id ? { ...item, ...data.booking } : item,
+        ),
+      }));
+      setRescheduleTargets((old) => ({ ...old, [booking.id]: "" }));
+      setNotice("Booking moved to the new time.");
+      loadSchedule();
+    } catch (error) {
+      setNotice(error.message);
+    }
+  };
   const header = {
     Overview: [
       "A calm control room.",
@@ -589,7 +639,7 @@ export default function OwnerDashboard() {
             <article>
               <span>BOOKINGS</span>
               <b>{schedule.bookings.length || "03"}</b>
-              <p>See incoming paid reservations and their status.</p>
+              <p>See upcoming bookings, past history, and simple controls.</p>
               <button type="button" onClick={() => setSection("Bookings")}>
                 OPEN BOOKINGS →
               </button>
@@ -895,17 +945,29 @@ export default function OwnerDashboard() {
         {section === "Bookings" && (
           <div className="admin-list">
             <div className="admin-list-head">
-              <p>INCOMING BOOKINGS</p>
-              <button type="button" onClick={loadSchedule}>
-                REFRESH
-              </button>
+              <div>
+                <p>BOOKINGS OVERVIEW</p>
+                <div className="admin-booking-filter" aria-label="Booking view">
+                  {["upcoming", "history", "all"].map((view) => (
+                    <button
+                      key={view}
+                      type="button"
+                      className={bookingView === view ? "active" : ""}
+                      onClick={() => setBookingView(view)}
+                    >
+                      {view.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <button type="button" onClick={loadSchedule}>REFRESH</button>
             </div>
             {!session ? (
               <p className="admin-empty-note">
                 Sign in with the owner email to view private booking details.
               </p>
-            ) : schedule.bookings.length ? (
-              schedule.bookings.map((booking) => (
+            ) : visibleBookings.length ? (
+              visibleBookings.map((booking) => (
                 <article className="admin-booking" key={booking.id}>
                   <span>
                     {new Date(booking.created_at).toLocaleDateString("en-GB")}
@@ -913,6 +975,7 @@ export default function OwnerDashboard() {
                   <div>
                     <b>{booking.customer_name || "Customer"}</b>
                     <small>{booking.email}</small>
+                    <small>{bookingTime(booking)}</small>
                   </div>
                   <small>
                     {booking.kind} ·{" "}
@@ -920,23 +983,55 @@ export default function OwnerDashboard() {
                       ? `€${(booking.amount_cents / 100).toFixed(0)}`
                       : "no payment"}
                   </small>
-                  <select
-                    value={booking.status}
-                    onChange={(event) =>
-                      updateBooking(booking.id, event.target.value)
-                    }
-                  >
-                    <option value="confirmed">Confirmed</option>
-                    <option value="pending">Pending</option>
-                    <option value="cancelled">Cancelled</option>
-                    <option value="refunded">Refunded</option>
-                  </select>
+                  <div className="admin-booking-controls">
+                    <select
+                      value={booking.status}
+                      onChange={(event) => updateBooking(booking.id, event.target.value)}
+                    >
+                      <option value="confirmed">Confirmed</option>
+                      <option value="cancelled">Cancelled</option>
+                      <option value="refunded">Refunded</option>
+                    </select>
+                    {booking.status === "confirmed" && (
+                      <button
+                        type="button"
+                        className="admin-danger"
+                        onClick={() => {
+                          if (window.confirm("Cancel this booking and reopen the time?"))
+                            updateBooking(booking.id, "cancelled");
+                        }}
+                      >
+                        CANCEL
+                      </button>
+                    )}
+                  </div>
+                  {booking.status === "confirmed" && (
+                    <div className="admin-reschedule">
+                      <select
+                        value={rescheduleTargets[booking.id] || ""}
+                        onChange={(event) => setRescheduleTargets((old) => ({
+                          ...old, [booking.id]: event.target.value,
+                        }))}
+                      >
+                        <option value="">Move to another time…</option>
+                        {availableRescheduleTimes(booking).map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {new Date(item.starts_at).toLocaleString("en-GB", {
+                              day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit",
+                            })}{booking.kind === "class" ? ` · ${item.title_lv}` : " · Private studio"}
+                          </option>
+                        ))}
+                      </select>
+                      <button type="button" onClick={() => rescheduleBooking(booking)}>
+                        RESCHEDULE
+                      </button>
+                    </div>
+                  )}
                 </article>
               ))
             ) : (
               <p className="admin-empty-note">
-                No paid bookings yet. Weekly group applications are collected
-                separately so people can reserve a spot without paying.
+                There are no {bookingView === "all" ? "bookings" : bookingView} bookings to show.
               </p>
             )}
           </div>
