@@ -1363,4 +1363,152 @@
 .inspire-depth-panel > summary > b::after{transform:none!important}.inspire-depth-panel[open] > summary > b::after{transform:rotate(180deg)!important}
 .inspire-page-method .inspire-panel-open-hint{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;padding:0 7px 0 10px!important}
 .inspire-page-method .inspire-panel-open-hint b{display:grid!important;place-items:center!important;width:12px;height:18px;margin:0!important;color:currentColor!important;font:400 16px/1 Arial,sans-serif!important;transform:none!important}
+
+/* Contact is the studio's business card: generous, immediately useful and
+   deliberately composed rather than a loose line of utility links. */
+.inspire-page-contact .inspire-contact-panel {
+  position: relative;
+  isolation: isolate;
+  grid-template-columns: minmax(130px, .36fr) minmax(420px, 1.16fr) minmax(315px, .72fr) !important;
+  gap: clamp(30px, 4vw, 76px) !important;
+  padding: clamp(48px, 5.2vw, 84px) max(32px, 8vw) !important;
+  overflow: hidden;
+  border: 0 !important;
+  background:
+    radial-gradient(circle at 76% 22%, rgba(38, 163, 180, .16), transparent 28%),
+    radial-gradient(circle at 15% 95%, rgba(181, 65, 212, .13), transparent 34%),
+    linear-gradient(112deg, #0d1018 0%, #101727 52%, #0a111d 100%) !important;
+}
+.inspire-page-contact .inspire-contact-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16px max(24px, 4vw);
+  border: 1px solid rgba(129, 237, 246, .24);
+  pointer-events: none;
+}
+.inspire-page-contact .inspire-contact-panel .inspire-kicker {
+  align-self: start;
+  padding-top: 9px;
+  color: #94f5fa;
+  text-shadow: 0 0 18px rgba(105, 238, 246, .38);
+}
+.inspire-page-contact .inspire-contact-details {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 !important;
+  min-width: 0;
+  border: 1px solid rgba(151, 242, 247, .38);
+  background: linear-gradient(125deg, rgba(23, 40, 61, .82), rgba(11, 16, 31, .74));
+  box-shadow: 0 16px 45px rgba(0, 0, 0, .2), inset 0 1px rgba(210, 255, 255, .08);
+}
+.inspire-page-contact .inspire-contact-details > a,
+.inspire-page-contact .inspire-contact-details > p,
+.inspire-page-contact .inspire-contact-message {
+  min-width: 0;
+  min-height: 112px;
+  padding: 22px clamp(18px, 2vw, 30px) !important;
+  border-right: 1px solid rgba(151, 242, 247, .24);
+  background: transparent !important;
+  color: #f3ffff !important;
+  text-decoration: none;
+}
+.inspire-page-contact .inspire-contact-details > :last-child { border-right: 0; }
+.inspire-page-contact .inspire-contact-details span {
+  color: #83ebf3 !important;
+  font-size: 9px !important;
+  letter-spacing: .16em !important;
+}
+.inspire-page-contact .inspire-contact-details strong {
+  font-size: clamp(15px, 1.12vw, 19px) !important;
+  line-height: 1.25 !important;
+}
+.inspire-page-contact .inspire-contact-message {
+  display: grid !important;
+  align-content: center;
+  cursor: pointer;
+}
+.inspire-page-contact .inspire-contact-details a:hover,
+.inspire-page-contact .inspire-contact-message:hover {
+  background: rgba(97, 225, 237, .11) !important;
+}
+.inspire-page-contact .inspire-contact-quick-actions {
+  align-self: center;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+}
+.inspire-page-contact .inspire-contact-quick-actions a,
+.inspire-page-contact .inspire-contact-quick-actions button {
+  min-height: 44px !important;
+  padding: 12px 17px !important;
+}
+
+/* Location needs the broadest reading field on the contact page.  It is a
+   clean three-part composition: directions, a real entrance view and map. */
+.inspire-page-contact .inspire-directions {
+  grid-template-columns: minmax(340px, 1.05fr) minmax(320px, .9fr) minmax(320px, .9fr) !important;
+  gap: clamp(28px, 3.2vw, 64px) !important;
+  padding: clamp(76px, 8vw, 132px) max(28px, 5vw) !important;
+  align-items: stretch !important;
+  border: 0 !important;
+  background: linear-gradient(180deg, #08090e 0%, #050507 100%) !important;
+}
+.inspire-page-contact .inspire-directions-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.inspire-page-contact .inspire-directions figure,
+.inspire-page-contact .inspire-directions iframe {
+  height: clamp(390px, 34vw, 560px) !important;
+  min-height: 0;
+  border: 1px solid rgba(119, 231, 241, .43) !important;
+  background: #10111a;
+}
+.inspire-page-contact .inspire-directions figure { overflow: hidden; }
+.inspire-page-contact .inspire-directions figure img {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.inspire-page-contact .inspire-directions iframe { width: 100% !important; }
+
+/* Language is outside the centred masthead composition: it belongs to the
+   fixed upper-right corner on every desktop route. */
+@media (min-width: 801px) {
+  .inspire-masthead { position: relative !important; }
+  .inspire-masthead-language,
+  .inspire-page-home .inspire-masthead-language {
+    position: absolute !important;
+    top: 14px !important;
+    right: 24px !important;
+    left: auto !important;
+    z-index: 20 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .inspire-page-contact .inspire-contact-panel { grid-template-columns: 1fr !important; gap: 22px !important; }
+  .inspire-page-contact .inspire-contact-panel .inspire-kicker { padding-top: 0; }
+  .inspire-page-contact .inspire-directions { grid-template-columns: minmax(0, 1fr) minmax(280px, .82fr) !important; }
+  .inspire-page-contact .inspire-directions-copy { grid-column: 1 / -1 !important; }
+  .inspire-page-contact .inspire-directions figure { grid-column: 1 !important; grid-row: 2 !important; }
+  .inspire-page-contact .inspire-directions iframe { grid-column: 2 !important; grid-row: 2 !important; }
+}
+
+@media (max-width: 620px) {
+  .inspire-page-contact .inspire-contact-panel { padding: 42px 20px !important; }
+  .inspire-page-contact .inspire-contact-panel::before { inset: 10px; }
+  .inspire-page-contact .inspire-contact-details { grid-template-columns: 1fr !important; }
+  .inspire-page-contact .inspire-contact-details > a,
+  .inspire-page-contact .inspire-contact-details > p,
+  .inspire-page-contact .inspire-contact-message { min-height: 0; border-right: 0; border-bottom: 1px solid rgba(151, 242, 247, .24); }
+  .inspire-page-contact .inspire-contact-details > :last-child { border-bottom: 0; }
+  .inspire-page-contact .inspire-directions { grid-template-columns: 1fr !important; padding: 62px 20px !important; }
+  .inspire-page-contact .inspire-directions figure,
+  .inspire-page-contact .inspire-directions iframe { grid-column: 1 !important; grid-row: auto !important; height: 320px !important; }
+}
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
