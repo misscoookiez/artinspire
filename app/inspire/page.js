@@ -53,14 +53,10 @@ const statementSlides = [
   ["/art/studio-neutral-02.webp", "Art Studio Inspire gleznošanas telpa"],
 ];
 const landingStatementSlides = [
-  ["/art/landing-generated-02.webp", "Art Studio Inspire radošā vide"],
-  ["/art/landing-child-standing.webp", "Jaunā māksliniece glezno Art Studio Inspire"],
-  ["/art/inspire-landing-studio-poster-hq.webp", "Art Studio Inspire studijas noskaņa"],
-  ["/art/landing-generated-01.webp", "Art Studio Inspire radošā vide"],
-  ["/art/landing-generated-03.webp", "Art Studio Inspire radošā vide"],
-  ["/art/landing-generated-04.webp", "Art Studio Inspire radošā vide"],
-  ["/art/landing-generated-child.webp", "Jaunā māksliniece glezno Art Studio Inspire"],
-  ["/art/landing-child-standing.webp", "Jaunā māksliniece glezno Art Studio Inspire"],
+  ["/art/landing-confirmed-f88.webp", "Art Studio Inspire radošā vide"],
+  ["/art/landing-confirmed-40ba.webp", "Jaunā māksliniece glezno Art Studio Inspire"],
+  ["/art/landing-confirmed-ca08.webp", "Art Studio Inspire studijas noskaņa"],
+  ["/art/landing-confirmed-447.webp", "Art Studio Inspire radošā vide"],
 ];
 const youthGallerySlides = [
   ["/art/inspire-student-work.webp", "Skolēna darbs Art Studio Inspire"],
@@ -1558,6 +1554,9 @@ export default function InspirePage({ page = "home" }) {
             ["EXTRA ACTIVITIES", "decor, karaoke, games, tattoo and piercing"],
             ["AT YOUR PLACE", "a travelling format by arrangement"],
           ];
+  useEffect(() => {
+    setSlide(0);
+  }, [page]);
   useEffect(() => {
     const timer = window.setInterval(
       () => setSlide((current) => (current + 1) % showcaseSlides.length),

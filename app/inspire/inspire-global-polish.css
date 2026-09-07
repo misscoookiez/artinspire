@@ -906,12 +906,25 @@
 
 /* A real, pre-sized photographic landing rotation; it is decorative only and
    never behaves like a gallery control. */
-.inspire-page-home .inspire-statement { background: #080714 !important; }
+.inspire-page-home .inspire-statement {
+  position: relative !important;
+  isolation: isolate !important;
+  display: block !important;
+  overflow: hidden !important;
+  background: #080714 !important;
+}
 .inspire-page-home .inspire-statement::before { content: none !important; display: none !important; }
+.inspire-page-home .inspire-statement-copy {
+  position: relative !important;
+  z-index: 2 !important;
+}
 .inspire-page-home .inspire-statement-slideshow {
   display: block !important;
   position: absolute !important;
   inset: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
   z-index: 0 !important;
   min-height: 100% !important;
   background: #080714;
@@ -922,6 +935,7 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgba(5,3,13,.96) 0%, rgba(6,4,15,.82) 31%, rgba(7,6,18,.46) 56%, rgba(8,12,21,.14) 100%);
+  z-index: 1;
 }
 .inspire-page-home .inspire-statement-slideshow img {
   position: absolute !important;
@@ -934,6 +948,7 @@
   opacity: 0 !important;
   transform: none !important;
   transition: opacity 1.2s ease !important;
+  z-index: 0;
 }
 .inspire-page-home .inspire-statement-slideshow img.active { opacity: 1 !important; }
 
@@ -980,7 +995,7 @@
 .inspire-page-method .inspire-capabilities::before {
   background:
     linear-gradient(90deg, rgba(7, 8, 18, .96) 0%, rgba(8, 10, 21, .84) 36%, rgba(9, 10, 25, .54) 68%, rgba(7, 8, 18, .82) 100%),
-    url('/art/landing-generated-01.webp') center / cover no-repeat !important;
+    url('/art/landing-confirmed-447.webp') center / cover no-repeat !important;
 }
 .inspire-page-method .inspire-capability-grid {
   border-top: 0 !important;
