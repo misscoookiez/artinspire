@@ -1316,3 +1316,26 @@
   .inspire-masthead-mood { margin-top: 5px !important; line-height: 1.14 !important; }
   .inspire-masthead-language { top: 8px !important; right: 14px !important; }
 }
+
+/* Desktop master rule: all routes—including the landing page—share the same
+   fixed centred pair.  This intentionally overrides every older home-only
+   masthead adjustment so the geometry cannot drift between pages. */
+@media (min-width: 801px) {
+  .inspire-masthead,
+  .inspire-page-home .inspire-masthead {
+    grid-template-columns: clamp(360px, 29vw, 560px) clamp(340px, 28vw, 540px) !important;
+    column-gap: clamp(72px, 13vw, 250px) !important;
+    justify-content: center !important;
+    padding-inline: 18px !important;
+  }
+
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand,
+  .inspire-masthead-copy,
+  .inspire-page-home .inspire-masthead-copy {
+    justify-self: stretch !important;
+    align-self: center !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+}
