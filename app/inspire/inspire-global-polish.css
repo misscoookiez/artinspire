@@ -2244,3 +2244,29 @@
   .inspire-page-contact .inspire-contact-panel { padding-inline: max(20px, 7vw) !important; }
   .inspire-page-contact .inspire-contact-card { min-height: 0; }
 }
+
+/* The first About-page disclosure uses one fixed chevron box. Rotating the
+   glyph itself—not the box—prevents the arrow from shifting when it opens. */
+.inspire-page-about .inspire-depth-panel:first-child > summary > b {
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 22px !important;
+  width: 22px !important;
+  height: 22px !important;
+  margin: 0 0 0 2px !important;
+  color: #9cf5fb !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::before {
+  content: "⌄" !important;
+  display: block !important;
+  color: currentColor;
+  font: 400 18px/1 Arial, sans-serif !important;
+  transform: rotate(0deg) !important;
+  transform-origin: center;
+  transition: transform .18s ease;
+}
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::after { content: none !important; }
+.inspire-page-about .inspire-depth-panel:first-child[open] > summary > b::before { transform: rotate(180deg) !important; }
