@@ -3122,7 +3122,7 @@ export default function InspirePage({ page = "home" }) {
       <section id="sazinies" className="inspire-contact-panel" aria-label={lang === "lv" ? "Sazinies ar mums" : lang === "ru" ? "Свяжитесь с нами" : "Contact us"}>
         <div className="inspire-contact-card inspire-contact-card-info">
           <p className="inspire-contact-card-kicker">{lang === "lv" ? "SAZINIES AR MUMS" : lang === "ru" ? "СВЯЖИТЕСЬ С НАМИ" : "GET IN TOUCH"}</p>
-          <h3>{lang === "lv" ? "Radīsim ko īpašu kopā" : lang === "ru" ? "Давайте создадим что-то особенное вместе" : "Let’s create something special together"}</h3>
+          <h3>{lang === "lv" ? "Radīsim ko īpašu kopā!" : lang === "ru" ? "Давайте создадим что-то особенное вместе!" : "Let’s create something special together!"}</h3>
           <p className="inspire-contact-card-copy">{lang === "lv" ? "Mēs vienmēr esam atvērti jaunām idejām, sadarbībai un radošiem projektiem." : lang === "ru" ? "Мы всегда открыты новым идеям, сотрудничеству и творческим проектам." : "We are always open to new ideas, collaborations and creative projects."}</p>
           <div className="inspire-contact-details">
             <a href="tel:+37128809550"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></a>
@@ -3136,7 +3136,7 @@ export default function InspirePage({ page = "home" }) {
         <form className="inspire-contact-card inspire-contact-card-message" onSubmit={submitContact}>
           <p className="inspire-contact-card-kicker">{lang === "lv" ? "GATAVI SARUNAI?" : lang === "ru" ? "ГОТОВЫ ПОГОВОРИТЬ?" : "READY TO TALK?"}</p>
           <h3>{lang === "lv" ? "Sazinies ar mums" : lang === "ru" ? "Свяжитесь с нами" : "Get in touch"}</h3>
-          <p className="inspire-contact-card-copy">{lang === "lv" ? "Pastāsti par savu ideju — mēs atbildēsim drīzumā." : lang === "ru" ? "Расскажите о своей идее — мы скоро ответим." : "Tell us about your idea — we will reply soon."}</p>
+          <p className="inspire-contact-card-copy">{lang === "lv" ? "Pastāsti par savu ideju — mēs atbildēsim drīzumā!" : lang === "ru" ? "Расскажите о своей идее — мы скоро ответим!" : "Tell us about your idea — we will reply soon!"}</p>
           <div className="inspire-contact-composer">
             <input required name="firstName" autoComplete="given-name" aria-label={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} />
             <input required name="email" type="email" autoComplete="email" aria-label={t.email} defaultValue={savedEmail} placeholder={t.email} />
