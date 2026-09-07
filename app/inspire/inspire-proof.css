@@ -29,10 +29,12 @@
   letter-spacing: -0.07em;
 }
 .inspire-proof > div > p:not(.inspire-kicker) {
-  max-width: 860px;
+  max-width: 64ch;
   color: #cfc8d2;
   font-size: 17px;
   line-height: 1.58;
+  text-wrap: pretty;
+  hyphens: auto;
 }
 .inspire-proof blockquote {
   max-width: 690px;
@@ -86,11 +88,14 @@
   transform: rotate(45deg);
 }
 .inspire-proof details p {
-  max-width: 690px;
+  max-width: 58ch;
   margin: 0 26px 27px 58px;
   color: #d4ced8;
   font-size: 16px;
   line-height: 1.62;
+  text-indent: 1.1em;
+  text-wrap: pretty;
+  hyphens: auto;
 }
 @media (max-width: 800px) {
   .inspire-proof {

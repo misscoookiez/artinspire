@@ -98,7 +98,7 @@
 .inspire-host-stories summary strong { font: 700 11px/1.35 Arial, sans-serif; letter-spacing: .1em; }
 .inspire-host-stories summary b { color: #d987ef; font-size: 24px; font-weight: 300; transition: transform .2s ease; }
 .inspire-host-stories details[open] summary b { transform: rotate(45deg); }
-.inspire-host-stories details > p { margin: 0 !important; padding: 16px 18px 20px !important; border: 0 !important; border-left: 2px solid rgba(128, 236, 244, .28) !important; color: #d8d2dc; font-size: 16px !important; line-height: 1.64 !important; }
+.inspire-host-stories details > p { max-width: 62ch; margin: 0 !important; padding: 16px 18px 20px !important; border: 0 !important; border-left: 2px solid rgba(128, 236, 244, .28) !important; color: #d8d2dc; font-size: 16px !important; line-height: 1.64 !important; text-indent: 1.1em; text-wrap: pretty; hyphens: auto; }
 
 @media (max-width: 900px) {
   .inspire-host-stories { margin-top: 32px; }

@@ -134,6 +134,16 @@
 .inspire-contact-quick-actions button { background: #b9f7fa; color: #08111b !important; }
 .inspire-contact-quick-actions a:hover, .inspire-contact-quick-actions button:hover { transform: translateY(-2px); background: #78e7ee; color: #071019 !important; }
 
+/* Long descriptive copy keeps a book-like measure without turning the site
+   into a wall of text. The actual information remains in its existing panels. */
+.inspire-faq details p,
+.inspire-events-faq details p {
+  max-width: 58ch;
+  text-indent: 1.1em;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
 @media (max-width: 960px) {
   .inspire-page-contact .inspire-contact-panel { grid-template-columns: 1fr; gap: 18px; }
   .inspire-contact-quick-actions { justify-content: flex-start; }
