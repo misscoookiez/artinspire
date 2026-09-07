@@ -1511,4 +1511,43 @@
   .inspire-page-contact .inspire-directions figure,
   .inspire-page-contact .inspire-directions iframe { grid-column: 1 !important; grid-row: auto !important; height: 320px !important; }
 }
+
+/* Method accordions begin as close to their own panel headers as the rows
+   begin to one another. The spacious lower portion remains for readable
+   expanded content, not as an empty buffer before the first choice. */
+.inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-proof {
+  padding-top: 8px !important;
+  padding-bottom: clamp(62px, 7vw, 112px) !important;
+}
+.inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-proof-list {
+  margin-top: 0 !important;
+}
+.inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof {
+  padding-top: 8px !important;
+  padding-bottom: clamp(62px, 7vw, 112px) !important;
+}
+.inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof > div:first-child {
+  padding-top: clamp(34px, 4vw, 64px) !important;
+}
+.inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof-list {
+  margin-top: 0 !important;
+}
+
+/* The chevron belongs on the same optical baseline as ATVĒRT, even when the
+   panel changes state and the glyph rotates. */
+.inspire-page-method .inspire-panel-open-hint {
+  align-self: center !important;
+  line-height: 1 !important;
+}
+.inspire-page-method .inspire-panel-open-hint b {
+  position: relative !important;
+  top: -1px !important;
+  line-height: 1 !important;
+}
+
+@media (max-width: 800px) {
+  .inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-proof,
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof { padding-top: 6px !important; }
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof > div:first-child { padding-top: 30px !important; }
+}
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
