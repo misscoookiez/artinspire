@@ -2595,20 +2595,6 @@ export default function InspirePage({ page = "home" }) {
                     <p key={`${index}-${paragraph.slice(0, 16)}`}>{paragraph}</p>
                   ))}
               </div>
-              <div className="inspire-host-stories">
-                <p className="inspire-kicker">
-                  {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
-                </p>
-                {hostStories.map(([title, body]) => (
-                  <details key={title}>
-                    <summary>
-                      <strong>{title}</strong>
-                      <b>+</b>
-                    </summary>
-                    <p>{body}</p>
-                  </details>
-                ))}
-              </div>
             </div>
             <div className="inspire-host-visuals">
               <div className="inspire-host-gallery">
@@ -2635,6 +2621,22 @@ export default function InspirePage({ page = "home" }) {
                   alt="Sandra Rudzīte painting a dramatic studio work"
                 />
               </div>
+            </div>
+          </section>
+          <section className="inspire-host-story-section">
+            <div className="inspire-host-stories">
+              <p className="inspire-kicker">
+                {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
+              </p>
+              {hostStories.map(([title, body]) => (
+                <details key={title}>
+                  <summary>
+                    <strong>{title}</strong>
+                    <b>+</b>
+                  </summary>
+                  <p>{body}</p>
+                </details>
+              ))}
             </div>
           </section>
           <section className="inspire-host-art-section">

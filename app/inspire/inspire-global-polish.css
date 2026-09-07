@@ -602,6 +602,64 @@
   .inspire-page-about .inspire-host-art-section .inspire-wide-artworks { padding-inline: 20px !important; }
 }
 
+/* Final About-page alignment rule.  Its reading edge uses the same 15vw
+   gutter as the landing statement, so the site never appears to jump sideways
+   between its opening chapters. */
+@media (min-width: 901px) {
+  .inspire-page-about .inspire-about-studio-intro {
+    min-height: clamp(620px, 48vw, 780px);
+    padding-left: clamp(72px, 15vw, 300px);
+    padding-right: clamp(72px, 15vw, 300px);
+    align-items: center;
+  }
+
+  .inspire-page-about .inspire-depth-panel:first-child > summary {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 24px clamp(72px, 15vw, 300px) !important;
+  }
+
+  .inspire-page-about .inspire-host,
+  .inspire-page-about .inspire-host-story-section,
+  .inspire-page-about .inspire-host-art-section .inspire-wide-artworks {
+    padding-left: clamp(72px, 15vw, 300px) !important;
+    padding-right: clamp(72px, 15vw, 300px) !important;
+  }
+}
+
+/* This is a site-wide band, but its action remains attached to the label—no
+   detached arrow at the far edge. The duplicated mini-label above Sandra is
+   intentionally removed. */
+.inspire-page-about .inspire-depth-panel:first-child > summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+}
+.inspire-page-about .inspire-depth-panel:first-child > summary strong {
+  flex: 0 0 auto !important;
+  text-align: left !important;
+}
+.inspire-page-about .inspire-depth-panel:first-child > summary b {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+.inspire-page-about .inspire-host-copy > .inspire-kicker { display: none !important; }
+
+/* The photo triptych belongs only to Sandra's core biography. Once the story
+   accordions begin, they receive their own reading section below it. */
+.inspire-page-about .inspire-host-story-section {
+  width: 100%;
+  margin: 0;
+  padding: clamp(42px, 5vw, 72px) max(24px, 10vw) clamp(28px, 3vw, 44px);
+  background: #111013;
+}
+.inspire-page-about .inspire-host-story-section .inspire-host-stories {
+  width: min(800px, 100%);
+  max-width: 800px !important;
+  margin: 0 !important;
+}
+
 /* Accordion controls read as one compact action: the plus stays with its
    title instead of occupying a detached right-hand column.  This also keeps
    the control stable when a title wraps on a narrow screen. */
