@@ -2663,7 +2663,13 @@
 .inspire-page-method .inspire-panel-open-hint b {
   position: relative !important;
   background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
   box-shadow: none !important;
+  filter: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  isolation: isolate !important;
 }
 .inspire details > summary > b::after,
 .inspire-page-about .inspire-depth-panel:first-child > summary > b::after,
