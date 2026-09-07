@@ -1,0 +1,58 @@
+/* The two contact cards share one vertical rhythm: heading, short invitation,
+   direct details, then the final action at the same baseline. */
+.inspire-page-contact .inspire-contact-panel{
+  background:
+    radial-gradient(ellipse at 13% 86%,rgba(118,69,245,.26),transparent 42%),
+    radial-gradient(ellipse at 86% 12%,rgba(47,221,244,.2),transparent 36%),
+    linear-gradient(110deg,rgba(6,11,35,.7),rgba(11,24,61,.62) 54%,rgba(5,20,37,.72)),
+    url('/art/inspire-nebula.jpg') center 45% / cover !important;
+}
+@media (min-width:861px){
+  .inspire-page-contact .inspire-contact-card{
+    display:flex;
+    flex-direction:column;
+    height:456px!important;
+    min-height:456px!important;
+    padding:26px!important;
+  }
+  .inspire-page-contact .inspire-contact-card h3,
+  .inspire-page-contact .inspire-contact-card-message h3{
+    margin:0 0 10px!important;
+    font-size:clamp(29px,2.15vw,37px)!important;
+    line-height:1.03!important;
+  }
+  .inspire-page-contact .inspire-contact-card-message h3{margin-top:10px!important;}
+  .inspire-page-contact .inspire-contact-card-info .inspire-contact-card-kicker,
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-card-kicker{margin:0 0 8px!important;}
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-card-copy{font-size:15px!important;line-height:1.5!important;}
+  .inspire-page-contact .inspire-contact-card-info .inspire-contact-details{
+    margin:14px 0 0!important;
+  }
+  .inspire-page-contact .inspire-contact-details>a,
+  .inspire-page-contact .inspire-contact-details>p{
+    height:56px;
+    min-height:56px;
+    box-sizing:border-box;
+    padding:10px 0!important;
+  }
+  .inspire-page-contact .inspire-contact-socials{
+    margin-top:auto!important;
+    padding-top:12px;
+    border-top:1px solid rgba(185,219,250,.2);
+  }
+  .inspire-page-contact .inspire-contact-socials a{min-height:55px;padding:10px 0!important;}
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer{
+    margin-top:auto!important;
+    padding-top:0!important;
+    gap:9px;
+  }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer input{min-height:40px;}
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer textarea{min-height:102px;}
+  .inspire-page-contact .inspire-contact-send{
+    min-height:38px;
+    margin-top:10px;
+  }
+}
+@media (max-width:860px){
+  .inspire-page-contact .inspire-contact-socials{padding-top:12px;border-top:1px solid rgba(185,219,250,.2);}
+}
