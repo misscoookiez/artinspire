@@ -89,3 +89,36 @@
   }
   .inspire-page-contact .inspire-contact-send{margin-top:0!important;}
 }
+
+/* Keep the card layout intact while borrowing the site artwork as a quiet
+   pigment layer. The readable surface stays dark and blue-led. */
+.inspire-page-contact .inspire-contact-panel{
+  background:
+    radial-gradient(ellipse at 87% 12%,rgba(39,193,217,.13),transparent 34%),
+    radial-gradient(ellipse at 10% 91%,rgba(99,61,160,.12),transparent 39%),
+    linear-gradient(112deg,rgba(5,12,31,.88),rgba(10,27,60,.82) 54%,rgba(5,21,37,.87)),
+    url('/art/inspire-contact-lightscape.png') center 55% / cover!important;
+}
+
+@media(min-width:861px){
+  /* Two-line detail rows need the same breathable lower edge as the compact
+     form fields; this removes the one compressed divider under the address. */
+  .inspire-page-contact .inspire-contact-details>p{
+    height:64px!important;
+    min-height:64px!important;
+  }
+  .inspire-page-contact .inspire-contact-card-copy{color:#b7c8df!important;}
+  .inspire-page-contact .inspire-contact-details strong{color:#dce8f6!important;}
+  .inspire-page-contact .inspire-contact-socials a{color:#d3e1f0!important;}
+  .inspire-page-contact .inspire-contact-send{color:#a6f7ff!important;}
+  .inspire-page-contact .inspire-contact-socials a{
+    transition:color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .inspire-page-contact .inspire-contact-socials a:hover,
+  .inspire-page-contact .inspire-contact-socials a:focus-visible{
+    color:#fff!important;
+    background:linear-gradient(90deg,rgba(111,89,240,.14),rgba(51,210,225,.11))!important;
+    box-shadow:inset 0 0 0 1px rgba(152,232,248,.48),0 0 18px rgba(65,192,222,.12);
+    transform:translateX(3px);
+  }
+}
