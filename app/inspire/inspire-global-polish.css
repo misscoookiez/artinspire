@@ -225,6 +225,20 @@
   padding-top: 0 !important;
 }
 
+/* One measured triptych: the lead image stays inside the same outer bounds
+   as the two companion images, and every internal gutter is identical. */
+@media (min-width: 901px) {
+  .inspire-page-about .inspire-host-gallery {
+    gap: 4px !important;
+  }
+  .inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+    transform: none !important;
+    transform-origin: initial !important;
+    clip-path: none !important;
+    object-position: center 64% !important;
+  }
+}
+
 /* Long explanatory copy is still complete, but it now reads like publishing:
    a modest first-line indent, generous line-height and deliberate paragraph
    breaks instead of an unbroken block. */
