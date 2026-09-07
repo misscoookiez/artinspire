@@ -2121,3 +2121,14 @@
     transform: translateX(clamp(112px, 8.3vw, 148px)) !important;
   }
 }
+
+/* Sandra's three-photo composition must finish on one shared top and bottom
+   edge.  The previous visual scale made the lead portrait bleed past the
+   companion pair; its crop is now contained by the actual grid cell. */
+@media (min-width: 901px) {
+  .inspire-page-about .inspire-host-gallery { gap: 4px !important; }
+  .inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+    transform: none !important;
+    transform-origin: initial !important;
+  }
+}
