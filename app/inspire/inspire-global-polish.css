@@ -398,6 +398,150 @@
   text-indent: 0;
 }
 
+/* About is deliberately a short, self-contained story: the studio itself,
+   then Sandra. Teaching methods and student galleries live on their dedicated
+   Method page, so they never repeat here. */
+.inspire-page-about > .inspire-capabilities,
+.inspire-page-about > .inspire-student-galleries,
+.inspire-page-about .inspire-depth-panel:nth-child(n + 2),
+.inspire-page-about > .inspire-energy-strip {
+  display: none !important;
+}
+
+.inspire-page-about > .inspire-about-studio-intro {
+  order: 6;
+}
+.inspire-page-about > .inspire-depth {
+  order: 7;
+}
+
+.inspire-about-studio-intro {
+  display: grid;
+  grid-template-columns: minmax(280px, .82fr) minmax(420px, 1.18fr);
+  gap: clamp(52px, 9vw, 170px);
+  align-items: end;
+  width: 100%;
+  max-width: none;
+  padding: clamp(44px, 4vw, 60px) max(24px, 10vw) clamp(34px, 3vw, 48px);
+  color: #f5f2f5;
+  background:
+    linear-gradient(118deg, rgba(8, 9, 17, .99), rgba(10, 10, 22, .92) 58%, rgba(12, 14, 25, .87)),
+    url('/art/inspire-studio-supplies-backdrop.webp') center / cover;
+}
+
+.inspire-about-studio-intro h1 {
+  max-width: 700px;
+  margin: 12px 0 0;
+  font-size: clamp(42px, 4.8vw, 74px);
+  font-weight: 400;
+  letter-spacing: -.065em;
+  line-height: .94;
+}
+
+.inspire-about-studio-intro-copy {
+  max-width: 820px;
+  padding: 0 0 4px 24px;
+  border-left: 2px solid #86edf5;
+}
+.inspire-about-studio-intro-copy > p {
+  max-width: 68ch;
+  margin: 0;
+  color: rgba(244, 247, 248, .9);
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  text-indent: 1.1em;
+  text-wrap: pretty;
+}
+.inspire-about-studio-intro-copy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 22px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid rgba(134, 237, 245, .26);
+  list-style: none;
+}
+.inspire-about-studio-intro-copy li {
+  color: #aaf6fb;
+  font: 800 10px/1.35 Arial, sans-serif;
+  letter-spacing: .1em;
+}
+.inspire-about-studio-intro-copy li::before { content: "✦"; margin-right: 7px; }
+
+/* Sandra’s portrait grouping has one tall primary photograph and two companion
+   frames. It stretches exactly with the combined biography and story panels,
+   while every full photo remains uncropped. */
+.inspire-page-about .inspire-depth-panel:first-child > summary {
+  width: min(1560px, 100%);
+  margin: 0 auto;
+  padding: 20px max(24px, 10vw) !important;
+}
+.inspire-page-about .inspire-host {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr) !important;
+  column-gap: clamp(48px, 7vw, 132px) !important;
+  align-items: stretch !important;
+  width: 100%;
+  max-width: none;
+  padding: clamp(42px, 5vw, 74px) max(24px, 10vw) clamp(34px, 4vw, 56px) !important;
+}
+.inspire-page-about .inspire-host-copy,
+.inspire-page-about .inspire-host-bio,
+.inspire-page-about .inspire-host-stories {
+  max-width: 780px !important;
+}
+.inspire-page-about .inspire-host-bio p {
+  font-size: clamp(16px, 1.16vw, 19px) !important;
+  line-height: 1.64 !important;
+}
+.inspire-page-about .inspire-host-stories {
+  margin-top: 30px !important;
+}
+.inspire-page-about .inspire-host-visuals,
+.inspire-page-about .inspire-host-gallery {
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.inspire-page-about .inspire-host-visuals {
+  grid-template-rows: minmax(0, 1fr) !important;
+  align-content: stretch !important;
+}
+.inspire-page-about .inspire-host-gallery {
+  align-self: stretch !important;
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, .78fr) !important;
+  grid-template-rows: 1fr 1fr !important;
+  gap: 12px !important;
+  background: transparent !important;
+}
+.inspire-page-about .inspire-host-gallery .inspire-host-portrait { grid-row: span 2 !important; }
+.inspire-page-about .inspire-host-gallery img {
+  background: transparent !important;
+  object-fit: contain !important;
+}
+.inspire-page-about .inspire-host-art-section {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #111013;
+}
+.inspire-page-about .inspire-host-art-section .inspire-wide-artworks {
+  padding: 0 max(24px, 10vw) clamp(56px, 7vw, 96px) !important;
+  background: transparent !important;
+}
+
+@media (max-width: 900px) {
+  .inspire-about-studio-intro,
+  .inspire-page-about .inspire-host {
+    grid-template-columns: 1fr !important;
+  }
+  .inspire-about-studio-intro { gap: 28px; padding: 54px 20px 46px; }
+  .inspire-about-studio-intro-copy { padding-left: 18px; }
+  .inspire-page-about .inspire-host { gap: 32px; padding-inline: 20px !important; }
+  .inspire-page-about .inspire-host-gallery { height: auto !important; min-height: 460px !important; }
+  .inspire-page-about .inspire-depth-panel:first-child > summary { padding-inline: 20px !important; }
+  .inspire-page-about .inspire-host-art-section .inspire-wide-artworks { padding-inline: 20px !important; }
+}
+
 /* Accordion controls read as one compact action: the plus stays with its
    title instead of occupying a detached right-hand column.  This also keeps
    the control stable when a title wraps on a narrow screen. */

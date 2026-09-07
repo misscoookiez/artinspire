@@ -2480,6 +2480,35 @@ export default function InspirePage({ page = "home" }) {
               : "APPLICATIONS DO NOT REQUIRE PAYMENT UPFRONT. Any reservation must be cancelled or rescheduled at least 24 hours before the class; until then, cancellation is free and the refund is automatic."}
         </p>
       </section>
+      {page === "about" && (
+        <section className="inspire-about-studio-intro">
+          <div>
+            <p className="inspire-kicker">
+              {lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}
+            </p>
+            <h1>
+              {lang === "lv" ? "Vieta, kur idejai dod laiku." : lang === "ru" ? "Место, где идее дают время." : "A place that gives ideas time."}
+            </h1>
+          </div>
+          <div className="inspire-about-studio-intro-copy">
+            <p>
+              {content(
+                "inspire.about.studio.intro",
+                lang === "lv"
+                  ? "Art Studio Inspire ir neatkarīga gleznošanas studija Rīgas centrā, Miera ielā 17. To izveidoja māksliniece Sandra Rudzīte kā regulāru, pieejamu vietu bērniem, jauniešiem un pieaugušajiem — lai gleznotu, mācītos un īstenotu savas idejas bez spiediena iederēties vienā stilā. Materiāli un profesionāls atbalsts ir uz vietas; darbu sākam no tā, kas Tev šobrīd svarīgs."
+                  : lang === "ru"
+                    ? "Art Studio Inspire — независимая художественная студия в центре Риги, на улице Миера, 17. Художница Сандра Рудзите создала её как постоянное, доступное место для детей, подростков и взрослых — чтобы рисовать, учиться и воплощать свои идеи без давления соответствовать одному стилю. Материалы и профессиональная поддержка есть в студии; мы начинаем с того, что важно вам сейчас."
+                    : "Art Studio Inspire is an independent painting studio in central Riga, at Miera iela 17. Artist Sandra Rudzīte created it as a regular, accessible place for children, young people and adults to paint, learn and realise their ideas without pressure to fit one style. Materials and professional support are here; we begin with what matters to you now.",
+              )}
+            </p>
+            <ul aria-label={lang === "lv" ? "Studijas pamatinformācija" : "Studio essentials"}>
+              <li>{lang === "lv" ? "Miera iela 17, Rīga" : lang === "ru" ? "Миера, 17, Рига" : "Miera iela 17, Riga"}</li>
+              <li>{lang === "lv" ? "Bērniem, jauniešiem un pieaugušajiem" : lang === "ru" ? "Для детей, подростков и взрослых" : "For children, young people and adults"}</li>
+              <li>{lang === "lv" ? "Materiāli un atbalsts uz vietas" : lang === "ru" ? "Материалы и поддержка на месте" : "Materials and support on site"}</li>
+            </ul>
+          </div>
+        </section>
+      )}
       <section className="inspire-capabilities">
         <div>
           <p className="inspire-kicker">
@@ -2566,6 +2595,20 @@ export default function InspirePage({ page = "home" }) {
                     <p key={`${index}-${paragraph.slice(0, 16)}`}>{paragraph}</p>
                   ))}
               </div>
+              <div className="inspire-host-stories">
+                <p className="inspire-kicker">
+                  {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
+                </p>
+                {hostStories.map(([title, body]) => (
+                  <details key={title}>
+                    <summary>
+                      <strong>{title}</strong>
+                      <b>+</b>
+                    </summary>
+                    <p>{body}</p>
+                  </details>
+                ))}
+              </div>
             </div>
             <div className="inspire-host-visuals">
               <div className="inspire-host-gallery">
@@ -2594,21 +2637,7 @@ export default function InspirePage({ page = "home" }) {
               </div>
             </div>
           </section>
-          <section className="inspire-host-story-section">
-            <div className="inspire-host-stories">
-              <p className="inspire-kicker">
-                {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
-              </p>
-              {hostStories.map(([title, body]) => (
-                <details key={title}>
-                  <summary>
-                    <strong>{title}</strong>
-                    <b>+</b>
-                  </summary>
-                  <p>{body}</p>
-                </details>
-              ))}
-            </div>
+          <section className="inspire-host-art-section">
             <div className="inspire-wide-artworks">
               <details className="inspire-host-artworks">
               <summary>

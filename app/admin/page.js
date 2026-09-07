@@ -24,6 +24,11 @@ const emptySlot = {
 };
 const textFields = [
   [
+    "inspire.about.studio.intro",
+    "About studio — introduction",
+    "Art Studio Inspire ir neatkarīga gleznošanas studija Rīgas centrā, Miera ielā 17. To izveidoja māksliniece Sandra Rudzīte kā regulāru, pieejamu vietu bērniem, jauniešiem un pieaugušajiem — lai gleznotu, mācītos un īstenotu savas idejas bez spiediena iederēties vienā stilā. Materiāli un profesionāls atbalsts ir uz vietas; darbu sākam no tā, kas Tev šobrīd svarīgs.",
+  ],
+  [
     "inspire.statement.title",
     "Main statement",
     "MĒS SĀKAM NEVIS AR TO, KO TU PROTI, BET AR TO, KO VĒLIES RADĪT.",
