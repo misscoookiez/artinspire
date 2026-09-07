@@ -3146,7 +3146,7 @@ export default function InspirePage({ page = "home" }) {
             <input required name="email" type="email" autoComplete="email" aria-label={t.email} defaultValue={savedEmail} placeholder={t.email} />
             <textarea required name="message" rows="4" aria-label={lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"} placeholder={lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"} />
           </div>
-          <button className="inspire-contact-send" type="submit">{lang === "lv" ? "✦  NOSŪTĪT ZIŅU" : lang === "ru" ? "✦  ОТПРАВИТЬ СООБЩЕНИЕ" : "✦  SEND MESSAGE"}</button>
+          <button className="inspire-contact-send" type="submit">{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE"}</button>
           {contactStatus ? <p className="inspire-contact-status" role="status">{contactStatus}</p> : null}
         </form>
       </section>

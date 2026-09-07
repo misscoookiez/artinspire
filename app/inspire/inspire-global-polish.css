@@ -2756,3 +2756,124 @@
   border-color: #fff !important;
   box-shadow: none !important;
 }
+
+/* Contact refinement: keep the pair compact and atmospheric, while letting
+   the form read as a calm conversation rather than a glossy campaign panel. */
+@media (min-width: 861px) {
+  .inspire-page-contact .inspire-contact-card-message h3 {
+    font-size: clamp(28px, 1.78vw, 32px);
+  }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-card-copy {
+    max-width: none;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+}
+.inspire-page-contact .inspire-contact-card-message .inspire-contact-composer {
+  margin-top: 27px;
+  padding-top: 0;
+}
+.inspire-page-contact .inspire-contact-card-message .inspire-contact-composer input {
+  color: #eef7ff;
+  border-bottom-color: rgba(179, 222, 248, .58);
+}
+.inspire-page-contact .inspire-contact-card-message .inspire-contact-composer textarea {
+  background: rgba(39, 67, 121, .24);
+  border-color: rgba(157, 209, 244, .58);
+  box-shadow: inset 0 1px rgba(255,255,255,.1);
+}
+.inspire-page-contact .inspire-contact-send {
+  min-height: 48px;
+  margin-top: 12px;
+  border: 1px solid rgba(210, 247, 255, .88);
+  border-radius: 11px;
+  background: rgba(221, 247, 250, .92);
+  color: #10263d;
+  box-shadow: inset 0 1px rgba(255,255,255,.75), 0 4px 14px rgba(65, 201, 232, .12);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+.inspire-page-contact .inspire-contact-send:hover,
+.inspire-page-contact .inspire-contact-send:focus-visible {
+  transform: translateY(-1px);
+  filter: none;
+  background: #f5feff;
+  color: #071d34;
+  box-shadow: inset 0 1px #fff, 0 5px 16px rgba(77, 218, 239, .2);
+}
+@media (max-width: 860px) {
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer { margin-top: 24px; }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-card-copy { font-size: 14px; }
+}
+
+/* The surrounding contact atmosphere belongs to the full section, not a
+   narrow rectangle behind the cards.  Both cards consequently share exactly
+   the same measure while the nebula remains visible at either side. */
+@media (min-width: 861px) {
+  .inspire-page-contact .inspire-contact-panel {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 30px !important;
+    padding: clamp(14px, 1.25vw, 22px) max(24px, calc((100vw - 1072px) / 2)) clamp(28px, 3vw, 46px) !important;
+    background:
+      radial-gradient(ellipse at 20% 92%, rgba(119, 67, 238, .22), transparent 43%),
+      radial-gradient(ellipse at 84% 12%, rgba(43, 214, 239, .18), transparent 39%),
+      linear-gradient(112deg, #0b1020 0%, #111b38 51%, #081522 100%) !important;
+  }
+}
+.inspire-page-contact .inspire-contact-card {
+  border-color: rgba(148, 222, 255, .52) !important;
+  background:
+    radial-gradient(ellipse at 5% 104%, rgba(102, 61, 229, .18), transparent 48%),
+    radial-gradient(ellipse at 100% 0%, rgba(45, 219, 239, .13), transparent 43%),
+    linear-gradient(135deg, rgba(31, 42, 103, .42), rgba(7, 14, 39, .56) 61%, rgba(12, 68, 95, .33)) !important;
+  box-shadow: inset 0 1px rgba(237, 253, 255, .3), inset 0 0 48px rgba(74, 124, 255, .05), 0 14px 34px rgba(1, 5, 23, .2), 0 0 22px rgba(66, 177, 255, .1) !important;
+}
+
+/* Phone remains a quiet piece of information; it does not need a link hover
+   treatment.  The address gets a clean, recognisable map-pin instead. */
+.inspire-page-contact .inspire-contact-details > a:hover,
+.inspire-page-contact .inspire-contact-details > a:focus-visible {
+  background: transparent !important;
+  color: inherit !important;
+  text-decoration: none !important;
+}
+.inspire-page-contact .inspire-contact-details > a:hover strong,
+.inspire-page-contact .inspire-contact-details > a:focus-visible strong {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+.inspire-page-contact .inspire-contact-details > p::before {
+  content: "";
+  color: transparent;
+  font-size: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d2a5ff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 5.3-8 11-8 11S4 15.3 4 10a8 8 0 1 1 16 0Z'/%3E%3Ccircle cx='12' cy='10' r='2.7'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 19px 19px !important;
+}
+
+/* With the available vertical room, social actions become a calm, legible
+   stack instead of competing with the contact information on one line. */
+.inspire-page-contact .inspire-contact-socials {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  width: 184px;
+  max-width: 100%;
+  gap: 9px;
+}
+.inspire-page-contact .inspire-contact-socials a {
+  width: 100%;
+  flex-basis: auto;
+  min-height: 47px;
+}
+.inspire-page-contact .inspire-contact-card-info .inspire-contact-card-copy { color: #b8c8e5; }
+.inspire-page-contact .inspire-contact-card-info .inspire-contact-details strong { color: #eef5ff; }
+.inspire-page-contact .inspire-contact-card-message .inspire-contact-card-copy { color: #aabddd; }
+@media (max-width: 860px) {
+  .inspire-page-contact .inspire-contact-socials { display: grid !important; width: 100%; }
+  .inspire-page-contact .inspire-contact-socials a { width: 100%; }
+}
