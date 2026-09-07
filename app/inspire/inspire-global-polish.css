@@ -1892,3 +1892,17 @@
   }
 }
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
+
+/* Keep the shared neon close control within the panel it closes.  Older
+   modal rules made it relative, which left the control at the start of the
+   form rather than in its upper-right corner. */
+.inspire-modal form { position: relative !important; }
+.inspire-modal .inspire-x {
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  bottom: auto !important;
+  left: auto !important;
+  margin: 0 !important;
+  z-index: 2 !important;
+}
