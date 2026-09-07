@@ -1201,3 +1201,97 @@
     display: none !important;
   }
 }
+
+/* The masthead is one centred composition: wordmark plus studio invitation.
+   The language control is deliberately independent so it can stay in its
+   familiar top-right position without changing that shared visual centre. */
+@media (min-width: 801px) {
+  .inspire-masthead,
+  .inspire-page-home .inspire-masthead {
+    grid-template-columns: minmax(340px, 42vw) minmax(320px, 32vw) !important;
+    justify-content: center !important;
+    column-gap: clamp(44px, 5.2vw, 104px) !important;
+    padding-inline: 24px !important;
+  }
+
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand {
+    width: 100% !important;
+    margin: 0 !important;
+    justify-self: stretch !important;
+  }
+
+  .inspire-masthead-copy,
+  .inspire-page-home .inspire-masthead-copy {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    transform: none !important;
+    justify-self: stretch !important;
+  }
+
+  .inspire-masthead-language {
+    position: absolute !important;
+    top: clamp(14px, 1.15vw, 22px) !important;
+    right: clamp(18px, 2.4vw, 46px) !important;
+    z-index: 4 !important;
+    margin: 0 !important;
+  }
+}
+
+/* Phones need the complete masthead, not its desktop-sized empty stage. The
+   wordmark and three text lines now determine the height directly. */
+@media (max-width: 800px) {
+  .inspire-masthead,
+  .inspire-page-home .inspire-masthead {
+    display: grid !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 17px 14px 20px !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto !important;
+    gap: 18px !important;
+    align-items: start !important;
+  }
+
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: start !important;
+    width: min(315px, 70vw) !important;
+    max-width: 70vw !important;
+    margin: 0 !important;
+  }
+
+  .inspire-masthead-copy,
+  .inspire-page-home .inspire-masthead-copy {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    align-self: start !important;
+    width: min(365px, 100%) !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .inspire-masthead-copy > p:first-child { margin: 0 0 8px !important; }
+  .inspire-masthead-copy > span { margin-top: 0 !important; }
+  .inspire-masthead-mood { height: auto !important; min-height: 0 !important; margin-top: 8px !important; }
+
+  .inspire-masthead-language {
+    position: absolute !important;
+    top: 8px !important;
+    right: 12px !important;
+    z-index: 4 !important;
+    margin: 0 !important;
+  }
+
+  #nodarbibas,
+  #studija,
+  #pasakumi,
+  #sazinies,
+  #par-sandru,
+  #biezakie-jautajumi { scroll-margin-top: 66px !important; }
+}

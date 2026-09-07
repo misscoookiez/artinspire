@@ -1589,6 +1589,28 @@ export default function InspirePage({ page = "home" }) {
     return () => window.clearTimeout(timer);
   }, [page]);
   useEffect(() => {
+    if (!window.matchMedia("(max-width: 800px)").matches) return undefined;
+    let requested = false;
+    try {
+      requested = window.sessionStorage.getItem("inspire-mobile-content-jump") === "true";
+      if (requested) window.sessionStorage.removeItem("inspire-mobile-content-jump");
+    } catch {}
+    if (!requested) return undefined;
+
+    const firstContentId = {
+      classes: "nodarbibas",
+      method: "studija",
+      events: "pasakumi",
+      contact: "sazinies",
+      about: "par-sandru",
+      questions: "biezakie-jautajumi",
+    }[page];
+    const timer = window.setTimeout(() => {
+      document.getElementById(firstContentId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 110);
+    return () => window.clearTimeout(timer);
+  }, [page]);
+  useEffect(() => {
     try {
       setSavedEmail(window.localStorage.getItem("inspire-booking-email") || "");
     } catch {}
@@ -1694,6 +1716,13 @@ export default function InspirePage({ page = "home" }) {
     const gallery = targetId === "studentu-darbi" ? target.querySelector("details") : null;
     if (gallery) gallery.open = true;
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+  };
+  const closeMobileMenuAndShowContent = () => {
+    setMobileMenuOpen(false);
+    if (!window.matchMedia("(max-width: 800px)").matches) return;
+    try {
+      window.sessionStorage.setItem("inspire-mobile-content-jump", "true");
+    } catch {}
   };
   const aboutChapterLinks = lang === "lv"
     ? [["studentu-darbi", "STUDENTU DARBI"], ["par-sandru", "KAS VADA STUDIJU"], ["studija", "PIEEJA PIEAUGUŠAJIEM"], ["berni-un-jauniesi", "PIEEJA BĒRNIEM UN JAUNIEŠIEM"]]
@@ -2229,11 +2258,11 @@ export default function InspirePage({ page = "home" }) {
           <b aria-hidden="true">{mobileMenuOpen ? "×" : "+"}</b>
         </button>
         <div id="inspire-navigation-links" className="inspire-navigation-links">
-        <Link href="/classes" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/classes" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </Link>
-        <Link href="/method" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/method" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
@@ -2243,7 +2272,7 @@ export default function InspirePage({ page = "home" }) {
                 : "HOW WE WORK"}
           </span>
         </Link>
-        <Link href="/events" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/events" onClick={closeMobileMenuAndShowContent}>
           <img
             className="inspire-gift-icon"
             src="/art/inspire-icon-gift.png"
@@ -2257,15 +2286,15 @@ export default function InspirePage({ page = "home" }) {
                 : "PRIVATE EVENTS"}
           </span>
         </Link>
-        <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/contact" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </Link>
-        <Link href="/about" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/about" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-easel.png" alt="" />
           <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
         </Link>
-        <Link href="/questions" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/questions" onClick={closeMobileMenuAndShowContent}>
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
         </Link>
         </div>
