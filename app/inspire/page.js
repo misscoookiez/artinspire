@@ -2557,6 +2557,13 @@ export default function InspirePage({ page = "home" }) {
                 <summary>
                   <span>{item.title}</span>
                   <b aria-hidden="true">+</b>
+                  <em>
+                    {lang === "lv"
+                      ? "ATVĒRT MĀCĪBU METODI"
+                      : lang === "ru"
+                        ? "ОТКРЫТЬ МЕТОД"
+                        : "OPEN THE METHOD"}
+                  </em>
                 </summary>
                 <div>
                   <p>{item.body}</p>

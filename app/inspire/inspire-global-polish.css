@@ -768,3 +768,80 @@
   .inspire-navigation-links a:active,
   .inspire-navigation-links a:focus-visible { background: #aef9fc !important; color: #071019 !important; outline: none; }
 }
+/* Keep the home page focused on its opening statement and studio atmosphere. */
+.inspire-page-home > .inspire-capabilities {
+  display: none !important;
+}
+
+/* On the method page, the two paths are the immediate next step after the studio overview. */
+.inspire-page-method .inspire-capabilities {
+  padding-bottom: clamp(38px, 4vw, 64px) !important;
+}
+
+.inspire-page-method .inspire-capability-audiences {
+  grid-template-columns: minmax(0, 1fr) !important;
+  width: 100% !important;
+  margin-top: clamp(18px, 2vw, 28px) !important;
+  background: none !important;
+  border: 1px solid rgba(132, 229, 255, 0.28) !important;
+}
+
+.inspire-page-method .inspire-capability-audience {
+  background: linear-gradient(105deg, rgba(47, 184, 210, 0.2), rgba(74, 75, 176, 0.14)) !important;
+}
+
+.inspire-page-method .inspire-capability-audience + .inspire-capability-audience {
+  border-left: 0 !important;
+  border-top: 1px solid rgba(132, 229, 255, 0.25) !important;
+}
+
+.inspire-page-method .inspire-capability-audience summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  min-height: 64px;
+  padding: 17px 22px !important;
+}
+
+.inspire-page-method .inspire-capability-audience summary span {
+  flex: 0 1 auto;
+}
+
+.inspire-page-method .inspire-capability-audience summary b {
+  order: 2;
+  flex: 0 0 auto;
+  margin: 0 !important;
+  color: #a6f2ff;
+}
+
+.inspire-page-method .inspire-capability-audience summary em {
+  order: 3;
+  flex: 0 0 auto;
+  margin-left: 8px;
+  padding: 5px 9px;
+  border: 1px solid rgba(147, 237, 255, 0.55);
+  background: rgba(14, 69, 112, 0.34);
+  color: #a7efff;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+}
+
+.inspire-page-method .inspire-capability-audience > div {
+  max-width: 780px;
+  padding: 0 22px 20px !important;
+}
+
+@media (max-width: 760px) {
+  .inspire-page-method .inspire-capability-audience summary {
+    flex-wrap: wrap;
+  }
+
+  .inspire-page-method .inspire-capability-audience summary em {
+    margin-left: 0;
+  }
+}
