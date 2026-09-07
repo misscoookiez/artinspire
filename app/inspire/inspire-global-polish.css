@@ -1131,3 +1131,59 @@
   .inspire-image-lightbox-close { top: -16px !important; right: -8px !important; }
   .inspire-event-format-picker { grid-template-columns: 1fr 1fr !important; }
 }
+
+/* Shared desktop masthead: the wordmark sets the vertical rhythm. Its top
+   breathing room now precisely matches the room above the navigation, and
+   the studio introduction centres alongside it instead of drifting per page. */
+@media (min-width: 801px) {
+  .inspire-masthead,
+  .inspire-page-home .inspire-masthead {
+    height: clamp(216px, 11.7vw, 228px) !important;
+    min-height: clamp(216px, 11.7vw, 228px) !important;
+    padding-block: clamp(28px, 1.75vw, 34px) !important;
+    padding-inline: var(--inspire-page-edge) !important;
+    grid-template-columns: minmax(0, 1.08fr) minmax(350px, .92fr) !important;
+    column-gap: clamp(42px, 7vw, 140px) !important;
+    align-items: center !important;
+  }
+
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand {
+    margin: 0 !important;
+    align-self: center !important;
+    justify-self: start !important;
+  }
+
+  .inspire-masthead-copy,
+  .inspire-page-home .inspire-masthead-copy {
+    justify-self: center !important;
+    align-self: center !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .inspire-masthead-copy > p:first-child,
+  .inspire-masthead-mood {
+    font-size: clamp(14px, .95vw, 16px) !important;
+    line-height: 1.28 !important;
+  }
+
+  .inspire-masthead-copy > p:first-child {
+    margin: 0 !important;
+    font-weight: 650 !important;
+    letter-spacing: .015em !important;
+    text-transform: none !important;
+  }
+
+  .inspire-masthead-copy > span,
+  .inspire-page-home .inspire-masthead-copy > span {
+    margin-top: 12px !important;
+    line-height: 1.13 !important;
+  }
+
+  .inspire-masthead-mood {
+    height: auto !important;
+    min-height: 0 !important;
+    margin-top: 9px !important;
+  }
+}
