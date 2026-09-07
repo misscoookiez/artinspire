@@ -2877,3 +2877,113 @@
   .inspire-page-contact .inspire-contact-socials { display: grid !important; width: 100%; }
   .inspire-page-contact .inspire-contact-socials a { width: 100%; }
 }
+
+/* Directions continues the contact atmosphere: one readable glass guide beside
+   the real entrance view and map, with the useful existing copy left intact. */
+@media (min-width: 861px) {
+  .inspire-page-contact .inspire-contact-panel {
+    grid-template-areas: "info form" !important;
+    row-gap: 0 !important;
+  }
+}
+.inspire-page-contact .inspire-directions {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  grid-template-columns: minmax(340px, 1.08fr) minmax(260px, .8fr) minmax(260px, .8fr) !important;
+  gap: clamp(18px, 2vw, 30px) !important;
+  padding: clamp(60px, 6vw, 96px) max(24px, calc((100vw - 1220px) / 2)) !important;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 14% 12%, rgba(111, 67, 231, .22), transparent 35%),
+    radial-gradient(ellipse at 88% 86%, rgba(42, 203, 227, .16), transparent 37%),
+    linear-gradient(116deg, #0a1020 0%, #111a35 51%, #071521 100%) !important;
+}
+.inspire-page-contact .inspire-directions::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  z-index: -1;
+  inset: 20px max(24px, 4vw);
+  border: 1px solid rgba(142, 220, 249, .15);
+  background: linear-gradient(112deg, rgba(255,255,255,.035), transparent 25%, transparent 73%, rgba(89, 231, 241, .045));
+  pointer-events: none;
+}
+.inspire-page-contact .inspire-directions-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  min-width: 0;
+  padding: clamp(25px, 2.6vw, 38px) !important;
+  border: 1px solid rgba(149, 218, 255, .48);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(35, 47, 112, .39), rgba(8, 15, 43, .5) 64%, rgba(18, 70, 99, .29));
+  box-shadow: inset 0 1px rgba(240, 253, 255, .25), inset 0 0 42px rgba(99, 101, 251, .05), 0 15px 34px rgba(1, 5, 24, .2);
+  backdrop-filter: blur(12px) saturate(120%);
+}
+.inspire-page-contact .inspire-directions-copy .inspire-kicker { display: none; }
+.inspire-page-contact .inspire-directions-copy h2 {
+  margin: 0 0 22px !important;
+  color: #f7fbff;
+  font: 400 clamp(31px, 3vw, 47px)/.98 Arial, Helvetica, sans-serif;
+  letter-spacing: -.06em;
+  text-shadow: 0 0 15px rgba(138, 200, 255, .16);
+}
+.inspire-page-contact .inspire-directions-copy h2::after {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin-top: 14px;
+  background: linear-gradient(90deg, #6ce6f2, #b38cff);
+  box-shadow: 0 0 9px rgba(102, 232, 244, .35);
+}
+.inspire-page-contact .inspire-directions-copy > p:not(.inspire-kicker) {
+  max-width: none;
+  margin: 0 0 10px !important;
+  padding: 13px 15px !important;
+  border: 1px solid rgba(163, 212, 247, .2);
+  border-radius: 11px;
+  background: rgba(13, 28, 67, .28);
+  color: #c9d7eb;
+  font-size: 14px !important;
+  line-height: 1.52 !important;
+}
+.inspire-page-contact .inspire-directions-copy > p:not(.inspire-kicker)::before { content: none !important; }
+.inspire-page-contact .inspire-directions-copy .inspire-address-lead {
+  border-color: rgba(124, 231, 242, .43) !important;
+  background: linear-gradient(100deg, rgba(39, 105, 150, .3), rgba(46, 42, 122, .24)) !important;
+  color: #baf5fa !important;
+  font-size: 16px !important;
+}
+.inspire-page-contact .inspire-directions-copy > p:last-child {
+  margin-bottom: 0 !important;
+  color: #b6c8e1;
+}
+.inspire-page-contact .inspire-directions figure,
+.inspire-page-contact .inspire-directions iframe {
+  align-self: stretch !important;
+  height: auto !important;
+  min-height: 390px;
+  overflow: hidden !important;
+  border: 1px solid rgba(146, 219, 253, .48) !important;
+  border-radius: 20px;
+  background: rgba(9, 18, 45, .48) !important;
+  box-shadow: inset 0 1px rgba(245,254,255,.2), 0 15px 34px rgba(1,5,24,.2), 0 0 22px rgba(67,180,255,.09);
+}
+.inspire-page-contact .inspire-directions figure img {
+  height: 100% !important;
+  object-fit: cover !important;
+  filter: saturate(.9) contrast(1.02);
+}
+.inspire-page-contact .inspire-directions iframe { width: 100% !important; }
+@media (max-width: 860px) {
+  .inspire-page-contact .inspire-directions {
+    grid-template-columns: 1fr !important;
+    padding: 52px max(20px, 6vw) !important;
+  }
+  .inspire-page-contact .inspire-directions-copy { padding: 25px !important; }
+  .inspire-page-contact .inspire-directions figure,
+  .inspire-page-contact .inspire-directions iframe { min-height: 300px; height: 300px !important; }
+}

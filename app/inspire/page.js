@@ -3119,11 +3119,7 @@ export default function InspirePage({ page = "home" }) {
           </details>
         </div>
       </section>{" "}
-      <section id="sazinies" className="inspire-contact-panel" aria-labelledby="inspire-contact-title">
-        <header className="inspire-contact-heading">
-          <h2 id="inspire-contact-title">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</h2>
-          <p>{lang === "lv" ? "IDEJAS • MĀKSLA • CILVĒKI • REZULTĀTI" : lang === "ru" ? "ИДЕИ • ИСКУССТВО • ЛЮДИ • РЕЗУЛЬТАТЫ" : "IDEAS • ART • PEOPLE • RESULTS"}</p>
-        </header>
+      <section id="sazinies" className="inspire-contact-panel" aria-label={lang === "lv" ? "Sazinies ar mums" : lang === "ru" ? "Свяжитесь с нами" : "Contact us"}>
         <div className="inspire-contact-card inspire-contact-card-info">
           <p className="inspire-contact-card-kicker">{lang === "lv" ? "SAZINIES AR MUMS" : lang === "ru" ? "СВЯЖИТЕСЬ С НАМИ" : "GET IN TOUCH"}</p>
           <h3>{lang === "lv" ? "Radīsim ko īpašu kopā" : lang === "ru" ? "Давайте создадим что-то особенное вместе" : "Let’s create something special together"}</h3>
