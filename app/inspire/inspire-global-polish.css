@@ -2747,7 +2747,7 @@
 .inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint b::after,
 .inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint b::after {
   border-color: #efffff !important;
-  box-shadow: 0 0 7px rgba(104, 243, 251, .52) !important;
+  box-shadow: none !important;
 }
 .inspire details > summary:hover > b::before,
 .inspire details > summary:focus-visible > b::before,
