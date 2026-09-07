@@ -2541,24 +2541,48 @@
 .inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint,
 .inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint { border-color: #d2feff !important; background: linear-gradient(100deg, rgba(71, 211, 223, .34), rgba(107, 67, 206, .38)) !important; box-shadow: 0 0 18px rgba(89, 238, 248, .24), 0 0 24px rgba(218, 90, 250, .16) !important; }
 
-/* Lock the final disclosure asset above older chapter-specific rules. The
-   vector acts as a mask, so only its linework can paint—never a square. */
+/* The final disclosure is native linework on a genuinely transparent surface.
+   Avoiding image/mask compositing prevents a square artefact on dark panels. */
 .inspire details > summary > b,
 .inspire-page-about .inspire-depth-panel:first-child > summary > b,
 .inspire-page-method .inspire-panel-open-hint b {
   position: relative !important;
   background: none !important;
+  box-shadow: none !important;
 }
 .inspire details > summary > b::after,
 .inspire-page-about .inspire-depth-panel:first-child > summary > b::after,
 .inspire-page-method .inspire-panel-open-hint b::after {
   content: "" !important;
   position: absolute !important;
-  inset: 0 !important;
+  top: 50% !important;
+  left: 50% !important;
   display: block !important;
-  background: linear-gradient(135deg, #9ffaff 12%, #bfc6ff 56%, #e59dff 100%) !important;
-  -webkit-mask: url("/art/inspire-disclosure-chevron.svg") center / contain no-repeat !important;
-  mask: url("/art/inspire-disclosure-chevron.svg") center / contain no-repeat !important;
+  width: 18px !important;
+  height: 18px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #aaf8ff !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  box-shadow: 0 0 8px rgba(89, 238, 248, .56), 0 0 14px rgba(218, 90, 250, .2) !important;
+  transform: translate(-50%, -50%) !important;
+  pointer-events: none !important;
+}
+.inspire details > summary > b::before,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::before,
+.inspire-page-method .inspire-panel-open-hint b::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  display: block !important;
+  width: 5px !important;
+  height: 5px !important;
+  border-right: 1.5px solid #d8fbff !important;
+  border-bottom: 1.5px solid #e0acff !important;
+  background: transparent !important;
+  box-shadow: 1px 1px 5px rgba(122, 239, 250, .75) !important;
+  transform: translate(-50%, -70%) rotate(45deg) !important;
   pointer-events: none !important;
 }
 .inspire details[open] > summary > b,
