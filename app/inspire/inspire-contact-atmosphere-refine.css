@@ -7,7 +7,8 @@
     linear-gradient(rgba(137,220,255,.055) 1px,transparent 1px) 0 0/100% 158px,
     radial-gradient(ellipse at 98% 18%,rgba(25,180,226,.13),transparent 29%),
     radial-gradient(ellipse at 3% 70%,rgba(83,64,187,.14),transparent 27%),
-    linear-gradient(118deg,#070c1c 0%,#0a1631 48%,#061522 100%)!important;
+    linear-gradient(118deg,rgba(4,9,23,.76),rgba(6,17,40,.72) 48%,rgba(3,14,28,.79)),
+    url('/art/inspire-contact-lightscape.png') center top / cover fixed!important;
 }
 .inspire-contact-atmosphere-word{
   position:absolute;
@@ -34,7 +35,27 @@
   background:
     radial-gradient(ellipse at 88% 80%,rgba(26,181,210,.11),transparent 33%),
     radial-gradient(ellipse at 13% 14%,rgba(82,66,181,.1),transparent 34%),
-    linear-gradient(116deg,rgba(6,12,29,.88),rgba(9,21,47,.84) 51%,rgba(5,17,28,.88))!important;
+    linear-gradient(116deg,rgba(6,12,29,.84),rgba(9,21,47,.81) 51%,rgba(5,17,28,.86)),
+    url('/art/inspire-contact-lightscape.png') center 62% / cover!important;
+}
+/* Remove the old floating accent, keep the guide itself deliberately clean. */
+.inspire-page-contact .inspire-directions-copy::before{content:none!important;display:none!important}
+.inspire-page-contact .inspire-directions-copy .inspire-directions-entry{margin-top:19px!important}
+.inspire-page-contact .inspire-directions-copy .inspire-address-lead{margin-top:14px!important}
+@media(min-width:861px){
+  .inspire-page-contact .inspire-directions figure{
+    aspect-ratio:3 / 4;
+    height:auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  .inspire-page-contact .inspire-directions figure img{
+    width:100%!important;
+    height:100%!important;
+    max-height:none!important;
+    object-fit:cover!important;
+    object-position:right center!important;
+  }
 }
 @media(min-width:861px){
   .inspire-page-contact .inspire-contact-details>p{
