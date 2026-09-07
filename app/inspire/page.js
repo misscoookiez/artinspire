@@ -3150,29 +3150,12 @@ export default function InspirePage({ page = "home" }) {
         <div className="inspire-directions-copy">
           <p className="inspire-kicker">{t.find}</p>
           <h2>{t.find}</h2>
-          <p className="inspire-address-lead">{lang === "lv" ? "Studija atrodas pašā Rīgas sirdī — Miera ielā 17." : lang === "ru" ? "Студия находится в самом сердце Риги — на улице Миера, 17." : "The studio is in the very heart of Riga — at Miera iela 17."}</p>
-          <p>{lang === "lv" ? "Miera iela ir mākslinieku, mazu radošu veikalu un kultūras vietu rajons. Ieeja ir pie veikala M50; lejā pa kāpnēm redzēsi studijas durvis." : lang === "ru" ? "Улица Миера — район художников, небольших творческих магазинов и культурных мест. Вход находится рядом с магазином M50; спуститесь по лестнице — и увидите дверь студии." : "Miera iela is home to artists, small creative shops and cultural venues. The entrance is beside M50; go down the stairs to the studio door."}</p>
-          <p>
-            {lang === "lv" ? (
-              <>
-                Autostāvvieta: C zona uz ielas līdz 20.00; svētdienās bez maksas.
-                <br /><br />
-                Ar 11. tramvaju — pietura Laima; ar transportu pa Brīvības ielu — pietura Matīsa iela.
-              </>
-            ) : lang === "ru" ? (
-              <>
-                Парковка: зона C на улице до 20:00; по воскресеньям бесплатно.
-                <br /><br />
-                Трамвай №11 — остановка Laima; транспорт по улице Brīvības — остановка Matīsa iela.
-              </>
-            ) : (
-              <>
-                Parking: C zone on the street until 20:00; free on Sundays.
-                <br /><br />
-                Tram 11 — Laima stop; services along Brīvības iela — Matīsa iela stop.
-              </>
-            )}
-          </p>
+          <p className="inspire-directions-location">{lang === "lv" ? "Miera iela 17, Rīga, Latvija" : lang === "ru" ? "Улица Миера, 17, Рига, Латвия" : "Miera iela 17, Riga, Latvia"}</p>
+          <p className="inspire-address-lead">{lang === "lv" ? "Studija atrodas pašā Rīgas sirdī — Miera ielā." : lang === "ru" ? "Студия находится в самом сердце Риги — на улице Миера." : "The studio is in the heart of Riga, on Miera iela."}</p>
+          <p>{lang === "lv" ? "Tā ir mākslinieku, mazu radošu veikalu un kultūras vietu rajons." : lang === "ru" ? "Это район художников, небольших творческих магазинов и культурных мест." : "It is a district of artists, small creative shops and cultural places."}</p>
+          <p className="inspire-directions-entry">{lang === "lv" ? "Ieeja ir pie veikala M50; lejā pa kāpnēm redzēsi studijas durvis." : lang === "ru" ? "Вход находится рядом с магазином M50; спуститесь по лестнице — и увидите дверь студии." : "The entrance is beside M50; go down the stairs to the studio door."}</p>
+          <p><strong>{lang === "lv" ? "Autostāvvieta" : lang === "ru" ? "Парковка" : "Parking"}</strong><br />{lang === "lv" ? "C zona uz ielas līdz 20.00; svētdienās bez maksas." : lang === "ru" ? "Зона C на улице до 20:00; по воскресеньям бесплатно." : "C zone on the street until 20:00; free on Sundays."}</p>
+          <p><strong>{lang === "lv" ? "Nokļūšana ar sabiedrisko transportu" : lang === "ru" ? "Общественный транспорт" : "Public transport"}</strong><br />{lang === "lv" ? "Pietura Laima — 11. tramvajs. Pietura Matīsa iela — autobusiem un trolejbusiem pa Brīvības ielu." : lang === "ru" ? "Остановка Laima — трамвай №11. Остановка Matīsa iela — автобусы и троллейбусы по улице Brīvības." : "Laima stop — tram 11. Matīsa iela stop — buses and trolleybuses along Brīvības iela."}</p>
         </div>
         <figure>
           <img
