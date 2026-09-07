@@ -2303,3 +2303,144 @@
   .inspire-page-contact .inspire-contact-heading { justify-items: start; text-align: left; }
   .inspire-page-contact .inspire-contact-heading h2 { font-size: clamp(22px, 7vw, 36px); }
 }
+
+/* One global disclosure control. It is a CSS-drawn version of the supplied
+   circled chevron, so its 28px button never changes size or baseline; only
+   the inner mark rotates when a panel opens. */
+.inspire details > summary > b,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  align-self: center !important;
+  flex: 0 0 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid rgba(150, 249, 255, .72) !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 28%, #242842 0%, #0a0d19 62%, #020308 100%) !important;
+  box-shadow: 0 0 0 1px rgba(5, 7, 13, .55), 0 0 12px rgba(89, 238, 248, .34), 0 0 22px rgba(218, 90, 250, .16) !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  text-indent: 0 !important;
+  transform: none !important;
+  transition: border-color .18s ease, box-shadow .18s ease, filter .18s ease !important;
+}
+.inspire details > summary > b::before,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::before {
+  content: "" !important;
+  display: block !important;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid #a3f8ff;
+  border-bottom: 2px solid #e8a4ff;
+  border-radius: 1px;
+  box-shadow: 1px 1px 6px rgba(133, 241, 250, .72);
+  transform: rotate(45deg) !important;
+  transform-origin: center;
+  transition: transform .18s ease;
+}
+.inspire details > summary > b::after,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::after { content: none !important; display: none !important; }
+.inspire details[open] > summary > b { transform: none !important; }
+.inspire details[open] > summary > b::before,
+.inspire-page-about .inspire-depth-panel:first-child[open] > summary > b::before { transform: rotate(225deg) !important; }
+.inspire details > summary:hover > b,
+.inspire details > summary:focus-visible > b { border-color: #c4fcff !important; filter: brightness(1.15); box-shadow: 0 0 0 1px rgba(5, 7, 13, .65), 0 0 17px rgba(89, 238, 248, .62), 0 0 29px rgba(218, 90, 250, .28) !important; }
+
+/* Method keeps its action label, but its embedded chevron follows the same
+   fixed-centre language at a slightly smaller scale. */
+.inspire-page-method .inspire-panel-open-hint b {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  margin: 0 0 0 2px !important;
+  padding: 0 !important;
+  border: 1px solid rgba(150, 249, 255, .66) !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 28%, #242842 0%, #080b15 64%) !important;
+  box-shadow: 0 0 8px rgba(89, 238, 248, .3) !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  transform: none !important;
+}
+.inspire-page-method .inspire-panel-open-hint b::before {
+  content: "" !important;
+  display: block !important;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid #a3f8ff;
+  border-bottom: 1.5px solid #e8a4ff;
+  transform: rotate(45deg) !important;
+  transform-origin: center;
+  transition: transform .18s ease;
+}
+.inspire-page-method .inspire-panel-open-hint b::after { content: none !important; display: none !important; }
+.inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b { transform: none !important; }
+.inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b::before { transform: rotate(225deg) !important; }
+
+/* The open/close prompt is a deliberately compact paired control: it has the
+   scale of a label, while the circled arrow remains crisp and independently
+   centred beside it. */
+.inspire-page-method .inspire-depth-panel > summary {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  min-height: 76px;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+.inspire-page-method .inspire-depth-panel > summary strong { line-height: 1.08 !important; }
+.inspire-page-method .inspire-panel-open-hint {
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: center !important;
+  flex: 0 0 auto !important;
+  min-height: 30px !important;
+  margin: 0 !important;
+  padding: 4px 7px 4px 10px !important;
+  border: 1px solid rgba(151, 241, 247, .72) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(100deg, rgba(45, 140, 164, .22), rgba(27, 32, 75, .34)) !important;
+  box-shadow: inset 0 1px rgba(235, 252, 255, .12), 0 0 14px rgba(74, 222, 242, .12) !important;
+  color: #d7fbff !important;
+  font: 800 9px/1 Arial, sans-serif !important;
+  letter-spacing: .12em !important;
+  white-space: nowrap;
+}
+.inspire-page-method .inspire-panel-open-hint b {
+  flex-basis: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  border-color: rgba(151, 241, 247, .84) !important;
+  box-shadow: 0 0 7px rgba(89, 238, 248, .36) !important;
+}
+.inspire-page-method .inspire-panel-open-hint b::before { width: 5px; height: 5px; }
+.inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 30px !important;
+  margin: 0 !important;
+  padding: 4px 7px 4px 10px !important;
+  border: 1px solid rgba(151, 241, 247, .72) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(100deg, rgba(45, 140, 164, .22), rgba(27, 32, 75, .34)) !important;
+  box-shadow: inset 0 1px rgba(235, 252, 255, .12), 0 0 14px rgba(74, 222, 242, .12) !important;
+  color: #d7fbff !important;
+}
+.inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint,
+.inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint { border-color: #d2feff !important; background: linear-gradient(100deg, rgba(71, 211, 223, .34), rgba(107, 67, 206, .38)) !important; box-shadow: 0 0 18px rgba(89, 238, 248, .24), 0 0 24px rgba(218, 90, 250, .16) !important; }
