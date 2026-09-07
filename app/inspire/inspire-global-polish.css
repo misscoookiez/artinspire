@@ -398,6 +398,66 @@
   text-indent: 0;
 }
 
+/* Masthead composition: a large, complete mark on the left and a compact
+   information field on the right. The elements have independent columns, so
+   neither can clip or push the other as the viewport changes. */
+@media (min-width: 801px) {
+  .inspire-page-home .inspire-masthead {
+    grid-template-columns: minmax(0, 54%) minmax(330px, 46%) !important;
+    column-gap: 0 !important;
+  }
+
+  .inspire-page-home .inspire-masthead-brand {
+    width: min(820px, 38vw) !important;
+    max-width: none !important;
+    margin-left: min(7vw, 130px) !important;
+    align-self: center !important;
+  }
+
+  .inspire-page-home .inspire-masthead-brand img {
+    max-height: 255px !important;
+  }
+
+  .inspire-page-home .inspire-masthead-copy {
+    justify-self: start !important;
+    align-self: center !important;
+    width: min(620px, 100%) !important;
+    max-width: 620px !important;
+    padding: clamp(18px, 2vw, 30px) clamp(22px, 2.4vw, 38px) !important;
+    background: linear-gradient(90deg, rgba(8, 9, 24, .56), rgba(9, 13, 31, .22)) !important;
+  }
+
+  .inspire-page-home .inspire-masthead-copy > p:first-child {
+    max-width: 40ch;
+    font-size: clamp(12px, .92vw, 16px) !important;
+    line-height: 1.32 !important;
+  }
+
+  .inspire-page-home .inspire-masthead-copy > span {
+    margin-top: 16px !important;
+    font-size: clamp(18px, 1.36vw, 25px) !important;
+    line-height: 1.18 !important;
+  }
+
+  .inspire-page-home .inspire-masthead-language {
+    top: 20px !important;
+    right: max(24px, 3vw) !important;
+  }
+
+  .inspire-page-home .inspire-statement {
+    padding-left: clamp(72px, 15vw, 300px) !important;
+  }
+
+  .inspire-page-home .inspire-statement-copy {
+    width: min(800px, 58vw) !important;
+  }
+
+  .inspire-page-home .inspire-statement h2 {
+    max-width: 760px !important;
+    font-size: clamp(44px, 4.2vw, 66px) !important;
+  }
+}
+
 /* About is deliberately a short, self-contained story: the studio itself,
    then Sandra. Teaching methods and student galleries live on their dedicated
    Method page, so they never repeat here. */
