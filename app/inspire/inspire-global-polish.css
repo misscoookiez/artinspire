@@ -2515,3 +2515,27 @@
 }
 .inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint,
 .inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint { border-color: #d2feff !important; background: linear-gradient(100deg, rgba(71, 211, 223, .34), rgba(107, 67, 206, .38)) !important; box-shadow: 0 0 18px rgba(89, 238, 248, .24), 0 0 24px rgba(218, 90, 250, .16) !important; }
+
+/* Lock the final disclosure asset above older chapter-specific rules. The
+   SVG contains both the ring and arrow; the button itself never owns a fill. */
+.inspire details > summary > b,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b,
+.inspire-page-method .inspire-panel-open-hint b {
+  background-color: transparent !important;
+  background-image: url("/art/inspire-disclosure-chevron.svg") !important;
+  background-position: center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
+.inspire details[open] > summary > b,
+.inspire-page-about .inspire-depth-panel:first-child[open] > summary > b,
+.inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b {
+  transform: rotate(180deg) !important;
+  transform-origin: center !important;
+}
+.inspire details:not([open]) > summary > b,
+.inspire-page-about .inspire-depth-panel:first-child:not([open]) > summary > b,
+.inspire-page-method .inspire-depth-panel:not([open]) .inspire-panel-open-hint b {
+  transform: rotate(0deg) !important;
+  transform-origin: center !important;
+}
