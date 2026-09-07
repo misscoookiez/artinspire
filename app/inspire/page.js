@@ -21,7 +21,6 @@ import "./inspire-host.css";
 import "./inspire-regression-fix.css";
 import "./inspire-proof.css";
 import "./inspire-schedule-refine.css";
-import "./inspire-directions-refine.css";
 import "./inspire-event-faq-inline.css";
 import "./inspire-events-hero.css";
 import "./inspire-local-guide.css";
@@ -39,6 +38,7 @@ import "./inspire-events-hero-refine.css";
 import "./inspire-masthead-logo-refine.css";
 import "./inspire-about-panel-refine.css";
 import "./inspire-global-polish.css";
+import "./inspire-directions-refine.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -3151,11 +3151,12 @@ export default function InspirePage({ page = "home" }) {
           <p className="inspire-kicker">{t.find}</p>
           <h2>{t.find}</h2>
           <p className="inspire-directions-location">{lang === "lv" ? "Miera iela 17, Rīga, Latvija" : lang === "ru" ? "Улица Миера, 17, Рига, Латвия" : "Miera iela 17, Riga, Latvia"}</p>
-          <p className="inspire-address-lead">{lang === "lv" ? "Studija atrodas pašā Rīgas sirdī — Miera ielā." : lang === "ru" ? "Студия находится в самом сердце Риги — на улице Миера." : "The studio is in the heart of Riga, on Miera iela."}</p>
-          <p>{lang === "lv" ? "Tā ir mākslinieku, mazu radošu veikalu un kultūras vietu rajons." : lang === "ru" ? "Это район художников, небольших творческих магазинов и культурных мест." : "It is a district of artists, small creative shops and cultural places."}</p>
+          <p className="inspire-address-lead">{lang === "lv" ? "Studija atrodas pašā Rīgas sirdī — Miera ielā, mākslinieku, mazu radošu veikalu un kultūras vietu rajonā." : lang === "ru" ? "Студия находится в самом сердце Риги — на улице Миера, в районе художников, небольших творческих магазинов и культурных мест." : "The studio is in the heart of Riga, on Miera iela — a district of artists, small creative shops and cultural places."}</p>
           <p className="inspire-directions-entry">{lang === "lv" ? "Ieeja ir pie veikala M50; lejā pa kāpnēm redzēsi studijas durvis." : lang === "ru" ? "Вход находится рядом с магазином M50; спуститесь по лестнице — и увидите дверь студии." : "The entrance is beside M50; go down the stairs to the studio door."}</p>
-          <p><strong>{lang === "lv" ? "Autostāvvieta" : lang === "ru" ? "Парковка" : "Parking"}</strong><br />{lang === "lv" ? "C zona uz ielas līdz 20.00; svētdienās bez maksas." : lang === "ru" ? "Зона C на улице до 20:00; по воскресеньям бесплатно." : "C zone on the street until 20:00; free on Sundays."}</p>
-          <p><strong>{lang === "lv" ? "Nokļūšana ar sabiedrisko transportu" : lang === "ru" ? "Общественный транспорт" : "Public transport"}</strong><br />{lang === "lv" ? "Pietura Laima — 11. tramvajs. Pietura Matīsa iela — autobusiem un trolejbusiem pa Brīvības ielu." : lang === "ru" ? "Остановка Laima — трамвай №11. Остановка Matīsa iela — автобусы и троллейбусы по улице Brīvības." : "Laima stop — tram 11. Matīsa iela stop — buses and trolleybuses along Brīvības iela."}</p>
+          <div className="inspire-directions-practical">
+            <p><strong>{lang === "lv" ? "Autostāvvieta" : lang === "ru" ? "Парковка" : "Parking"}</strong><span>{lang === "lv" ? "C zona uz ielas līdz 20.00; svētdienās bez maksas." : lang === "ru" ? "Зона C на улице до 20:00; по воскресеньям бесплатно." : "C zone on the street until 20:00; free on Sundays."}</span></p>
+            <p><strong>{lang === "lv" ? "Sabiedriskais transports" : lang === "ru" ? "Общественный транспорт" : "Public transport"}</strong><span>{lang === "lv" ? "Pietura Laima — 11. tramvajs. Pietura Matīsa iela — autobusiem un trolejbusiem pa Brīvības ielu." : lang === "ru" ? "Остановка Laima — трамвай №11. Остановка Matīsa iela — автобусы и троллейбусы по улице Brīvības." : "Laima stop — tram 11. Matīsa iela stop — buses and trolleybuses along Brīvības iela."}</span></p>
+          </div>
         </div>
         <figure>
           <img
@@ -3171,12 +3172,15 @@ export default function InspirePage({ page = "home" }) {
               : "Follow the arrow to the studio door."}
           </figcaption>
         </figure>
-        <iframe
-          title="Map to Art Studio Inspire"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2175.2120325500114!2d24.128192791942578!3d56.96230038731691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46eecfccbd837589%3A0x4c4607ad637d0f9f!2sAvanti%20celojumi!5e0!3m2!1sen!2slv!4v1788360123943!5m2!1sen!2slv"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+        <div className="inspire-directions-map">
+          <iframe
+            title="Map to Art Studio Inspire"
+            src="https://www.google.com/maps?q=56.9621791,24.1304391&z=18&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <a href="https://maps.app.goo.gl/GUmohcYmRLpuYKmv9" target="_blank" rel="noreferrer">{lang === "lv" ? "Atvērt Google Maps" : lang === "ru" ? "Открыть Google Maps" : "Open in Google Maps"} <span aria-hidden="true">↗</span></a>
+        </div>
       </section>
       <InspireLocalGuide lang={lang} />
       {page !== "contact" && <section id="biezakie-jautajumi" className="inspire-faq" tabIndex={-1}>
