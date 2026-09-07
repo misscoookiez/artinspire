@@ -856,8 +856,10 @@
 
 @media (min-width: 801px) {
   .inspire-masthead {
-    min-height: clamp(250px, 16vw, 300px) !important;
-    padding: clamp(24px, 2vw, 34px) var(--inspire-page-edge) !important;
+    height: clamp(270px, 17vw, 290px) !important;
+    min-height: clamp(270px, 17vw, 290px) !important;
+    padding: clamp(24px, 2vw, 32px) var(--inspire-page-edge) !important;
+    box-sizing: border-box !important;
     grid-template-columns: minmax(0, 1.08fr) minmax(350px, .92fr) !important;
     column-gap: clamp(42px, 7vw, 140px) !important;
     align-items: center !important;
@@ -878,7 +880,7 @@
     max-width: 590px !important;
     margin: 0 !important;
     padding: 0 !important;
-    justify-self: start !important;
+    justify-self: center !important;
     align-self: center !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -1057,6 +1059,23 @@
 .inspire-modal .inspire-inquiry-message textarea { color: #101820 !important; }
 .inspire-modal button[name="bookingAction"][value="inquiry"] { border-radius: 0 !important; border: 1px solid #13232d !important; background: #b8f6fa !important; color: #071019 !important; }
 
+/* The event choice is an immediate four-way decision. Details follow it,
+   rather than interrupting the visual scan of the formats. */
+.inspire-event-format-picker { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+.inspire-event-time-summary { order: 6; }
+.inspire-event-format-picker { order: 5; }
+
+/* Some older modal styles add a decorative second multiplication sign. The
+   button already contains its accessible text mark, so use just that one. */
+.inspire-x::after { content: none !important; display: none !important; }
+.inspire-modal .inspire-x {
+  top: 18px !important;
+  right: 18px !important;
+  transform: none !important;
+  text-indent: 0 !important;
+  line-height: 1 !important;
+}
+
 @media (max-width: 800px) {
   .inspire-masthead { min-height: 0 !important; padding: 20px !important; gap: 10px !important; }
   .inspire-masthead-brand { width: min(360px, 80vw) !important; }
@@ -1069,4 +1088,5 @@
   .inspire-page-contact .inspire-directions { padding: 52px 20px !important; }
   .inspire-image-lightbox { padding: 40px 18px !important; }
   .inspire-image-lightbox-close { top: -16px !important; right: -8px !important; }
+  .inspire-event-format-picker { grid-template-columns: 1fr 1fr !important; }
 }

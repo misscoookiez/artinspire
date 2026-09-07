@@ -33,6 +33,18 @@ The schema exposes only available catalogue records publicly. Capacity, holds, c
 5. Confirm that a paid artwork becomes unavailable; abandoned checkouts release after their hold; class capacity remains correct; a private slot reopens after an eligible refund.
 6. Only then switch to live Stripe keys and a live webhook signing secret.
 
+## Connect studio email
+
+The enquiry form and booking confirmations send through [Resend](https://resend.com). Add these **server-only** values to the production `/web/app/.env` file:
+
+```env
+RESEND_API_KEY=re_...
+RESEND_FROM_EMAIL=Art Studio Inspire <bookings@artinspire.lv>
+STUDIO_INBOX_EMAIL=misscoookiez@gmail.com
+```
+
+Before enabling it, verify `artinspire.lv` in Resend and add the SPF/DKIM DNS records Resend supplies. `RESEND_FROM_EMAIL` must use that verified domain. Test an enquiry and a reservation confirmation after deployment; the customer should receive the confirmation and the studio inbox should receive the enquiry/reservation notification.
+
 ## Deploy to Vercel
 
 1. Import this project into Vercel or connect a Git repository.
@@ -40,6 +52,10 @@ The schema exposes only available catalogue records publicly. Capacity, holds, c
 3. Set `NEXT_PUBLIC_SITE_URL` to the HTTPS custom domain, without a trailing slash.
 4. Deploy, then register the production Stripe webhook endpoint. Stripe webhooks must point at the deployed HTTPS domain—not localhost.
 5. Replace demo image files with Supabase Storage/CDN URLs and update `lib/catalog.js` or the future admin catalogue data.
+
+### ISPConfig production server
+
+The deployment target is the ISPConfig app directory `/web/app`. The deploy pipeline deliberately preserves `/web/app/.env`, so the server administrator should create or update that file directly, then restart the PM2 process after changing any value. The existing Supabase/Stripe entries remain; add the Resend entries above plus the final value of `NEXT_PUBLIC_SITE_URL=https://artinspire.lv`.
 
 ## Before accepting live money
 
