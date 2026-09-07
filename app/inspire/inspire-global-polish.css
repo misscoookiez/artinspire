@@ -242,6 +242,39 @@
   }
 }
 
+/* Landing refinement: keep the wordmark anchored to its familiar left edge,
+   but let it claim more of the quiet centre space.  The statement moves only
+   a little right so its established three-column rhythm remains intact. */
+@media (min-width: 801px) {
+  .inspire-page-home .inspire-masthead {
+    grid-template-columns: minmax(0, 1.42fr) minmax(330px, .58fr) !important;
+  }
+
+  .inspire-page-home .inspire-masthead-brand {
+    width: min(1090px, 70vw) !important;
+    max-width: none !important;
+  }
+
+  .inspire-page-home .inspire-statement {
+    padding-left: clamp(48px, 11.5vw, 230px) !important;
+  }
+}
+
+/* Two photographic landing atmospheres replace the soft, enlarged legacy
+   files.  The child-at-work scene is the default and therefore remains on
+   screen longer; both files are sized specifically for this wide panel. */
+.inspire-page-home .inspire-statement {
+  background-image:
+    linear-gradient(90deg, rgba(5, 3, 13, .97) 0%, rgba(6, 4, 15, .88) 29%, rgba(7, 6, 18, .60) 55%, rgba(8, 12, 21, .19) 100%),
+    url('/art/inspire-landing-child-studio.webp') !important;
+}
+
+.inspire-page-home .inspire-statement::before {
+  background-image:
+    linear-gradient(90deg, rgba(5, 3, 13, .97) 0%, rgba(6, 4, 15, .88) 29%, rgba(7, 6, 18, .60) 55%, rgba(8, 12, 21, .19) 100%),
+    url('/art/inspire-landing-stringlights.webp') !important;
+}
+
 /* Accordion controls read as one compact action: the plus stays with its
    title instead of occupying a detached right-hand column.  This also keeps
    the control stable when a title wraps on a narrow screen. */
