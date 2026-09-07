@@ -134,6 +134,12 @@ const imageGroups = [
         "Studio work",
         "/art/inspire-slide-02.webp",
       ],
+      ["inspire.image.statement.4", "Studio work 2", "/art/inspire-slide-03.webp"],
+      ["inspire.image.statement.5", "Studio work 3", "/art/inspire-slide-06.webp"],
+      ["inspire.image.statement.6", "Studio work 4", "/art/inspire-slide-07.webp"],
+      ["inspire.image.statement.7", "Studio work 5", "/art/inspire-slide-08.webp"],
+      ["inspire.image.statement.8", "Quiet studio", "/art/studio-neutral-01.webp"],
+      ["inspire.image.statement.9", "Quiet studio 2", "/art/studio-neutral-02.webp"],
     ],
   ],
   [
@@ -180,6 +186,28 @@ const imageGroups = [
         "Event image 5",
         "/art/event-slide-lecture.webp",
       ],
+    ],
+  ],
+  [
+    "Adult students’ gallery",
+    [
+      ["inspire.image.gallery.adult.0", "Adult work 1", "/art/inspire-studio.webp"],
+      ["inspire.image.gallery.adult.1", "Adult work 2", "/art/studio-slide-room.webp"],
+      ["inspire.image.gallery.adult.2", "Adult work 3", "/art/studio-slide-garden.webp"],
+      ["inspire.image.gallery.adult.3", "Adult work 4", "/art/inspire-slide-02.webp"],
+      ["inspire.image.gallery.adult.4", "Adult work 5", "/art/student-process-adult.webp"],
+      ["inspire.image.gallery.adult.5", "Adult work 6", "/art/inspire-slide-03.webp"],
+    ],
+  ],
+  [
+    "Children’s gallery",
+    [
+      ["inspire.image.gallery.youth.0", "Children’s work 1", "/art/inspire-student-work.webp"],
+      ["inspire.image.gallery.youth.1", "Children’s work 2", "/art/studio-slide-easel.webp"],
+      ["inspire.image.gallery.youth.2", "Children’s work 3", "/art/studio-slide-garden.webp"],
+      ["inspire.image.gallery.youth.3", "Children’s work 4", "/art/studio-slide-eyes.webp"],
+      ["inspire.image.gallery.youth.4", "Children’s work 5", "/art/inspire-slide-03.webp"],
+      ["inspire.image.gallery.youth.5", "Children’s work 6", "/art/inspire-slide-06.webp"],
     ],
   ],
   [
@@ -234,11 +262,24 @@ export default function OwnerDashboard() {
   }, [supabase]);
   useEffect(() => {
     let mounted = true;
-    fetch(`/api/content?page=inspire&locale=${language}`)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (mounted && data?.content)
-          setValues((old) => ({ ...defaults, ...old, ...data.content }));
+    const load = (locale) =>
+      fetch(`/api/content?page=inspire&locale=${locale}`).then((res) =>
+        res.ok ? res.json() : null,
+      );
+    Promise.all([load(language), load("lv")])
+      .then(([localized, latvian]) => {
+        if (!mounted) return;
+        const imageValues = Object.fromEntries(
+          Object.entries(latvian?.content || {}).filter(([id]) =>
+            id.startsWith("inspire.image."),
+          ),
+        );
+        setValues((old) => ({
+          ...defaults,
+          ...old,
+          ...(localized?.content || {}),
+          ...imageValues,
+        }));
       })
       .catch(() => {});
     return () => {
@@ -249,7 +290,7 @@ export default function OwnerDashboard() {
     ? { authorization: `Bearer ${session.access_token}` }
     : {};
   const update = (id, value) => setValues((old) => ({ ...old, [id]: value }));
-  const publish = async (entries, message) => {
+  const publish = async (entries, message, locale = language) => {
     if (!session)
       return setNotice(
         "Sign in with your owner email to publish. Your edits stay open in this tab.",
@@ -258,7 +299,7 @@ export default function OwnerDashboard() {
       const res = await fetch("/api/admin/content", {
         method: "PATCH",
         headers: { "content-type": "application/json", ...auth },
-        body: JSON.stringify({ page: "inspire", locale: language, entries }),
+        body: JSON.stringify({ page: "inspire", locale, entries }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not publish changes.");
@@ -277,7 +318,8 @@ export default function OwnerDashboard() {
       imageGroups.flatMap(([, fields]) =>
         fields.map(([id]) => ({ id, value: values[id] || "" })),
       ),
-      "Image choices published. Refresh the public page to see them.",
+      "Image choices published for every language. Refresh the public page to see them.",
+      "lv",
     );
   const signIn = async (event) => {
     event.preventDefault();

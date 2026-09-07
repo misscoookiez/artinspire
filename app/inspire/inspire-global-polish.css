@@ -211,10 +211,8 @@
 .inspire-student-galleries details > div {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 10px !important;
   columns: unset !important;
-  aspect-ratio: 3 / 2;
   padding: 0 0 22px !important;
 }
 .inspire-student-gallery-item {
@@ -224,17 +222,12 @@
   height: auto !important;
   min-height: 0;
   margin: 0 !important;
-  aspect-ratio: auto !important;
+  aspect-ratio: 1 / 1 !important;
   break-inside: unset !important;
   background: #111013 !important;
 }
-/* Five adult/student images fill a 3 × 2 rectangle with one intentionally
-   wider first frame; the four children images use a balanced 2 × 2 grid. */
-.inspire-student-galleries details:nth-of-type(1) > div > :first-child { grid-column: span 2; }
-.inspire-student-galleries details:nth-of-type(2) > div {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  aspect-ratio: 1 / 1;
-}
+/* Every gallery now has six equal frames: a calm 3 × 2 puzzle that keeps the
+   entire artwork visible inside its own neutral frame. */
 
 @media (max-width: 800px) {
   .inspire-wide-artworks .inspire-host-artworks > div {
@@ -243,7 +236,10 @@
     aspect-ratio: 1 / 2;
     gap: 8px !important;
   }
-  .inspire-student-galleries details > div { gap: 8px !important; }
+  .inspire-student-galleries details > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
 }
 
 /* Accordion controls read as one compact action: the plus stays with its

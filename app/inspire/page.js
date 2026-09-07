@@ -59,12 +59,13 @@ const youthGallerySlides = [
     "Gleznojums uz molberta Art Studio Inspire",
   ],
   ["/art/studio-slide-eyes.webp", "Skolēna darbs Art Studio Inspire"],
+  ["/art/inspire-slide-03.webp", "Skolēna darbs Art Studio Inspire"],
+  ["/art/inspire-slide-06.webp", "Skolēna darbs Art Studio Inspire"],
 ];
-const studioSlides = [
-  ["/art/inspire-studio.webp", "Inside Art Studio Inspire"],
-  ["/art/studio-slide-room.webp", "A room in Art Studio Inspire"],
-  ["/art/studio-slide-easel.webp", "Painting space at Art Studio Inspire"],
-  ["/art/studio-slide-garden.webp", "A quiet corner of Art Studio Inspire"],
+const adultGallerySlides = [
+  ...statementSlides.slice(0, 4),
+  ["/art/student-process-adult.webp", "Pieaugušā studenta gleznošanas process Art Studio Inspire"],
+  ["/art/inspire-slide-03.webp", "Pieaugušā studenta darbs Art Studio Inspire"],
 ];
 const studioPreviewImages = [
   ["/art/studio-preview-room.webp", "Art Studio Inspire galvenā telpa"],
@@ -1330,13 +1331,13 @@ export default function InspirePage({ page = "home" }) {
     ],
   }[lang];
   const [slide, setSlide] = useState(0);
-  const [studioSlide, setStudioSlide] = useState(0);
   const [eventSlide, setEventSlide] = useState(0);
   const [moodQuote, setMoodQuote] = useState(0);
   const [moodQuoteLeaving, setMoodQuoteLeaving] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [editableContent, setEditableContent] = useState({});
+  const [sharedImages, setSharedImages] = useState({});
   const [availability, setAvailability] = useState({});
   const [savedEmail, setSavedEmail] = useState("");
   const approach = proofCopy[lang],
@@ -1599,13 +1600,6 @@ export default function InspirePage({ page = "home" }) {
   }, [form]);
   useEffect(() => {
     const timer = window.setInterval(
-      () => setStudioSlide((current) => (current + 1) % studioSlides.length),
-      6800,
-    );
-    return () => window.clearInterval(timer);
-  }, []);
-  useEffect(() => {
-    const timer = window.setInterval(
       () => setEventSlide((current) => (current + 1) % eventSlides.length),
       5200,
     );
@@ -1640,13 +1634,21 @@ export default function InspirePage({ page = "home" }) {
   }, [lang]);
   useEffect(() => {
     let active = true;
-    fetch(`/api/content?page=inspire&locale=${lang}`)
-      .then((response) => (response.ok ? response.json() : null))
-      .then((result) => {
-        if (active && result?.content) setEditableContent(result.content);
+    const load = (locale) =>
+      fetch(`/api/content?page=inspire&locale=${locale}`).then((response) =>
+        response.ok ? response.json() : null,
+      );
+    Promise.all([load(lang), load("lv")])
+      .then(([localized, latvian]) => {
+        if (!active) return;
+        setEditableContent(localized?.content || {});
+        setSharedImages(latvian?.content || {});
       })
       .catch(() => {
-        if (active) setEditableContent({});
+        if (active) {
+          setEditableContent({});
+          setSharedImages({});
+        }
       });
     return () => {
       active = false;
@@ -1670,7 +1672,8 @@ export default function InspirePage({ page = "home" }) {
   }, []);
   const content = (id, fallback) =>
     typeof editableContent[id] === "string" ? editableContent[id] : fallback;
-  const image = (id, fallback) => content(id, fallback);
+  const image = (id, fallback) =>
+    typeof sharedImages[id] === "string" ? sharedImages[id] : fallback;
   const openAboutChapter = (targetId) => {
     const target = document.getElementById(targetId);
     if (!target) return;
@@ -2773,18 +2776,12 @@ export default function InspirePage({ page = "home" }) {
             <b>+</b>
           </summary>
           <div>
-            {[
-              ...statementSlides.slice(0, 4),
-              [
-                "/art/student-process-adult.webp",
-                "Pieaugušā studenta gleznošanas process Art Studio Inspire",
-              ],
-            ].map(([src, alt]) => (
+            {adultGallerySlides.map(([src, alt], index) => (
               <div
-                key={src}
+                key={`${src}-${index}`}
                 className="inspire-student-gallery-item"
               >
-                <img src={src} alt={alt} />
+                <img src={image(`inspire.image.gallery.adult.${index}`, src)} alt={alt} />
               </div>
             ))}
           </div>
@@ -2799,12 +2796,12 @@ export default function InspirePage({ page = "home" }) {
             <b>+</b>
           </summary>
           <div>
-            {youthGallerySlides.map(([src, alt]) => (
+            {youthGallerySlides.map(([src, alt], index) => (
               <div
-                key={src}
+                key={`${src}-${index}`}
                 className="inspire-student-gallery-item"
               >
-                <img src={src} alt={alt} />
+                <img src={image(`inspire.image.gallery.youth.${index}`, src)} alt={alt} />
               </div>
             ))}
           </div>
