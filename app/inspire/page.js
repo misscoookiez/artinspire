@@ -2243,11 +2243,11 @@ export default function InspirePage({ page = "home" }) {
           <p className={`inspire-masthead-mood ${moodQuoteLeaving ? "is-leaving" : ""}`} aria-live="polite" key={`${lang}-${moodQuote}`}>
             {moodQuotes[lang][moodQuote]}
           </p>
-          <div className="inspire-language inspire-masthead-language" aria-label="Language">
-            <button className={lang === "lv" ? "active" : ""} onClick={() => chooseLanguage("lv")}>LV</button>
-            <button className={lang === "en" ? "active" : ""} onClick={() => chooseLanguage("en")}>EN</button>
-            <button className={lang === "ru" ? "active" : ""} onClick={() => chooseLanguage("ru")}>RU</button>
-          </div>
+        </div>
+        <div className="inspire-language inspire-masthead-language" aria-label="Language">
+          <button className={lang === "lv" ? "active" : ""} onClick={() => chooseLanguage("lv")}>LV</button>
+          <button className={lang === "en" ? "active" : ""} onClick={() => chooseLanguage("en")}>EN</button>
+          <button className={lang === "ru" ? "active" : ""} onClick={() => chooseLanguage("ru")}>RU</button>
         </div>
       </section>
       <nav className={`inspire-icon-nav ${mobileMenuOpen ? "is-open" : ""}`} aria-label="Inspire sections">
