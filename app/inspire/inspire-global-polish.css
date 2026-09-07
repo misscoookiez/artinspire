@@ -275,6 +275,129 @@
     url('/art/inspire-landing-stringlights.webp') !important;
 }
 
+/* Method chapter: no framed "stage" around the artwork atmosphere.  The
+   children’s prose remains left-aligned while one calm, full-width list of
+   prompts occupies the right—an intentional mirror of the adult chapter. */
+.inspire-page-method .inspire-depth,
+.inspire-page-method > .inspire-student-galleries {
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+}
+
+.inspire-page-method .inspire-depth-panel,
+.inspire-page-method .inspire-depth-panel .inspire-proof {
+  width: 100% !important;
+  max-width: none !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+@media (min-width: 901px) {
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof {
+    grid-template-columns: minmax(0, 1fr) minmax(470px, .98fr) !important;
+    column-gap: clamp(64px, 8vw, 170px) !important;
+  }
+
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof-list {
+    display: block !important;
+    width: 100% !important;
+  }
+}
+
+/* The audience entries belong to the practical promise, not to a separate
+   boxed chapter. They use the empty lower band of the same section. */
+.inspire-page-method .inspire-capabilities {
+  padding-bottom: clamp(56px, 6vw, 94px) !important;
+}
+.inspire-page-method .inspire-capability-audiences {
+  margin-top: clamp(28px, 4vw, 54px) !important;
+  background: linear-gradient(90deg, rgba(48, 104, 125, .12), rgba(61, 31, 93, .08)) !important;
+}
+
+/* Student work reads as an uninterrupted wide chapter rather than a card
+   sitting inside a darker parent page. */
+.inspire-page-method > .inspire-student-galleries {
+  padding-inline: clamp(22px, 10vw, 220px) !important;
+  border: 0 !important;
+  background: linear-gradient(115deg, #07070b, #0c0c18 54%, #090912) !important;
+}
+
+/* Justified gallery rows: every image keeps its full composition, row height
+   stays consistent, widths adapt to the artwork, and the old grey tile fill
+   disappears into the page behind it. */
+.inspire-wide-artworks .inspire-host-artworks > div,
+.inspire-student-galleries details > div {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+  aspect-ratio: auto !important;
+  padding-bottom: 20px !important;
+}
+
+.inspire-wide-artworks .inspire-host-artworks > div > *,
+.inspire-student-gallery-item {
+  display: block !important;
+  flex: calc(var(--gallery-ratio, 1.25) * 100) 1 160px !important;
+  width: auto !important;
+  height: clamp(170px, 16vw, 278px) !important;
+  min-width: 110px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  cursor: zoom-in;
+}
+
+.inspire-wide-artworks .inspire-host-artworks > div img,
+.inspire-student-gallery-item img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+.inspire-student-gallery-item:focus-visible,
+.inspire-wide-artworks .inspire-host-artworks > div > *:focus-visible {
+  outline: 2px solid #aef8fb !important;
+  outline-offset: 3px;
+}
+
+@media (max-width: 800px) {
+  .inspire-page-method > .inspire-student-galleries { padding-inline: 20px !important; }
+  .inspire-wide-artworks .inspire-host-artworks > div,
+  .inspire-student-galleries details > div { gap: 5px !important; }
+  .inspire-wide-artworks .inspire-host-artworks > div > *,
+  .inspire-student-gallery-item { height: clamp(118px, 39vw, 190px) !important; min-width: 82px !important; }
+}
+
+/* A highlighted booking close control retains a mathematically centred X. */
+.inspire-modal .inspire-x {
+  display: grid !important;
+  place-items: center !important;
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  min-height: 58px !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-indent: -9999px;
+}
+.inspire-modal .inspire-x::after {
+  content: "×";
+  display: block;
+  transform: translateY(-1px);
+  color: currentColor;
+  font: 700 33px/1 Arial, sans-serif;
+  text-indent: 0;
+}
+
 /* Accordion controls read as one compact action: the plus stays with its
    title instead of occupying a detached right-hand column.  This also keeps
    the control stable when a title wraps on a narrow screen. */

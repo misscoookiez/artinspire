@@ -2521,7 +2521,7 @@ export default function InspirePage({ page = "home" }) {
             </article>
           ))}
         </div>
-        {page === "home" && (
+        {(page === "home" || page === "method") && (
           <div className="inspire-capability-audiences" aria-label={lang === "lv" ? "Studijas pieejas" : lang === "ru" ? "Подходы студии" : "Studio approaches"}>
             {audienceOverview.map((item) => (
               <details key={item.title} className="inspire-capability-audience">
@@ -2620,38 +2620,32 @@ export default function InspirePage({ page = "home" }) {
                 <b>+</b>
               </summary>
               <div>
-                <img
-                  src="/art/sandra-art-red-eyes.webp"
-                  alt="Red Eyes, original painting by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-eye.webp"
-                  alt="Eye, original painting by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-raven.webp"
-                  alt="Raven, original painting by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-drips.webp"
-                  alt="Abstract painting with layered drips by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-sea.webp"
-                  alt="Dreamy seascape painting by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-lakeside.webp"
-                  alt="Lakeside landscape painting by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-canal.webp"
-                  alt="Canal landscape painting by Sandra Rudzīte"
-                />
-                <img
-                  src="/art/sandra-art-raven-drawing.webp"
-                  alt="Raven drawing by Sandra Rudzīte"
-                />
+                {[
+                  ["/art/sandra-art-red-eyes.webp", "Red Eyes, original painting by Sandra Rudzīte"],
+                  ["/art/sandra-art-eye.webp", "Eye, original painting by Sandra Rudzīte"],
+                  ["/art/sandra-art-raven.webp", "Raven, original painting by Sandra Rudzīte"],
+                  ["/art/sandra-art-drips.webp", "Abstract painting with layered drips by Sandra Rudzīte"],
+                  ["/art/sandra-art-sea.webp", "Dreamy seascape painting by Sandra Rudzīte"],
+                  ["/art/sandra-art-lakeside.webp", "Lakeside landscape painting by Sandra Rudzīte"],
+                  ["/art/sandra-art-canal.webp", "Canal landscape painting by Sandra Rudzīte"],
+                  ["/art/sandra-art-raven-drawing.webp", "Raven drawing by Sandra Rudzīte"],
+                ].map(([src, alt]) => (
+                  <button
+                    type="button"
+                    key={src}
+                    onClick={() => setImagePreview({ src, alt })}
+                    aria-label={`${alt}. Skatīt lielākā izmērā`}
+                  >
+                    <img
+                      src={src}
+                      alt={alt}
+                      onLoad={(event) => {
+                        const { naturalWidth, naturalHeight } = event.currentTarget;
+                        if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                      }}
+                    />
+                  </button>
+                ))}
               </div>
               </details>
             </div>
@@ -2774,12 +2768,21 @@ export default function InspirePage({ page = "home" }) {
           </summary>
           <div>
             {adultGallerySlides.map(([src, alt], index) => (
-              <div
+              <button
+                type="button"
                 key={`${src}-${index}`}
                 className="inspire-student-gallery-item"
+                onClick={() => setImagePreview({ src: image(`inspire.image.gallery.adult.${index}`, src), alt })}
               >
-                <img src={image(`inspire.image.gallery.adult.${index}`, src)} alt={alt} />
-              </div>
+                <img
+                  src={image(`inspire.image.gallery.adult.${index}`, src)}
+                  alt={alt}
+                  onLoad={(event) => {
+                    const { naturalWidth, naturalHeight } = event.currentTarget;
+                    if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                  }}
+                />
+              </button>
             ))}
           </div>
         </details>
@@ -2794,12 +2797,21 @@ export default function InspirePage({ page = "home" }) {
           </summary>
           <div>
             {youthGallerySlides.map(([src, alt], index) => (
-              <div
+              <button
+                type="button"
                 key={`${src}-${index}`}
                 className="inspire-student-gallery-item"
+                onClick={() => setImagePreview({ src: image(`inspire.image.gallery.youth.${index}`, src), alt })}
               >
-                <img src={image(`inspire.image.gallery.youth.${index}`, src)} alt={alt} />
-              </div>
+                <img
+                  src={image(`inspire.image.gallery.youth.${index}`, src)}
+                  alt={alt}
+                  onLoad={(event) => {
+                    const { naturalWidth, naturalHeight } = event.currentTarget;
+                    if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
+                  }}
+                />
+              </button>
             ))}
           </div>
         </details>
