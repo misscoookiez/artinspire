@@ -2089,7 +2089,7 @@ export default function InspirePage({ page = "home" }) {
           body: JSON.stringify({
             name: customerName,
             email: customerEmail,
-            topic: inquiryTopic,
+            topic: String(data.get("topic") || inquiryTopic).trim(),
             message: `${String(data.get("message") || "").trim()}${calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nPapildu studijas laiks: ${selectedEventExtraHours} h · €${selectedEventExtraPrice}` : ""}`,
           }),
         });
@@ -3098,16 +3098,34 @@ export default function InspirePage({ page = "home" }) {
         </div>
       </section>{" "}
       <section id="sazinies" className="inspire-contact-panel" aria-labelledby="inspire-contact-title">
-        <p id="inspire-contact-title" className="inspire-kicker">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</p>
-        <div className="inspire-contact-details">
-          <a href="tel:+37128809550"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></a>
-          <button type="button" className="inspire-contact-message" onClick={() => openInquiry(lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page")}><span>{lang === "lv" ? "E-pasts" : lang === "ru" ? "Эл. почта" : "Email"}</span><strong>{lang === "lv" ? "NOSŪTĪT ZIŅU →" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ →" : "SEND A MESSAGE →"}</strong></button>
-          <p><span>{lang === "lv" ? "Adrese" : lang === "ru" ? "Адрес" : "Address"}</span><strong>Miera iela 17, Rīga</strong></p>
+        <header className="inspire-contact-heading">
+          <h2 id="inspire-contact-title">{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</h2>
+          <p>{lang === "lv" ? "IDEJAS • MĀKSLA • CILVĒKI • REZULTĀTI" : lang === "ru" ? "ИДЕИ • ИСКУССТВО • ЛЮДИ • РЕЗУЛЬТАТЫ" : "IDEAS • ART • PEOPLE • RESULTS"}</p>
+        </header>
+        <div className="inspire-contact-card inspire-contact-card-info">
+          <p className="inspire-contact-card-kicker">{lang === "lv" ? "SAZINIES AR MUMS" : lang === "ru" ? "СВЯЖИТЕСЬ С НАМИ" : "GET IN TOUCH"}</p>
+          <h3>{lang === "lv" ? "Radīsim ko īpašu kopā" : lang === "ru" ? "Давайте создадим что-то особенное вместе" : "Let’s create something special together"}</h3>
+          <p className="inspire-contact-card-copy">{lang === "lv" ? "Mēs vienmēr esam atvērti jaunām idejām, sadarbībai un radošiem projektiem." : lang === "ru" ? "Мы всегда открыты новым идеям, сотрудничеству и творческим проектам." : "We are always open to new ideas, collaborations and creative projects."}</p>
+          <div className="inspire-contact-details">
+            <a href="tel:+37128809550"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></a>
+            <p><span>{lang === "lv" ? "Adrese" : lang === "ru" ? "Адрес" : "Address"}</span><strong>Miera iela 17, Rīga</strong></p>
+          </div>
+          <div className="inspire-contact-socials">
+            <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram <b>→</b></a>
+            <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp <b>→</b></a>
+          </div>
+          <button type="button" className="inspire-contact-open-form" onClick={() => openInquiry(lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page")}>{lang === "lv" ? "ATVĒRT KONTAKTA FORMU  →" : lang === "ru" ? "ОТКРЫТЬ ФОРМУ СВЯЗИ  →" : "OPEN CONTACT FORM  →"}</button>
         </div>
-        <div className="inspire-contact-quick-actions">
-          <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp</a>
-          <button type="button" onClick={() => openInquiry(lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page")}>{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND A MESSAGE"}</button>
+        <div className="inspire-contact-card inspire-contact-card-message">
+          <p className="inspire-contact-card-kicker">{lang === "lv" ? "RAKSTI MUMS" : lang === "ru" ? "НАПИШИТЕ НАМ" : "WRITE TO US"}</p>
+          <h3>{lang === "lv" ? "Nosūti mums ziņu" : lang === "ru" ? "Отправьте нам сообщение" : "Send us a message"}</h3>
+          <p className="inspire-contact-card-copy">{lang === "lv" ? "Pastāsti par savu ideju, jautājumu vai vienkārši sasveicinies." : lang === "ru" ? "Расскажите о своей идее, задайте вопрос или просто поздоровайтесь." : "Tell us about your idea, ask a question, or simply say hi."}</p>
+          <div className="inspire-contact-composer" aria-hidden="true">
+            <span>{lang === "lv" ? "Tavs vārds" : lang === "ru" ? "Ваше имя" : "Your name"}</span>
+            <span>{lang === "lv" ? "Ziņas tēma" : lang === "ru" ? "Тема сообщения" : "Message topic"}</span>
+            <span>{lang === "lv" ? "E-pasts" : lang === "ru" ? "Эл. почта" : "Email"}</span>
+            <span>{lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"}</span>
+          </div>
         </div>
       </section>
       <section id="kontakti" className="inspire-directions">
@@ -3494,13 +3512,15 @@ export default function InspirePage({ page = "home" }) {
                   </>
                 {calendarKind !== "event-format" && <>
                 <div className="inspire-customer-name">
-                  <input required name="firstName" autoComplete="name" placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} />
+                  <input required name="firstName" autoComplete="given-name" aria-label={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} />
                 </div>
+                {calendarKind === "inquiry" && <input required name="topic" defaultValue={inquiryTopic} aria-label={lang === "lv" ? "Ziņas tēma" : lang === "ru" ? "Тема сообщения" : "Message topic"} placeholder={lang === "lv" ? "Ziņas tēma" : lang === "ru" ? "Тема сообщения" : "Message topic"} />}
                 <input
                   required
                   name="email"
                   type="email"
                   autoComplete="email"
+                  aria-label={t.email}
                   defaultValue={savedEmail}
                   placeholder={t.email}
                 />

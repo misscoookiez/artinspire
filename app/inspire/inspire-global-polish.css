@@ -1906,3 +1906,208 @@
   margin: 0 !important;
   z-index: 2 !important;
 }
+
+/* Contact is its own luminous scene: familiar studio nebula texture beneath a
+   dark wash, two floating panes, and quiet typographic details in the field. */
+.inspire-page-contact .inspire-contact-panel {
+  position: relative !important;
+  isolation: isolate;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-template-rows: auto auto !important;
+  gap: clamp(20px, 2.3vw, 38px) !important;
+  padding: clamp(58px, 6.2vw, 102px) max(24px, 11vw) clamp(74px, 7vw, 118px) !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  background:
+    radial-gradient(circle at 16% 84%, rgba(73, 55, 255, .47), transparent 24%),
+    radial-gradient(circle at 88% 19%, rgba(41, 223, 241, .35), transparent 23%),
+    linear-gradient(110deg, rgba(3, 8, 28, .84), rgba(5, 13, 43, .76) 54%, rgba(4, 9, 30, .87)),
+    url('/art/inspire-nebula.webp') center / cover !important;
+}
+.inspire-page-contact .inspire-contact-panel::before {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  inset: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(145, 241, 255, .18) 7.05% 7.12%, transparent 7.17% 92.82%, rgba(167, 134, 255, .18) 92.87% 92.94%, transparent 93%),
+    linear-gradient(180deg, transparent 0 12%, rgba(146, 235, 255, .16) 12.08% 12.14%, transparent 12.2% 87.9%, rgba(130, 100, 249, .14) 87.96% 88.02%, transparent 88.08%) !important;
+  box-shadow: none !important;
+}
+.inspire-page-contact .inspire-contact-panel::after {
+  content: "RĪGA  /  RADĪT  /  IEDVESMOT";
+  position: absolute;
+  right: max(24px, 3.5vw);
+  top: 50%;
+  z-index: 0;
+  color: rgba(186, 237, 255, .37);
+  font: 700 9px/1 Arial, sans-serif;
+  letter-spacing: .42em;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.inspire-page-contact .inspire-contact-panel > * { position: relative; z-index: 1; }
+.inspire-page-contact .inspire-contact-heading {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  margin: 0 0 clamp(4px, .8vw, 12px);
+  text-align: center;
+}
+.inspire-page-contact .inspire-contact-heading h2 {
+  margin: 0;
+  color: #f4f6ff;
+  font: 600 clamp(44px, 6.6vw, 100px)/.9 Arial, sans-serif;
+  letter-spacing: .055em;
+  text-shadow: 0 0 18px rgba(111, 218, 255, .4), 0 0 44px rgba(125, 75, 255, .28);
+}
+.inspire-page-contact .inspire-contact-heading p,
+.inspire-page-contact .inspire-contact-card-kicker {
+  margin: 0;
+  color: #a9ddff;
+  font: 700 10px/1.35 Arial, sans-serif;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+}
+.inspire-page-contact .inspire-contact-card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 430px;
+  margin: 0 !important;
+  padding: clamp(28px, 3.1vw, 50px) !important;
+  overflow: hidden;
+  border: 1px solid rgba(157, 210, 255, .62) !important;
+  border-radius: 25px !important;
+  background: linear-gradient(135deg, rgba(49, 79, 149, .42), rgba(7, 15, 43, .74) 54%, rgba(31, 41, 98, .45)) !important;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .26), inset 13px 13px 42px rgba(153, 203, 255, .06), 0 26px 58px rgba(0, 0, 0, .33), 0 0 34px rgba(81, 104, 255, .22) !important;
+  backdrop-filter: blur(16px) saturate(125%);
+}
+.inspire-page-contact .inspire-contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(132deg, rgba(255, 255, 255, .13), transparent 27%, transparent 66%, rgba(51, 222, 250, .08));
+  pointer-events: none;
+}
+.inspire-page-contact .inspire-contact-card > * { position: relative; z-index: 1; }
+.inspire-page-contact .inspire-contact-card h3 {
+  max-width: 12ch;
+  margin: 13px 0 12px;
+  color: #f9fbff;
+  font: 500 clamp(31px, 3.05vw, 52px)/1.02 Arial, sans-serif;
+  letter-spacing: -.045em;
+}
+.inspire-page-contact .inspire-contact-card-copy {
+  max-width: 37ch;
+  margin: 0;
+  color: #a9c6ed;
+  font: 400 clamp(15px, 1.15vw, 18px)/1.55 Arial, sans-serif;
+}
+.inspire-page-contact .inspire-contact-details {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  margin: auto 0 16px !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+.inspire-page-contact .inspire-contact-details > a,
+.inspire-page-contact .inspire-contact-details > p {
+  display: grid !important;
+  gap: 7px;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 16px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(191, 222, 255, .2) !important;
+  background: transparent !important;
+  color: #f6fbff !important;
+  text-decoration: none;
+}
+.inspire-page-contact .inspire-contact-details > :last-child { border-bottom: 0 !important; }
+.inspire-page-contact .inspire-contact-details span {
+  color: #86edff !important;
+  font: 700 9px/1 Arial, sans-serif !important;
+  letter-spacing: .28em !important;
+  text-transform: uppercase;
+}
+.inspire-page-contact .inspire-contact-details strong { font-size: clamp(18px, 1.45vw, 25px) !important; font-weight: 500 !important; }
+.inspire-page-contact .inspire-contact-socials { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.inspire-page-contact .inspire-contact-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 54px;
+  padding: 12px 17px;
+  border: 1px solid rgba(165, 211, 255, .5);
+  border-radius: 13px;
+  background: rgba(15, 29, 73, .43);
+  color: #f2f8ff;
+  font: 600 13px/1 Arial, sans-serif;
+  text-decoration: none;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.inspire-page-contact .inspire-contact-socials a:hover,
+.inspire-page-contact .inspire-contact-socials a:focus-visible { transform: translateY(-2px); border-color: #aaf6ff; background: rgba(41, 96, 171, .56); outline: 0; }
+.inspire-page-contact .inspire-contact-socials b { color: #96efff; font-size: 21px; font-weight: 400; }
+.inspire-page-contact .inspire-contact-open-form {
+  width: 100%;
+  min-height: 57px;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(100deg, #7458ef 0%, #b461f0 48%, #55dfe8 100%);
+  color: #fff;
+  box-shadow: 0 12px 26px rgba(107, 78, 236, .36), inset 0 1px rgba(255, 255, 255, .32);
+  font: 800 11px/1 Arial, sans-serif;
+  letter-spacing: .14em;
+  cursor: pointer;
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+.inspire-page-contact .inspire-contact-open-form:hover,
+.inspire-page-contact .inspire-contact-open-form:focus-visible { transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 16px 34px rgba(89, 213, 244, .34), 0 0 26px rgba(154, 79, 248, .4); outline: 0; }
+.inspire-page-contact .inspire-contact-card-message { justify-content: flex-start; }
+.inspire-page-contact .inspire-contact-composer {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(94px, 1fr);
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 25px;
+}
+.inspire-page-contact .inspire-contact-composer span {
+  display: flex;
+  align-items: center;
+  min-height: 57px;
+  padding: 0 19px;
+  border: 1px solid rgba(139, 181, 255, .42);
+  border-radius: 14px;
+  background: rgba(47, 68, 134, .4);
+  color: #d8e4ff;
+  font: 400 16px/1 Arial, sans-serif;
+}
+.inspire-page-contact .inspire-contact-composer span:last-child { align-items: flex-start; padding-top: 18px; }
+@media (max-width: 860px) {
+  .inspire-page-contact .inspire-contact-panel { grid-template-columns: 1fr !important; padding-inline: max(20px, 7vw) !important; }
+  .inspire-page-contact .inspire-contact-card { min-height: 0; }
+  .inspire-page-contact .inspire-contact-panel::after { display: none; }
+}
+@media (max-width: 480px) {
+  .inspire-page-contact .inspire-contact-heading h2 { font-size: clamp(38px, 13vw, 58px); }
+  .inspire-page-contact .inspire-contact-heading p { font-size: 8px; letter-spacing: .22em; }
+  .inspire-page-contact .inspire-contact-card { padding: 28px 22px !important; border-radius: 19px !important; }
+  .inspire-page-contact .inspire-contact-socials { grid-template-columns: 1fr; }
+}
