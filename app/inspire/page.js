@@ -3137,6 +3137,7 @@ export default function InspirePage({ page = "home" }) {
           </div>
         </div>
         <form className="inspire-contact-card inspire-contact-card-message" onSubmit={submitContact}>
+          <p className="inspire-contact-card-kicker">{lang === "lv" ? "GATAVI SARUNAI?" : lang === "ru" ? "ГОТОВЫ ПОГОВОРИТЬ?" : "READY TO TALK?"}</p>
           <h3>{lang === "lv" ? "Nosūti mums ziņu" : lang === "ru" ? "Отправьте нам сообщение" : "Send us a message"}</h3>
           <p className="inspire-contact-card-copy">{lang === "lv" ? "Pastāsti par savu ideju, jautājumu vai vienkārši sasveicinies." : lang === "ru" ? "Расскажите о своей идее, задайте вопрос или просто поздоровайтесь." : "Tell us about your idea, ask a question, or simply say hi."}</p>
           <div className="inspire-contact-composer">
