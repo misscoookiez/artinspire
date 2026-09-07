@@ -2111,3 +2111,13 @@
   .inspire-page-contact .inspire-contact-card { padding: 28px 22px !important; border-radius: 19px !important; }
   .inspire-page-contact .inspire-contact-socials { grid-template-columns: 1fr; }
 }
+
+/* Final desktop wordmark anchor. This moves only the logo toward the centre;
+   the copy, language controls, masthead grid and navigation retain their
+   existing geometry. */
+@media (min-width: 801px) {
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand {
+    transform: translateX(clamp(112px, 8.3vw, 148px)) !important;
+  }
+}
