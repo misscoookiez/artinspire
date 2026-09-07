@@ -2286,6 +2286,18 @@
   box-shadow: inset 0 1px rgba(255,255,255,.2), 0 0 15px rgba(65, 242, 195, .16);
 }
 .inspire-page-contact .inspire-contact-socials a:nth-child(2)::before { content: "◔"; border-color: #5cf3c7; border-radius: 50%; color: #74f7d0; text-shadow: 0 0 8px rgba(62, 244, 191, .85); }
+.inspire-page-contact .inspire-contact-socials {
+  display: flex !important;
+  width: max-content;
+  max-width: 100%;
+  gap: 11px;
+}
+.inspire-page-contact .inspire-contact-socials a {
+  flex: 0 0 164px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 14px;
+}
 .inspire-page-contact .inspire-contact-composer {
   gap: 12px;
   padding-top: 20px;
@@ -2343,6 +2355,10 @@
 @media (max-width: 860px) {
   .inspire-page-contact .inspire-contact-panel { padding-inline: max(20px, 7vw) !important; }
   .inspire-page-contact .inspire-contact-card { height: auto; min-height: 0; }
+}
+@media (max-width: 420px) {
+  .inspire-page-contact .inspire-contact-socials { width: 100%; display: grid !important; grid-template-columns: 1fr; }
+  .inspire-page-contact .inspire-contact-socials a { width: 100%; }
 }
 
 /* The first About-page disclosure uses one fixed chevron box. Rotating the
