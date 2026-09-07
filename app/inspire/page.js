@@ -3126,7 +3126,7 @@ export default function InspirePage({ page = "home" }) {
           <h3>{lang === "lv" ? "Radīsim ko īpašu kopā!" : lang === "ru" ? "Давайте создадим что-то особенное вместе!" : "Let’s create something special together!"}</h3>
           <p className="inspire-contact-card-copy">{lang === "lv" ? "Mēs vienmēr esam atvērti jaunām idejām, sadarbībai un radošiem projektiem." : lang === "ru" ? "Мы всегда открыты новым идеям, сотрудничеству и творческим проектам." : "We are always open to new ideas, collaborations and creative projects."}</p>
           <div className="inspire-contact-details">
-            <a href="tel:+37128809550"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></a>
+            <p className="inspire-contact-phone"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></p>
             <p><span>{lang === "lv" ? "Adrese" : lang === "ru" ? "Адрес" : "Address"}</span><strong>Miera iela 17, Rīga</strong></p>
           </div>
           <div className="inspire-contact-socials">

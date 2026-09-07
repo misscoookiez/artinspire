@@ -30,6 +30,7 @@
   }
   .inspire-page-contact .inspire-contact-details>a,
   .inspire-page-contact .inspire-contact-details>p{
+    width:100%;
     height:56px;
     min-height:56px;
     box-sizing:border-box;
@@ -41,6 +42,19 @@
     border-top:1px solid rgba(185,219,250,.2);
   }
   .inspire-page-contact .inspire-contact-socials a{min-height:55px;padding:10px 0!important;}
+  .inspire-page-contact .inspire-contact-details .inspire-contact-phone{cursor:default;}
+  .inspire-page-contact .inspire-contact-details .inspire-contact-phone::before{
+    content:"☎"!important;
+    background-image:none!important;
+    color:#a6f7ff!important;
+    font:18px/1 Arial,sans-serif!important;
+  }
+  .inspire-page-contact .inspire-contact-details strong,
+  .inspire-page-contact .inspire-contact-socials a{
+    font-size:16px!important;
+    font-weight:500!important;
+    line-height:1.3!important;
+  }
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer{
     margin-top:auto!important;
     padding-top:0!important;
@@ -49,8 +63,23 @@
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer input{min-height:40px;}
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer textarea{min-height:102px;}
   .inspire-page-contact .inspire-contact-send{
-    min-height:38px;
+    min-height:56px;
     margin-top:10px;
+    min-width:0!important;
+    padding:0 16px!important;
+    border-color:transparent!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:#eef6ff!important;
+    font-size:16px!important;
+    font-weight:500!important;
+    letter-spacing:-.01em!important;
+  }
+  .inspire-page-contact .inspire-contact-send:hover,
+  .inspire-page-contact .inspire-contact-send:focus-visible{
+    border-color:rgba(176,235,248,.7)!important;
+    background:rgba(134,230,241,.07)!important;
+    color:#fff!important;
   }
 }
 @media (max-width:860px){
