@@ -1758,4 +1758,23 @@
   .inspire .inspire-tattoo-preview.inspire-gallery-grid > button,
   .inspire .inspire-space-preview.inspire-gallery-grid > button:first-child { height: clamp(110px, 30vw, 148px) !important; }
 }
+
+/* Sandra’s introductory triptych is editorial imagery, not a gallery.  The
+   companion portraits retain their existing dimensions; the lead is cropped
+   only enough from its quiet upper area to form one clean two-row grid. */
+@media (min-width: 901px) {
+  .inspire-page-about .inspire-host-gallery {
+    grid-template-columns: minmax(0, 1.14fr) minmax(0, .86fr) !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+  .inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+    grid-row: span 2 !important;
+    object-fit: cover !important;
+    object-position: center 64% !important;
+    transform: scale(1.075) !important;
+    transform-origin: center 66% !important;
+    clip-path: inset(0) !important;
+  }
+}
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
