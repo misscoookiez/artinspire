@@ -7,7 +7,7 @@
     linear-gradient(rgba(137,220,255,.055) 1px,transparent 1px) 0 0/100% 158px,
     radial-gradient(ellipse at 98% 18%,rgba(25,180,226,.13),transparent 29%),
     radial-gradient(ellipse at 3% 70%,rgba(83,64,187,.14),transparent 27%),
-    linear-gradient(118deg,rgba(4,9,23,.64),rgba(6,17,40,.61) 48%,rgba(3,14,28,.67)),
+    linear-gradient(118deg,rgba(4,9,23,.55),rgba(6,17,40,.52) 48%,rgba(3,14,28,.58)),
     url('/art/inspire-contact-lightscape.png') center top / cover fixed!important;
 }
 .inspire-contact-atmosphere-word{
@@ -35,7 +35,7 @@
   background:
     radial-gradient(ellipse at 88% 80%,rgba(26,181,210,.11),transparent 33%),
     radial-gradient(ellipse at 13% 14%,rgba(82,66,181,.1),transparent 34%),
-    linear-gradient(116deg,rgba(6,12,29,.84),rgba(9,21,47,.81) 51%,rgba(5,17,28,.86)),
+    linear-gradient(116deg,rgba(6,12,29,.69),rgba(9,21,47,.66) 51%,rgba(5,17,28,.71)),
     url('/art/inspire-contact-lightscape.png') center 62% / cover!important;
 }
 /* Remove the old floating accent, keep the guide itself deliberately clean. */
@@ -94,7 +94,7 @@
    pigment layer. The readable surface stays dark and blue-led. */
 .inspire-page-contact .inspire-contact-panel{
   background:
-    linear-gradient(112deg,rgba(5,12,31,.81),rgba(10,27,60,.74) 54%,rgba(5,21,37,.8)),
+    linear-gradient(112deg,rgba(5,12,31,.68),rgba(10,27,60,.61) 54%,rgba(5,21,37,.65)),
     url('/art/inspire-contact-lightscape.png') center 55% / cover!important;
 }
 .inspire-page-contact .inspire-contact-card-info{background-position:28% 76%!important;}
@@ -138,7 +138,9 @@
      row rhythm remains unchanged while the whole information group settles
      into the spare lower space. */
   .inspire-page-contact .inspire-contact-details,
-  .inspire-page-contact .inspire-contact-socials{transform:translateY(10px);}
+  .inspire-page-contact .inspire-contact-socials{transform:translateY(5px);}
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer,
+  .inspire-page-contact .inspire-contact-send{transform:translateY(11px);}
 
   /* A square WhatsApp mark makes it part of the same icon system as phone,
      address and Instagram while keeping the recognisable chat-bubble/phone. */
@@ -158,15 +160,30 @@
 
 /* The entry belongs to the address line; the blue rule deliberately follows
    that sentence before the neighbourhood description begins. */
-.inspire-page-contact .inspire-directions-copy .inspire-directions-location{border-bottom:0!important;}
-.inspire-page-contact .inspire-directions-copy .inspire-directions-entry{
-  margin-top:14px!important;
+.inspire-page-contact .inspire-directions-copy > p.inspire-directions-location{border-bottom:0!important;}
+.inspire-page-contact .inspire-directions-copy > p.inspire-directions-entry{
+  margin-top:4px!important;
   padding:0 0 15px!important;
   border-bottom:1px solid rgba(125,226,255,.62)!important;
   color:#f0f6ff!important;
+  font-weight:400!important;
 }
+.inspire-page-contact .inspire-directions-copy > p.inspire-directions-location{font-weight:700!important;}
 .inspire-page-contact .inspire-directions-copy .inspire-address-lead{margin-top:19px!important;}
 .inspire-page-contact .inspire-directions-practical p{
   padding-left:18px!important;
   border-left:1px solid rgba(166,211,255,.25)!important;
 }
+
+/* The guide headings and imagery use firmer editorial geometry. */
+.inspire-page-contact .inspire-directions-copy h2::after{width:132px!important;}
+@media(min-width:1051px){
+  .inspire-page-contact .inspire-directions{
+    column-gap:8px!important;
+    row-gap:clamp(24px,3vw,46px)!important;
+  }
+  .inspire-page-contact .inspire-directions-copy{margin-right:clamp(20px,3vw,42px)!important;}
+}
+.inspire-page-contact .inspire-directions figure,
+.inspire-page-contact .inspire-directions-map,
+.inspire-page-contact .inspire-directions-map iframe{border-radius:0!important;}
