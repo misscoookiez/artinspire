@@ -7,7 +7,7 @@
     linear-gradient(rgba(137,220,255,.055) 1px,transparent 1px) 0 0/100% 158px,
     radial-gradient(ellipse at 98% 18%,rgba(25,180,226,.13),transparent 29%),
     radial-gradient(ellipse at 3% 70%,rgba(83,64,187,.14),transparent 27%),
-    linear-gradient(118deg,rgba(4,9,23,.76),rgba(6,17,40,.72) 48%,rgba(3,14,28,.79)),
+    linear-gradient(118deg,rgba(4,9,23,.64),rgba(6,17,40,.61) 48%,rgba(3,14,28,.67)),
     url('/art/inspire-contact-lightscape.png') center top / cover fixed!important;
 }
 .inspire-contact-atmosphere-word{
@@ -94,19 +94,29 @@
    pigment layer. The readable surface stays dark and blue-led. */
 .inspire-page-contact .inspire-contact-panel{
   background:
-    radial-gradient(ellipse at 87% 12%,rgba(39,193,217,.13),transparent 34%),
-    radial-gradient(ellipse at 10% 91%,rgba(99,61,160,.12),transparent 39%),
-    linear-gradient(112deg,rgba(5,12,31,.88),rgba(10,27,60,.82) 54%,rgba(5,21,37,.87)),
+    linear-gradient(112deg,rgba(5,12,31,.81),rgba(10,27,60,.74) 54%,rgba(5,21,37,.8)),
     url('/art/inspire-contact-lightscape.png') center 55% / cover!important;
 }
+.inspire-page-contact .inspire-contact-card-info{background-position:28% 76%!important;}
+.inspire-page-contact .inspire-contact-card-message{background-position:76% 24%!important;}
 
 @media(min-width:861px){
-  /* Two-line detail rows need the same breathable lower edge as the compact
-     form fields; this removes the one compressed divider under the address. */
+  /* One uninterrupted list rhythm: each separator belongs to the row above
+     it, including the address, rather than to the social-links block. */
+  .inspire-page-contact .inspire-contact-details{flex-shrink:0!important;}
   .inspire-page-contact .inspire-contact-details>p{
-    height:64px!important;
-    min-height:64px!important;
+    height:56px!important;
+    min-height:56px!important;
+    flex-shrink:0!important;
   }
+  .inspire-page-contact .inspire-contact-details>p:last-child{border-bottom:1px solid rgba(185,219,250,.2)!important;}
+  .inspire-page-contact .inspire-contact-socials{
+    flex-shrink:0!important;
+    margin-top:0!important;
+    padding-top:0!important;
+    border-top:0!important;
+  }
+  .inspire-page-contact .inspire-contact-socials a{height:56px!important;min-height:56px!important;}
   .inspire-page-contact .inspire-contact-card-copy{color:#b7c8df!important;}
   .inspire-page-contact .inspire-contact-details strong{color:#dce8f6!important;}
   .inspire-page-contact .inspire-contact-socials a{color:#d3e1f0!important;}
@@ -121,4 +131,42 @@
     box-shadow:inset 0 0 0 1px rgba(152,232,248,.48),0 0 18px rgba(65,192,222,.12);
     transform:translateX(3px);
   }
+}
+
+@media(min-width:861px){
+  /* Copy and contact methods read as two intentional groups; their internal
+     row rhythm remains unchanged while the whole information group settles
+     into the spare lower space. */
+  .inspire-page-contact .inspire-contact-details,
+  .inspire-page-contact .inspire-contact-socials{transform:translateY(10px);}
+
+  /* A square WhatsApp mark makes it part of the same icon system as phone,
+     address and Instagram while keeping the recognisable chat-bubble/phone. */
+  .inspire-page-contact .inspire-contact-socials a:nth-child(2)::before{
+    content:""!important;
+    width:34px!important;
+    height:34px!important;
+    border-radius:10px!important;
+    border-color:#5cf3c7!important;
+    background-color:rgba(24,79,101,.32)!important;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2374f7d0' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 11.35a8.05 8.05 0 0 1-11.9 7.05L4 19.5l1.15-3.82A8.05 8.05 0 1 1 20 11.35Z'/%3E%3Cpath d='M8.38 8.28c.14-.32.29-.34.52-.34h.44c.14 0 .33.02.42.29l.58 1.4c.08.2.05.34-.04.48l-.34.48c-.1.13-.22.28-.1.5.15.28.65 1.07 1.41 1.73.97.84 1.79 1.1 2.07 1.23.23.1.36.08.5-.06l.64-.75c.14-.16.29-.2.49-.12l1.3.61c.2.1.32.14.37.22.05.08.05.46-.1.89-.15.43-.85.83-1.18.88-.31.05-.71.08-1.15-.06-.27-.08-.62-.2-1.07-.39-1.84-.8-3.04-2.67-3.13-2.79-.09-.12-.75-1-.75-1.91 0-.91.48-1.36.65-1.55Z'/%3E%3C/svg%3E")!important;
+    background-repeat:no-repeat!important;
+    background-position:center!important;
+    background-size:21px 21px!important;
+  }
+}
+
+/* The entry belongs to the address line; the blue rule deliberately follows
+   that sentence before the neighbourhood description begins. */
+.inspire-page-contact .inspire-directions-copy .inspire-directions-location{border-bottom:0!important;}
+.inspire-page-contact .inspire-directions-copy .inspire-directions-entry{
+  margin-top:14px!important;
+  padding:0 0 15px!important;
+  border-bottom:1px solid rgba(125,226,255,.62)!important;
+  color:#f0f6ff!important;
+}
+.inspire-page-contact .inspire-directions-copy .inspire-address-lead{margin-top:19px!important;}
+.inspire-page-contact .inspire-directions-practical p{
+  padding-left:18px!important;
+  border-left:1px solid rgba(166,211,255,.25)!important;
 }
