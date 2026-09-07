@@ -1338,6 +1338,12 @@
     margin: 0 !important;
     transform: none !important;
   }
+
+  .inspire-masthead-copy,
+  .inspire-page-home .inspire-masthead-copy {
+    /* Optical vertical centre of the complete three-line invitation. */
+    transform: translateY(-22px) !important;
+  }
 }
 
 /* Shared close language, matching the circled-X reference while staying
