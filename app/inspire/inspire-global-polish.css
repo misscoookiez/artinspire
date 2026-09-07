@@ -173,6 +173,52 @@
   }
 }
 
+/* Justified gallery refinement: the frame takes its ratio from the loaded
+   artwork itself. This is the portfolio-wall behaviour—equal row height,
+   natural variable widths, graceful wrapping, and no invented black tiles. */
+.inspire .inspire-gallery-grid > button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  aspect-ratio: var(--gallery-ratio, 1.25) !important;
+  background: transparent !important;
+}
+.inspire .inspire-gallery-grid > button img {
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+/* Room explanations are read before they are viewed. The gallery then runs
+   beneath the full text as its own responsive, proportion-led image wall. */
+.inspire .inspire-space-details details > div {
+  display: block !important;
+  padding: 6px 0 30px !important;
+}
+.inspire .inspire-space-details details > div > p {
+  max-width: 66ch !important;
+}
+.inspire .inspire-space-preview.inspire-gallery-grid,
+.inspire .inspire-tattoo-preview.inspire-gallery-grid {
+  display: flex !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  margin-top: 24px !important;
+}
+.inspire .inspire-space-preview.inspire-gallery-grid > button,
+.inspire .inspire-tattoo-preview.inspire-gallery-grid > button,
+.inspire .inspire-space-preview.inspire-gallery-grid > button:first-child {
+  flex: 0 0 auto !important;
+  height: clamp(140px, 11vw, 190px) !important;
+  aspect-ratio: var(--gallery-ratio, 1.25) !important;
+  background: transparent !important;
+}
+
+@media (max-width: 760px) {
+  .inspire .inspire-gallery-grid > button { height: clamp(108px, 29vw, 160px) !important; }
+  .inspire .inspire-space-preview.inspire-gallery-grid > button,
+  .inspire .inspire-tattoo-preview.inspire-gallery-grid > button,
+  .inspire .inspire-space-preview.inspire-gallery-grid > button:first-child { height: clamp(104px, 28vw, 145px) !important; }
+}
+
 /* Long explanatory copy is still complete, but it now reads like publishing:
    a modest first-line indent, generous line-height and deliberate paragraph
    breaks instead of an unbroken block. */
