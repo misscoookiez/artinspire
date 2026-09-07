@@ -1238,6 +1238,7 @@ export default function InspirePage({ page = "home" }) {
   const [selection, setSelection] = useState("");
   const [booking, setBooking] = useState(null);
   const [status, setStatus] = useState("");
+  const [contactStatus, setContactStatus] = useState("");
   const [calendarKind, setCalendarKind] = useState("all");
   const [checkoutOption, setCheckoutOption] = useState("");
   const [giftClasses, setGiftClasses] = useState(2);
@@ -2149,6 +2150,36 @@ export default function InspirePage({ page = "home" }) {
       else setStatus(result.error || "Checkout is not available yet.");
     } catch {
       setStatus("Checkout could not be reached. Please try again.");
+    }
+  };
+  const submitContact = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const name = String(data.get("firstName") || "").trim();
+    const email = String(data.get("email") || "").trim().toLowerCase();
+    const message = String(data.get("message") || "").trim();
+    setContactStatus(lang === "lv" ? "Nosūtām ziņu…" : lang === "ru" ? "Отправляем сообщение…" : "Sending your message…");
+    try {
+      const response = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          topic: lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page",
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Could not send your message.");
+      try {
+        window.localStorage.setItem("inspire-booking-email", email);
+        setSavedEmail(email);
+      } catch {}
+      e.currentTarget.reset();
+      setContactStatus(lang === "lv" ? "Paldies — ziņa ir nosūtīta." : lang === "ru" ? "Спасибо — сообщение отправлено." : "Thank you — your message has been sent.");
+    } catch (error) {
+      setContactStatus(error.message);
     }
   };
   return (
@@ -3103,7 +3134,6 @@ export default function InspirePage({ page = "home" }) {
           <p>{lang === "lv" ? "IDEJAS • MĀKSLA • CILVĒKI • REZULTĀTI" : lang === "ru" ? "ИДЕИ • ИСКУССТВО • ЛЮДИ • РЕЗУЛЬТАТЫ" : "IDEAS • ART • PEOPLE • RESULTS"}</p>
         </header>
         <div className="inspire-contact-card inspire-contact-card-info">
-          <p className="inspire-contact-card-kicker">{lang === "lv" ? "SAZINIES AR MUMS" : lang === "ru" ? "СВЯЖИТЕСЬ С НАМИ" : "GET IN TOUCH"}</p>
           <h3>{lang === "lv" ? "Radīsim ko īpašu kopā" : lang === "ru" ? "Давайте создадим что-то особенное вместе" : "Let’s create something special together"}</h3>
           <p className="inspire-contact-card-copy">{lang === "lv" ? "Mēs vienmēr esam atvērti jaunām idejām, sadarbībai un radošiem projektiem." : lang === "ru" ? "Мы всегда открыты новым идеям, сотрудничеству и творческим проектам." : "We are always open to new ideas, collaborations and creative projects."}</p>
           <div className="inspire-contact-details">
@@ -3114,19 +3144,18 @@ export default function InspirePage({ page = "home" }) {
             <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram <b>→</b></a>
             <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp <b>→</b></a>
           </div>
-          <button type="button" className="inspire-contact-open-form" onClick={() => openInquiry(lang === "lv" ? "Ziņa no kontaktu lapas" : lang === "ru" ? "Сообщение со страницы контактов" : "Message from the contact page")}>{lang === "lv" ? "ATVĒRT KONTAKTA FORMU  →" : lang === "ru" ? "ОТКРЫТЬ ФОРМУ СВЯЗИ  →" : "OPEN CONTACT FORM  →"}</button>
         </div>
-        <div className="inspire-contact-card inspire-contact-card-message">
-          <p className="inspire-contact-card-kicker">{lang === "lv" ? "RAKSTI MUMS" : lang === "ru" ? "НАПИШИТЕ НАМ" : "WRITE TO US"}</p>
+        <form className="inspire-contact-card inspire-contact-card-message" onSubmit={submitContact}>
           <h3>{lang === "lv" ? "Nosūti mums ziņu" : lang === "ru" ? "Отправьте нам сообщение" : "Send us a message"}</h3>
           <p className="inspire-contact-card-copy">{lang === "lv" ? "Pastāsti par savu ideju, jautājumu vai vienkārši sasveicinies." : lang === "ru" ? "Расскажите о своей идее, задайте вопрос или просто поздоровайтесь." : "Tell us about your idea, ask a question, or simply say hi."}</p>
-          <div className="inspire-contact-composer" aria-hidden="true">
-            <span>{lang === "lv" ? "Tavs vārds" : lang === "ru" ? "Ваше имя" : "Your name"}</span>
-            <span>{lang === "lv" ? "Ziņas tēma" : lang === "ru" ? "Тема сообщения" : "Message topic"}</span>
-            <span>{lang === "lv" ? "E-pasts" : lang === "ru" ? "Эл. почта" : "Email"}</span>
-            <span>{lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"}</span>
+          <div className="inspire-contact-composer">
+            <input required name="firstName" autoComplete="given-name" aria-label={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} placeholder={lang === "lv" ? "Vārds" : lang === "ru" ? "Имя" : "Name"} />
+            <input required name="email" type="email" autoComplete="email" aria-label={t.email} defaultValue={savedEmail} placeholder={t.email} />
+            <textarea required name="message" rows="4" aria-label={lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"} placeholder={lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"} />
           </div>
-        </div>
+          <button className="inspire-contact-send" type="submit">{lang === "lv" ? "✦  NOSŪTĪT ZIŅU" : lang === "ru" ? "✦  ОТПРАВИТЬ СООБЩЕНИЕ" : "✦  SEND MESSAGE"}</button>
+          {contactStatus ? <p className="inspire-contact-status" role="status">{contactStatus}</p> : null}
+        </form>
       </section>
       <section id="kontakti" className="inspire-directions">
         <div className="inspire-directions-copy">
