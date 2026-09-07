@@ -971,6 +971,32 @@
 }
 .inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint { background: #b8faff; color: #07111d; }
 
+/* Method opens almost directly from the menu. The practical matrix keeps its
+   useful internal rhythm, but loses the detached top and bottom frame lines. */
+.inspire-page-method > .inspire-capabilities {
+  padding-top: clamp(18px, 2vw, 30px) !important;
+  padding-bottom: 0 !important;
+}
+.inspire-page-method .inspire-capabilities::before {
+  background:
+    linear-gradient(90deg, rgba(7, 8, 18, .96) 0%, rgba(8, 10, 21, .84) 36%, rgba(9, 10, 25, .54) 68%, rgba(7, 8, 18, .82) 100%),
+    url('/art/landing-generated-01.webp') center / cover no-repeat !important;
+}
+.inspire-page-method .inspire-capability-grid {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+.inspire-page-method .inspire-capability-grid::before,
+.inspire-page-method .inspire-capability-grid::after { display: none !important; }
+.inspire-page-method .inspire-capability-grid article:first-child,
+.inspire-page-method .inspire-capability-grid article:nth-child(2) { border-top: 0 !important; }
+.inspire-page-method .inspire-capability-grid article b::before {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+.inspire-page-method .inspire-capability-grid article:not(:last-child) {
+  border-bottom-color: rgba(128, 237, 245, .18) !important;
+}
+
 /* About’s introduction now lands in the same first-screen rhythm as the
    other pages, leaving Sandra's chapter visible below it. */
 @media (min-width: 901px) {
