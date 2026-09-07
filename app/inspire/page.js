@@ -40,6 +40,7 @@ import "./inspire-about-panel-refine.css";
 import "./inspire-global-polish.css";
 import "./inspire-directions-refine.css";
 import "./inspire-contact-rhythm-refine.css";
+import "./inspire-contact-atmosphere-refine.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -2176,6 +2177,7 @@ export default function InspirePage({ page = "home" }) {
   };
   return (
     <main className={`inspire inspire-page-${showContactsFromMenu ? "contact" : page}`} lang={lang}>
+      {page === "contact" ? <span className="inspire-contact-atmosphere-word" aria-hidden="true">RĪGA / RADĪT / IEDVESMOT</span> : null}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -3143,7 +3145,7 @@ export default function InspirePage({ page = "home" }) {
             <input required name="email" type="email" autoComplete="email" aria-label={t.email} defaultValue={savedEmail} placeholder={t.email} />
             <textarea required name="message" rows="4" aria-label={lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"} placeholder={lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"} />
           </div>
-          <button className="inspire-contact-send" type="submit">{lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE"}</button>
+          <button className="inspire-contact-send" type="submit">{lang === "lv" ? "Nosūtīt ziņu" : lang === "ru" ? "Отправить сообщение" : "Send message"}</button>
           {contactStatus ? <p className="inspire-contact-status" role="status">{contactStatus}</p> : null}
         </form>
       </section>
