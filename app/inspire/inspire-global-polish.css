@@ -2526,15 +2526,24 @@
 .inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint { border-color: #d2feff !important; background: linear-gradient(100deg, rgba(71, 211, 223, .34), rgba(107, 67, 206, .38)) !important; box-shadow: 0 0 18px rgba(89, 238, 248, .24), 0 0 24px rgba(218, 90, 250, .16) !important; }
 
 /* Lock the final disclosure asset above older chapter-specific rules. The
-   SVG contains both the ring and arrow; the button itself never owns a fill. */
+   vector acts as a mask, so only its linework can paint—never a square. */
 .inspire details > summary > b,
 .inspire-page-about .inspire-depth-panel:first-child > summary > b,
 .inspire-page-method .inspire-panel-open-hint b {
-  background-color: transparent !important;
-  background-image: url("/art/inspire-disclosure-chevron.svg") !important;
-  background-position: center !important;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
+  position: relative !important;
+  background: none !important;
+}
+.inspire details > summary > b::after,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::after,
+.inspire-page-method .inspire-panel-open-hint b::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  background: linear-gradient(135deg, #9ffaff 12%, #bfc6ff 56%, #e59dff 100%) !important;
+  -webkit-mask: url("/art/inspire-disclosure-chevron.svg") center / contain no-repeat !important;
+  mask: url("/art/inspire-disclosure-chevron.svg") center / contain no-repeat !important;
+  pointer-events: none !important;
 }
 .inspire details[open] > summary > b,
 .inspire-page-about .inspire-depth-panel:first-child[open] > summary > b,
