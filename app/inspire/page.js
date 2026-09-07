@@ -2749,8 +2749,8 @@ export default function InspirePage({ page = "home" }) {
             </strong>
             <em className="inspire-panel-open-hint" aria-hidden="true">
               {lang === "lv" ? "ATVĒRT" : lang === "ru" ? "ОТКРЫТЬ" : "OPEN"}
+              <b>⌄</b>
             </em>
-            <b>+</b>
           </summary>
           <section id="studija" className="inspire-proof">
             <div>
@@ -2794,8 +2794,8 @@ export default function InspirePage({ page = "home" }) {
             </strong>
             <em className="inspire-panel-open-hint" aria-hidden="true">
               {lang === "lv" ? "ATVĒRT" : lang === "ru" ? "ОТКРЫТЬ" : "OPEN"}
+              <b>⌄</b>
             </em>
-            <b>+</b>
           </summary>
           <section id="berni-un-jauniesi" className="inspire-proof inspire-youth-proof">
             <div>

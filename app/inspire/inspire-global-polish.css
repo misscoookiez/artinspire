@@ -1356,3 +1356,11 @@
 .inspire-modal .inspire-x{position:relative!important;background:radial-gradient(circle at 35% 28%,#20243a 0%,#080a13 58%,#020308 100%)!important;color:transparent!important;font-size:0!important;text-indent:0!important}
 .inspire-modal .inspire-x::before,.inspire-modal .inspire-x::after{content:""!important;display:block!important;font:initial!important;text-indent:0!important;transform-origin:center!important}
 .inspire-modal .inspire-x::before{transform:rotate(45deg)!important}.inspire-modal .inspire-x::after{transform:rotate(-45deg)!important}
+
+/* Every chapter arrow sits on the header's true vertical centre, regardless
+   of title size.  The method action keeps that same arrow inside its button. */
+.inspire-depth-panel > summary > b{display:grid!important;place-items:center!important;align-self:center!important;width:1.1em;height:1.1em;line-height:1!important}
+.inspire-depth-panel > summary > b::after{transform:none!important}.inspire-depth-panel[open] > summary > b::after{transform:rotate(180deg)!important}
+.inspire-page-method .inspire-panel-open-hint{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;padding:0 7px 0 10px!important}
+.inspire-page-method .inspire-panel-open-hint b{display:grid!important;place-items:center!important;width:12px;height:18px;margin:0!important;color:currentColor!important;font:400 16px/1 Arial,sans-serif!important;transform:none!important}
+.inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint b{transform:rotate(180deg)!important}
