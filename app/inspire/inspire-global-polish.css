@@ -2670,6 +2670,11 @@
   -webkit-appearance: none !important;
   appearance: none !important;
   isolation: isolate !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-indent: -9999px !important;
+  text-shadow: none !important;
 }
 .inspire details > summary > b::after,
 .inspire-page-about .inspire-depth-panel:first-child > summary > b::after,
@@ -2717,4 +2722,37 @@
 .inspire-page-method .inspire-depth-panel:not([open]) .inspire-panel-open-hint b {
   transform: rotate(0deg) !important;
   transform-origin: center !important;
+}
+
+/* Hover must never revive the old square shadow on the icon's hit area.
+   The interaction is carried solely by the two circular linework layers. */
+.inspire details > summary:hover > b,
+.inspire details > summary:focus-visible > b,
+.inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint b,
+.inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint b {
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.inspire details > summary > b::after,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::after,
+.inspire-page-method .inspire-panel-open-hint b::after,
+.inspire details > summary > b::before,
+.inspire-page-about .inspire-depth-panel:first-child > summary > b::before,
+.inspire-page-method .inspire-panel-open-hint b::before {
+  transition: border-color .18s ease, box-shadow .18s ease !important;
+}
+.inspire details > summary:hover > b::after,
+.inspire details > summary:focus-visible > b::after,
+.inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint b::after,
+.inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint b::after {
+  border-color: #efffff !important;
+  box-shadow: 0 0 7px rgba(104, 243, 251, .52) !important;
+}
+.inspire details > summary:hover > b::before,
+.inspire details > summary:focus-visible > b::before,
+.inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint b::before,
+.inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint b::before {
+  border-color: #fff !important;
+  box-shadow: none !important;
 }
