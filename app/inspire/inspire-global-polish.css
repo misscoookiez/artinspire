@@ -1295,3 +1295,24 @@
   #par-sandru,
   #biezakie-jautajumi { scroll-margin-top: 66px !important; }
 }
+
+/* Compact mobile reference: the mark occupies the upper-left, languages stay
+   in the opposite corner, and the invitation starts straight below the mark. */
+@media (max-width: 800px) {
+  .inspire-masthead,
+  .inspire-page-home .inspire-masthead {
+    padding: 13px 16px 15px !important;
+    gap: 8px !important;
+  }
+
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand {
+    width: min(315px, 70vw) !important;
+    max-width: 70vw !important;
+  }
+
+  .inspire-masthead-copy > p:first-child { margin-bottom: 5px !important; }
+  .inspire-masthead-copy > span { line-height: 1.1 !important; }
+  .inspire-masthead-mood { margin-top: 5px !important; line-height: 1.14 !important; }
+  .inspire-masthead-language { top: 8px !important; right: 14px !important; }
+}
