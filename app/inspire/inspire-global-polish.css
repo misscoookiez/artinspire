@@ -264,6 +264,50 @@
   text-align: center;
 }
 
+/* Method refinements: clean horizontal panels, no decorative left rails and
+   one dependable right-hand control edge across both audiences. */
+.inspire-page-method .inspire-proof-list summary,
+.inspire-page-method .inspire-proof .inspire-proof-list > details > summary {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 24px !important;
+  justify-content: unset !important;
+  gap: 14px !important;
+  border-left: 0 !important;
+  padding-left: 18px !important;
+}
+.inspire-page-method .inspire-proof-list summary b,
+.inspire-page-method .inspire-proof .inspire-proof-list > details > summary b {
+  justify-self: end !important;
+  margin: 0 !important;
+}
+.inspire-page-method .inspire-proof-list details p {
+  border-left: 0 !important;
+  margin-left: 18px !important;
+}
+.inspire-page-method .inspire-youth-visual { display: none !important; }
+.inspire-page-method .inspire-depth-panel:nth-child(2) .inspire-proof {
+  max-height: none !important;
+  overflow: visible !important;
+}
+@media (min-width: 901px) {
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr) !important;
+    column-gap: clamp(54px, 8vw, 150px) !important;
+    align-items: start !important;
+  }
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof > div:first-child {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    max-width: none !important;
+  }
+  .inspire-page-method .inspire-depth-panel:nth-child(3) .inspire-proof-list {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+  }
+}
+
 @media (max-width: 800px) {
   .inspire-masthead {
     min-height: 0 !important;

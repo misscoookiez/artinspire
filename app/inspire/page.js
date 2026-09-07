@@ -2499,22 +2499,6 @@ export default function InspirePage({ page = "home" }) {
           )}
         </div>
         <div className="inspire-capability-grid">
-          {page === "home" && (
-            <div className="inspire-capability-audiences" aria-label={lang === "lv" ? "Studijas pieejas" : lang === "ru" ? "Подходы студии" : "Studio approaches"}>
-              {audienceOverview.map((item) => (
-                <details key={item.title} className="inspire-capability-audience" open>
-                  <summary>
-                    <span>{item.title}</span>
-                    <b aria-hidden="true">+</b>
-                  </summary>
-                  <div>
-                    <p>{item.body}</p>
-                    <a href={item.href}>{item.cta}</a>
-                  </div>
-                </details>
-              ))}
-            </div>
-          )}
           {capabilities.items.map(([title, body, bullets], index) => (
             <article key={title}>
               <b>{title}</b>
@@ -2537,6 +2521,22 @@ export default function InspirePage({ page = "home" }) {
             </article>
           ))}
         </div>
+        {page === "home" && (
+          <div className="inspire-capability-audiences" aria-label={lang === "lv" ? "Studijas pieejas" : lang === "ru" ? "Подходы студии" : "Studio approaches"}>
+            {audienceOverview.map((item) => (
+              <details key={item.title} className="inspire-capability-audience">
+                <summary>
+                  <span>{item.title}</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <div>
+                  <p>{item.body}</p>
+                  <a href={item.href}>{item.cta}</a>
+                </div>
+              </details>
+            ))}
+          </div>
+        )}
       </section>
       <section className="inspire-depth">
         <details className="inspire-depth-panel" open>
@@ -2690,10 +2690,10 @@ export default function InspirePage({ page = "home" }) {
               {approach.items.map(([title, body], index) => (
                 <details key={title} open={index === 0}>
                   <summary>
-                    <strong>{title}</strong>
+                    <strong>{content(`inspire.adults.item.${index}.title`, title)}</strong>
                     <b>+</b>
                   </summary>
-                  <p>{body}</p>
+                  <p>{content(`inspire.adults.item.${index}.body`, body)}</p>
                 </details>
               ))}
             </div>
@@ -2730,19 +2730,16 @@ export default function InspirePage({ page = "home" }) {
                 <br />
                 <em>{content("inspire.youth.emphasis", t.youthEm)}</em>
               </h2>
-              <div className="inspire-youth-visual" aria-hidden="true">
-                <img src="/art/inspire-visual-elements.webp" alt="" />
-              </div>
               <p>{content("inspire.youth.body", t.youthBody)}</p>
             </div>
             <div className="inspire-proof-list">
               {youthPrinciples.map(([title, body], index) => (
                 <details key={title} open={index === 0}>
                   <summary>
-                    <strong>{title}</strong>
+                    <strong>{content(`inspire.youth.item.${index}.title`, title)}</strong>
                     <b>+</b>
                   </summary>
-                  <p>{body}</p>
+                  <p>{content(`inspire.youth.item.${index}.body`, body)}</p>
                 </details>
               ))}
             </div>
