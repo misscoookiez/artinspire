@@ -63,10 +63,11 @@
     gap: clamp(9px, .9vw, 16px) !important;
     border-left: 1px solid rgba(188, 208, 255, .25);
     color: rgba(246, 242, 255, .87) !important;
+    font-family: "Segoe UI", "Aptos", Arial, sans-serif;
     font-size: clamp(11px, .88vw, 14px) !important;
     font-weight: 600;
     line-height: 1.12;
-    letter-spacing: .01em;
+    letter-spacing: .03em;
     text-align: center;
     text-decoration: none !important;
     text-shadow: 0 1px 12px rgba(0, 0, 0, .4);

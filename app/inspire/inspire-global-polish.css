@@ -874,9 +874,11 @@
     border: 1px solid rgba(125, 240, 247, .3) !important;
     background: linear-gradient(100deg, rgba(30, 213, 225, .12), rgba(135, 70, 176, .1)) !important;
     color: #f4ffff !important;
-    font-size: 11px !important;
-    font-weight: 800 !important;
-    letter-spacing: .1em !important;
+    font-family: "Segoe UI", "Aptos", Arial, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1.18 !important;
+    letter-spacing: .065em !important;
     text-decoration: none !important;
   }
   .inspire-navigation-links a:active,

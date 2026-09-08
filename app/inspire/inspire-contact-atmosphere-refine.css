@@ -227,3 +227,39 @@
 .inspire-page-contact .inspire-directions figure,
 .inspire-page-contact .inspire-directions-map,
 .inspire-page-contact .inspire-directions-map iframe{border-radius:0!important;}
+
+/* Localised headings become substantially longer at compact desktop widths.
+   Let the grid row grow with the information card instead of clipping the
+   final social action; the form card stretches with it, so its final action
+   remains on the WhatsApp baseline. */
+@media (min-width:861px) and (max-width:1200px){
+  .inspire-page-contact .inspire-contact-card{
+    height:auto!important;
+    min-height:480px!important;
+  }
+}
+
+/* Mobile is a sequence, not a compressed version of the desktop pair: each
+   card owns a full row and its actions retain their comfortable list rhythm. */
+@media (max-width:860px){
+  .inspire-page-contact .inspire-contact-panel{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:18px!important;
+  }
+  .inspire-page-contact .inspire-contact-card{
+    width:100%;
+    height:auto!important;
+    min-height:0!important;
+    box-sizing:border-box;
+  }
+  .inspire-page-contact .inspire-contact-socials{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    width:100%!important;
+  }
+  .inspire-page-contact .inspire-contact-socials a{
+    display:grid!important;
+    grid-template-columns:38px minmax(0,1fr) 16px!important;
+    min-height:56px!important;
+  }
+}
