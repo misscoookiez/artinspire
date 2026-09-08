@@ -3219,3 +3219,17 @@
   .inspire-page-contact .inspire-contact-socials { width: 100%; }
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer textarea { min-height: 126px; }
 }
+
+/* Method-panel disclosure: the blue label and chevron are enough of a cue.
+   Removing its filled frame lets the panel title remain the primary action. */
+.inspire-page-method .inspire-panel-open-hint,
+.inspire-page-method .inspire-depth-panel[open] .inspire-panel-open-hint,
+.inspire-page-method .inspire-depth-panel > summary:hover .inspire-panel-open-hint,
+.inspire-page-method .inspire-depth-panel > summary:focus-visible .inspire-panel-open-hint {
+  min-height: 0 !important;
+  padding: 0 !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #8feff8 !important;
+}
