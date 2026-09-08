@@ -1907,6 +1907,40 @@
   z-index: 2 !important;
 }
 
+/* Booking controls: a calm, obvious close target without the oversized halo.
+   Event dates are deliberately circular; time and format choices retain a
+   compact rounded-rectangle form so their labels remain easy to scan. */
+.inspire-modal .inspire-x {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-color: rgba(150, 249, 255, .66) !important;
+  box-shadow: 0 0 0 1px rgba(5, 7, 13, .58), 0 0 11px rgba(89, 238, 248, .30), 0 0 19px rgba(218, 90, 250, .12) !important;
+}
+.inspire-modal .inspire-x::before,
+.inspire-modal .inspire-x::after {
+  width: 17px !important;
+  height: 2px !important;
+  box-shadow: 0 0 5px rgba(123, 241, 250, .68) !important;
+}
+.inspire-modal .inspire-x:hover,
+.inspire-modal .inspire-x:focus-visible {
+  transform: scale(1.03) !important;
+  box-shadow: 0 0 0 1px rgba(5, 7, 13, .62), 0 0 14px rgba(94, 240, 249, .44), 0 0 24px rgba(221, 94, 251, .18) !important;
+}
+.inspire-modal .inspire-event-calendar button {
+  width: 100% !important;
+  max-width: 38px !important;
+  min-height: 0 !important;
+  aspect-ratio: 1 !important;
+  height: auto !important;
+  justify-self: center;
+  border-radius: 50% !important;
+}
+.inspire-modal .inspire-event-hour-grid button,
+.inspire-modal .inspire-event-format-picker button { border-radius: 8px !important; }
+
 /* Contact is its own luminous scene: familiar studio nebula texture beneath a
    dark wash, two floating panes, and quiet typographic details in the field. */
 .inspire-page-contact .inspire-contact-panel {
