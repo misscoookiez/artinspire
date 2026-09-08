@@ -1,0 +1,110 @@
+/* Shared desktop navigation skin.  It deliberately leaves the link structure,
+   routes and mobile-menu behaviour alone: this is only the visual layer. */
+@media (min-width: 801px) {
+  .inspire .inspire-icon-nav {
+    position: sticky;
+    isolation: isolate;
+    min-height: 82px;
+    padding: 0 max(28px, 7.2vw) !important;
+    overflow: visible;
+    border-top: 1px solid rgba(222, 128, 255, .52);
+    border-bottom: 1px solid rgba(76, 228, 246, .63);
+    background:
+      linear-gradient(90deg, rgba(35, 8, 45, .96), rgba(16, 10, 43, .95) 43%, rgba(5, 26, 45, .96)) !important;
+    box-shadow:
+      0 12px 28px rgba(20, 5, 48, .32),
+      0 7px 22px rgba(38, 210, 234, .16);
+    backdrop-filter: blur(16px) saturate(1.16);
+  }
+
+  .inspire .inspire-icon-nav::before,
+  .inspire .inspire-icon-nav::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .inspire .inspire-icon-nav::before {
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, #ff659b 0%, #d565ef 32%, #826dff 58%, #4ce8f5 100%);
+    box-shadow: 0 0 13px rgba(130, 121, 255, .44);
+  }
+
+  /* The panel casts its own restrained light onto whatever section follows;
+     it is not an extra strip or a continuation of the masthead artwork. */
+  .inspire .inspire-icon-nav::after {
+    bottom: -18px;
+    height: 18px;
+    background: linear-gradient(90deg, rgba(235, 61, 147, .15), rgba(124, 87, 238, .12) 48%, rgba(48, 215, 233, .15));
+    filter: blur(13px);
+    opacity: .7;
+  }
+
+  .inspire .inspire-navigation-links {
+    min-height: 80px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+  }
+
+  .inspire .inspire-navigation-links a {
+    position: relative;
+    min-height: 80px;
+    padding: 0 clamp(10px, 1.2vw, 22px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(9px, .9vw, 16px) !important;
+    border-left: 1px solid rgba(188, 208, 255, .25);
+    color: rgba(246, 242, 255, .87) !important;
+    font-size: clamp(11px, .88vw, 14px) !important;
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: .01em;
+    text-align: center;
+    text-decoration: none !important;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, .4);
+    transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+
+  .inspire .inspire-navigation-links a:first-child { border-left: 0; }
+
+  .inspire .inspire-navigation-links a::after {
+    content: "";
+    position: absolute;
+    right: 14%;
+    bottom: 0;
+    left: 14%;
+    height: 2px;
+    background: linear-gradient(90deg, #ff779d, #d96af0 52%, #4ce9f5);
+    box-shadow: 0 0 14px rgba(140, 96, 255, .8);
+    opacity: 0;
+    transform: scaleX(.35);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  .inspire .inspire-navigation-links a:hover,
+  .inspire .inspire-navigation-links a:focus-visible {
+    color: #fff !important;
+    background: linear-gradient(180deg, rgba(236, 76, 166, .12), rgba(42, 211, 235, .07));
+    box-shadow: inset 0 0 24px rgba(129, 94, 246, .12);
+    outline: none;
+  }
+
+  .inspire .inspire-navigation-links a:hover::after,
+  .inspire .inspire-navigation-links a:focus-visible::after { opacity: 1; transform: scaleX(1); }
+
+  .inspire .inspire-navigation-links a img {
+    width: clamp(24px, 1.65vw, 31px) !important;
+    height: clamp(24px, 1.65vw, 31px) !important;
+    flex: 0 0 auto;
+    object-fit: contain;
+    filter: saturate(1.25) brightness(1.2) drop-shadow(0 0 7px rgba(108, 237, 248, .34));
+  }
+}

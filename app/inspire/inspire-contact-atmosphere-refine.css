@@ -138,7 +138,7 @@
      row rhythm remains unchanged while the whole information group settles
      into the spare lower space. */
   .inspire-page-contact .inspire-contact-details,
-  .inspire-page-contact .inspire-contact-socials{transform:translateY(5px);}
+  .inspire-page-contact .inspire-contact-socials{transform:translateY(3px);}
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer,
   .inspire-page-contact .inspire-contact-send{transform:translateY(11px);}
 
@@ -163,7 +163,7 @@
 .inspire-page-contact .inspire-directions-copy > p.inspire-directions-location{border-bottom:0!important;}
 .inspire-page-contact .inspire-directions-copy > p.inspire-directions-entry{
   margin-top:4px!important;
-  padding:0 0 15px!important;
+  padding:0 0 9px!important;
   border-bottom:1px solid rgba(125,226,255,.62)!important;
   color:#f0f6ff!important;
   font-weight:400!important;
