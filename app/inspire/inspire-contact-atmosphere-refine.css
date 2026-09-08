@@ -3,8 +3,6 @@
   position:relative;
   isolation:isolate;
   background:
-    linear-gradient(90deg,rgba(91,124,255,.075) 1px,transparent 1px) 0 0/18vw 100%,
-    linear-gradient(rgba(137,220,255,.055) 1px,transparent 1px) 0 0/100% 158px,
     radial-gradient(ellipse at 98% 18%,rgba(25,180,226,.13),transparent 29%),
     radial-gradient(ellipse at 3% 70%,rgba(83,64,187,.14),transparent 27%),
     linear-gradient(118deg,rgba(4,9,23,.55),rgba(6,17,40,.52) 48%,rgba(3,14,28,.58)),
@@ -128,6 +126,31 @@
   .inspire-page-contact .inspire-contact-details strong{color:#dce8f6!important;}
   .inspire-page-contact .inspire-contact-socials a{color:#d3e1f0!important;}
   .inspire-page-contact .inspire-contact-send{color:#a6f7ff!important;}
+  .inspire-page-contact .inspire-contact-send{
+    position:relative!important;
+    border-color:transparent!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  .inspire-page-contact .inspire-contact-send::before{
+    content:"";
+    position:absolute;
+    inset:9px 0!important;
+    border:1px solid rgba(176,235,248,.7);
+    border-radius:8px;
+    background:rgba(134,230,241,.07);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s ease;
+  }
+  .inspire-page-contact .inspire-contact-send:hover::before,
+  .inspire-page-contact .inspire-contact-send:focus-visible::before{opacity:1;}
+  .inspire-page-contact .inspire-contact-send:hover,
+  .inspire-page-contact .inspire-contact-send:focus-visible{
+    border-color:transparent!important;
+    background:transparent!important;
+    color:#fff!important;
+  }
   .inspire-page-contact .inspire-contact-socials a{
     transition:color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
   }
@@ -145,7 +168,7 @@
      row rhythm remains unchanged while the whole information group settles
      into the spare lower space. */
   .inspire-page-contact .inspire-contact-details,
-  .inspire-page-contact .inspire-contact-socials{transform:translateY(3px);}
+  .inspire-page-contact .inspire-contact-socials{transform:translateY(-11px);}
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer,
   .inspire-page-contact .inspire-contact-send{transform:translateY(11px);}
 
