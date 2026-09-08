@@ -3233,3 +3233,21 @@
   box-shadow: none !important;
   color: #8feff8 !important;
 }
+
+/* Gallery disclosures are simple row controls.  They must not inherit the
+   large open-state panel glow, which can overlap the first artwork at some
+   viewport widths. */
+.inspire-page-method .inspire-student-galleries details { overflow: visible !important; }
+.inspire-page-method .inspire-student-galleries summary {
+  width: 100% !important;
+  box-sizing: border-box;
+  overflow: visible !important;
+}
+.inspire-page-method .inspire-student-galleries details[open] > summary,
+.inspire-page-method .inspire-student-galleries summary:hover,
+.inspire-page-method .inspire-student-galleries summary:focus-visible {
+  padding-left: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
