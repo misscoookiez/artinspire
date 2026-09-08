@@ -951,8 +951,8 @@ const eventFormats = {
     title: "Not just a class. A whole evening to remember.",
     lead: "Bachelorette parties, children and adult birthdays, friends evenings and team events all work beautifully here. We can shape a quiet painting evening or something very specific; the format follows the people, ages, mood and idea.",
     rates: [
-      ["WATERCOLOUR", "from €20 / person", ""],
-      ["PAINTING", "from €35 / person", ""],
+      ["WATERCOLOUR", "€20 / person", ""],
+      ["PAINTING", "€35 / person", ""],
       ["ONE LARGE SHARED CANVAS", "from €200", ""],
     ],
     hangout:
@@ -1006,8 +1006,8 @@ const eventFormats = {
     title: "Не просто занятие. Целый вечер, который запомнится.",
     lead: "Здесь отлично получаются девичники, детские и взрослые дни рождения, вечера с друзьями и события для команд. Можно устроить спокойный вечер живописи или очень конкретное творческое событие — формат строится вокруг людей, возраста, настроения и идеи.",
     rates: [
-      ["АКВАРЕЛЬ", "от €20 / человек", ""],
-      ["ЖИВОПИСЬ", "от €35 / человек", ""],
+      ["АКВАРЕЛЬ", "€20 / человек", ""],
+      ["ЖИВОПИСЬ", "€35 / человек", ""],
       ["ОДНО БОЛЬШОЕ ОБЩЕЕ ПОЛОТНО", "от €200", ""],
     ],
     hangout:
@@ -2987,6 +2987,13 @@ export default function InspirePage({ page = "home" }) {
                     : "A shared creative experience becomes a memory that brings people closer."}
               </span>
             </p>
+            <button
+              type="button"
+              className="inspire-event-primary-cta"
+              onClick={() => openEventInquiry()}
+            >
+              {events.cta}
+            </button>
           </div>
           <div
             className="inspire-event-gallery inspire-event-slideshow"
@@ -3101,13 +3108,6 @@ export default function InspirePage({ page = "home" }) {
           </div>
         ) : null}
         <p className="inspire-event-support">{host.event}</p>
-        <button
-          type="button"
-          className="inspire-event-primary-cta"
-          onClick={() => openEventInquiry()}
-        >
-          {events.cta}
-        </button>
         <div className="inspire-event-faq-inline">
           <details>
             <summary>

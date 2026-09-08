@@ -3260,3 +3260,58 @@
 /* The event invitation is intentionally large: normal tracking keeps it
    readable at that scale without changing its three-line composition. */
 .inspire-page-events .inspire-events-title { letter-spacing: .005em !important; }
+
+/* Mobile chapters are allowed to reflow, but the masthead must not grow when
+   a translated slideshow line wraps.  The content stays within one stable
+   opening frame across every route. */
+@media (max-width:800px) {
+  .inspire-masthead {
+    height:470px !important;
+    min-height:470px !important;
+    max-height:470px !important;
+    overflow:hidden !important;
+  }
+
+  /* Method panels become a calm vertical reading sequence on a phone. */
+  .inspire-page-method .inspire-depth-panel > summary {
+    min-height:68px !important;
+    padding:14px 20px !important;
+    gap:10px !important;
+  }
+  .inspire-page-method .inspire-depth-panel .inspire-proof {
+    display:block !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+    padding:24px 20px 42px !important;
+  }
+  .inspire-page-method .inspire-proof-list {
+    width:100% !important;
+    margin-top:24px !important;
+  }
+  .inspire-page-method .inspire-proof-list summary {
+    padding:14px !important;
+    overflow-wrap:anywhere;
+  }
+  .inspire-page-method .inspire-proof-list details p {
+    margin:0 14px 18px !important;
+    overflow-wrap:anywhere;
+  }
+
+  /* Sandra's portrait leads on mobile; the companion photographs sit beneath
+     it at their own readable size instead of inheriting the desktop mosaic. */
+  .inspire-page-about .inspire-host-gallery {
+    min-height:0 !important;
+    height:auto !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    grid-template-rows:auto !important;
+    gap:8px !important;
+  }
+  .inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+    grid-column:1 / -1 !important;
+    grid-row:auto !important;
+    aspect-ratio:4 / 5 !important;
+  }
+  .inspire-page-about .inspire-host-gallery img:not(.inspire-host-portrait) {
+    aspect-ratio:1 / 1 !important;
+  }
+}
