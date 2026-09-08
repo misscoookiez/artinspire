@@ -3242,12 +3242,19 @@
   width: 100% !important;
   box-sizing: border-box;
   overflow: visible !important;
+  padding-left: 16px !important;
+  padding-right: 14px !important;
 }
 .inspire-page-method .inspire-student-galleries details[open] > summary,
 .inspire-page-method .inspire-student-galleries summary:hover,
 .inspire-page-method .inspire-student-galleries summary:focus-visible {
-  padding-left: 0 !important;
+  padding-left: 16px !important;
+  padding-right: 14px !important;
   background: transparent !important;
   box-shadow: none !important;
   outline: none !important;
 }
+
+/* The event invitation is intentionally large: normal tracking keeps it
+   readable at that scale without changing its three-line composition. */
+.inspire-page-events .inspire-events-title { letter-spacing: .005em !important; }

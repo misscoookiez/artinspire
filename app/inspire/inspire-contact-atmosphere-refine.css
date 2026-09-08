@@ -73,6 +73,9 @@
     border-bottom:1px solid rgba(185,219,250,.2)!important;
   }
   .inspire-page-contact .inspire-contact-socials a:last-child{border-bottom:0!important;}
+  .inspire-page-contact .inspire-contact-socials a:first-child{
+    border-bottom-color:rgba(185,219,250,.42)!important;
+  }
   .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer textarea{
     height:121px;
     min-height:121px;
