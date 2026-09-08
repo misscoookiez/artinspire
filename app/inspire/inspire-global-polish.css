@@ -3095,14 +3095,14 @@
     radial-gradient(ellipse at 12% 24%, rgba(156, 54, 221, .18), transparent 28%),
     radial-gradient(ellipse at 84% 18%, rgba(38, 211, 236, .16), transparent 32%),
     linear-gradient(rgba(5, 8, 24, .54), rgba(5, 8, 25, .72)),
-    url('/art/inspire-nebula.jpg') center top / cover fixed;
+    url('/art/inspire-nebula.webp') center top / cover fixed;
 }
 .inspire-page-contact .inspire-icon-nav {
   border-top: 1px solid rgba(139, 231, 245, .3);
   border-bottom: 1px solid rgba(104, 224, 240, .55);
   background:
     linear-gradient(90deg, rgba(7, 11, 29, .82), rgba(21, 30, 70, .66), rgba(7, 20, 35, .78)),
-    url('/art/inspire-nebula.jpg') center 36% / cover;
+    url('/art/inspire-nebula.webp') center 36% / cover;
   box-shadow: 0 8px 24px rgba(3, 5, 19, .3), inset 0 1px rgba(234, 253, 255, .08);
 }
 .inspire-page-contact .inspire-contact-panel {
@@ -3117,7 +3117,7 @@
     radial-gradient(ellipse at 14% 12%, rgba(111, 67, 231, .18), transparent 35%),
     radial-gradient(ellipse at 88% 86%, rgba(42, 203, 227, .13), transparent 37%),
     linear-gradient(116deg, rgba(10, 16, 32, .82), rgba(17, 26, 53, .82) 51%, rgba(7, 21, 33, .85)),
-    url('/art/inspire-nebula.jpg') center 66% / cover !important;
+    url('/art/inspire-nebula.webp') center 66% / cover !important;
 }
 
 /* Contact actions use the same quiet information rhythm as the phone and

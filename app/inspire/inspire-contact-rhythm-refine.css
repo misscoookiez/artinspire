@@ -5,7 +5,7 @@
     radial-gradient(ellipse at 13% 86%,rgba(118,69,245,.26),transparent 42%),
     radial-gradient(ellipse at 86% 12%,rgba(47,221,244,.2),transparent 36%),
     linear-gradient(110deg,rgba(6,11,35,.7),rgba(11,24,61,.62) 54%,rgba(5,20,37,.72)),
-    url('/art/inspire-nebula.jpg') center 45% / cover !important;
+    url('/art/inspire-nebula.webp') center 45% / cover !important;
 }
 @media (min-width:861px){
   .inspire-page-contact .inspire-contact-card{
