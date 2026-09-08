@@ -93,12 +93,19 @@
 /* Keep the card layout intact while borrowing the site artwork as a quiet
    pigment layer. The readable surface stays dark and blue-led. */
 .inspire-page-contact .inspire-contact-panel{
-  background:
-    linear-gradient(112deg,rgba(5,12,31,.68),rgba(10,27,60,.61) 54%,rgba(5,21,37,.65)),
-    url('/art/inspire-contact-lightscape.png') center 55% / cover!important;
+  /* The parent page owns the lightscape.  Let it continue behind both the
+     cards and the guide instead of restarting the artwork in each section. */
+  background:transparent!important;
 }
-.inspire-page-contact .inspire-contact-card-info{background-position:28% 76%!important;}
-.inspire-page-contact .inspire-contact-card-message{background-position:76% 24%!important;}
+.inspire-page-contact .inspire-directions{background:transparent!important;}
+
+/* Lighter glass leaves more of the shared artwork visible inside the cards. */
+.inspire-page-contact .inspire-contact-card{
+  background:
+    radial-gradient(ellipse at 5% 104%,rgba(111,72,244,.28),transparent 50%),
+    radial-gradient(ellipse at 100% 0%,rgba(58,229,244,.23),transparent 46%),
+    linear-gradient(135deg,rgba(31,42,103,.34),rgba(7,14,39,.43) 61%,rgba(12,68,95,.26))!important;
+}
 
 @media(min-width:861px){
   /* One uninterrupted list rhythm: each separator belongs to the row above
@@ -156,6 +163,13 @@
     background-position:center!important;
     background-size:21px 21px!important;
   }
+}
+
+/* On short desktop windows the card is more compressed.  This small
+   compensating lift preserves the same cross-card guide-line alignment. */
+@media (min-width:861px) and (max-height:620px){
+  .inspire-page-contact .inspire-contact-details,
+  .inspire-page-contact .inspire-contact-socials{transform:translateY(-11px);}
 }
 
 /* The entry belongs to the address line; the blue rule deliberately follows
