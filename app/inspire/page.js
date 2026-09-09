@@ -706,7 +706,7 @@ const groups = [
 ];
 const products = [
   [
-    "PIRMAIS APMEKLĒJUMS",
+    "IZMĒĢINĀJUMA NODARBĪBA",
     "1 nodarbība",
     "€15",
     "Pirmais solis, lai iepazītu studiju, pasniedzēju un savu gleznošanas ritmu.",
@@ -798,7 +798,7 @@ const englishGroups = [
 ];
 const englishProducts = [
   [
-    "FIRST VISIT",
+    "TRIAL CLASS",
     "1 class",
     "€15",
     "A first step to get to know the studio, the teacher and your own painting rhythm.",
@@ -856,7 +856,7 @@ const russianGroups = [
 ];
 const russianProducts = [
   [
-    "ПЕРВОЕ ПОСЕЩЕНИЕ",
+    "ПРОБНОЕ ЗАНЯТИЕ",
     "1 занятие",
     "€15",
     "Первый шаг, чтобы познакомиться со студией, преподавателем и своим ритмом в живописи.",
@@ -1177,7 +1177,7 @@ const words = {
     booking: "PIETEIKŠANĀS",
     format: "IZVĒLIES SAVU FORMĀTU",
     book: "REZERVĒT VIETU",
-    price: "€15 PIRMAIS APMEKLĒJUMS · €25 VIENA NODARBĪBA · ABONEMENTS 4× €80",
+    price: "€15 IZMĒĢINĀJUMA NODARBĪBA · €25 VIENA NODARBĪBA · ABONEMENTS 4× €80",
     materialsIncluded: "VISI MATERIĀLI IEKĻAUTI",
     scheduleNote:
       "JAUNIEŠU GRUPA — BĒRNI NO 8 GADU VECUMA · CETURTDIEN UN SESTDIEN\nPIEAUGUŠIE · CETURTDIEN, SESTDIEN UN SVĒTDIEN",
@@ -1235,7 +1235,7 @@ const words = {
     booking: "BOOKING",
     format: "CHOOSE YOUR FORMAT",
     book: "RESERVE A PLACE",
-    price: "€15 TRIAL · €25 SINGLE CLASS · €80 FOUR-CLASS PASS",
+    price: "€15 TRIAL CLASS · €25 SINGLE CLASS · €80 FOUR-CLASS PASS",
     materialsIncluded: "ALL MATERIALS INCLUDED",
     scheduleNote:
       "YOUTH GROUP — CHILDREN AGED 8+ · THURSDAY & SATURDAY\nADULTS · THURSDAY, SATURDAY & SUNDAY",
@@ -1293,7 +1293,7 @@ const words = {
     booking: "БРОНИРОВАНИЕ",
     format: "ВЫБЕРИ СВОЙ ФОРМАТ",
     book: "ЗАБРОНИРОВАТЬ",
-    price: "€15 ПРОБНОЕ · €25 ОДНО ЗАНЯТИЕ · €80 АБОНЕМЕНТ НА 4 ЗАНЯТИЯ",
+    price: "€15 ПРОБНОЕ ЗАНЯТИЕ · €25 ОДНО ЗАНЯТИЕ · €80 АБОНЕМЕНТ НА 4 ЗАНЯТИЯ",
     materialsIncluded: "ВСЕ МАТЕРИАЛЫ ВКЛЮЧЕНЫ",
     scheduleNote:
       "МОЛОДЁЖНАЯ ГРУППА — ДЕТИ ОТ 8 ЛЕТ · ЧЕТВЕРГ И СУББОТА\nВЗРОСЛЫЕ · ЧЕТВЕРГ, СУББОТА И ВОСКРЕСЕНЬЕ",
