@@ -14,7 +14,9 @@
     box-shadow:
       0 12px 28px rgba(20, 5, 48, .32),
       0 7px 22px rgba(38, 210, 234, .16);
-    backdrop-filter: blur(16px) saturate(1.16);
+    /* The panel has an opaque gradient of its own; backdrop blurring adds
+       compositing work to a sticky element without a visible benefit. */
+    backdrop-filter: none;
   }
 
   .inspire .inspire-icon-nav::before,
