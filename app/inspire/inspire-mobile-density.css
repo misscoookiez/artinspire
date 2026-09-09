@@ -6,11 +6,11 @@
   .inspire-page-home .inspire-masthead {
     /* Keep the full invitation visible, but do not leave a poster-sized
        staging area between the mark, copy and the navigation below. */
-    height: 276px !important;
-    min-height: 276px !important;
+    height: 250px !important;
+    min-height: 250px !important;
     padding: 12px 20px 14px !important;
     grid-template-rows: auto auto !important;
-    align-content: space-between !important;
+    align-content: start !important;
     gap: 8px !important;
   }
 
