@@ -598,8 +598,7 @@
     background: #050507;
     border-bottom: 1px solid #28dce9;
   }
-  .inspire-icon-nav.is-open .inspire-navigation-links,
-  .inspire-icon-nav[open] .inspire-navigation-links { display: grid; }
+  .inspire-icon-nav.is-open .inspire-navigation-links { display: grid; }
   .inspire-navigation-links a {
     min-height: 54px;
     padding: 10px 5px;

@@ -1353,6 +1353,7 @@ export default function InspirePage({ page = "home" }) {
   const [eventSlide, setEventSlide] = useState(0);
   const [moodQuote, setMoodQuote] = useState(0);
   const [moodQuoteLeaving, setMoodQuoteLeaving] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [editableContent, setEditableContent] = useState({});
   const [sharedImages, setSharedImages] = useState({});
@@ -1728,7 +1729,8 @@ export default function InspirePage({ page = "home" }) {
     if (gallery) gallery.open = true;
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
   };
-  const markMobileContentJump = () => {
+  const closeMobileMenuAndShowContent = () => {
+    setMobileMenuOpen(false);
     if (!window.matchMedia("(max-width: 800px)").matches) return;
     try {
       window.sessionStorage.setItem("inspire-mobile-content-jump", "true");
@@ -2321,17 +2323,23 @@ export default function InspirePage({ page = "home" }) {
           <button className={lang === "ru" ? "active" : ""} onClick={() => chooseLanguage("ru")}>RU</button>
         </div>
       </section>
-      <details className="inspire-icon-nav" aria-label="Inspire sections">
-        <summary className="inspire-mobile-menu-toggle">
+      <nav className={`inspire-icon-nav ${mobileMenuOpen ? "is-open" : ""}`} aria-label="Inspire sections">
+        <button
+          type="button"
+          className="inspire-mobile-menu-toggle"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="inspire-navigation-links"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+        >
           <span>{lang === "lv" ? "IZVĒLNE" : lang === "ru" ? "МЕНЮ" : "MENU"}</span>
-          <b aria-hidden="true">+</b>
-        </summary>
+          <b aria-hidden="true">{mobileMenuOpen ? "×" : "+"}</b>
+        </button>
         <div id="inspire-navigation-links" className="inspire-navigation-links">
-        <Link href="/classes" onClick={markMobileContentJump}>
+        <Link href="/classes" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </Link>
-        <Link href="/method" onClick={markMobileContentJump}>
+        <Link href="/method" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
@@ -2341,7 +2349,7 @@ export default function InspirePage({ page = "home" }) {
                 : "HOW WE WORK"}
           </span>
         </Link>
-        <Link href="/events" onClick={markMobileContentJump}>
+        <Link href="/events" onClick={closeMobileMenuAndShowContent}>
           <img
             className="inspire-gift-icon"
             src="/art/inspire-icon-gift.png"
@@ -2355,19 +2363,19 @@ export default function InspirePage({ page = "home" }) {
                 : "PRIVATE EVENTS"}
           </span>
         </Link>
-        <Link href="/contact" onClick={markMobileContentJump}>
+        <Link href="/contact" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
         </Link>
-        <Link href="/about" onClick={markMobileContentJump}>
+        <Link href="/about" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-easel.png" alt="" />
           <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
         </Link>
-        <Link href="/questions" onClick={markMobileContentJump}>
+        <Link href="/questions" onClick={closeMobileMenuAndShowContent}>
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
         </Link>
         </div>
-      </details>
+      </nav>
       <section className="inspire-statement">
         <div className="inspire-statement-copy">
           <h2>
