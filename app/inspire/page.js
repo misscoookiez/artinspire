@@ -61,6 +61,7 @@ const landingStatementSlides = [
   ["/art/landing-confirmed-ca08.webp", "Art Studio Inspire studijas noskaņa"],
   ["/art/landing-confirmed-447.webp", "Art Studio Inspire radošā vide"],
   ["/art/landing-approved-0502.webp", "Art Studio Inspire studijas noskaņa"],
+  ["/art/landing-confirmed-exec.webp", "Radošs mirklis Art Studio Inspire"],
 ];
 const youthGallerySlides = [
   ["/art/inspire-student-work.webp", "Skolēna darbs Art Studio Inspire"],
@@ -2395,14 +2396,16 @@ export default function InspirePage({ page = "home" }) {
           className="inspire-statement-slideshow"
           aria-label="Art Studio Inspire gallery"
         >
-          {showcaseSlides.map(([src, alt], index) => (
+          {showcaseSlides.map(([src, alt], index) => ([slide, (slide + 1) % showcaseSlides.length].includes(index) ? (
             <img
               className={index === slide ? "active" : ""}
               key={`${src}-${index}`}
               src={image(`inspire.image.statement.${index}`, src)}
               alt={alt}
+              decoding="async"
+              fetchPriority={index === slide ? "high" : "low"}
             />
-          ))}
+          ) : null))}
         </div>
       </section>
       <section id="nodarbibas" className="inspire-section">
@@ -3022,14 +3025,16 @@ export default function InspirePage({ page = "home" }) {
             className="inspire-event-gallery inspire-event-slideshow"
             aria-label="Private events at Art Studio Inspire"
           >
-            {eventSlides.map(([src, alt], index) => (
+            {eventSlides.map(([src, alt], index) => ([eventSlide, (eventSlide + 1) % eventSlides.length].includes(index) ? (
               <img
                 key={src}
                 className={index === eventSlide ? "active" : ""}
                 src={image(`inspire.image.event.${index}`, src)}
                 alt={alt}
+                decoding="async"
+                fetchPriority={index === eventSlide ? "high" : "low"}
               />
-            ))}
+            ) : null))}
           </div>
         </div>
         <div className="inspire-event-rates" aria-label={lang === "lv" ? "Pasākuma sākuma cenas" : lang === "ru" ? "Стартовые цены события" : "Event starting prices"}>
