@@ -6,7 +6,7 @@ const money = new Intl.NumberFormat("en-IE", {style:"currency",currency:"EUR",ma
 
 export default function ShopPage(){
   const [cart,setCart]=useState([]), [active,setActive]=useState(null), [drawer,setDrawer]=useState(false), [invoice,setInvoice]=useState(false), [status,setStatus]=useState(""), [availableIds,setAvailableIds]=useState(null), [liveArtwork,setLiveArtwork]=useState(null);
-  useEffect(()=>{fetch("/api/catalog").then(response=>response.ok?response.json():null).then(data=>{if(data?.availableIds)setAvailableIds(data.availableIds);if(data?.artworks)setLiveArtwork(data.artworks)}).catch(()=>{})},[]);
+  useEffect(()=>{fetch("/api/catalog?scope=shop").then(response=>response.ok?response.json():null).then(data=>{if(data?.availableIds)setAvailableIds(data.availableIds);if(data?.artworks)setLiveArtwork(data.artworks)}).catch(()=>{})},[]);
   const visibleArtwork=liveArtwork??(availableIds===null?artwork:artwork.filter(piece=>availableIds.includes(piece.id)));
   const add=(piece)=>{setCart(current=>current.some(item=>item.id===piece.id)?current:[...current,piece]);setDrawer(true)};
   const checkout=async()=>{setStatus("Opening secure checkout…");try{const res=await fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"art",items:cart,invoice})});const data=await res.json();if(data.url)window.location.href=data.url;else setStatus(data.error||"Checkout is not configured yet.")}catch{setStatus("Checkout could not be reached. Please try again.")}};

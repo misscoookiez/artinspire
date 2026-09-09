@@ -1699,9 +1699,11 @@ export default function InspirePage({ page = "home" }) {
     };
   }, [lang]);
   useEffect(() => {
+    if (!["home", "classes", "events"].includes(page)) return undefined;
     let active = true;
+    const scope = page === "events" ? "events" : "booking";
     const refresh = () =>
-      fetch("/api/catalog")
+      fetch(`/api/catalog?scope=${scope}`)
         .then((response) => (response.ok ? response.json() : null))
         .then((result) => {
           if (active && result) setAvailability(result);
@@ -1713,7 +1715,7 @@ export default function InspirePage({ page = "home" }) {
       active = false;
       window.clearInterval(timer);
     };
-  }, []);
+  }, [page]);
   const content = (id, fallback) =>
     typeof editableContent[id] === "string" ? editableContent[id] : fallback;
   const image = (id, fallback) =>
