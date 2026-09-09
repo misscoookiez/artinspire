@@ -1,5 +1,5 @@
 "use client";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { classes, privateSlots } from "@/lib/catalog";
 import InspireLocalGuide, { InspireFooter } from "@/components/InspireLocalGuide";
 import "./inspire.css";
@@ -133,6 +133,37 @@ const moodQuotes = {
     "Хорошей идее можно расти медленно.",
     "Руки часто понимают раньше слов.",
   ],
+};
+
+const rigaDatePartsFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Riga",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+const rigaTimePartsFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Riga",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+const rigaDateKey = (dateValue) => {
+  if (!dateValue) return "";
+  const parts = rigaDatePartsFormatter.formatToParts(new Date(dateValue));
+  const value = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+};
+const weekdayInRiga = (dateValue) => new Date(`${rigaDateKey(dateValue)}T12:00:00Z`).getUTCDay();
+const weekStartKey = (dateValue) => {
+  const key = rigaDateKey(dateValue);
+  if (!key) return "";
+  const date = new Date(`${key}T12:00:00Z`);
+  date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
+  return date.toISOString().slice(0, 10);
+};
+const rigaMinuteOfDay = (dateValue) => {
+  const value = Object.fromEntries(rigaTimePartsFormatter.formatToParts(new Date(dateValue)).map((part) => [part.type, part.value]));
+  return Number(value.hour) * 60 + Number(value.minute);
 };
 
 function InspireRotatingGallery({ slides, resolveImage, className, label, intervalMs }) {
@@ -1784,40 +1815,35 @@ export default function InspirePage({ page = "home" }) {
   const livePrivateSlots = availability.privateSlots?.length
     ? availability.privateSlots
     : privateSlots;
-  const allLiveClasses = availability.classSessions?.length
-    ? availability.classSessions.map((item) => ({
+  const allLiveClasses = useMemo(() => {
+    if (!availability.classSessions?.length) return classes;
+    const dateFormatter = new Intl.DateTimeFormat(
+      lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB",
+      { timeZone: "Europe/Riga", weekday: "short", day: "numeric", month: "short" },
+    );
+    const timeFormatter = new Intl.DateTimeFormat(
+      lang === "ru" ? "ru-RU" : lang === "lv" ? "lv-LV" : "en-GB",
+      { timeZone: "Europe/Riga", hour: "2-digit", minute: "2-digit", hour12: false },
+    );
+    return availability.classSessions.map((item) => ({
         id: item.id,
         startsAt: item.starts_at,
         endsAt: item.ends_at,
-        date: new Intl.DateTimeFormat(
-          lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB",
-          {
-            timeZone: "Europe/Riga",
-            weekday: "short",
-            day: "numeric",
-            month: "short",
-          },
-        ).format(new Date(item.starts_at)),
+        date: dateFormatter.format(new Date(item.starts_at)),
         title: item.title_en,
         titleLv: item.title_lv,
-        time: new Intl.DateTimeFormat(
-          lang === "ru" ? "ru-RU" : lang === "lv" ? "lv-LV" : "en-GB",
-          {
-            timeZone: "Europe/Riga",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          },
-        ).format(new Date(item.starts_at)),
+        time: timeFormatter.format(new Date(item.starts_at)),
         price: item.price_cents / 100,
         seats: item.available ? 1 : 0,
         past: Boolean(item.past),
         level: "",
-      }))
-    : classes;
+      }));
+  }, [availability.classSessions, lang]);
   const isStudioWorkSession = (session) => /studio work session|patstāvīgs darbs studijā/i.test(session.title || session.titleLv || "");
-  const liveClasses = allLiveClasses.filter((item) => !isStudioWorkSession(item));
-  const liveStudioWorkSlots = allLiveClasses.filter((item) => isStudioWorkSession(item));
+  const [liveClasses, liveStudioWorkSlots] = useMemo(() => [
+    allLiveClasses.filter((item) => !isStudioWorkSession(item)),
+    allLiveClasses.filter((item) => isStudioWorkSession(item)),
+  ], [allLiveClasses]);
   const labelSlot = (slot) =>
     slot.label ||
     new Intl.DateTimeFormat(
@@ -1853,22 +1879,11 @@ export default function InspirePage({ page = "home" }) {
         : session.title?.replace(/mixed\s+painting\s+group/i, "Mixed group");
     return title?.replace(/\s*\((?:ages?\s*)?8[–-]16(?:\s*(?:gadi|years))?\)/gi, "") || "";
   };
-  const dateKeyInRiga = (dateValue) => {
-    if (!dateValue) return "";
-    const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Riga", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date(dateValue));
-    const value = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
-    return `${value.year}-${value.month}-${value.day}`;
-  };
-  const dayInRiga = (dateValue) => new Date(`${dateKeyInRiga(dateValue)}T12:00:00Z`).getUTCDay();
-  const weekKey = (dateValue) => {
-    const key = dateKeyInRiga(dateValue);
-    if (!key) return "";
-    const date = new Date(`${key}T12:00:00Z`);
-    date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
-    return date.toISOString().slice(0, 10);
-  };
-  const scheduleWeeks = [...new Set(liveClasses.map((item) => weekKey(item.startsAt)).filter(Boolean))];
-  const currentScheduleWeek = weekKey(new Date().toISOString());
+  const scheduleWeeks = useMemo(
+    () => [...new Set(liveClasses.map((item) => weekStartKey(item.startsAt)).filter(Boolean))],
+    [liveClasses],
+  );
+  const currentScheduleWeek = weekStartKey(new Date().toISOString());
   const initialScheduleWeek = Math.max(0, scheduleWeeks.findIndex((week) => week >= currentScheduleWeek));
   const activeScheduleWeek = scheduleWeek < 0 ? initialScheduleWeek : Math.min(scheduleWeek, Math.max(0, scheduleWeeks.length - 1));
   const visibleWeek = scheduleWeeks[activeScheduleWeek];
@@ -1878,7 +1893,7 @@ export default function InspirePage({ page = "home" }) {
         const date = new Date(`${visibleWeek}T12:00:00Z`);
         date.setUTCDate(date.getUTCDate() + index);
         const hasClass = liveClasses.some(
-          (item) => weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === date.getUTCDay(),
+          (item) => weekStartKey(item.startsAt) === visibleWeek && weekdayInRiga(item.startsAt) === date.getUTCDay(),
         );
         return {
           key: date.toISOString().slice(0, 10),
@@ -1890,12 +1905,12 @@ export default function InspirePage({ page = "home" }) {
       })
     : [];
   const sameCalendarDay = (dateValue, dateKey) =>
-    Boolean(dateValue && dateKey) && dateKeyInRiga(dateValue) === dateKey;
+    Boolean(dateValue && dateKey) && rigaDateKey(dateValue) === dateKey;
   const bookingClasses = bookingDay
     ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
     : liveClasses;
   const bookableStudioSlots = calendarKind === "private" ? availablePrivateSessions : availableRentalSlots;
-  const rentalWeeks = [...new Set(bookableStudioSlots.map((item) => weekKey(item.startsAt)).filter(Boolean))];
+  const rentalWeeks = [...new Set(bookableStudioSlots.map((item) => weekStartKey(item.startsAt)).filter(Boolean))];
   const visibleRentalWeek = rentalWeeks[Math.min(rentalWeek, Math.max(0, rentalWeeks.length - 1))];
   const rentalDays = visibleRentalWeek
     ? Array.from({ length: 7 }, (_, index) => {
@@ -1956,22 +1971,12 @@ export default function InspirePage({ page = "home" }) {
   const eventMonthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(activeEventMonth);
   const eventDayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
   const eventHours = Array.from({ length: Math.max(0, 24 - eventDuration - 11 + 1) }, (_, index) => 11 + index);
-  const rigaMinutes = (dateValue) => {
-    const parts = new Intl.DateTimeFormat("en-GB", {
-      timeZone: "Europe/Riga",
-      hour: "2-digit",
-      minute: "2-digit",
-      hourCycle: "h23",
-    }).formatToParts(new Date(dateValue));
-    const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-    return Number(value.hour) * 60 + Number(value.minute);
-  };
   const eventOverlapsBusyTime = (dateKey, hour, duration, busyTime) => {
-    const busyStartDay = dateKeyInRiga(busyTime.starts_at);
-    const busyEndDay = dateKeyInRiga(busyTime.ends_at);
+    const busyStartDay = rigaDateKey(busyTime.starts_at);
+    const busyEndDay = rigaDateKey(busyTime.ends_at);
     if (dateKey < busyStartDay || dateKey > busyEndDay) return false;
-    const busyStart = busyStartDay === dateKey ? rigaMinutes(busyTime.starts_at) : 0;
-    const busyEnd = busyEndDay === dateKey ? rigaMinutes(busyTime.ends_at) : 24 * 60;
+    const busyStart = busyStartDay === dateKey ? rigaMinuteOfDay(busyTime.starts_at) : 0;
+    const busyEnd = busyEndDay === dateKey ? rigaMinuteOfDay(busyTime.ends_at) : 24 * 60;
     const eventStart = hour * 60;
     const eventEnd = (hour + duration) * 60;
     return eventStart < busyEnd && eventEnd > busyStart;
@@ -2007,7 +2012,7 @@ export default function InspirePage({ page = "home" }) {
       date,
       sessions: liveClasses.filter(
         (item) =>
-          weekKey(item.startsAt) === visibleWeek && dayInRiga(item.startsAt) === day,
+          weekStartKey(item.startsAt) === visibleWeek && weekdayInRiga(item.startsAt) === day,
       ),
     };
   }) : [];
@@ -2023,8 +2028,8 @@ export default function InspirePage({ page = "home" }) {
     if (nextWeek === activeScheduleWeek) return;
     setScheduleWeek(nextWeek);
     if (form && calendarKind === "class") {
-      const nextSession = liveClasses.find((item) => weekKey(item.startsAt) === scheduleWeeks[nextWeek]);
-      setBookingDay(nextSession ? dateKeyInRiga(nextSession.startsAt) : "");
+      const nextSession = liveClasses.find((item) => weekStartKey(item.startsAt) === scheduleWeeks[nextWeek]);
+      setBookingDay(nextSession ? rigaDateKey(nextSession.startsAt) : "");
       setBooking(null);
       setSelection("");
     }
@@ -2033,17 +2038,17 @@ export default function InspirePage({ page = "home" }) {
     const nextWeek = Math.max(0, Math.min(rentalWeeks.length - 1, rentalWeek + direction));
     if (nextWeek === rentalWeek) return;
     setRentalWeek(nextWeek);
-    const firstSlot = bookableStudioSlots.find((item) => weekKey(item.startsAt) === rentalWeeks[nextWeek]);
-    setBookingDay(firstSlot ? dateKeyInRiga(firstSlot.startsAt) : "");
+    const firstSlot = bookableStudioSlots.find((item) => weekStartKey(item.startsAt) === rentalWeeks[nextWeek]);
+    setBookingDay(firstSlot ? rigaDateKey(firstSlot.startsAt) : "");
     setBooking(null);
     setSelection("");
   };
   const openBooking = (kind, itemId, label) => {
     const selectedSession = kind === "class" ? liveClasses.find((item) => item.id === itemId) : null;
     if (selectedSession) {
-      const week = scheduleWeeks.indexOf(weekKey(selectedSession.startsAt));
+      const week = scheduleWeeks.indexOf(weekStartKey(selectedSession.startsAt));
       if (week >= 0) setScheduleWeek(week);
-      setBookingDay(dateKeyInRiga(selectedSession.startsAt));
+      setBookingDay(rigaDateKey(selectedSession.startsAt));
     } else setBookingDay("");
     setBooking({ kind, itemId, label });
     setSelection(`${kind}:${itemId}`);
@@ -2062,7 +2067,7 @@ export default function InspirePage({ page = "home" }) {
     if (kind === "rental" || kind === "private") {
       setRentalWeek(0);
       const firstSlot = kind === "private" ? availablePrivateSessions[0] : availableRentalSlots[0];
-      setBookingDay(dateKeyInRiga(firstSlot?.startsAt));
+      setBookingDay(rigaDateKey(firstSlot?.startsAt));
     } else setBookingDay(kind === "class" ? weekDays.find((day) => day.hasClass)?.key || "" : "");
     setStatus("");
     setSent(false);
