@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import Link from "next/link";
 import { classes, privateSlots } from "@/lib/catalog";
 import InspireLocalGuide, { InspireFooter } from "@/components/InspireLocalGuide";
@@ -135,6 +135,67 @@ const moodQuotes = {
     "Руки часто понимают раньше слов.",
   ],
 };
+
+function InspireRotatingGallery({ slides, resolveImage, className, label, intervalMs }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  useEffect(() => {
+    setActiveIndex(0);
+    const timer = window.setInterval(
+      () => setActiveIndex((current) => (current + 1) % slides.length),
+      intervalMs,
+    );
+    return () => window.clearInterval(timer);
+  }, [intervalMs, slides]);
+
+  const nextIndex = (activeIndex + 1) % slides.length;
+  return (
+    <div className={className} aria-label={label}>
+      {slides.map(([src, alt], index) => (index === activeIndex || index === nextIndex ? (
+        <img
+          className={index === activeIndex ? "active" : ""}
+          key={`${src}-${index}`}
+          src={resolveImage(src, index)}
+          alt={alt}
+          decoding="async"
+          fetchPriority={index === activeIndex ? "high" : "low"}
+        />
+      ) : null))}
+    </div>
+  );
+}
+
+function InspireMoodQuote({ lang }) {
+  const [quote, setQuote] = useState(0);
+  const [leaving, setLeaving] = useState(false);
+  useEffect(() => {
+    const quoteKey = `inspire-mood-quote-${lang}`;
+    const savedQuote = Number.parseInt(window.sessionStorage.getItem(quoteKey) || "", 10);
+    const firstQuote = Number.isInteger(savedQuote) && savedQuote >= 0 && savedQuote < moodQuotes[lang].length
+      ? savedQuote
+      : Math.floor(Math.random() * moodQuotes[lang].length);
+    window.sessionStorage.setItem(quoteKey, String(firstQuote));
+    setQuote(firstQuote);
+    setLeaving(false);
+    let swapTimer;
+    const timer = window.setInterval(() => {
+      setLeaving(true);
+      swapTimer = window.setTimeout(() => {
+        setQuote((current) => {
+          let next = current;
+          while (next === current) next = Math.floor(Math.random() * moodQuotes[lang].length);
+          window.sessionStorage.setItem(quoteKey, String(next));
+          return next;
+        });
+        setLeaving(false);
+      }, 380);
+    }, 8200);
+    return () => {
+      window.clearInterval(timer);
+      window.clearTimeout(swapTimer);
+    };
+  }, [lang]);
+  return <p className={`inspire-masthead-mood ${leaving ? "is-leaving" : ""}`} aria-live="polite">{moodQuotes[lang][quote]}</p>;
+}
 
 const studioCopy = {
   lv: {
@@ -1259,7 +1320,7 @@ export default function InspirePage({ page = "home" }) {
   const [lang, setLang] = useState("lv");
   const [showContactsFromMenu, setShowContactsFromMenu] = useState(false);
   const chooseLanguage = (nextLanguage) => {
-    setLang(nextLanguage);
+    startTransition(() => setLang(nextLanguage));
     try {
       window.localStorage.setItem("inspire-language", nextLanguage);
     } catch {}
@@ -1348,12 +1409,7 @@ export default function InspirePage({ page = "home" }) {
       ["ПОЧЕМУ СУЩЕСТВУЕТ ЭТА СТУДИЯ", "После многих лет за компьютером Сандре захотелось больше живого общения и возможности делать что-то хорошее вместе с людьми. Здесь знание встречается со свободой: искусство не обязано быть правильным, красивым или сразу понятным. В нём может быть личный мотив, сильная индивидуальность и что-то настоящее, что важно именно вам. Единственное правило — вам самим оно должно нравиться."],
     ],
   }[lang];
-  const [slide, setSlide] = useState(0);
   const showcaseSlides = page === "home" ? landingStatementSlides : statementSlides;
-  const [eventSlide, setEventSlide] = useState(0);
-  const [moodQuote, setMoodQuote] = useState(0);
-  const [moodQuoteLeaving, setMoodQuoteLeaving] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [editableContent, setEditableContent] = useState({});
   const [sharedImages, setSharedImages] = useState({});
@@ -1566,16 +1622,6 @@ export default function InspirePage({ page = "home" }) {
             ["AT YOUR PLACE", "a travelling format by arrangement"],
           ];
   useEffect(() => {
-    setSlide(0);
-  }, [page]);
-  useEffect(() => {
-    const timer = window.setInterval(
-      () => setSlide((current) => (current + 1) % showcaseSlides.length),
-      6200,
-    );
-    return () => window.clearInterval(timer);
-  }, [showcaseSlides.length]);
-  useEffect(() => {
     const updateContactView = () => {
       setShowContactsFromMenu(page === "home" && window.location.hash === "#kontakti");
     };
@@ -1643,40 +1689,6 @@ export default function InspirePage({ page = "home" }) {
     };
   }, [form]);
   useEffect(() => {
-    const timer = window.setInterval(
-      () => setEventSlide((current) => (current + 1) % eventSlides.length),
-      5200,
-    );
-    return () => window.clearInterval(timer);
-  }, []);
-  useEffect(() => {
-    const quoteKey = `inspire-mood-quote-${lang}`;
-    const savedQuote = Number.parseInt(window.sessionStorage.getItem(quoteKey) || "", 10);
-    const firstQuote = Number.isInteger(savedQuote) && savedQuote >= 0 && savedQuote < moodQuotes[lang].length
-      ? savedQuote
-      : Math.floor(Math.random() * moodQuotes[lang].length);
-    window.sessionStorage.setItem(quoteKey, String(firstQuote));
-    setMoodQuote(firstQuote);
-    setMoodQuoteLeaving(false);
-    let swapTimer;
-    const timer = window.setInterval(() => {
-      setMoodQuoteLeaving(true);
-      swapTimer = window.setTimeout(() => {
-        setMoodQuote((current) => {
-          let next = current;
-          while (next === current) next = Math.floor(Math.random() * moodQuotes[lang].length);
-          window.sessionStorage.setItem(quoteKey, String(next));
-          return next;
-        });
-        setMoodQuoteLeaving(false);
-      }, 380);
-    }, 8200);
-    return () => {
-      window.clearInterval(timer);
-      window.clearTimeout(swapTimer);
-    };
-  }, [lang]);
-  useEffect(() => {
     let active = true;
     const load = (locale) =>
       fetch(`/api/content?page=inspire&locale=${locale}`).then((response) =>
@@ -1706,7 +1718,7 @@ export default function InspirePage({ page = "home" }) {
       fetch(`/api/catalog?scope=${scope}`)
         .then((response) => (response.ok ? response.json() : null))
         .then((result) => {
-          if (active && result) setAvailability(result);
+          if (active && result) startTransition(() => setAvailability(result));
         })
         .catch(() => {});
     refresh();
@@ -1730,7 +1742,12 @@ export default function InspirePage({ page = "home" }) {
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
   };
   const closeMobileMenuAndShowContent = () => {
-    setMobileMenuOpen(false);
+    const menu = document.querySelector(".inspire-icon-nav");
+    const toggle = menu?.querySelector(".inspire-mobile-menu-toggle");
+    menu?.classList.remove("is-open");
+    toggle?.setAttribute("aria-expanded", "false");
+    const mark = toggle?.querySelector("b");
+    if (mark) mark.textContent = "+";
     if (!window.matchMedia("(max-width: 800px)").matches) return;
     try {
       window.sessionStorage.setItem("inspire-mobile-content-jump", "true");
@@ -2313,9 +2330,7 @@ export default function InspirePage({ page = "home" }) {
           <span>
             {t.hero} {t.hero2} {t.hero3}
           </span>
-          <p className={`inspire-masthead-mood ${moodQuoteLeaving ? "is-leaving" : ""}`} aria-live="polite" key={`${lang}-${moodQuote}`}>
-            {moodQuotes[lang][moodQuote]}
-          </p>
+          <InspireMoodQuote lang={lang} />
         </div>
         <div className="inspire-language inspire-masthead-language" aria-label="Language">
           <button className={lang === "lv" ? "active" : ""} onClick={() => chooseLanguage("lv")}>LV</button>
@@ -2323,16 +2338,23 @@ export default function InspirePage({ page = "home" }) {
           <button className={lang === "ru" ? "active" : ""} onClick={() => chooseLanguage("ru")}>RU</button>
         </div>
       </section>
-      <nav className={`inspire-icon-nav ${mobileMenuOpen ? "is-open" : ""}`} aria-label="Inspire sections">
+      <nav className="inspire-icon-nav" aria-label="Inspire sections">
         <button
           type="button"
           className="inspire-mobile-menu-toggle"
-          aria-expanded={mobileMenuOpen}
+          aria-expanded="false"
           aria-controls="inspire-navigation-links"
-          onClick={() => setMobileMenuOpen((open) => !open)}
+          onClick={(event) => {
+            const menu = event.currentTarget.closest(".inspire-icon-nav");
+            const open = !menu?.classList.contains("is-open");
+            menu?.classList.toggle("is-open", open);
+            event.currentTarget.setAttribute("aria-expanded", String(open));
+            const mark = event.currentTarget.querySelector("b");
+            if (mark) mark.textContent = open ? "×" : "+";
+          }}
         >
           <span>{lang === "lv" ? "IZVĒLNE" : lang === "ru" ? "МЕНЮ" : "MENU"}</span>
-          <b aria-hidden="true">{mobileMenuOpen ? "×" : "+"}</b>
+          <b aria-hidden="true">+</b>
         </button>
         <div id="inspire-navigation-links" className="inspire-navigation-links">
         <Link href="/classes" onClick={closeMobileMenuAndShowContent}>
@@ -2394,21 +2416,13 @@ export default function InspirePage({ page = "home" }) {
             {content("inspire.statement.quote.v2", t.statementQuote)}
           </blockquote>
         </div>
-        <div
+        <InspireRotatingGallery
           className="inspire-statement-slideshow"
-          aria-label="Art Studio Inspire gallery"
-        >
-          {showcaseSlides.map(([src, alt], index) => ([slide, (slide + 1) % showcaseSlides.length].includes(index) ? (
-            <img
-              className={index === slide ? "active" : ""}
-              key={`${src}-${index}`}
-              src={image(`inspire.image.statement.${index}`, src)}
-              alt={alt}
-              decoding="async"
-              fetchPriority={index === slide ? "high" : "low"}
-            />
-          ) : null))}
-        </div>
+          label="Art Studio Inspire gallery"
+          slides={showcaseSlides}
+          resolveImage={(src, index) => image(`inspire.image.statement.${index}`, src)}
+          intervalMs={6200}
+        />
       </section>
       <section id="nodarbibas" className="inspire-section">
         <div className="inspire-schedule-heading">
@@ -3037,21 +3051,13 @@ export default function InspirePage({ page = "home" }) {
               {events.cta}
             </button>
           </div>
-          <div
+          <InspireRotatingGallery
             className="inspire-event-gallery inspire-event-slideshow"
-            aria-label="Private events at Art Studio Inspire"
-          >
-            {eventSlides.map(([src, alt], index) => ([eventSlide, (eventSlide + 1) % eventSlides.length].includes(index) ? (
-              <img
-                key={src}
-                className={index === eventSlide ? "active" : ""}
-                src={image(`inspire.image.event.${index}`, src)}
-                alt={alt}
-                decoding="async"
-                fetchPriority={index === eventSlide ? "high" : "low"}
-              />
-            ) : null))}
-          </div>
+            label="Private events at Art Studio Inspire"
+            slides={eventSlides}
+            resolveImage={(src, index) => image(`inspire.image.event.${index}`, src)}
+            intervalMs={5200}
+          />
         </div>
         <div className="inspire-event-rates" aria-label={lang === "lv" ? "Pasākuma sākuma cenas" : lang === "ru" ? "Стартовые цены события" : "Event starting prices"}>
           {events.rates.map(([title, price, meta], index) => (
