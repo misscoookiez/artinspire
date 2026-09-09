@@ -32,6 +32,69 @@
   .inspire-masthead-copy > span { margin-top: 0 !important; }
   .inspire-masthead-mood { margin: 4px 0 0 !important; }
 
+  /* Booking formats are a compact, full-width list on phones.  Each keeps
+     its complete explanation and a generously tappable action, while the
+     title and price share a single visual row instead of creating a poster. */
+  .inspire-page-classes .inspire-products {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    border-top: 0 !important;
+  }
+
+  .inspire-page-classes .inspire-products article {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "meta meta"
+      "title price"
+      "summary summary"
+      "action action";
+    align-items: baseline;
+    min-height: 0 !important;
+    padding: 15px 16px !important;
+    gap: 5px 12px;
+    border: 1px solid rgba(126, 222, 230, .28) !important;
+  }
+
+  .inspire-page-classes .inspire-products article > p {
+    grid-area: meta;
+    margin: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.2;
+  }
+
+  .inspire-page-classes .inspire-products article > h3 {
+    grid-area: title;
+    margin: 0 !important;
+    font-size: 23px !important;
+    line-height: 1.02 !important;
+  }
+
+  .inspire-page-classes .inspire-products article > b {
+    grid-area: price;
+    font-size: 26px !important;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .inspire-page-classes .inspire-products article > span {
+    grid-area: summary;
+    min-height: 0 !important;
+    max-width: none !important;
+    margin: 2px 0 4px !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+
+  .inspire-page-classes .inspire-products article > button,
+  .inspire-page-classes .inspire-products article > a {
+    grid-area: action;
+    width: 100%;
+    min-height: 46px;
+    margin: 0 !important;
+    padding: 10px 12px !important;
+  }
+
   /* Three days remain readable and tappable, but the schedule becomes a
      compact weekly overview instead of three very tall posters. */
   .inspire-page-classes .inspire-weekly-columns {
