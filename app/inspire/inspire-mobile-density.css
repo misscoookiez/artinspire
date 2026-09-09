@@ -1,4 +1,6 @@
 /* Mobile-only density pass. Desktop keeps the established layout intact. */
+.inspire-weekly-columns h3 { white-space: pre-line; }
+
 @media (max-width: 800px) {
   /* Bring the weekly schedule closer to the mobile navigation without
      changing the desktop chapter rhythm. */
@@ -118,6 +120,7 @@
   .inspire-page-classes .inspire-weekly-columns h3 {
     display: flex;
     align-items: center;
+    white-space: pre-line;
     margin: 0;
     padding: 14px 12px !important;
     border-right: 1px solid rgba(255,255,255,.2);

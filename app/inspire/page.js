@@ -2039,7 +2039,7 @@ export default function InspirePage({ page = "home" }) {
       ),
     };
   }) : [];
-  const weeklyDayLabel = (session) => {
+  const weeklyDayLabel = (session, multiline = false) => {
     const date = new Date(session.startsAt);
     if (lang === "en") {
       return new Intl.DateTimeFormat(locale, {
@@ -2050,18 +2050,19 @@ export default function InspirePage({ page = "home" }) {
       }).format(date);
     }
 
-    // The compact labels keep the three schedule columns even on a narrow
-    // phone.  They deliberately omit the locale's default comma and use
-    // title case to match the English schedule styling.
+    // Latvian and Russian dates use their native punctuation: a full weekday,
+    // then the date on its own line in the schedule, with a dot after the day
+    // number and title-case month.
     const weekdays = lang === "lv"
-      ? ["Svētd.", "Pirmd.", "Otrd.", "Trešd.", "Ceturtd.", "Piektd.", "Sestd."]
-      : ["Вс.", "Пн.", "Вт.", "Ср.", "Чт.", "Пт.", "Сб."];
+      ? ["Svētdiena", "Pirmdiena", "Otrdiena", "Trešdiena", "Ceturtdiena", "Piektdiena", "Sestdiena"]
+      : ["Воскр.", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
     const day = new Intl.DateTimeFormat(locale, { timeZone: "Europe/Riga", day: "numeric" }).format(date);
     const month = new Intl.DateTimeFormat(locale, { timeZone: "Europe/Riga", month: "short" })
       .format(date)
       .replace(/[.,]$/u, "");
-    const monthTitle = month ? `${month.charAt(0).toLocaleUpperCase(locale)}${month.slice(1)}.` : "";
-    return `${weekdays[weekdayInRiga(session.startsAt)]} ${day} ${monthTitle}`;
+    const monthTitle = month ? `${month.charAt(0).toLocaleUpperCase(locale)}${month.slice(1)}` : "";
+    const dateLabel = `${day}. ${monthTitle}`;
+    return `${weekdays[weekdayInRiga(session.startsAt)]}${multiline ? "\n" : " "}${dateLabel}`;
   };
   const changeScheduleWeek = (direction) => {
     const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, activeScheduleWeek + direction));
@@ -2500,7 +2501,7 @@ export default function InspirePage({ page = "home" }) {
         <div className="inspire-weekly-columns">
           {weeklyColumns.map((column) => (
             <div key={column.key}>
-              <h3>{weeklyDayLabel({ startsAt: column.date.toISOString() })}</h3>
+              <h3>{weeklyDayLabel({ startsAt: column.date.toISOString() }, true)}</h3>
               {column.sessions.length ? column.sessions.map((session) => {
                 const seats = remaining(session.id, session.seats);
                 return (
