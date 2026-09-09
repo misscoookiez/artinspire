@@ -1873,11 +1873,15 @@ export default function InspirePage({ page = "home" }) {
       ? session.titleLv?.replace(/\s*gleznošanas(?=\s+grupa)/i, "")
       : lang === "ru"
         ? session.title?.includes("Youth")
-          ? "Группа живописи для детей и подростков"
+          ? "Молодёжная группа"
           : session.title?.includes("Adult")
-            ? "Группа живописи для взрослых"
+            ? "Взрослая группа"
             : "Смешанная группа"
-        : session.title?.replace(/mixed\s+painting\s+group/i, "Mixed group");
+        : session.title?.includes("Youth")
+          ? "Youth group"
+          : session.title?.includes("Adult")
+            ? "Adult group"
+            : "Mixed group";
     return title?.replace(/\s*\((?:ages?\s*)?8[–-]16(?:\s*(?:gadi|years))?\)/gi, "") || "";
   };
   const scheduleWeeks = useMemo(
