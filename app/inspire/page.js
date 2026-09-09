@@ -1,6 +1,5 @@
 "use client";
 import { startTransition, useEffect, useState } from "react";
-import Link from "next/link";
 import { classes, privateSlots } from "@/lib/catalog";
 import InspireLocalGuide, { InspireFooter } from "@/components/InspireLocalGuide";
 import "./inspire.css";
@@ -1319,6 +1318,8 @@ export default function InspirePage({ page = "home" }) {
   const [eventAttendees, setEventAttendees] = useState(1);
   const [lang, setLang] = useState("lv");
   const [showContactsFromMenu, setShowContactsFromMenu] = useState(false);
+  const isContactView = page === "contact" || showContactsFromMenu;
+  const isAboutView = page === "about" || page === "method";
   const chooseLanguage = (nextLanguage) => {
     startTransition(() => setLang(nextLanguage));
     try {
@@ -2319,12 +2320,12 @@ export default function InspirePage({ page = "home" }) {
           alt=""
           aria-hidden="true"
         />
-        <Link className="inspire-masthead-brand" href="/" aria-label="Art Studio Inspire sākumlapa">
+        <a className="inspire-masthead-brand" href="/" aria-label="Art Studio Inspire sākumlapa">
           <img
             src="/art/inspire-logo-white-clean.webp"
             alt="Art Studio Inspire"
           />
-        </Link>
+        </a>
         <div className="inspire-masthead-copy">
           <p>{t.sub}</p>
           <span>
@@ -2357,11 +2358,11 @@ export default function InspirePage({ page = "home" }) {
           <b aria-hidden="true">+</b>
         </button>
         <div id="inspire-navigation-links" className="inspire-navigation-links">
-        <Link href="/classes" onClick={closeMobileMenuAndShowContent}>
+        <a href="/classes" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
-        </Link>
-        <Link href="/method" onClick={closeMobileMenuAndShowContent}>
+        </a>
+        <a href="/method" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-palette.png" alt="" />
           <span>
             {lang === "lv"
@@ -2370,8 +2371,8 @@ export default function InspirePage({ page = "home" }) {
                 ? "МЕТОД ОБУЧЕНИЯ"
                 : "HOW WE WORK"}
           </span>
-        </Link>
-        <Link href="/events" onClick={closeMobileMenuAndShowContent}>
+        </a>
+        <a href="/events" onClick={closeMobileMenuAndShowContent}>
           <img
             className="inspire-gift-icon"
             src="/art/inspire-icon-gift.png"
@@ -2384,21 +2385,21 @@ export default function InspirePage({ page = "home" }) {
                 ? "ПРАЗДНИКИ"
                 : "PRIVATE EVENTS"}
           </span>
-        </Link>
-        <Link href="/contact" onClick={closeMobileMenuAndShowContent}>
+        </a>
+        <a href="/contact" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-pin.png" alt="" />
           <span>{lang === "lv" ? "KONTAKTI" : lang === "ru" ? "КОНТАКТЫ" : "CONTACT"}</span>
-        </Link>
-        <Link href="/about" onClick={closeMobileMenuAndShowContent}>
+        </a>
+        <a href="/about" onClick={closeMobileMenuAndShowContent}>
           <img src="/art/inspire-icon-easel.png" alt="" />
           <span>{lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}</span>
-        </Link>
-        <Link href="/questions" onClick={closeMobileMenuAndShowContent}>
+        </a>
+        <a href="/questions" onClick={closeMobileMenuAndShowContent}>
           <span>{lang === "lv" ? "JAUTĀJUMI" : lang === "ru" ? "ВОПРОСЫ" : "FAQ"}</span>
-        </Link>
+        </a>
         </div>
       </nav>
-      <section className="inspire-statement">
+      {page === "home" && <section className="inspire-statement">
         <div className="inspire-statement-copy">
           <h2>
             {content("inspire.statement.title.v2", t.statement)
@@ -2423,8 +2424,8 @@ export default function InspirePage({ page = "home" }) {
           resolveImage={(src, index) => image(`inspire.image.statement.${index}`, src)}
           intervalMs={6200}
         />
-      </section>
-      <section id="nodarbibas" className="inspire-section">
+      </section>}
+      {page === "classes" && <section id="nodarbibas" className="inspire-section">
         <div className="inspire-schedule-heading">
           <div className="inspire-schedule-title">
             <p className="inspire-kicker">
@@ -2467,8 +2468,8 @@ export default function InspirePage({ page = "home" }) {
           <small>{t.materialsIncluded}</small>
           <small>{lang === "lv" ? "NODARBĪBAS ILGUMS — 2 STUNDAS" : lang === "ru" ? "ДЛИТЕЛЬНОСТЬ ЗАНЯТИЯ — 2 ЧАСА" : "CLASS DURATION — 2 HOURS"}</small>
         </p>
-      </section>
-      <section className="inspire-section inspire-booking">
+      </section>}
+      {page === "classes" && <section className="inspire-section inspire-booking">
         <h2>{t.format}</h2>
         <div className="inspire-products">
           {activeProducts.map(([name, meta, price, description], index) => {
@@ -2626,7 +2627,7 @@ export default function InspirePage({ page = "home" }) {
               ? "ДЛЯ ЗАЯВОК ПРЕДОПЛАТА НЕ НУЖНА. Любую бронь нужно отменить или перенести не позднее чем за 24 часа до занятия; до этого возможны бесплатная отмена и автоматический возврат."
               : "APPLICATIONS DO NOT REQUIRE PAYMENT UPFRONT. Any reservation must be cancelled or rescheduled at least 24 hours before the class; until then, cancellation is free and the refund is automatic."}
         </p>
-      </section>
+      </section>}
       {page === "about" && (
         <section className="inspire-about-studio-intro">
           <div>
@@ -2656,7 +2657,7 @@ export default function InspirePage({ page = "home" }) {
           </div>
         </section>
       )}
-      <section className="inspire-capabilities">
+      {isAboutView && <section className="inspire-capabilities">
         <div>
           <p className="inspire-kicker">
             {lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}
@@ -2720,8 +2721,8 @@ export default function InspirePage({ page = "home" }) {
             ))}
           </div>
         )}
-      </section>
-      <section className="inspire-depth">
+      </section>}
+      {isAboutView && <section className="inspire-depth">
         <details className="inspire-depth-panel" open>
           <summary>
             <span>01</span>
@@ -2940,8 +2941,8 @@ export default function InspirePage({ page = "home" }) {
             </div>
           </section>
         </details>
-      </section>
-      <section id="studentu-darbi" className="inspire-student-galleries">
+      </section>}
+      {isAboutView && <section id="studentu-darbi" className="inspire-student-galleries">
         <div className="inspire-student-galleries-intro">
           <p className="inspire-kicker">
             {lang === "lv"
@@ -3020,8 +3021,8 @@ export default function InspirePage({ page = "home" }) {
             ))}
           </div>
         </details>
-      </section>
-      <section id="pasakumi" className="inspire-events">
+      </section>}
+      {page === "events" && <section id="pasakumi" className="inspire-events">
         <div className="inspire-events-top">
           <div className="inspire-events-intro">
             <p className="inspire-kicker">{t.events}</p>
@@ -3193,8 +3194,8 @@ export default function InspirePage({ page = "home" }) {
             </div>
           </details>
         </div>
-      </section>{" "}
-      <section id="sazinies" className="inspire-contact-panel" aria-label={lang === "lv" ? "Sazinies ar mums" : lang === "ru" ? "Свяжитесь с нами" : "Contact us"}>
+      </section>}
+      {isContactView && <section id="sazinies" className="inspire-contact-panel" aria-label={lang === "lv" ? "Sazinies ar mums" : lang === "ru" ? "Свяжитесь с нами" : "Contact us"}>
         <div className="inspire-contact-card inspire-contact-card-info">
           <p className="inspire-contact-card-kicker">{lang === "lv" ? "SAZINIES AR MUMS" : lang === "ru" ? "СВЯЖИТЕСЬ С НАМИ" : "GET IN TOUCH"}</p>
           <h3>{lang === "lv" ? "Radīsim ko īpašu kopā!" : lang === "ru" ? "Давайте создадим что-то особенное вместе!" : "Let’s create something special together!"}</h3>
@@ -3220,8 +3221,8 @@ export default function InspirePage({ page = "home" }) {
           <button className="inspire-contact-send" type="submit">{lang === "lv" ? "Nosūtīt ziņu" : lang === "ru" ? "Отправить сообщение" : "Send message"}</button>
           {contactStatus ? <p className="inspire-contact-status" role="status">{contactStatus}</p> : null}
         </form>
-      </section>
-      <section id="kontakti" className="inspire-directions">
+      </section>}
+      {isContactView && <section id="kontakti" className="inspire-directions">
         <div className="inspire-directions-copy">
           <p className="inspire-kicker">{t.find}</p>
           <h2>{t.find}</h2>
@@ -3258,9 +3259,9 @@ export default function InspirePage({ page = "home" }) {
           />
           <a href="https://maps.app.goo.gl/GUmohcYmRLpuYKmv9" target="_blank" rel="noreferrer">{lang === "lv" ? "Atvērt Google Maps" : lang === "ru" ? "Открыть Google Maps" : "Open in Google Maps"} <span aria-hidden="true">↗</span></a>
         </div>
-      </section>
-      <InspireLocalGuide lang={lang} />
-      {page !== "contact" && <section id="biezakie-jautajumi" className="inspire-faq" tabIndex={-1}>
+      </section>}
+      {(isContactView || page === "questions") && <InspireLocalGuide lang={lang} />}
+      {page === "questions" && <section id="biezakie-jautajumi" className="inspire-faq" tabIndex={-1}>
         <div>
           {faq.title && <p className="inspire-kicker">{faq.title}</p>}
           <h2>{faq.lead}</h2>
@@ -3278,7 +3279,7 @@ export default function InspirePage({ page = "home" }) {
           ))}
         </div>
       </section>}
-      {page !== "contact" && <section className="inspire-energy-strip" aria-hidden="true">
+      {page === "questions" && <section className="inspire-energy-strip" aria-hidden="true">
         <span>✦</span>
       </section>}
       <InspireFooter lang={lang} />
