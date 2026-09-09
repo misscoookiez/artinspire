@@ -1689,14 +1689,24 @@ export default function InspirePage({ page = "home" }) {
 
     const firstContentId = {
       classes: "nodarbibas",
-      method: "studija",
+      method: "metode",
       events: "pasakumi",
       contact: "sazinies",
       about: "par-studiju",
       questions: "biezakie-jautajumi",
     }[page];
     const timer = window.setTimeout(() => {
-      document.getElementById(firstContentId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const target = document.getElementById(firstContentId);
+      if (!target) return;
+      if (page === "method") {
+        const navigationHeight = document.querySelector(".inspire-icon-nav")?.getBoundingClientRect().height || 0;
+        window.scrollTo({
+          top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - navigationHeight),
+          behavior: "auto",
+        });
+        return;
+      }
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 110);
     return () => window.clearTimeout(timer);
   }, [page]);
@@ -2718,7 +2728,7 @@ export default function InspirePage({ page = "home" }) {
           </div>
         </section>
       )}
-      {isAboutView && <section className="inspire-capabilities">
+      {isAboutView && <section id={page === "method" ? "metode" : undefined} className="inspire-capabilities">
         <div>
           <p className="inspire-kicker">
             {lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}
