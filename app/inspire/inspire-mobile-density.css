@@ -4,8 +4,8 @@
      first screen before visitors reach the navigation. */
   .inspire-masthead,
   .inspire-page-home .inspire-masthead {
-    height: 390px !important;
-    min-height: 390px !important;
+    height: 340px !important;
+    min-height: 340px !important;
     padding: 18px 20px 22px !important;
     gap: 6px !important;
   }
@@ -47,6 +47,7 @@
     border-right: 1px solid rgba(255,255,255,.2);
     font-size: 18px !important;
     line-height: 1.04;
+    grid-row: span 2 !important;
   }
 
   .inspire-page-classes .inspire-weekly-columns button {
@@ -84,6 +85,79 @@
     min-height: 62px;
     padding: 10px 12px;
   }
+}
+
+/* Sandra's images are one self-contained visual unit.  They never take their
+   height from the adjacent biography, so translated copy cannot distort the
+   composition or pull the artwork control on top of the photographs. */
+.inspire-page-about .inspire-host,
+.inspire-page-about .inspire-host-visuals {
+  align-items: start !important;
+  height: auto !important;
+}
+
+.inspire-page-about .inspire-host-gallery {
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1.22 !important;
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, .84fr) !important;
+  grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  overflow: hidden;
+}
+
+.inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+  grid-row: span 2 !important;
+  grid-column: 1 !important;
+  aspect-ratio: auto !important;
+  transform: none !important;
+}
+
+.inspire-page-about .inspire-host-gallery img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transform: none !important;
+}
+
+.inspire-page-about .inspire-host-art-section,
+.inspire-page-about .inspire-host-art-section .inspire-wide-artworks {
+  position: static !important;
+  clear: both;
+  isolation: isolate;
+  margin-top: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .inspire-page-about .inspire-host-gallery {
+    width: 100%;
+    aspect-ratio: 1 / 1.46 !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0, 1.35fr) minmax(0, .7fr) !important;
+  }
+
+  .inspire-page-about .inspire-host-gallery .inspire-host-portrait {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+  }
+}
+
+/* Dates signal selection with a crisp outlined tile, rather than a tall
+   filled oval that can look accidental in a compact calendar. */
+.inspire-booking-week > div button.available:hover {
+  border-radius: 3px !important;
+  background: rgba(65, 174, 185, .13) !important;
+}
+
+.inspire-booking-week > div button.active {
+  border: 1px solid #27cddd !important;
+  border-radius: 3px !important;
+  background: transparent !important;
+  color: #0d5360 !important;
+  outline: none !important;
+  box-shadow: inset 0 0 0 1px rgba(39, 205, 221, .18) !important;
 }
 
 @media (max-width: 390px) {
