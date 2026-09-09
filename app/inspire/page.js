@@ -2062,7 +2062,8 @@ export default function InspirePage({ page = "home" }) {
       .replace(/[.,]$/u, "");
     const monthTitle = month ? `${month.charAt(0).toLocaleUpperCase(locale)}${month.slice(1)}` : "";
     const dateLabel = `${day}. ${monthTitle}`;
-    return `${weekdays[weekdayInRiga(session.startsAt)]}${multiline ? "\n" : " "}${dateLabel}`;
+    const weekday = weekdays[weekdayInRiga(session.startsAt)];
+    return multiline ? <><span>{weekday}</span><span>{dateLabel}</span></> : `${weekday} ${dateLabel}`;
   };
   const changeScheduleWeek = (direction) => {
     const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, activeScheduleWeek + direction));
