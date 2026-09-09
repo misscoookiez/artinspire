@@ -18,7 +18,8 @@ const classPurchases={
 };
 const privatePurchases={
   private:{name:"Private studio session",amount:4500},
-  rental:{name:"Studio work session",amount:1000}
+  rental:{name:"Studio work session",amount:1000},
+  "treatment-room":{name:"Tattoo room",amount:2000}
 };
 const paymentMethodTypes=(process.env.STRIPE_PAYMENT_METHOD_TYPES || "card")
   .split(",")
@@ -74,7 +75,7 @@ export async function POST(request) {
     } else if (body.kind === "private") {
       if(!body.privateSlot) return NextResponse.json({error:"Please choose a time."},{status:400});
       const purchase=privatePurchases[body.purchase];
-      if(!purchase) return NextResponse.json({error:"Please choose a private-session or studio-work format."},{status:400});
+      if(!purchase) return NextResponse.json({error:"Please choose an available studio format."},{status:400});
       if (stripe && !supabaseAdmin && !allowLocalStripeBookingTest) return NextResponse.json({error:"Bookings are not configured yet."},{status:503});
       if(supabaseAdmin){
         const {data:slot,error}=await supabaseAdmin.from("private_slots").select("id,price_cents,status,starts_at,ends_at").eq("id",body.privateSlot).maybeSingle();

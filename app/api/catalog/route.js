@@ -34,20 +34,20 @@ export async function GET(request) {
     const [classesResult, holdsResult, busyPrivateSlotsResult] = await Promise.all([
       supabaseAdmin.from("class_sessions").select("starts_at,ends_at,title_en,title_lv").eq("status", "open").gte("ends_at", now).order("starts_at"),
       supabaseAdmin.from("booking_holds").select("private_slot_id").gt("expires_at", now).not("private_slot_id", "is", null),
-      supabaseAdmin.from("private_slots").select("starts_at,ends_at").in("status", ["held", "booked"]).gte("ends_at", now).order("starts_at"),
+      supabaseAdmin.from("private_slots").select("starts_at,ends_at,price_cents").in("status", ["held", "booked"]).gte("ends_at", now).order("starts_at"),
     ]);
     const error = [classesResult, holdsResult, busyPrivateSlotsResult].find((result) => result.error)?.error;
     if (error) return NextResponse.json({ error: "Catalogue is unavailable." }, { status: 503 });
     const heldIds = (holdsResult.data || []).map((row) => row.private_slot_id).filter(Boolean);
     const heldOpenSlotsResult = heldIds.length
-      ? await supabaseAdmin.from("private_slots").select("starts_at,ends_at").in("id", heldIds)
+      ? await supabaseAdmin.from("private_slots").select("starts_at,ends_at,price_cents").in("id", heldIds)
       : emptyResult;
     if (heldOpenSlotsResult.error) return NextResponse.json({ error: "Catalogue is unavailable." }, { status: 503 });
     return NextResponse.json({
       // A self-directed studio-work window is intentionally lower priority
       // than an event. Group classes and every confirmed/held private booking
       // remain unavailable in the event planner.
-      eventBusyTimes: [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []), ...(heldOpenSlotsResult.data || [])],
+      eventBusyTimes: [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000), ...(heldOpenSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000)],
       mode: "live",
     });
   }
@@ -65,7 +65,7 @@ export async function GET(request) {
     supabaseAdmin.from("bookings").select("class_session_id").eq("status", "confirmed").not("class_session_id", "is", null),
     supabaseAdmin.from("booking_holds").select("class_session_id,private_slot_id").gt("expires_at", now),
     supabaseAdmin.from("private_slots").select("id,starts_at,ends_at,price_cents").eq("status", "open").gte("ends_at", now).order("starts_at"),
-    supabaseAdmin.from("private_slots").select("id,starts_at,ends_at").in("status", ["held", "booked"]).gte("ends_at", now).order("starts_at"),
+    supabaseAdmin.from("private_slots").select("id,starts_at,ends_at,price_cents").in("status", ["held", "booked"]).gte("ends_at", now).order("starts_at"),
   ]);
   const error = [artworkResult, classesResult, bookingsResult, holdsResult, slotsResult, busyPrivateSlotsResult].find((result) => result.error)?.error;
   if (error) return NextResponse.json({ error: "Catalogue is unavailable." }, { status: 503 });
@@ -79,7 +79,7 @@ export async function GET(request) {
   const withAvailability = (session) => ({ ...session, past: new Date(session.ends_at) < new Date(now), available: new Date(session.ends_at) >= new Date(now) && Math.max(0, session.capacity - (booked[session.id] || 0) - (held[session.id] || 0)) > 0 });
   const heldPrivate = new Set((holdsResult.data || []).map((row) => row.private_slot_id).filter(Boolean));
   const heldPrivateTimes = (slotsResult.data || []).filter((slot) => heldPrivate.has(slot.id));
-  const eventBusyTimes = [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []), ...heldPrivateTimes].map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at }));
+  const eventBusyTimes = [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000), ...heldPrivateTimes.filter((slot) => slot.price_cents !== 2000)].map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at }));
   const response = {
     classAvailability: (classesResult.data || []).map((session) => ({ id: session.id, available: withAvailability(session).available })),
     classSessions: (classesResult.data || []).map((session) => {

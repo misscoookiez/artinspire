@@ -1863,8 +1863,18 @@ export default function InspirePage({ page = "home" }) {
   const availablePrivateSlots = livePrivateSlots.filter(
     (slot) => privateIsAvailable(slot.id) && slot.price_cents === 4500,
   );
+  // Tattoo-room availability is deliberately a separate set of private slots.
+  // Its €20 slots never borrow the painting-event calendar or studio-work seats.
+  const availableTattooRoomSlots = livePrivateSlots.filter(
+    (slot) => privateIsAvailable(slot.id) && slot.price_cents === 2000,
+  );
   const availableRentalSlots = liveStudioWorkSlots.filter((slot) => slot.seats > 0);
   const availablePrivateSessions = availablePrivateSlots.map((slot) => ({
+    ...slot,
+    startsAt: slot.starts_at,
+    time: new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { timeZone: "Europe/Riga", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(slot.starts_at)),
+  }));
+  const availableTattooRoomSessions = availableTattooRoomSlots.map((slot) => ({
     ...slot,
     startsAt: slot.starts_at,
     time: new Intl.DateTimeFormat(lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB", { timeZone: "Europe/Riga", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(slot.starts_at)),
@@ -1915,7 +1925,11 @@ export default function InspirePage({ page = "home" }) {
   const bookingClasses = bookingDay
     ? liveClasses.filter((item) => sameCalendarDay(item.startsAt, bookingDay))
     : liveClasses;
-  const bookableStudioSlots = calendarKind === "private" ? availablePrivateSessions : availableRentalSlots;
+  const bookableStudioSlots = calendarKind === "private"
+    ? availablePrivateSessions
+    : calendarKind === "treatment-room"
+      ? availableTattooRoomSessions
+      : availableRentalSlots;
   const rentalWeeks = [...new Set(bookableStudioSlots.map((item) => weekStartKey(item.startsAt)).filter(Boolean))];
   const visibleRentalWeek = rentalWeeks[Math.min(rentalWeek, Math.max(0, rentalWeeks.length - 1))];
   const rentalDays = visibleRentalWeek
@@ -2073,9 +2087,13 @@ export default function InspirePage({ page = "home" }) {
     setSelection("");
     setCalendarKind(kind);
     setCheckoutOption(option);
-    if (kind === "rental" || kind === "private") {
+    if (kind === "rental" || kind === "private" || kind === "treatment-room") {
       setRentalWeek(0);
-      const firstSlot = kind === "private" ? availablePrivateSessions[0] : availableRentalSlots[0];
+      const firstSlot = kind === "private"
+        ? availablePrivateSessions[0]
+        : kind === "treatment-room"
+          ? availableTattooRoomSessions[0]
+          : availableRentalSlots[0];
       setBookingDay(rigaDateKey(firstSlot?.startsAt));
     } else setBookingDay(kind === "class" ? weekDays.find((day) => day.hasClass)?.key || "" : "");
     setStatus("");
@@ -2154,7 +2172,7 @@ export default function InspirePage({ page = "home" }) {
       setSavedEmail(customerEmail);
     } catch {}
     if (!booking) return;
-    if (booking.kind === "inquiry") {
+    if (booking.kind === "inquiry" || (calendarKind === "treatment-room" && action === "inquiry")) {
       setStatus(lang === "lv" ? "Nosūtām ziņu…" : lang === "ru" ? "Отправляем сообщение…" : "Sending your message…");
       try {
         const response = await fetch("/api/inquiries", {
@@ -2164,8 +2182,10 @@ export default function InspirePage({ page = "home" }) {
             name: customerName,
             email: customerEmail,
             kind: calendarKind === "event" ? "event" : undefined,
-            topic: String(data.get("topic") || inquiryTopic).trim(),
-            message: `${String(data.get("message") || "").trim()}${calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}${eventNeedsAttendees ? `\nDalībnieki: ${eventAttendees}` : ""}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nAptuvenā cena: €${selectedEventEstimate}${eventFormat === "custom" ? `\nTelpas noma: ${eventDuration} h × €15` : `\nIekļautais pasākuma ilgums: ${eventBaseDuration} h\nPapildu studijas laiks: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}`}` : ""}`,
+            topic: calendarKind === "treatment-room"
+              ? (lang === "lv" ? "Tattoo telpas datuma rezervēšanas pieprasījums" : lang === "ru" ? "Запрос на резервирование даты для тату-комнаты" : "Tattoo room date-reservation request")
+              : String(data.get("topic") || inquiryTopic).trim(),
+            message: `${String(data.get("message") || "").trim()}${calendarKind === "treatment-room" ? `\n\n${lang === "lv" ? "TATTOO TELPA" : lang === "ru" ? "ТАТУ-КОМНАТА" : "TATTOO ROOM"}\n${booking.label}\n${lang === "lv" ? "Cena" : lang === "ru" ? "Цена" : "Price"}: €20` : calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}${eventNeedsAttendees ? `\nDalībnieki: ${eventAttendees}` : ""}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nAptuvenā cena: €${selectedEventEstimate}${eventFormat === "custom" ? `\nTelpas noma: ${eventDuration} h × €15` : `\nIekļautais pasākuma ilgums: ${eventBaseDuration} h\nPapildu studijas laiks: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}`}` : ""}`,
           }),
         });
         const result = await response.json();
@@ -2507,13 +2527,16 @@ export default function InspirePage({ page = "home" }) {
                 ? "rental"
                 : option === "private"
                   ? "private"
+                  : option === "treatment-room"
+                    ? "treatment-room"
                   : "class";
             const hasNoSlots =
               option === "rental"
                 ? !availableRentalSlots.length
-                : option === "private" && !availablePrivateSlots.length;
-            const personal =
-              option === "membership" || option === "treatment-room";
+                : option === "private"
+                  ? !availablePrivateSlots.length
+                  : option === "treatment-room" && !availableTattooRoomSlots.length;
+            const personal = option === "membership";
             const directPurchase = option === "pass" || option === "gift-card";
             const contactLabel =
               option === "membership"
@@ -3536,7 +3559,7 @@ export default function InspirePage({ page = "home" }) {
                         })}
                         </div>
                       </div>
-                    ) : calendarKind === "rental" || calendarKind === "private" ? (
+                    ) : calendarKind === "rental" || calendarKind === "private" || calendarKind === "treatment-room" ? (
                       <div className="inspire-booking-calendar-wrap inspire-rental-calendar-wrap">
                         {rentalWeeks.length > 0 ? <div className="inspire-booking-week" aria-label={lang === "lv" ? "Izvēlies dienu" : lang === "ru" ? "Выберите день" : "Choose a day"}>
                           <button type="button" aria-label={lang === "lv" ? "Iepriekšējā nedēļa" : lang === "ru" ? "Предыдущая неделя" : "Previous week"} onClick={() => changeRentalWeek(-1)} disabled={rentalWeek === 0}>‹</button>
@@ -3545,11 +3568,14 @@ export default function InspirePage({ page = "home" }) {
                         </div> : null}
                         <div className="inspire-rental-slot-list" role="group" aria-label={lang === "lv" ? "Pieejamie divu stundu laiki" : lang === "ru" ? "Доступное двухчасовое время" : "Available two-hour times"}>
                           {rentalSlotsForDay.map((item) => {
-                            const isPrivate = calendarKind === "private";
+                            const isPrivate = calendarKind === "private" || calendarKind === "treatment-room";
+                            const isTattooRoom = calendarKind === "treatment-room";
                             const kind = isPrivate ? "private" : "class";
                             const selected = selection === `${kind}:${item.id}`;
-                            const title = isPrivate ? (lang === "lv" ? "Individuāla nodarbība" : lang === "ru" ? "Индивидуальное занятие" : "Individual class") : (lang === "lv" ? "Patstāvīgs darbs studijā" : lang === "ru" ? "Самостоятельная работа в студии" : "Studio work");
-                            return <button key={item.id} type="button" className={selected ? "active" : ""} onClick={() => { setBooking({ kind, itemId: item.id, label: `${title} · ${weeklyDayLabel(item)} · ${item.time}` }); setSelection(`${kind}:${item.id}`); }}><strong>{item.time}</strong><span>{isPrivate ? (lang === "lv" ? "2 stundas · individuāls laiks" : lang === "ru" ? "2 часа · индивидуальное время" : "2 hours · private time") : (lang === "lv" ? "2 stundas · vieta studijā" : lang === "ru" ? "2 часа · место в студии" : "2 hours · a studio place")}</span></button>;
+                            const title = isTattooRoom
+                              ? (lang === "lv" ? "Tattoo telpa" : lang === "ru" ? "Тату-комната" : "Tattoo room")
+                              : isPrivate ? (lang === "lv" ? "Individuāla nodarbība" : lang === "ru" ? "Индивидуальное занятие" : "Individual class") : (lang === "lv" ? "Patstāvīgs darbs studijā" : lang === "ru" ? "Самостоятельная работа в студии" : "Studio work");
+                            return <button key={item.id} type="button" className={selected ? "active" : ""} onClick={() => { setBooking({ kind, itemId: item.id, label: `${title} · ${weeklyDayLabel(item)} · ${item.time}` }); setSelection(`${kind}:${item.id}`); }}><strong>{item.time}</strong><span>{isTattooRoom ? (lang === "lv" ? "Aprīkota telpa · €20" : lang === "ru" ? "Оборудованная комната · €20" : "Equipped room · €20") : isPrivate ? (lang === "lv" ? "2 stundas · individuāls laiks" : lang === "ru" ? "2 часа · индивидуальное время" : "2 hours · private time") : (lang === "lv" ? "2 stundas · vieta studijā" : lang === "ru" ? "2 часа · место в студии" : "2 hours · a studio place")}</span></button>;
                           })}
                         </div>
                       </div>
@@ -3647,7 +3673,7 @@ export default function InspirePage({ page = "home" }) {
                   </>
                 ) : calendarKind !== "gift" && calendarKind !== "pass" ? (
                   <div className="inspire-reservation-actions">
-                    <button className="inspire-reserve-option" name="bookingAction" value="reserve">{lang === "lv" ? "REZERVĒT VIETU" : lang === "ru" ? "ЗАБРОНИРОВАТЬ МЕСТО" : "RESERVE A PLACE"}</button>
+                    <button className="inspire-reserve-option" name="bookingAction" value={calendarKind === "treatment-room" ? "inquiry" : "reserve"}>{calendarKind === "treatment-room" ? (lang === "lv" ? "NOSŪTĪT DATUMA REZERVĒŠANAS PIEPRASĪJUMU" : lang === "ru" ? "ОТПРАВИТЬ ЗАПРОС НА РЕЗЕРВИРОВАНИЕ ДАТЫ" : "SEND DATE-RESERVATION REQUEST") : (lang === "lv" ? "REZERVĒT VIETU" : lang === "ru" ? "ЗАБРОНИРОВАТЬ МЕСТО" : "RESERVE A PLACE")}</button>
                     <button className="inspire-pay-option" name="bookingAction" value="pay">{lang === "lv" ? "REZERVĒT UN MAKSĀT TIEŠSAISTĒ" : lang === "ru" ? "ЗАБРОНИРОВАТЬ И ОПЛАТИТЬ ОНЛАЙН" : "RESERVE & PAY ONLINE"}</button>
                   </div>
                 ) : <button name="bookingAction" value="pay">
