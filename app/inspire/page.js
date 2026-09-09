@@ -2561,7 +2561,7 @@ export default function InspirePage({ page = "home" }) {
                     aria-label={`${alt}. Skatīt lielākā izmērā`}
                     onClick={() => setImagePreview({ src, alt })}
                   >
-                    <img src={src} alt={alt} onLoad={(event) => {
+                    <img src={src} alt={alt} loading="lazy" decoding="async" onLoad={(event) => {
                       const { naturalWidth, naturalHeight } = event.currentTarget;
                       if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
                     }} />
@@ -2588,7 +2588,7 @@ export default function InspirePage({ page = "home" }) {
                     aria-label={`${alt}. Skatīt lielākā izmērā`}
                     onClick={() => setImagePreview({ src, alt })}
                   >
-                    <img src={src} alt={alt} onLoad={(event) => {
+                    <img src={src} alt={alt} loading="lazy" decoding="async" onLoad={(event) => {
                       const { naturalWidth, naturalHeight } = event.currentTarget;
                       if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
                     }} />
@@ -2761,6 +2761,8 @@ export default function InspirePage({ page = "home" }) {
                     "/art/sandra-profile-lead.webp",
                   )}
                   alt="Sandra Rudzīte in her painting studio"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <img
                   src={image(
@@ -2768,6 +2770,8 @@ export default function InspirePage({ page = "home" }) {
                     "/art/sandra-studio-tea-upright.webp",
                   )}
                   alt="Sandra Rudzīte enjoying tea in her sunlit studio"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <img
                   src={image(
@@ -2775,6 +2779,8 @@ export default function InspirePage({ page = "home" }) {
                     "/art/sandra-studio-07.webp",
                   )}
                   alt="Sandra Rudzīte painting a dramatic studio work"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
@@ -2810,6 +2816,8 @@ export default function InspirePage({ page = "home" }) {
                     <img
                       src={src}
                       alt={alt}
+                      loading="lazy"
+                      decoding="async"
                       onLoad={(event) => {
                         const { naturalWidth, naturalHeight } = event.currentTarget;
                         if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
@@ -2852,6 +2860,8 @@ export default function InspirePage({ page = "home" }) {
                 src="/art/inspire-palette-atmosphere.webp"
                 alt=""
                 aria-hidden="true"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div className="inspire-proof-list">
@@ -2954,6 +2964,8 @@ export default function InspirePage({ page = "home" }) {
                 <img
                   src={image(`inspire.image.gallery.adult.${index}`, src)}
                   alt={alt}
+                  loading="lazy"
+                  decoding="async"
                   onLoad={(event) => {
                     const { naturalWidth, naturalHeight } = event.currentTarget;
                     if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
@@ -2983,6 +2995,8 @@ export default function InspirePage({ page = "home" }) {
                 <img
                   src={image(`inspire.image.gallery.youth.${index}`, src)}
                   alt={alt}
+                  loading="lazy"
+                  decoding="async"
                   onLoad={(event) => {
                     const { naturalWidth, naturalHeight } = event.currentTarget;
                     if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
@@ -3101,7 +3115,7 @@ export default function InspirePage({ page = "home" }) {
                         aria-label={`${alt}. Skatīt lielākā izmērā`}
                         onClick={() => setImagePreview({ src, alt })}
                       >
-                        <img src={src} alt={alt} onLoad={(event) => {
+                        <img src={src} alt={alt} loading="lazy" decoding="async" onLoad={(event) => {
                           const { naturalWidth, naturalHeight } = event.currentTarget;
                           if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
                         }} />
@@ -3125,7 +3139,7 @@ export default function InspirePage({ page = "home" }) {
                         aria-label={`${alt}. Skatīt lielākā izmērā`}
                         onClick={() => setImagePreview({ src, alt })}
                       >
-                        <img src={src} alt={alt} onLoad={(event) => {
+                        <img src={src} alt={alt} loading="lazy" decoding="async" onLoad={(event) => {
                           const { naturalWidth, naturalHeight } = event.currentTarget;
                           if (naturalWidth && naturalHeight) event.currentTarget.parentElement.style.setProperty("--gallery-ratio", naturalWidth / naturalHeight);
                         }} />
@@ -3220,6 +3234,8 @@ export default function InspirePage({ page = "home" }) {
               "/art/inspire-door-directions.webp",
             )}
             alt="The entrance door to Art Studio Inspire"
+            loading="lazy"
+            decoding="async"
           />
           <figcaption>
             {lang === "lv"
