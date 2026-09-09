@@ -1323,7 +1323,7 @@ export default function InspirePage({ page = "home" }) {
   const artistBio = {
     lv: "Sandras Rudzītes glezniecībā figurālais un simboliskais bieži kļūst par iekšēju ainavu: tēls, dzīvnieks, klusā daba vai tumšāka gaisma nav tikai dekorācija, bet veids, kā noturēt skatienu pie sajūtas. Viņa strādā starp rūpīgu novērojumu un iztēli — ar eļļu, zīmējumu, akrilu un akvareli — un nebaidās no darba, kuram vajag laiku.\n\nLai gan viņas darbos nereti ienāk smagāki, tumšāki vai simboliski motīvi, Sandra pati ir viegla, priecīga un ziņkārīga klātbūtne: studijā ir vieta smiekliem, tējai un arī gleznai par mīļu kaķi. Viņa brīvi strādā dažādos žanros, un viens no viņas mazajiem vainīgajiem priekiem ir gleznot īpaši mīļus kaķus.\n\nAr Adobe, tiešsaistes mākslas projektiem un dzīvo studijas darbu viņai ir plaša pieredze, taču mācīšanā svarīgākais ir vienkāršs: palīdzēt cilvēkam ieraudzīt, ko viņš pats mēģina pateikt attēlā.",
     en: "Sandra Rudzīte’s paintings often let the figurative and symbolic become an inner landscape: a figure, animal, still life or darker light is not decoration, but a way of holding attention on a feeling. She works between close observation and invention — in oils, drawing, acrylics and watercolour — without rushing a work that needs time. Although her work often carries darker, heavier or symbolic subjects, Sandra herself is light-hearted, happy and curious: the studio has room for laughter, tea, and a painting of a sweet cat. She works freely across genres, and one of her small guilty pleasures is painting cute cats. Her experience spans Adobe, online art projects and the daily life of a working studio; in teaching, the essential thing is simpler: helping someone see what they are already trying to say in an image.",
-    ru: "В живописи Сандры Рудзите фигуративное и символическое часто становятся внутренним пейзажем: персонаж, животное, натюрморт или более тёмный свет — не просто декор, а способ удержать внимание на ощущении. Она работает между внимательным наблюдением и воображением — маслом, рисунком, акрилом и акварелью — не торопя работу, которой нужно время. Хотя в её работах нередко появляются более тяжёлые, тёмные или символические мотивы, сама Сандра — лёгкий, радостный и любопытный человек: в студии есть место смеху, чаю и картине с милым котом. Она свободно работает в разных жанрах, а одно из её маленьких удовольствий — рисовать милых котиков. Её опыт включает Adobe, онлайн-проекты об искусстве и повседневную жизнь работающей студии; в преподавании главное проще: помочь человеку увидеть, что именно он уже пытается сказать своим изображением.",
+    ru: "В живописи Сандры Рудзите фигуративное и символическое часто становятся внутренним пейзажем: персонаж, животное, натюрморт или более тёмный свет — не просто декор, а способ удержать внимание на ощущении. Она работает между внимательным наблюдением и воображением — маслом, рисунком, акрилом и акварелью — не торопя работу, которой нужно время.\n\nХотя в её работах нередко появляются более тяжёлые, тёмные или символические мотивы, сама Сандра — лёгкий, радостный и любопытный человек: в студии есть место смеху, чаю и картине с милым котом. Она свободно работает в разных жанрах, а одно из её маленьких удовольствий — рисовать милых котиков.\n\nЕё опыт включает Adobe, онлайн-проекты об искусстве и повседневную жизнь работающей студии; в преподавании главное проще: помочь человеку увидеть, что именно он уже пытается сказать своим изображением.",
   }[lang];
   const hostStories = {
     lv: [
@@ -2733,6 +2733,22 @@ export default function InspirePage({ page = "home" }) {
                     <p key={`${index}-${paragraph.slice(0, 16)}`}>{paragraph}</p>
                   ))}
               </div>
+              <section className="inspire-host-story-section inspire-host-story-inline">
+                <div className="inspire-host-stories">
+                  <p className="inspire-kicker">
+                    {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
+                  </p>
+                  {hostStories.map(([title, body]) => (
+                    <details key={title}>
+                      <summary>
+                        <strong>{title}</strong>
+                        <b>+</b>
+                      </summary>
+                      <p>{body}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
             </div>
             <div className="inspire-host-visuals">
               <div className="inspire-host-gallery">
@@ -2759,22 +2775,6 @@ export default function InspirePage({ page = "home" }) {
                   alt="Sandra Rudzīte painting a dramatic studio work"
                 />
               </div>
-            </div>
-          </section>
-          <section className="inspire-host-story-section">
-            <div className="inspire-host-stories">
-              <p className="inspire-kicker">
-                {lang === "lv" ? "SANDRAS STĀSTS" : lang === "ru" ? "ИСТОРИЯ САНДРЫ" : "SANDRA’S STORY"}
-              </p>
-              {hostStories.map(([title, body]) => (
-                <details key={title}>
-                  <summary>
-                    <strong>{title}</strong>
-                    <b>+</b>
-                  </summary>
-                  <p>{body}</p>
-                </details>
-              ))}
             </div>
           </section>
           <section className="inspire-host-art-section">

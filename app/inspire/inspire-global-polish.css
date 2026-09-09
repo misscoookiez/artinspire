@@ -3315,3 +3315,26 @@
     aspect-ratio:1 / 1 !important;
   }
 }
+
+/* The landing statement keeps its established measure, simply nudged into
+   the calmer centre area on wide screens. */
+@media (min-width: 801px) {
+  .inspire-page-home .inspire-statement {
+    padding-left: clamp(66px, 13vw, 266px) !important;
+  }
+}
+
+/* The biography facts are part of Sandra's written story, not a separate
+   chapter beneath the photo grid.  They begin directly after the bio in all
+   language versions, while the images continue independently alongside. */
+.inspire-page-about .inspire-host-copy .inspire-host-story-inline {
+  width: auto !important;
+  margin: 30px 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+.inspire-page-about .inspire-host-copy .inspire-host-story-inline .inspire-host-stories {
+  width: 100% !important;
+  max-width: 780px !important;
+  margin: 0 !important;
+}

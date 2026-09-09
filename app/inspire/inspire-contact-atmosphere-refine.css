@@ -263,3 +263,13 @@
     min-height:56px!important;
   }
 }
+
+/* Russian needs one additional text line in the invitation.  Give only that
+   locale the room it needs, while keeping the Latvian desktop rhythm fixed. */
+@media (min-width:861px){
+  .inspire-page-contact[lang="ru"] .inspire-contact-card{
+    height:auto!important;
+    min-height:512px!important;
+  }
+  .inspire-page-contact[lang="ru"] .inspire-contact-card-info h3{max-width:16ch!important;}
+}
