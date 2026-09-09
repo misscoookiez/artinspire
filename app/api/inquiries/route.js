@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rate-limit";
-import { sendInquiry } from "@/lib/booking-email";
+import { sendEventInquiryConfirmation, sendInquiry } from "@/lib/booking-email";
 import { isTrustedBrowserRequest } from "@/lib/request-security";
 
 export async function POST(request) {
@@ -11,7 +11,7 @@ export async function POST(request) {
     return NextResponse.json({ error: "Messaging is temporarily unavailable. Please use email or WhatsApp instead." }, { status: 503 });
   }
   try {
-    const { name, email, topic, message } = await request.json();
+    const { name, email, topic, message, kind } = await request.json();
     const cleanName = String(name || "").trim();
     const cleanEmail = String(email || "").trim().toLowerCase();
     const cleanTopic = String(topic || "Studio inquiry").trim();
@@ -19,7 +19,18 @@ export async function POST(request) {
     if (!cleanName || !/^\S+@\S+\.\S+$/.test(cleanEmail) || !cleanMessage) return NextResponse.json({ error: "Please enter your name, email and message." }, { status: 400 });
     if (cleanName.length > 120 || cleanEmail.length > 254 || cleanTopic.length > 140 || cleanMessage.length > 4000) return NextResponse.json({ error: "Please shorten your message." }, { status: 400 });
     await sendInquiry({ name: cleanName, email: cleanEmail, topic: cleanTopic, message: cleanMessage });
-    return NextResponse.json({ ok: true });
+    let confirmationSent = false;
+    if (kind === "event") {
+      try {
+        await sendEventInquiryConfirmation({ name: cleanName, email: cleanEmail });
+        confirmationSent = true;
+      } catch (confirmationError) {
+        // The studio still receives the request if a customer-mail provider is
+        // temporarily unavailable; do not lose a genuine enquiry.
+        console.error("Event inquiry confirmation failed", confirmationError);
+      }
+    }
+    return NextResponse.json({ ok: true, confirmationSent });
   } catch (error) {
     console.error("Inquiry failed", error);
     return NextResponse.json({ error: "Could not send your message. Please try again." }, { status: 500 });

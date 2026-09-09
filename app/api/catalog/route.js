@@ -4,6 +4,8 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { ensureRollingClassSessions } from "@/lib/regular-class-schedule";
 
 const emptyResult = { data: [], error: null };
+const isStudioWorkSession = (session) =>
+  session.title_en === "Studio work session" || session.title_lv === "Patstāvīgs darbs studijā";
 
 export async function GET(request) {
   const scope = new URL(request.url).searchParams.get("scope") || "legacy";
@@ -30,7 +32,7 @@ export async function GET(request) {
     // The planner needs anonymous occupied intervals only, not the full
     // booking catalogue (titles, prices and every open slot).
     const [classesResult, holdsResult, busyPrivateSlotsResult] = await Promise.all([
-      supabaseAdmin.from("class_sessions").select("starts_at,ends_at").eq("status", "open").gte("ends_at", now).order("starts_at"),
+      supabaseAdmin.from("class_sessions").select("starts_at,ends_at,title_en,title_lv").eq("status", "open").gte("ends_at", now).order("starts_at"),
       supabaseAdmin.from("booking_holds").select("private_slot_id").gt("expires_at", now).not("private_slot_id", "is", null),
       supabaseAdmin.from("private_slots").select("starts_at,ends_at").in("status", ["held", "booked"]).gte("ends_at", now).order("starts_at"),
     ]);
@@ -42,7 +44,10 @@ export async function GET(request) {
       : emptyResult;
     if (heldOpenSlotsResult.error) return NextResponse.json({ error: "Catalogue is unavailable." }, { status: 503 });
     return NextResponse.json({
-      eventBusyTimes: [...(classesResult.data || []), ...(busyPrivateSlotsResult.data || []), ...(heldOpenSlotsResult.data || [])],
+      // A self-directed studio-work window is intentionally lower priority
+      // than an event. Group classes and every confirmed/held private booking
+      // remain unavailable in the event planner.
+      eventBusyTimes: [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []), ...(heldOpenSlotsResult.data || [])],
       mode: "live",
     });
   }
@@ -74,7 +79,7 @@ export async function GET(request) {
   const withAvailability = (session) => ({ ...session, past: new Date(session.ends_at) < new Date(now), available: new Date(session.ends_at) >= new Date(now) && Math.max(0, session.capacity - (booked[session.id] || 0) - (held[session.id] || 0)) > 0 });
   const heldPrivate = new Set((holdsResult.data || []).map((row) => row.private_slot_id).filter(Boolean));
   const heldPrivateTimes = (slotsResult.data || []).filter((slot) => heldPrivate.has(slot.id));
-  const eventBusyTimes = [...(classesResult.data || []), ...(busyPrivateSlotsResult.data || []), ...heldPrivateTimes].map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at }));
+  const eventBusyTimes = [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []), ...heldPrivateTimes].map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at }));
   const response = {
     classAvailability: (classesResult.data || []).map((session) => ({ id: session.id, available: withAvailability(session).available })),
     classSessions: (classesResult.data || []).map((session) => {

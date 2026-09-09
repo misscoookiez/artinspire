@@ -1,0 +1,94 @@
+/* Mobile-only density pass. Desktop keeps the established layout intact. */
+@media (max-width: 800px) {
+  /* The photograph stays present, but the header stops consuming most of the
+     first screen before visitors reach the navigation. */
+  .inspire-masthead,
+  .inspire-page-home .inspire-masthead {
+    height: 390px !important;
+    min-height: 390px !important;
+    padding: 18px 20px 22px !important;
+    gap: 6px !important;
+  }
+
+  .inspire-masthead-brand,
+  .inspire-page-home .inspire-masthead-brand {
+    width: min(310px, 78vw) !important;
+  }
+
+  .inspire-masthead-copy,
+  .inspire-page-home .inspire-masthead-copy {
+    width: calc(100vw - 40px) !important;
+    max-width: calc(100vw - 40px) !important;
+    margin-top: 0 !important;
+  }
+
+  .inspire-masthead-copy > p:first-child,
+  .inspire-masthead-mood { margin-block: 0 !important; }
+
+  /* Three days remain readable and tappable, but the schedule becomes a
+     compact weekly overview instead of three very tall posters. */
+  .inspire-page-classes .inspire-weekly-columns {
+    gap: 8px !important;
+  }
+
+  .inspire-page-classes .inspire-weekly-columns > div {
+    display: grid;
+    grid-template-columns: 102px minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .inspire-page-classes .inspire-weekly-columns > div::before { display: none; }
+
+  .inspire-page-classes .inspire-weekly-columns h3 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 14px 12px !important;
+    border-right: 1px solid rgba(255,255,255,.2);
+    font-size: 18px !important;
+    line-height: 1.04;
+  }
+
+  .inspire-page-classes .inspire-weekly-columns button {
+    min-height: 62px !important;
+    display: grid !important;
+    grid-template-columns: 62px minmax(0, 1fr) auto;
+    column-gap: 9px;
+    align-items: center !important;
+    padding: 10px 12px !important;
+  }
+
+  .inspire-page-classes .inspire-weekly-columns button b {
+    font-size: 25px !important;
+    line-height: 1;
+  }
+
+  .inspire-page-classes .inspire-weekly-columns button small {
+    margin: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.25;
+    letter-spacing: .08em;
+  }
+
+  .inspire-page-classes .inspire-weekly-columns button i {
+    margin: 0 !important;
+    font-size: 9px !important;
+    line-height: 1.2;
+    letter-spacing: .07em;
+    text-align: right;
+  }
+
+  .inspire-page-classes .inspire-empty-session {
+    display: grid;
+    align-items: center;
+    min-height: 62px;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .inspire-page-classes .inspire-weekly-columns > div { grid-template-columns: 88px minmax(0, 1fr); }
+  .inspire-page-classes .inspire-weekly-columns h3 { font-size: 16px !important; padding-inline: 10px !important; }
+  .inspire-page-classes .inspire-weekly-columns button { grid-template-columns: 52px minmax(0, 1fr) auto; column-gap: 6px; padding-inline: 9px !important; }
+  .inspire-page-classes .inspire-weekly-columns button i { display: block; font-size: 8px !important; }
+}

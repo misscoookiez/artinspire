@@ -41,6 +41,7 @@ import "./inspire-directions-refine.css";
 import "./inspire-contact-rhythm-refine.css";
 import "./inspire-contact-atmosphere-refine.css";
 import "./inspire-navigation-skin.css";
+import "./inspire-mobile-density.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1690,7 +1691,7 @@ export default function InspirePage({ page = "home" }) {
       method: "studija",
       events: "pasakumi",
       contact: "sazinies",
-      about: "par-sandru",
+      about: "par-studiju",
       questions: "biezakie-jautajumi",
     }[page];
     const timer = window.setTimeout(() => {
@@ -1953,7 +1954,10 @@ export default function InspirePage({ page = "home" }) {
       ? (eventAttendees === 1 ? "участник" : "участников")
       : (eventAttendees === 1 ? "attendee" : "attendees");
   const eventBaseDuration = eventFormat === "custom" ? 0 : eventOffer.duration + 2;
-  const minimumEventDuration = eventFormat === "custom" ? 2 : eventBaseDuration;
+  // Customers may enquire about any length from one hour. The price retains
+  // each painting format's included studio time; choosing a shorter window
+  // never creates a misleading discount on the creative activity itself.
+  const minimumEventDuration = 1;
   const eventDurationOptions = Array.from(
     { length: 10 - minimumEventDuration + 1 },
     (_, index) => minimumEventDuration + index,
@@ -1963,7 +1967,7 @@ export default function InspirePage({ page = "home" }) {
     : eventFormat === "canvas"
       ? 200
       : eventDuration * 15;
-  const eventMonthStarts = Array.from({ length: 3 }, (_, index) => {
+  const eventMonthStarts = Array.from({ length: 6 }, (_, index) => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth() + index, 1, 12);
   });
@@ -2129,7 +2133,7 @@ export default function InspirePage({ page = "home" }) {
     setEventMonth(0);
     setEventDate("");
     setEventStartHour(11);
-    setEventDuration(format === "custom" ? 2 : eventOffers[format].duration + 2);
+    setEventDuration(1);
     setStatus("");
     setSent(false);
     setForm(true);
@@ -2154,6 +2158,7 @@ export default function InspirePage({ page = "home" }) {
           body: JSON.stringify({
             name: customerName,
             email: customerEmail,
+            kind: calendarKind === "event" ? "event" : undefined,
             topic: String(data.get("topic") || inquiryTopic).trim(),
             message: `${String(data.get("message") || "").trim()}${calendarKind === "event" ? `\n\nPASĀKUMA PIEPRASĪJUMS\nFormāts: ${eventOffer.label}${eventNeedsAttendees ? `\nDalībnieki: ${eventAttendees}` : ""}\nDatums: ${eventDate}\nLaiks: ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00\nIlgums: ${eventDuration} stundas\nAptuvenā cena: €${selectedEventEstimate}${eventFormat === "custom" ? `\nTelpas noma: ${eventDuration} h × €15` : `\nIekļautais pasākuma ilgums: ${eventBaseDuration} h\nPapildu studijas laiks: ${selectedEventExtraHours} h × €15 = €${selectedEventExtraPrice}`}` : ""}`,
           }),
@@ -2634,7 +2639,7 @@ export default function InspirePage({ page = "home" }) {
         </p>
       </section>}
       {page === "about" && (
-        <section className="inspire-about-studio-intro">
+        <section id="par-studiju" className="inspire-about-studio-intro">
           <div>
             <p className="inspire-kicker">
               {lang === "lv" ? "PAR STUDIJU" : lang === "ru" ? "О СТУДИИ" : "ABOUT THE STUDIO"}
@@ -2674,7 +2679,7 @@ export default function InspirePage({ page = "home" }) {
               {aboutChapterLinks.map(([targetId, label]) => (
                 <button key={targetId} type="button" onClick={() => openAboutChapter(targetId)}>
                   <span>{label}</span>
-                  <b aria-hidden="true">↘</b>
+                  <b aria-hidden="true">→</b>
                 </button>
               ))}
             </nav>
@@ -3425,7 +3430,7 @@ export default function InspirePage({ page = "home" }) {
                           <div className="inspire-event-start-time"><b>{lang === "lv" ? "Vēlamais sākuma laiks" : lang === "ru" ? "Желаемое время начала" : "Preferred start time"}</b><div className="inspire-event-hour-grid">{eventHours.map((hour) => <button key={hour} type="button" disabled={!eventDate || !eventAvailableHours(eventDate).includes(hour)} className={eventStartHour === hour ? "active" : ""} onClick={() => setEventStartHour(hour)}>{String(hour).padStart(2, "0")}:00</button>)}</div></div>
                         </div>
                         <div className="inspire-event-format-picker" role="group" aria-label={lang === "lv" ? "Pasākuma formāts" : "Event format"}>
-                          {Object.entries(eventOffers).map(([key, offer]) => <button key={key} type="button" className={eventFormat === key ? "active" : ""} onClick={() => { const duration = key === "custom" ? 2 : offer.duration + 2; const hours = eventAvailableHours(eventDate, duration); setEventFormat(key); setEventDuration(duration); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}><b>{offer.label}</b><span>{key === "custom" ? (lang === "lv" ? "no €15 / h" : lang === "ru" ? "от €15 / ч" : "from €15 / h") : `${offer.duration + 2} h`}</span></button>)}
+                          {Object.entries(eventOffers).map(([key, offer]) => <button key={key} type="button" className={eventFormat === key ? "active" : ""} onClick={() => { const hours = eventAvailableHours(eventDate, 1); setEventFormat(key); setEventDuration(1); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}><b>{offer.label}</b><span>{key === "custom" ? (lang === "lv" ? "no €15 / h" : lang === "ru" ? "от €15 / ч" : "from €15 / h") : `${offer.duration} h`}</span></button>)}
                         </div>
                         <div className="inspire-event-time-summary"><b>{eventOffer.label} · {eventFormat === "custom" ? (lang === "lv" ? "no €15 / h" : lang === "ru" ? "от €15 / ч" : "from €15 / h") : `€${selectedEventEstimate}`}</b><span>{eventDate ? `${eventDate} · ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00` : (lang === "lv" ? "Izvēlies datumu" : lang === "ru" ? "Выберите дату" : "Choose a date")}</span><small>{eventFormat === "custom"
                           ? (lang === "lv" ? `Telpas noma: ${eventDuration} h × €15 = €${selectedEventEstimate}.` : lang === "ru" ? `Аренда студии: ${eventDuration} ч × €15 = €${selectedEventEstimate}.` : `Studio hire: ${eventDuration} h × €15 = €${selectedEventEstimate}.`)
