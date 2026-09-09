@@ -2039,13 +2039,30 @@ export default function InspirePage({ page = "home" }) {
       ),
     };
   }) : [];
-  const weeklyDayLabel = (session) =>
-    new Intl.DateTimeFormat(locale, {
-      timeZone: "Europe/Riga",
-      weekday: "long",
-      day: "numeric",
-      month: "short",
-    }).format(new Date(session.startsAt));
+  const weeklyDayLabel = (session) => {
+    const date = new Date(session.startsAt);
+    if (lang === "en") {
+      return new Intl.DateTimeFormat(locale, {
+        timeZone: "Europe/Riga",
+        weekday: "long",
+        day: "numeric",
+        month: "short",
+      }).format(date);
+    }
+
+    // The compact labels keep the three schedule columns even on a narrow
+    // phone.  They deliberately omit the locale's default comma and use
+    // title case to match the English schedule styling.
+    const weekdays = lang === "lv"
+      ? ["Svētd.", "Pirmd.", "Otrd.", "Trešd.", "Ceturtd.", "Piektd.", "Sestd."]
+      : ["Вс.", "Пн.", "Вт.", "Ср.", "Чт.", "Пт.", "Сб."];
+    const day = new Intl.DateTimeFormat(locale, { timeZone: "Europe/Riga", day: "numeric" }).format(date);
+    const month = new Intl.DateTimeFormat(locale, { timeZone: "Europe/Riga", month: "short" })
+      .format(date)
+      .replace(/[.,]$/u, "");
+    const monthTitle = month ? `${month.charAt(0).toLocaleUpperCase(locale)}${month.slice(1)}.` : "";
+    return `${weekdays[weekdayInRiga(session.startsAt)]} ${day} ${monthTitle}`;
+  };
   const changeScheduleWeek = (direction) => {
     const nextWeek = Math.max(0, Math.min(scheduleWeeks.length - 1, activeScheduleWeek + direction));
     if (nextWeek === activeScheduleWeek) return;
