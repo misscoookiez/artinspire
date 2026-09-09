@@ -4,10 +4,14 @@
      first screen before visitors reach the navigation. */
   .inspire-masthead,
   .inspire-page-home .inspire-masthead {
-    height: 340px !important;
-    min-height: 340px !important;
-    padding: 18px 20px 22px !important;
-    gap: 6px !important;
+    /* Keep the full invitation visible, but do not leave a poster-sized
+       staging area between the mark, copy and the navigation below. */
+    height: 276px !important;
+    min-height: 276px !important;
+    padding: 12px 20px 14px !important;
+    grid-template-rows: auto auto !important;
+    align-content: space-between !important;
+    gap: 8px !important;
   }
 
   .inspire-masthead-brand,
@@ -19,11 +23,14 @@
   .inspire-page-home .inspire-masthead-copy {
     width: calc(100vw - 40px) !important;
     max-width: calc(100vw - 40px) !important;
-    margin-top: 0 !important;
+    align-self: end !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .inspire-masthead-copy > p:first-child,
-  .inspire-masthead-mood { margin-block: 0 !important; }
+  .inspire-masthead-copy > p:first-child { margin: 0 0 4px !important; }
+  .inspire-masthead-copy > span { margin-top: 0 !important; }
+  .inspire-masthead-mood { margin: 4px 0 0 !important; }
 
   /* Three days remain readable and tappable, but the schedule becomes a
      compact weekly overview instead of three very tall posters. */
