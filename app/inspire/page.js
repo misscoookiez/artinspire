@@ -1884,9 +1884,9 @@ export default function InspirePage({ page = "home" }) {
       ? session.titleLv?.replace(/\s*gleznošanas(?=\s+grupa)/i, "")
       : lang === "ru"
         ? session.title?.includes("Youth")
-          ? "Молодёжная группа"
+          ? "Для юных"
           : session.title?.includes("Adult")
-            ? "Взрослая группа"
+            ? "Для взрослых"
             : "Смешанная группа"
         : session.title?.includes("Youth")
           ? "Youth group"

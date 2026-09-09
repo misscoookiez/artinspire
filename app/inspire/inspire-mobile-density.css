@@ -1,5 +1,11 @@
 /* Mobile-only density pass. Desktop keeps the established layout intact. */
 @media (max-width: 800px) {
+  /* Bring the weekly schedule closer to the mobile navigation without
+     changing the desktop chapter rhythm. */
+  .inspire-page-classes .inspire-section {
+    padding-top: 48px !important;
+  }
+
   /* The photograph stays present, but the header stops consuming most of the
      first screen before visitors reach the navigation. */
   .inspire-masthead,
