@@ -42,6 +42,7 @@ import "./inspire-contact-rhythm-refine.css";
 import "./inspire-contact-atmosphere-refine.css";
 import "./inspire-navigation-skin.css";
 import "./inspire-mobile-density.css";
+import "./inspire-contact-icon-system.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -3220,11 +3221,11 @@ export default function InspirePage({ page = "home" }) {
           <p className="inspire-contact-card-copy">{lang === "lv" ? "Mēs vienmēr esam atvērti jaunām idejām, sadarbībai un radošiem projektiem." : lang === "ru" ? "Мы всегда открыты новым идеям, сотрудничеству и творческим проектам." : "We are always open to new ideas, collaborations and creative projects."}</p>
           <div className="inspire-contact-details">
             <p className="inspire-contact-phone"><span>{lang === "lv" ? "Tālrunis" : lang === "ru" ? "Телефон" : "Phone"}</span><strong>+371 2880 9550</strong></p>
-            <p><span>{lang === "lv" ? "Adrese" : lang === "ru" ? "Адрес" : "Address"}</span><strong>Miera iela 17, Rīga</strong></p>
+            <p className="inspire-contact-address"><span>{lang === "lv" ? "Adrese" : lang === "ru" ? "Адрес" : "Address"}</span><strong>Miera iela 17, Rīga</strong></p>
           </div>
           <div className="inspire-contact-socials">
-            <a href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram <b>→</b></a>
-            <a href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp <b>→</b></a>
+            <a className="inspire-contact-instagram" href="https://www.instagram.com/artstudio.inspire" target="_blank" rel="noreferrer">Instagram <b>→</b></a>
+            <a className="inspire-contact-whatsapp" href="https://wa.me/37128809550" target="_blank" rel="noreferrer">WhatsApp <b>→</b></a>
           </div>
         </div>
         <form className="inspire-contact-card inspire-contact-card-message" onSubmit={submitContact}>
