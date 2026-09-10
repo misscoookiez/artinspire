@@ -3401,7 +3401,20 @@ export default function InspirePage({ page = "home" }) {
         </div>
       )}
       {form && (
-        <div className="inspire-modal" role="dialog" aria-modal="true" aria-labelledby="inspire-booking-modal-title">
+        <div
+          className="inspire-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="inspire-booking-modal-title"
+          onPointerDown={(event) => {
+            if (
+              (calendarKind === "event" || calendarKind === "event-format") &&
+              event.target === event.currentTarget
+            ) {
+              setForm(false);
+            }
+          }}
+        >
           <form onSubmit={submit}>
             <button
               type="button"
