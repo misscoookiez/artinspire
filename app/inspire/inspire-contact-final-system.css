@@ -39,6 +39,18 @@
   min-width: 36px !important;
   border-radius: 11px !important;
 }
+/* Defeat the legacy desktop telephone-character override. The phone uses the
+   same SVG-frame system as the other marks, not an emoji-like glyph. */
+.inspire-page-contact .inspire-contact-details .inspire-contact-phone::before {
+  content: "" !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ef5fb' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 16.9v2.3a1.65 1.65 0 0 1-1.8 1.65 16.32 16.32 0 0 1-7.12-2.53 16.05 16.05 0 0 1-4.95-4.95A16.32 16.32 0 0 1 4.6 6.2 1.65 1.65 0 0 1 6.25 4.4h2.3a1.65 1.65 0 0 1 1.65 1.42c.1.82.3 1.63.58 2.4a1.65 1.65 0 0 1-.37 1.74l-.97.97a13.2 13.2 0 0 0 4.95 4.95l.97-.97a1.65 1.65 0 0 1 1.74-.37c.77.28 1.58.48 2.4.58A1.65 1.65 0 0 1 21 16.9Z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 20px 20px !important;
+}
 
 /* Phone and address are alike: the pale-blue label sits directly above the
    white value and both begin at precisely the same x-position. */
