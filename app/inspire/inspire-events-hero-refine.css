@@ -71,4 +71,5 @@
 .inspire-event-time-summary span { font-size: 17px; }
 .inspire-event-time-summary small { color: #49636d; font-size: 12px; line-height: 1.5; }
 .inspire-event-time-summary em { color: #536771; font-size: 12px; font-style: normal; line-height: 1.5; }
+.inspire-event-time-summary .inspire-event-total { display: block; margin-top: 10px; padding-top: 12px; border-top: 1px solid #b8e0e5; color: #13262f; font-size: 18px; letter-spacing: .02em; }
 @media (max-width: 650px) { .inspire-event-format-picker { grid-template-columns: 1fr; } .inspire-event-time-controls { grid-template-columns: 1fr; gap: 16px; } .inspire-event-hour-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .inspire-event-booking-flow,.inspire-event-format-dialog { padding: 18px; } }

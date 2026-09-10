@@ -43,11 +43,18 @@ export async function GET(request) {
       ? await supabaseAdmin.from("private_slots").select("starts_at,ends_at,price_cents").in("id", heldIds)
       : emptyResult;
     if (heldOpenSlotsResult.error) return NextResponse.json({ error: "Catalogue is unavailable." }, { status: 503 });
+    const classBusyTimes = (classesResult.data || [])
+      .filter((session) => !isStudioWorkSession(session))
+      .map((session) => ({ starts_at: session.starts_at, ends_at: session.ends_at, source: "class" }));
+    const privateBusyTimes = [
+      ...(busyPrivateSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000),
+      ...(heldOpenSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000),
+    ].map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at, source: "booking" }));
     return NextResponse.json({
       // A self-directed studio-work window is intentionally lower priority
       // than an event. Group classes and every confirmed/held private booking
       // remain unavailable in the event planner.
-      eventBusyTimes: [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000), ...(heldOpenSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000)],
+      eventBusyTimes: [...classBusyTimes, ...privateBusyTimes],
       mode: "live",
     });
   }
@@ -79,7 +86,17 @@ export async function GET(request) {
   const withAvailability = (session) => ({ ...session, past: new Date(session.ends_at) < new Date(now), available: new Date(session.ends_at) >= new Date(now) && Math.max(0, session.capacity - (booked[session.id] || 0) - (held[session.id] || 0)) > 0 });
   const heldPrivate = new Set((holdsResult.data || []).map((row) => row.private_slot_id).filter(Boolean));
   const heldPrivateTimes = (slotsResult.data || []).filter((slot) => heldPrivate.has(slot.id));
-  const eventBusyTimes = [...(classesResult.data || []).filter((session) => !isStudioWorkSession(session)), ...(busyPrivateSlotsResult.data || []).filter((slot) => slot.price_cents !== 2000), ...heldPrivateTimes.filter((slot) => slot.price_cents !== 2000)].map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at }));
+  const eventBusyTimes = [
+    ...(classesResult.data || [])
+      .filter((session) => !isStudioWorkSession(session))
+      .map((session) => ({ starts_at: session.starts_at, ends_at: session.ends_at, source: "class" })),
+    ...(busyPrivateSlotsResult.data || [])
+      .filter((slot) => slot.price_cents !== 2000)
+      .map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at, source: "booking" })),
+    ...heldPrivateTimes
+      .filter((slot) => slot.price_cents !== 2000)
+      .map((slot) => ({ starts_at: slot.starts_at, ends_at: slot.ends_at, source: "booking" })),
+  ];
   const response = {
     classAvailability: (classesResult.data || []).map((session) => ({ id: session.id, available: withAvailability(session).available })),
     classSessions: (classesResult.data || []).map((session) => {
