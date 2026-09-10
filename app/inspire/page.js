@@ -2030,7 +2030,16 @@ export default function InspirePage({ page = "home" }) {
       const date = new Date(activeEventMonth.getFullYear(), activeEventMonth.getMonth(), index - leading + 1, 12);
       const key = eventDayKey(date);
       const isPast = key < eventDayKey(new Date());
-      return { key, day: date.getDate(), isPast, unavailable: !isPast && eventAvailableHours(key).length === 0 };
+      // Keep future dates interactive while the live calendar request is in
+      // flight.  The selected date immediately responds to the tap; the hour
+      // controls remain unavailable until the authoritative busy times arrive.
+      // Once ready, only dates with no possible start time are muted.
+      return {
+        key,
+        day: date.getDate(),
+        isPast,
+        unavailable: eventAvailabilityReady && !isPast && eventAvailableHours(key).length === 0,
+      };
     });
   })();
   const selectedEventExtraHours = eventFormat === "custom"
@@ -3500,7 +3509,7 @@ export default function InspirePage({ page = "home" }) {
                           {["P", "O", "T", "C", "P", "S", "Sv"].map((day, index) => <small key={`${day}-${index}`}>{day}</small>)}
                           {eventCalendarCells.map((day, index) => day ? <button key={day.key} type="button" disabled={day.isPast || day.unavailable} className={eventDate === day.key ? "active" : ""} onClick={() => { const hours = eventAvailableHours(day.key); setEventDate(day.key); setEventStartHour(hours.includes(eventStartHour) ? eventStartHour : (hours[0] || 11)); }}>{day.day}</button> : <span key={`blank-${index}`} />)}
                         </div>
-                        {!eventAvailabilityReady ? <p className="inspire-event-availability-status">{lang === "lv" ? "Pārbaudām studijas pieejamību…" : lang === "ru" ? "Проверяем доступность студии…" : "Checking studio availability…"}</p> : null}
+                        {!eventAvailabilityReady ? <p className="inspire-event-availability-status" role="status">{lang === "lv" ? "Izvēlies datumu — pārbaudām pieejamos laikus…" : lang === "ru" ? "Выберите дату — проверяем доступное время…" : "Choose a date — checking available times…"}</p> : null}
                         <div className="inspire-event-time-controls">
                           <div className="inspire-event-selection-details">
                             <label><b>{lang === "lv" ? "Vēlamais pasākuma ilgums" : lang === "ru" ? "Желаемая продолжительность события" : "Preferred event duration"}</b><select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); const hours = eventAvailableHours(eventDate, duration); setEventDuration(duration); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}>{eventDurationOptions.map((duration) => <option key={duration} value={duration}>{duration} h</option>)}</select></label>
