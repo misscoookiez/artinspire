@@ -1,0 +1,178 @@
+/* Final contact composition: one measured row system shared by the details,
+   social actions and form.  This deliberately replaces the older mix of
+   dividers and offsets, so the cards read as one designed pair. */
+.inspire-page-contact .inspire-contact-card {
+  --contact-row: 66px;
+}
+
+.inspire-page-contact .inspire-contact-details,
+.inspire-page-contact .inspire-contact-socials {
+  display: grid !important;
+  gap: 8px !important;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.inspire-page-contact .inspire-contact-details > p,
+.inspire-page-contact .inspire-contact-socials > a {
+  display: grid !important;
+  grid-template-columns: 38px minmax(0, 1fr) 16px;
+  column-gap: 12px;
+  align-items: center;
+  width: 100%;
+  height: var(--contact-row) !important;
+  min-height: var(--contact-row) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  border: 0 !important;
+  text-decoration: none !important;
+}
+
+.inspire-page-contact .inspire-contact-details > p::before,
+.inspire-page-contact .inspire-contact-socials > a::before {
+  grid-column: 1;
+  grid-row: 1;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 11px !important;
+}
+
+/* Phone and address are alike: the pale-blue label sits directly above the
+   white value and both begin at precisely the same x-position. */
+.inspire-page-contact .inspire-contact-details > p {
+  grid-template-rows: 1fr 1fr;
+  border-bottom: 1px solid rgba(185, 219, 250, .22) !important;
+}
+.inspire-page-contact .inspire-contact-details > p span,
+.inspire-page-contact .inspire-contact-details > p strong {
+  grid-column: 2 / 4;
+  min-width: 0;
+}
+.inspire-page-contact .inspire-contact-details > p span {
+  grid-row: 1;
+  align-self: end;
+  margin-bottom: 2px;
+  color: #8eeaf6 !important;
+  font: 700 10px/1 Arial, Helvetica, sans-serif !important;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.inspire-page-contact .inspire-contact-details > p strong {
+  grid-row: 2;
+  align-self: start;
+  color: #f4f8ff !important;
+  font: 500 16px/1.24 Arial, Helvetica, sans-serif !important;
+  letter-spacing: -.015em;
+  text-decoration: none !important;
+}
+.inspire-page-contact .inspire-contact-phone strong { text-decoration: none !important; }
+
+/* Social destinations are intentional low-profile buttons, not leftover
+   rows. Their identical geometry keeps the card calm and avoids a dangling
+   separator beneath WhatsApp. */
+.inspire-page-contact .inspire-contact-socials { margin-top: 8px !important; }
+.inspire-page-contact .inspire-contact-socials > a {
+  grid-template-columns: 38px minmax(0, 1fr) 16px;
+  padding: 0 12px !important;
+  border: 1px solid rgba(177, 218, 244, .28) !important;
+  border-radius: 12px !important;
+  background: rgba(7, 20, 48, .2) !important;
+  color: #f4f8ff !important;
+  font: 500 16px/1 Arial, Helvetica, sans-serif !important;
+  letter-spacing: -.015em;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.inspire-page-contact .inspire-contact-socials > a b {
+  grid-column: 3;
+  grid-row: 1;
+  color: #a8eff8;
+  font: 400 23px/1 Arial, Helvetica, sans-serif;
+}
+.inspire-page-contact .inspire-contact-socials > a:hover,
+.inspire-page-contact .inspire-contact-socials > a:focus-visible {
+  border-color: rgba(155, 239, 249, .72) !important;
+  background: linear-gradient(90deg, rgba(135, 83, 242, .18), rgba(41, 211, 228, .14)) !important;
+  transform: translateX(2px);
+}
+.inspire-page-contact .inspire-contact-instagram::before {
+  border: 0 !important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='3.5' width='17' height='17' rx='4.5'/%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M17.55 6.45h.01'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, #7b3fe4 2%, #d94b97 48%, #f6a35a 100%) !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 20px 20px, 100% 100% !important;
+}
+.inspire-page-contact .inspire-contact-whatsapp::before {
+  border-color: #66e5a8 !important;
+  background-color: rgba(45, 170, 102, .17) !important;
+}
+
+/* The two cards share a top text block and an aligned working baseline. */
+@media (min-width: 861px) {
+  .inspire-page-contact .inspire-contact-panel {
+    align-items: stretch !important;
+  }
+  .inspire-page-contact .inspire-contact-card {
+    display: flex !important;
+    flex-direction: column;
+    min-height: 500px !important;
+    height: auto !important;
+    padding: 30px !important;
+  }
+  .inspire-page-contact .inspire-contact-card h3 {
+    min-height: 76px;
+    margin: 0 0 12px !important;
+  }
+  .inspire-page-contact .inspire-contact-card-copy {
+    min-height: 48px;
+    margin: 0 0 18px !important;
+  }
+  .inspire-page-contact .inspire-contact-card-info .inspire-contact-details,
+  .inspire-page-contact .inspire-contact-card-info .inspire-contact-socials {
+    transform: none !important;
+  }
+  .inspire-page-contact .inspire-contact-socials { margin-top: auto !important; }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer {
+    margin-top: auto !important;
+    transform: none !important;
+  }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-send {
+    width: 100%;
+    min-height: var(--contact-row) !important;
+    margin: 8px 0 0 !important;
+    padding: 0 12px !important;
+    border-top: 1px solid rgba(179, 222, 248, .58) !important;
+    border-bottom: 1px solid rgba(179, 222, 248, .58) !important;
+    border-radius: 0 !important;
+    color: #f4f8ff !important;
+    text-align: left;
+  }
+}
+
+@media (max-width: 860px) {
+  /* The menu remains in normal document flow instead of visually floating
+     over the card as the user scrolls. */
+  .inspire-page-contact .inspire-icon-nav {
+    position: relative !important;
+    top: auto !important;
+  }
+  .inspire-page-contact .inspire-contact-card { padding: 28px 24px !important; }
+  .inspire-page-contact .inspire-contact-card h3 { margin-bottom: 12px !important; }
+  .inspire-page-contact .inspire-contact-card-copy { margin-bottom: 18px !important; }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-composer { margin-top: 18px !important; }
+  .inspire-page-contact .inspire-contact-card-message .inspire-contact-send {
+    width: 100%;
+    min-height: var(--contact-row) !important;
+    margin: 8px 0 0 !important;
+    padding: 0 12px !important;
+    border-top: 1px solid rgba(179, 222, 248, .58) !important;
+    border-bottom: 1px solid rgba(179, 222, 248, .58) !important;
+    border-radius: 0 !important;
+    color: #f4f8ff !important;
+    text-align: left;
+  }
+}
