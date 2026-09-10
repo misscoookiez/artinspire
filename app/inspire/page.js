@@ -1852,10 +1852,30 @@ export default function InspirePage({ page = "home" }) {
       }));
   }, [availability.classSessions, lang]);
   const isStudioWorkSession = (session) => /studio work session|patstāvīgs darbs studijā/i.test(session.title || session.titleLv || "");
+  const regularGroupType = (session) => {
+    const title = `${session.title || ""} ${session.titleLv || ""}`.toLowerCase();
+    if (/youth|jauniešu|для юных/.test(title)) return "youth";
+    if (/adult|pieaugušo|для взрослых/.test(title)) return "adult";
+    if (/mixed|jaukta|смешанная/.test(title)) return "mixed";
+    return null;
+  };
+  const uniqueLiveClasses = useMemo(() => {
+    const displayed = new Set();
+    return allLiveClasses.filter((session) => {
+      if (isStudioWorkSession(session)) return true;
+      const groupType = regularGroupType(session);
+      if (!groupType) return true;
+      const date = rigaDateKey(session.startsAt);
+      const key = `${date}|${session.time}|${groupType}`;
+      if (displayed.has(key)) return false;
+      displayed.add(key);
+      return true;
+    });
+  }, [allLiveClasses]);
   const [liveClasses, liveStudioWorkSlots] = useMemo(() => [
-    allLiveClasses.filter((item) => !isStudioWorkSession(item)),
-    allLiveClasses.filter((item) => isStudioWorkSession(item)),
-  ], [allLiveClasses]);
+    uniqueLiveClasses.filter((item) => !isStudioWorkSession(item)),
+    uniqueLiveClasses.filter((item) => isStudioWorkSession(item)),
+  ], [uniqueLiveClasses]);
   const labelSlot = (slot) =>
     slot.label ||
     new Intl.DateTimeFormat(
