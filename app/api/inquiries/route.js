@@ -70,7 +70,13 @@ export async function POST(request) {
     let confirmationSent = false;
     if (kind === "event") {
       try {
-        await sendEventInquiryConfirmation({ name: cleanName, email: cleanEmail });
+        await sendEventInquiryConfirmation({
+          name: cleanName,
+          email: cleanEmail,
+          dateKey: String(eventDate || ""),
+          startHour: Number(eventStartHour),
+          duration: Number(eventDuration),
+        });
         confirmationSent = true;
       } catch (confirmationError) {
         // The studio still receives the request if a customer-mail provider is
