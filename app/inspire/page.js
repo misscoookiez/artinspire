@@ -2023,26 +2023,22 @@ export default function InspirePage({ page = "home" }) {
   const activeEventMonth = eventMonthStarts[eventMonth] || eventMonthStarts[0];
   const eventMonthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(activeEventMonth);
   const eventDayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-  const eventHours = Array.from({ length: Math.max(0, 24 - eventDuration - 11 + 1) }, (_, index) => 11 + index);
+  const eventHours = Array.from({ length: Math.max(0, 24 - eventDuration - 10 + 1) }, (_, index) => 10 + index);
   const eventOverlapsBusyTime = (dateKey, hour, duration, busyTime) => {
     const busyStartDay = rigaDateKey(busyTime.starts_at);
     const busyEndDay = rigaDateKey(busyTime.ends_at);
     if (dateKey < busyStartDay || dateKey > busyEndDay) return false;
     const busyStart = busyStartDay === dateKey ? rigaMinuteOfDay(busyTime.starts_at) : 0;
-    const busyEnd = busyEndDay === dateKey ? rigaMinuteOfDay(busyTime.ends_at) : 24 * 60;
+    const busyEnd = busyEndDay === dateKey
+      ? Math.min(24 * 60, rigaMinuteOfDay(busyTime.ends_at) + (busyTime.source === "class" ? 60 : 0))
+      : 24 * 60;
     const eventStart = hour * 60;
     const eventEnd = (hour + duration) * 60;
     return eventStart < busyEnd && eventEnd > busyStart;
   };
   const eventAvailableHours = (dateKey, duration = eventDuration) => {
     if (!dateKey) return [];
-    // Regular group classes reserve the whole studio day for their students.
-    // Private events never compete with that weekly programme.
-    const hasGroupClass = (availability.eventBusyTimes || []).some(
-      (busyTime) => busyTime.source === "class" && rigaDateKey(busyTime.starts_at) === dateKey,
-    );
-    if (hasGroupClass) return [];
-    const hours = Array.from({ length: Math.max(0, 24 - duration - 11 + 1) }, (_, index) => 11 + index);
+    const hours = Array.from({ length: Math.max(0, 24 - duration - 10 + 1) }, (_, index) => 10 + index);
     return hours.filter((hour) => !(availability.eventBusyTimes || []).some((busyTime) => eventOverlapsBusyTime(dateKey, hour, duration, busyTime)));
   };
   const eventStartIsAvailable = Boolean(eventDate && eventAvailableHours(eventDate).includes(eventStartHour));
