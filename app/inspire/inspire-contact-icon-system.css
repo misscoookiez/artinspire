@@ -77,14 +77,18 @@
 .inspire-page-contact .inspire-contact-details > p::before,
 .inspire-page-contact .inspire-contact-socials > a::before {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
 }
 .inspire-page-contact .inspire-contact-details > p span,
 .inspire-page-contact .inspire-contact-details > p strong {
   grid-column: 2;
 }
-.inspire-page-contact .inspire-contact-details > p span { align-self: end; }
-.inspire-page-contact .inspire-contact-details > p strong { align-self: start; }
+.inspire-page-contact .inspire-contact-details > p {
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+}
+.inspire-page-contact .inspire-contact-details > p span { grid-row: 1; align-self: end; }
+.inspire-page-contact .inspire-contact-details > p strong { grid-row: 2; align-self: start; }
 .inspire-page-contact .inspire-contact-socials > a b { grid-column: 3; grid-row: 1; }
 .inspire-page-contact .inspire-contact-socials > a:last-child { border-bottom: 0 !important; }
 
