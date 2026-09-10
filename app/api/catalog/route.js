@@ -2,11 +2,9 @@ import { NextResponse } from "next/server";
 import { artwork } from "@/lib/catalog";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { ensureRollingClassSessions } from "@/lib/regular-class-schedule";
+import { isStudioWorkSession } from "@/lib/event-availability";
 
 const emptyResult = { data: [], error: null };
-const isStudioWorkSession = (session) =>
-  session.title_en === "Studio work session" || session.title_lv === "Patstāvīgs darbs studijā";
-
 export async function GET(request) {
   const scope = new URL(request.url).searchParams.get("scope") || "legacy";
   const eventOnly = scope === "events";

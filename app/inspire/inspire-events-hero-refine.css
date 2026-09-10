@@ -56,6 +56,7 @@
 .inspire-event-calendar button:not(:disabled):hover,.inspire-event-calendar button.active { border-color: #238c98 !important; background: #dff9fb !important; color: #08212a !important; }
 .inspire-event-calendar button:disabled { opacity: .28; cursor: not-allowed; }
 .inspire-event-calendar-note { margin: -8px 0 0; color: #536771; font-size: 12px; line-height: 1.45; }
+.inspire-event-availability-status { margin: -8px 0 0; color: #536771; font-size: 12px; line-height: 1.45; }
 .inspire-event-time-controls { display: grid; grid-template-columns: minmax(210px, 280px) minmax(0, 1fr); gap: 24px; align-items: start; }
 .inspire-event-selection-details { display: grid; width: 100%; max-width: 280px; gap: 14px; }
 .inspire-event-time-controls label { display: grid; gap: 8px; color: #1b3541; font-size: 12px; letter-spacing: .07em; }

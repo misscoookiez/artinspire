@@ -1,6 +1,7 @@
 "use client";
 import { startTransition, useEffect, useMemo, useState } from "react";
 import { classes, privateSlots } from "@/lib/catalog";
+import { availableEventHours, eventHoursForDuration, hasLiveEventAvailability } from "@/lib/event-availability";
 import InspireLocalGuide, { InspireFooter } from "@/components/InspireLocalGuide";
 import "./inspire.css";
 import "./inspire-mobile.css";
@@ -143,12 +144,6 @@ const rigaDatePartsFormatter = new Intl.DateTimeFormat("en-GB", {
   month: "2-digit",
   day: "2-digit",
 });
-const rigaTimePartsFormatter = new Intl.DateTimeFormat("en-GB", {
-  timeZone: "Europe/Riga",
-  hour: "2-digit",
-  minute: "2-digit",
-  hourCycle: "h23",
-});
 const rigaDateKey = (dateValue) => {
   if (!dateValue) return "";
   const parts = rigaDatePartsFormatter.formatToParts(new Date(dateValue));
@@ -162,10 +157,6 @@ const weekStartKey = (dateValue) => {
   const date = new Date(`${key}T12:00:00Z`);
   date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
   return date.toISOString().slice(0, 10);
-};
-const rigaMinuteOfDay = (dateValue) => {
-  const value = Object.fromEntries(rigaTimePartsFormatter.formatToParts(new Date(dateValue)).map((part) => [part.type, part.value]));
-  return Number(value.hour) * 60 + Number(value.minute);
 };
 
 function InspireRotatingGallery({ slides, resolveImage, className, label, intervalMs }) {
@@ -1759,7 +1750,7 @@ export default function InspirePage({ page = "home" }) {
     let active = true;
     const scope = page === "events" ? "events" : "booking";
     const refresh = () =>
-      fetch(`/api/catalog?scope=${scope}`)
+      fetch(`/api/catalog?scope=${scope}`, { cache: "no-store" })
         .then((response) => (response.ok ? response.json() : null))
         .then((result) => {
           if (active && result) startTransition(() => setAvailability(result));
@@ -2023,23 +2014,11 @@ export default function InspirePage({ page = "home" }) {
   const activeEventMonth = eventMonthStarts[eventMonth] || eventMonthStarts[0];
   const eventMonthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric" }).format(activeEventMonth);
   const eventDayKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-  const eventHours = Array.from({ length: Math.max(0, 24 - eventDuration - 10 + 1) }, (_, index) => 10 + index);
-  const eventOverlapsBusyTime = (dateKey, hour, duration, busyTime) => {
-    const busyStartDay = rigaDateKey(busyTime.starts_at);
-    const busyEndDay = rigaDateKey(busyTime.ends_at);
-    if (dateKey < busyStartDay || dateKey > busyEndDay) return false;
-    const busyStart = busyStartDay === dateKey ? rigaMinuteOfDay(busyTime.starts_at) : 0;
-    const busyEnd = busyEndDay === dateKey
-      ? Math.min(24 * 60, rigaMinuteOfDay(busyTime.ends_at) + (busyTime.source === "class" ? 60 : 0))
-      : 24 * 60;
-    const eventStart = hour * 60;
-    const eventEnd = (hour + duration) * 60;
-    return eventStart < busyEnd && eventEnd > busyStart;
-  };
+  const eventAvailabilityReady = hasLiveEventAvailability(availability);
+  const eventHours = eventHoursForDuration(eventDuration);
   const eventAvailableHours = (dateKey, duration = eventDuration) => {
-    if (!dateKey) return [];
-    const hours = Array.from({ length: Math.max(0, 24 - duration - 10 + 1) }, (_, index) => 10 + index);
-    return hours.filter((hour) => !(availability.eventBusyTimes || []).some((busyTime) => eventOverlapsBusyTime(dateKey, hour, duration, busyTime)));
+    if (!dateKey || !eventAvailabilityReady) return [];
+    return availableEventHours(dateKey, duration, availability.eventBusyTimes);
   };
   const eventStartIsAvailable = Boolean(eventDate && eventAvailableHours(eventDate).includes(eventStartHour));
   const eventCalendarCells = (() => {
@@ -2233,6 +2212,9 @@ export default function InspirePage({ page = "home" }) {
             name: customerName,
             email: customerEmail,
             kind: calendarKind === "event" ? "event" : undefined,
+            eventDate: calendarKind === "event" ? eventDate : undefined,
+            eventStartHour: calendarKind === "event" ? eventStartHour : undefined,
+            eventDuration: calendarKind === "event" ? eventDuration : undefined,
             topic: calendarKind === "treatment-room"
               ? (lang === "lv" ? "Tattoo telpas datuma rezervēšanas pieprasījums" : lang === "ru" ? "Запрос на резервирование даты для тату-комнаты" : "Tattoo room date-reservation request")
               : String(data.get("topic") || inquiryTopic).trim(),
@@ -3518,6 +3500,7 @@ export default function InspirePage({ page = "home" }) {
                           {["P", "O", "T", "C", "P", "S", "Sv"].map((day, index) => <small key={`${day}-${index}`}>{day}</small>)}
                           {eventCalendarCells.map((day, index) => day ? <button key={day.key} type="button" disabled={day.isPast || day.unavailable} className={eventDate === day.key ? "active" : ""} onClick={() => { const hours = eventAvailableHours(day.key); setEventDate(day.key); setEventStartHour(hours.includes(eventStartHour) ? eventStartHour : (hours[0] || 11)); }}>{day.day}</button> : <span key={`blank-${index}`} />)}
                         </div>
+                        {!eventAvailabilityReady ? <p className="inspire-event-availability-status">{lang === "lv" ? "Pārbaudām studijas pieejamību…" : lang === "ru" ? "Проверяем доступность студии…" : "Checking studio availability…"}</p> : null}
                         <div className="inspire-event-time-controls">
                           <div className="inspire-event-selection-details">
                             <label><b>{lang === "lv" ? "Vēlamais pasākuma ilgums" : lang === "ru" ? "Желаемая продолжительность события" : "Preferred event duration"}</b><select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); const hours = eventAvailableHours(eventDate, duration); setEventDuration(duration); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}>{eventDurationOptions.map((duration) => <option key={duration} value={duration}>{duration} h</option>)}</select></label>
