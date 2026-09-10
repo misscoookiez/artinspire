@@ -57,12 +57,14 @@
 .inspire-event-calendar button:disabled { opacity: .28; cursor: not-allowed; }
 .inspire-event-calendar-note { margin: -8px 0 0; color: #536771; font-size: 12px; line-height: 1.45; }
 .inspire-event-availability-status { margin: -8px 0 0; color: #536771; font-size: 12px; line-height: 1.45; }
-.inspire-event-time-controls { display: grid; grid-template-columns: minmax(168px, 210px) minmax(0, 1fr); gap: 20px; align-items: start; }
-.inspire-event-selection-details { display: grid; width: 100%; max-width: 210px; gap: 14px; }
+.inspire-event-time-controls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; align-items: start; }
+.inspire-event-selection-details { display: grid; grid-column: span 2; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; gap: 12px; }
 .inspire-event-time-controls label { display: grid; gap: 8px; color: #1b3541; font-size: 12px; letter-spacing: .07em; }
 .inspire-event-time-controls label > b,
 .inspire-event-start-time > b { display: block; min-height: 18px; margin: 0; color: #1b3541; font-size: 12px; font-weight: 700; letter-spacing: .07em; line-height: 18px; }
 .inspire-event-time-controls select { box-sizing: border-box; width: 100%; min-height: 42px; padding: 8px; border: 1px solid #afdbe0; background: #fff; color: #11212b; }
+.inspire-event-attendee-note { display: block; margin-top: -2px; color: #58717a; font-size: 11px; letter-spacing: 0; line-height: 1.35; }
+.inspire-event-start-time { grid-column: span 3; min-width: 0; }
 .inspire-event-start-time > b { margin-bottom: 8px; }
 .inspire-event-hour-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
 .inspire-event-hour-grid button { min-width: 0 !important; min-height: 42px; margin: 0 !important; padding: 7px !important; border: 1px solid #b8e0e5 !important; background: #fff !important; color: #13262f !important; box-shadow: none !important; }
@@ -71,7 +73,11 @@
 .inspire-event-time-summary { display: grid; gap: 5px; padding: 16px 0 0; border-top: 1px solid #b8e0e5; }
 .inspire-event-time-summary b { font-size: 13px; letter-spacing: .08em; }
 .inspire-event-time-summary span { font-size: 17px; }
-.inspire-event-time-summary small { color: #49636d; font-size: 12px; line-height: 1.5; }
-.inspire-event-time-summary em { color: #536771; font-size: 12px; font-style: normal; line-height: 1.5; }
+.inspire-event-price-breakdown { display: grid; gap: 7px; margin: 7px 0 2px; padding: 0; list-style: none; color: #49636d; font-size: 12px; line-height: 1.45; }
+.inspire-event-price-breakdown li { position: relative; padding-left: 14px; }
+.inspire-event-price-breakdown li::before { content: ""; position: absolute; top: .54em; left: 0; width: 5px; height: 5px; border-radius: 50%; background: #4aaeb8; }
+.inspire-event-price-breakdown li.minimum { color: #16313d; font-weight: 700; }
+.inspire-event-price-breakdown li.minimum::before { background: #8b58c7; }
+.inspire-event-time-summary em { margin-top: 1px; color: #536771; font-size: 12px; font-style: normal; line-height: 1.5; }
 .inspire-event-time-summary .inspire-event-total { display: block; margin-top: 10px; padding-top: 12px; border-top: 1px solid #b8e0e5; color: #13262f; font-size: 18px; letter-spacing: .02em; }
-@media (max-width: 650px) { .inspire-event-format-picker { grid-template-columns: 1fr; } .inspire-event-time-controls { grid-template-columns: 1fr; gap: 16px; } .inspire-event-selection-details { max-width: min(210px, 100%); } .inspire-event-hour-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .inspire-event-booking-flow,.inspire-event-format-dialog { padding: 18px; } }
+@media (max-width: 650px) { .inspire-event-format-picker { grid-template-columns: 1fr; } .inspire-event-time-controls { grid-template-columns: 1fr; gap: 16px; } .inspire-event-selection-details { grid-column: auto; grid-template-columns: 1fr; max-width: min(230px, 100%); } .inspire-event-start-time { grid-column: auto; } .inspire-event-hour-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .inspire-event-booking-flow,.inspire-event-format-dialog { padding: 18px; } }
