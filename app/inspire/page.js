@@ -3471,7 +3471,7 @@ export default function InspirePage({ page = "home" }) {
                       {calendarKind === "event-format"
                         ? eventOffer.label
                         : calendarKind === "event"
-                          ? (lang === "lv" ? "Pārbaudi datumus" : lang === "ru" ? "Проверьте даты" : "Check available dates")
+                          ? (lang === "lv" ? "Pārbaudi pieejamos datumus" : lang === "ru" ? "Проверьте доступные даты" : "Check available dates")
                         : calendarKind === "inquiry"
                           ? (lang === "lv" ? "Nosūtīt ziņu" : lang === "ru" ? "Отправить сообщение" : "Send a message")
                         : calendarKind === "gift"
