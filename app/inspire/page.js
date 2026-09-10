@@ -1925,6 +1925,12 @@ export default function InspirePage({ page = "home" }) {
   const activeScheduleWeek = scheduleWeek < 0 ? initialScheduleWeek : Math.min(scheduleWeek, Math.max(0, scheduleWeeks.length - 1));
   const visibleWeek = scheduleWeeks[activeScheduleWeek];
   const locale = lang === "lv" ? "lv-LV" : lang === "ru" ? "ru-RU" : "en-GB";
+  const eventHourUnit = lang === "ru" ? "ч" : "h";
+  const eventWeekdayLabels = lang === "lv"
+    ? ["P", "O", "T", "C", "P", "S", "Sv"]
+    : lang === "ru"
+      ? ["П", "В", "С", "Ч", "П", "С", "Вс"]
+      : ["M", "T", "W", "T", "F", "S", "S"];
   const weekDays = visibleWeek
     ? Array.from({ length: 7 }, (_, index) => {
         const date = new Date(`${visibleWeek}T12:00:00Z`);
@@ -3503,25 +3509,25 @@ export default function InspirePage({ page = "home" }) {
                       </div>
                     ) : calendarKind === "event" ? (
                       <div className="inspire-event-booking-flow">
-                        <div className="inspire-event-month-switcher" aria-label={lang === "lv" ? "Pasākuma mēnesis" : "Event month"}>
+                        <div className="inspire-event-month-switcher" aria-label={lang === "lv" ? "Pasākuma mēnesis" : lang === "ru" ? "Месяц события" : "Event month"}>
                           <button type="button" disabled={eventMonth === 0} onClick={() => setEventMonth((month) => Math.max(0, month - 1))}>‹</button>
                           <strong>{eventMonthLabel}</strong>
                           <button type="button" disabled={eventMonth === eventMonthStarts.length - 1} onClick={() => setEventMonth((month) => Math.min(eventMonthStarts.length - 1, month + 1))}>›</button>
                         </div>
-                        <div className="inspire-event-calendar" role="group" aria-label={lang === "lv" ? "Pieejamie datumi" : "Available dates"}>
-                          {["P", "O", "T", "C", "P", "S", "Sv"].map((day, index) => <small key={`${day}-${index}`}>{day}</small>)}
+                        <div className="inspire-event-calendar" role="group" aria-label={lang === "lv" ? "Pieejamie datumi" : lang === "ru" ? "Доступные даты" : "Available dates"}>
+                          {eventWeekdayLabels.map((day, index) => <small key={`${day}-${index}`}>{day}</small>)}
                           {eventCalendarCells.map((day, index) => day ? <button key={day.key} type="button" disabled={day.isPast || day.unavailable} className={eventDate === day.key ? "active" : ""} onClick={() => { const hours = eventAvailableHours(day.key); setEventDate(day.key); setEventStartHour(hours.includes(eventStartHour) ? eventStartHour : (hours[0] || 11)); }}>{day.day}</button> : <span key={`blank-${index}`} />)}
                         </div>
                         {!eventAvailabilityReady ? <p className="inspire-event-availability-status" role="status">{lang === "lv" ? "Izvēlies datumu — pārbaudām pieejamos laikus…" : lang === "ru" ? "Выберите дату — проверяем доступное время…" : "Choose a date — checking available times…"}</p> : null}
                         <div className="inspire-event-time-controls">
                           <div className="inspire-event-selection-details">
-                            <label><b>{lang === "lv" ? "Vēlamais pasākuma ilgums" : lang === "ru" ? "Желаемая продолжительность события" : "Preferred event duration"}</b><select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); const hours = eventAvailableHours(eventDate, duration); setEventDuration(duration); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}>{eventDurationOptions.map((duration) => <option key={duration} value={duration}>{duration} h</option>)}</select></label>
+                            <label><b>{lang === "lv" ? "Vēlamais pasākuma ilgums" : lang === "ru" ? "Желаемая продолжительность события" : "Preferred event duration"}</b><select value={eventDuration} onChange={(e) => { const duration = Number(e.target.value); const hours = eventAvailableHours(eventDate, duration); setEventDuration(duration); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}>{eventDurationOptions.map((duration) => <option key={duration} value={duration}>{duration} {eventHourUnit}</option>)}</select></label>
                             {eventNeedsAttendees ? <label><b>{lang === "lv" ? "Cik cilvēki glezno?" : lang === "ru" ? "Сколько человек будет рисовать?" : "How many people will paint?"}</b><select value={eventAttendees} onChange={(e) => setEventAttendees(Number(e.target.value))}>{Array.from({ length: 20 }, (_, index) => index + 1).map((count) => <option key={count} value={count}>{count}</option>)}</select><small className="inspire-event-attendee-note">{lang === "lv" ? "Līdz 20 gleznošanas vietām · līdz 30 viesiem kopā." : lang === "ru" ? "До 20 мест для рисования · до 30 гостей всего." : "Up to 20 painting places · up to 30 guests in total."}</small></label> : null}
                           </div>
                           <div className="inspire-event-start-time"><b>{lang === "lv" ? "Vēlamais sākuma laiks" : lang === "ru" ? "Желаемое время начала" : "Preferred start time"}</b><div className="inspire-event-hour-grid">{eventHours.map((hour) => <button key={hour} type="button" disabled={!eventDate || !eventAvailableHours(eventDate).includes(hour)} className={eventStartHour === hour ? "active" : ""} onClick={() => setEventStartHour(hour)}>{String(hour).padStart(2, "0")}:00</button>)}</div></div>
                         </div>
                         <div className="inspire-event-format-picker" role="group" aria-label={lang === "lv" ? "Pasākuma formāts" : "Event format"}>
-                          {Object.entries(eventOffers).map(([key, offer]) => <button key={key} type="button" className={eventFormat === key ? "active" : ""} onClick={() => { const hours = eventAvailableHours(eventDate, 1); setEventFormat(key); setEventDuration(1); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}><b>{offer.label}</b><span>{key === "custom" ? (lang === "lv" ? "no €15 / h" : lang === "ru" ? "от €15 / ч" : "from €15 / h") : `${offer.duration} h`}</span></button>)}
+                          {Object.entries(eventOffers).map(([key, offer]) => <button key={key} type="button" className={eventFormat === key ? "active" : ""} onClick={() => { const hours = eventAvailableHours(eventDate, 1); setEventFormat(key); setEventDuration(1); setEventStartHour((hour) => hours.includes(hour) ? hour : (hours[0] || 11)); }}><b>{offer.label}</b><span>{key === "custom" ? (lang === "lv" ? "no €15 / h" : lang === "ru" ? "от €15 / ч" : "from €15 / h") : `${offer.duration} ${eventHourUnit}`}</span></button>)}
                         </div>
                         <div className="inspire-event-time-summary"><b>{eventOffer.label} · {eventFormat === "custom" ? (lang === "lv" ? "no €15 / h" : lang === "ru" ? "от €15 / ч" : "from €15 / h") : `€${selectedEventEstimate}`}</b><span>{eventDate ? `${eventDate} · ${String(eventStartHour).padStart(2, "0")}:00–${String(eventStartHour + eventDuration).padStart(2, "0")}:00` : (lang === "lv" ? "Izvēlies datumu" : lang === "ru" ? "Выберите дату" : "Choose a date")}</span><ul className="inspire-event-price-breakdown">{eventFormat === "custom"
                           ? <li>{lang === "lv" ? `Telpas noma: ${eventDuration} h × €15/h = €${selectedEventEstimate}` : lang === "ru" ? `Аренда студии: ${eventDuration} ч × €15/ч = €${selectedEventEstimate}` : `Studio hire: ${eventDuration} h × €15/h = €${selectedEventEstimate}`}</li>
@@ -3726,9 +3732,9 @@ export default function InspirePage({ page = "home" }) {
                   <>
                     <label className="inspire-inquiry-message">
                       {lang === "lv" ? "Ziņa" : lang === "ru" ? "Сообщение" : "Message"}
-                      <textarea name="message" required rows="5" placeholder={calendarKind === "event" ? (lang === "lv" ? "Cilvēku skaits, pasākuma ideja, īpašas vēlmes…" : "Guest count, your idea and any special wishes…") : (lang === "lv" ? "Pastāsti, kas Tev interesē…" : lang === "ru" ? "Расскажите, что вас интересует…" : "Tell us what you would like to discuss…")} />
+                      <textarea name="message" required rows="5" placeholder={calendarKind === "event" ? (lang === "lv" ? "Cilvēku skaits, pasākuma ideja, īpašas vēlmes…" : lang === "ru" ? "Число гостей, ваша идея и особые пожелания…" : "Guest count, your idea and any special wishes…") : (lang === "lv" ? "Pastāsti, kas Tev interesē…" : lang === "ru" ? "Расскажите, что вас интересует…" : "Tell us what you would like to discuss…")} />
                     </label>
-                    <button name="bookingAction" value="inquiry" disabled={calendarKind === "event" && (!eventDate || !eventStartIsAvailable)}>{calendarKind === "event" ? (lang === "lv" ? "NOSŪTĪT PASĀKUMA PIEPRASĪJUMU" : "SEND EVENT REQUEST") : (lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE")}</button>
+                    <button name="bookingAction" value="inquiry" disabled={calendarKind === "event" && (!eventDate || !eventStartIsAvailable)}>{calendarKind === "event" ? (lang === "lv" ? "NOSŪTĪT PASĀKUMA PIEPRASĪJUMU" : lang === "ru" ? "ОТПРАВИТЬ ЗАПРОС НА СОБЫТИЕ" : "SEND EVENT REQUEST") : (lang === "lv" ? "NOSŪTĪT ZIŅU" : lang === "ru" ? "ОТПРАВИТЬ СООБЩЕНИЕ" : "SEND MESSAGE")}</button>
                   </>
                 ) : calendarKind !== "gift" && calendarKind !== "pass" ? (
                   <div className="inspire-reservation-actions">
