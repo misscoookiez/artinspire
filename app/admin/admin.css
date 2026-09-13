@@ -492,6 +492,7 @@
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
   font-size: 13px;
 }
+.admin-event-editor .admin-event-notify{display:flex;align-items:center;gap:9px;padding:13px;border:1px solid #3e6570;color:#8eeaf0;font-size:11px;letter-spacing:.04em;text-transform:none}.admin-event-editor .admin-event-notify input{width:16px;height:16px;padding:0;accent-color:#62e1ec}
 @media (max-width: 850px) {
   .studio-admin {
     grid-template-columns: 1fr;

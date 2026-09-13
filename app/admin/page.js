@@ -266,6 +266,7 @@ export default function OwnerDashboard() {
   const [editingArtwork, setEditingArtwork] = useState(null);
   const [eventData, setEventData] = useState({ events: [], tickets: [], waitlist: [], subscribers: [] });
   const [editingEvent, setEditingEvent] = useState(null);
+  const [notifyEventSubscribers, setNotifyEventSubscribers] = useState(false);
   const supabase = useMemo(() => getSupabaseBrowser(), []);
   useEffect(() => {
     if (!supabase) return;
@@ -1059,7 +1060,7 @@ export default function OwnerDashboard() {
           <div className="admin-list admin-events-admin">
             <div className="admin-list-head">
               <div><p>PUBLIC EVENTS</p><small>{eventData.tickets.length} ticket records · {eventData.waitlist.length} waitlist entries · {eventData.subscribers.filter((item) => !item.unsubscribed_at).length} subscribers</small></div>
-              <button type="button" onClick={() => setEditingEvent({ ...emptyEvent })}>+ CREATE EVENT</button>
+              <button type="button" onClick={() => { setEditingEvent({ ...emptyEvent }); setNotifyEventSubscribers(false); }}>+ CREATE EVENT</button>
             </div>
             {!session ? <p className="admin-empty-note">Sign in with the owner email to create and edit public events.</p> : (
               <>
@@ -1068,7 +1069,7 @@ export default function OwnerDashboard() {
                   return <article className="admin-event-row" key={item.id}>
                     {item.image_url && <img src={item.image_url} alt="" />}
                     <div><span>{new Date(item.starts_at).toLocaleString("en-GB", { day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" })}</span><b>{item.title_en}</b><small>{item.status} · {sold}/{item.capacity} places · {item.price_cents ? `€${(item.price_cents / 100).toFixed(0)}` : "details soon"}</small></div>
-                    <button type="button" onClick={() => setEditingEvent({ ...item, starts_at:item.starts_at.slice(0,16), ends_at:item.ends_at.slice(0,16) })}>EDIT</button>
+                    <button type="button" onClick={() => { setEditingEvent({ ...item, starts_at:item.starts_at.slice(0,16), ends_at:item.ends_at.slice(0,16) }); setNotifyEventSubscribers(false); }}>EDIT</button>
                   </article>;
                 })}
                 {!eventData.events.length && <p className="admin-empty-note">No event records yet. Use Create event after running the ticketed-events migration.</p>}
@@ -1081,9 +1082,9 @@ export default function OwnerDashboard() {
                 const isExisting = Boolean(editingEvent.id);
                 const values = { ...editingEvent, starts_at:new Date(editingEvent.starts_at).toISOString(), ends_at:new Date(editingEvent.ends_at).toISOString(), capacity:Number(editingEvent.capacity), price_cents:editingEvent.price_cents === "" ? null : Number(editingEvent.price_cents) };
                 delete values.id; delete values.created_at; delete values.updated_at;
-                const res = await fetch("/api/admin/events", { method:isExisting ? "PATCH" : "POST", headers:{ "content-type":"application/json", ...auth }, body:JSON.stringify(isExisting ? { id:editingEvent.id, values } : { values }) });
+                const res = await fetch("/api/admin/events", { method:isExisting ? "PATCH" : "POST", headers:{ "content-type":"application/json", ...auth }, body:JSON.stringify(isExisting ? { id:editingEvent.id, values, notifySubscribers:notifyEventSubscribers } : { values, notifySubscribers:notifyEventSubscribers }) });
                 const data = await res.json(); if (!res.ok) throw new Error(data.error);
-                setEditingEvent(null); setNotice(isExisting ? "Event updated." : "Event created."); loadEvents();
+                setEditingEvent(null); setNotice(data.announced ? `Event saved and sent to ${data.announced} subscribers.` : isExisting ? "Event updated." : "Event created."); loadEvents();
               } catch (error) { setNotice(error.message); }
             }}>
               <div className="admin-event-editor-head"><p>{editingEvent.id ? "EDIT EVENT" : "NEW EVENT"}</p><button type="button" onClick={() => setEditingEvent(null)}>CLOSE</button></div>
@@ -1091,6 +1092,7 @@ export default function OwnerDashboard() {
               <div className="admin-event-grid"><label>Status<select value={editingEvent.status} onChange={(event) => setEditingEvent((old) => ({ ...old, status:event.target.value }))}><option value="draft">Draft</option><option value="published">Published</option><option value="cancelled">Cancelled</option></select></label><label>Ticket capacity (up to 35)<input type="number" min="1" max="35" value={editingEvent.capacity} onChange={(event) => setEditingEvent((old) => ({ ...old, capacity:event.target.value }))} /></label><label>Ticket price in cents (leave blank for coming soon)<input type="number" min="0" value={editingEvent.price_cents ?? ""} onChange={(event) => setEditingEvent((old) => ({ ...old, price_cents:event.target.value }))} /></label></div>
               <div className="admin-event-grid"><label>Starts<input required type="datetime-local" value={editingEvent.starts_at} onChange={(event) => setEditingEvent((old) => ({ ...old, starts_at:event.target.value }))} /></label><label>Ends<input required type="datetime-local" value={editingEvent.ends_at} onChange={(event) => setEditingEvent((old) => ({ ...old, ends_at:event.target.value }))} /></label></div>
               <label>Image URL<input value={editingEvent.image_url || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, image_url:event.target.value }))} /></label><label>Video URL (YouTube or .mp4; optional)<input value={editingEvent.video_url || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, video_url:event.target.value }))} /></label>
+              <label className="admin-event-notify"><input type="checkbox" checked={notifyEventSubscribers} onChange={(event) => setNotifyEventSubscribers(event.target.checked)} /> Send this published event to the studio-letter subscribers once</label>
               {["lv", "en", "ru"].map((locale) => <section key={locale}><h3>{locale.toUpperCase()}</h3><label>Title<input required value={editingEvent[`title_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`title_${locale}`]:event.target.value }))} /></label><label>Short invitation<textarea value={editingEvent[`summary_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`summary_${locale}`]:event.target.value }))} /></label><label>Full description<textarea value={editingEvent[`description_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`description_${locale}`]:event.target.value }))} /></label><label>Host / collaborator<input value={editingEvent[`host_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`host_${locale}`]:event.target.value }))} /></label><label>Location<input value={editingEvent[`location_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`location_${locale}`]:event.target.value }))} /></label></section>)}
               <button className="admin-save">SAVE EVENT</button>
             </form>}

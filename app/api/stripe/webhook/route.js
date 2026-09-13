@@ -77,6 +77,7 @@ export async function POST(request) {
         break;
       case "charge.refunded":
         await refundBookingPayment(event.data.object.payment_intent);
+        await supabaseAdmin.from("event_tickets").update({ status:"refunded", cancelled_at:new Date().toISOString() }).eq("stripe_payment_intent_id", event.data.object.payment_intent).eq("status", "paid");
         break;
       default: break;
     }
