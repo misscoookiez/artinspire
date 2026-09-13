@@ -53,6 +53,14 @@ export async function POST(request) {
       if (stripe) artworkHoldId=await createArtworkHold({artworkIds:chosen.map(a=>a.id),email:body.email});
       line_items = chosen.map(a => ({ price_data:{ currency:"eur", product_data:{name:a.title,description:`${a.medium}, ${a.size}`}, unit_amount:a.price*100 }, quantity:1 }));
       metadata={type:"art_order", artwork_ids:chosen.map(a=>a.id).join(","), artwork_hold_id:artworkHoldId||""};
+    } else if (body.kind === "class-payment") {
+      // This is deliberately not a reservation: a visitor is settling the
+      // price of a class already attended, so it must never consume a future
+      // place or create a booking hold.
+      const purchase = ["trial", "group"].includes(body.purchase) ? classPurchases[body.purchase] : null;
+      if (!purchase) return NextResponse.json({error:"Please choose either the trial or group-class payment."},{status:400});
+      line_items=[{price_data:{currency:"eur",product_data:{name:`Art Studio Inspire · ${purchase.name}`,description:"Payment for a class already attended."},unit_amount:purchase.amount},quantity:1}];
+      metadata={type:"class_payment", purchase:body.purchase};
     } else if (body.kind === "class") {
       let session=classes.find(c=>c.id===body.itemId);
       if(supabaseAdmin){
@@ -105,6 +113,7 @@ export async function POST(request) {
     if (!stripe) return NextResponse.json({url:`${origin}/checkout/success?demo=1`});
     const session=await stripe.checkout.sessions.create({
       mode:"payment", line_items, customer_email:body.email || undefined, metadata,
+      customer_creation: body.kind === "class-payment" ? "always" : undefined,
       payment_method_types:paymentMethodTypes,
       success_url:`${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`, cancel_url:`${origin}/checkout/cancelled`,
       billing_address_collection:business ? "required" : "auto",

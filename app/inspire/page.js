@@ -45,6 +45,7 @@ import "./inspire-navigation-skin.css";
 import "./inspire-mobile-density.css";
 import "./inspire-contact-icon-system.css";
 import "./inspire-contact-final-system.css";
+import "./inspire-after-class-payment.css";
 
 const statementSlides = [
   ["/art/inspire-studio.webp", "Krāsaina gleznošanas vieta Art Studio Inspire"],
@@ -1330,6 +1331,8 @@ export default function InspirePage({ page = "home" }) {
   const [contactStatus, setContactStatus] = useState("");
   const [calendarKind, setCalendarKind] = useState("all");
   const [checkoutOption, setCheckoutOption] = useState("");
+  const [classPaymentStatus, setClassPaymentStatus] = useState("");
+  const [classPaymentLoading, setClassPaymentLoading] = useState(false);
   const [giftClasses, setGiftClasses] = useState(2);
   const [inquiryTopic, setInquiryTopic] = useState("");
   const [scheduleWeek, setScheduleWeek] = useState(-1);
@@ -2174,6 +2177,26 @@ export default function InspirePage({ page = "home" }) {
     setConfirmationEmailSent(false);
     setForm(true);
   };
+  const payForCompletedClass = async (purchase) => {
+    setClassPaymentLoading(true);
+    setClassPaymentStatus(lang === "lv" ? "Atver drošo apmaksu…" : lang === "ru" ? "Открываем безопасную оплату…" : "Opening secure checkout…");
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "class-payment", purchase }),
+      });
+      const result = await response.json();
+      if (result.url) window.location.href = result.url;
+      else {
+        setClassPaymentStatus(result.error || (lang === "lv" ? "Apmaksu pašlaik nevar atvērt." : lang === "ru" ? "Сейчас не удаётся открыть оплату." : "Checkout is not available right now."));
+        setClassPaymentLoading(false);
+      }
+    } catch {
+      setClassPaymentStatus(lang === "lv" ? "Apmaksu nevarēja atvērt. Mēģini vēlreiz." : lang === "ru" ? "Не удалось открыть оплату. Попробуйте ещё раз." : "Checkout could not be reached. Please try again.");
+      setClassPaymentLoading(false);
+    }
+  };
   const openInquiry = (topic) => {
     setBooking({ kind: "inquiry" });
     setSelection("");
@@ -2653,6 +2676,26 @@ export default function InspirePage({ page = "home" }) {
             );
           })}
         </div>
+        <aside className="inspire-after-class-payment" aria-label={lang === "lv" ? "Apmaksa pēc nodarbības" : lang === "ru" ? "Оплата после занятия" : "Pay after your class"}>
+          <div>
+            <p>{lang === "lv" ? "JAU BIJI NODARBĪBĀ?" : lang === "ru" ? "УЖЕ БЫЛИ НА ЗАНЯТИИ?" : "ALREADY ATTENDED A CLASS?"}</p>
+            <h3>{lang === "lv" ? "Samaksā par nodarbību" : lang === "ru" ? "Оплатите занятие" : "Pay for your class"}</h3>
+            <span>{lang === "lv" ? "Izvēlies nodarbību, kurā jau piedalījies. Pēc apmaksas nosūtīsim apstiprinājumu uz e-pastu." : lang === "ru" ? "Выберите занятие, которое уже посетили. После оплаты мы отправим подтверждение на эл. почту." : "Choose the class you attended. We will email your payment confirmation after checkout."}</span>
+          </div>
+          <div className="inspire-after-class-payment-options">
+            <button type="button" disabled={classPaymentLoading} onClick={() => payForCompletedClass("trial")}>
+              <small>{lang === "lv" ? "IZMĒĢINĀJUMA NODARBĪBA" : lang === "ru" ? "ПРОБНОЕ ЗАНЯТИЕ" : "TRIAL CLASS"}</small>
+              <strong>€15</strong>
+              <b>{lang === "lv" ? "MAKSĀT →" : lang === "ru" ? "ОПЛАТИТЬ →" : "PAY →"}</b>
+            </button>
+            <button type="button" disabled={classPaymentLoading} onClick={() => payForCompletedClass("group")}>
+              <small>{lang === "lv" ? "GRUPAS NODARBĪBA" : lang === "ru" ? "ГРУППОВОЕ ЗАНЯТИЕ" : "GROUP CLASS"}</small>
+              <strong>€25</strong>
+              <b>{lang === "lv" ? "MAKSĀT →" : lang === "ru" ? "ОПЛАТИТЬ →" : "PAY →"}</b>
+            </button>
+          </div>
+          <p className="inspire-after-class-payment-status" role="status">{classPaymentStatus}</p>
+        </aside>
         <div className="inspire-space-details">
           <details>
             <summary>

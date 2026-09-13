@@ -4,7 +4,7 @@ import { stripe } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { confirmBookingHold, refundBookingPayment, releaseBookingHold } from "@/lib/bookings";
 import { claimStripeEvent, completeArtworkOrder, releaseArtworkHold } from "@/lib/fulfillment";
-import { sendBookingConfirmation, sendClassPassConfirmation, sendGiftCardConfirmation } from "@/lib/booking-email";
+import { sendBookingConfirmation, sendClassPassConfirmation, sendCompletedClassPaymentConfirmation, sendGiftCardConfirmation } from "@/lib/booking-email";
 
 export const runtime = "nodejs";
 
@@ -31,6 +31,10 @@ export async function POST(request) {
         const email=session.customer_details?.email || session.customer_email || "";
         if (metadata.type === "art_order") {
           await completeArtworkOrder({checkoutSessionId:session.id,paymentIntentId:session.payment_intent,email,amountCents:session.amount_total || 0,artworkIds:(metadata.artwork_ids || "").split(",").filter(Boolean),artworkHoldId:metadata.artwork_hold_id});
+        } else if (metadata.type === "class_payment") {
+          const purchase = metadata.purchase === "trial" ? "trial" : "group";
+          try { await sendCompletedClassPaymentConfirmation({email,name:session.customer_details?.name,purchase,amountCents:session.amount_total || 0}); }
+          catch(emailError){console.error("Completed-class payment email failed",emailError);}
         } else if ((metadata.type === "class_booking" || metadata.type === "private_booking") && metadata.booking_hold_id) {
           const bookingId=await confirmBookingHold({holdId:metadata.booking_hold_id,checkoutSessionId:session.id,paymentIntentId:session.payment_intent,customerName:metadata.customer_name,email,amountCents:session.amount_total || 0});
           const {data:booking}=await supabaseAdmin.from("bookings").select("manage_token,kind,class_session_id,private_slot_id").eq("id",bookingId).maybeSingle();
