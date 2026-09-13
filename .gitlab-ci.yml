@@ -23,7 +23,11 @@ deploy_prod:
   stage: deploy
   image: node:22-alpine
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"
+    # Keep the production deploy rule deliberately simple. The events release
+    # added a pipeline-source condition here; the existing host deployment
+    # only needs the default branch check and has historically run reliably
+    # with this form.
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       exists:
         - package.json
   cache:
