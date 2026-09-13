@@ -34,6 +34,7 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const origin = site();
+    const locale = ["lv", "en", "ru"].includes(body.locale) ? body.locale : "en";
     const business = Boolean(body.invoice);
     // This can only be enabled in local development to verify that Stripe Checkout
     // itself is wired correctly before the Supabase booking database is connected.
@@ -115,6 +116,7 @@ export async function POST(request) {
       line_items=[{price_data:{currency:"eur",product_data:{name:`Art Studio Inspire ${classes}-class pass`,description:"Valid for four weeks from the first class."},unit_amount:amount},quantity:1}];
       metadata={type:"class_pass", pass_classes:String(classes), valid_for:"4 weeks from first class", customer_name:body.name||"", customer_email:body.email||""};
     } else return NextResponse.json({error:"Unknown checkout type."},{status:400});
+    metadata = { ...metadata, locale };
     if (!stripe) return NextResponse.json({url:`${origin}/checkout/success?demo=1`});
     const session=await stripe.checkout.sessions.create({
       mode:"payment", line_items, customer_email:body.email || undefined, metadata,

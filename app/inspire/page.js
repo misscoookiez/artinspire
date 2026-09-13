@@ -2197,7 +2197,7 @@ export default function InspirePage({ page = "home" }) {
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind: "class-payment", purchase, customAmount }),
+        body: JSON.stringify({ kind: "class-payment", purchase, customAmount, locale: lang }),
       });
       const result = await response.json();
       if (result.url) window.location.href = result.url;
@@ -2292,7 +2292,7 @@ export default function InspirePage({ page = "home" }) {
         const response = await fetch("/api/reservations", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind: booking.kind, itemId: booking.itemId, name: customerName, email: customerEmail, label: booking.label }),
+          body: JSON.stringify({ kind: booking.kind, itemId: booking.itemId, name: customerName, email: customerEmail, label: booking.label, locale: lang }),
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || "Could not reserve this place.");
@@ -2325,6 +2325,7 @@ export default function InspirePage({ page = "home" }) {
               : undefined,
           name: customerName,
           email: customerEmail,
+          locale: lang,
         }),
       });
       const result = await response.json();

@@ -10,7 +10,8 @@ export async function POST(request) {
   const throttle = rateLimit(request, "reservation", { limit: 6, windowMs: 60_000 });
   if (!throttle.allowed) return NextResponse.json({ error: "Please wait a moment and try again." }, { status: 429, headers: { "Retry-After": String(throttle.retryAfter) } });
   try {
-    const { kind, itemId, name, email, label } = await request.json();
+    const { kind, itemId, name, email, label, locale: requestedLocale } = await request.json();
+    const locale = ["lv", "en", "ru"].includes(requestedLocale) ? requestedLocale : "en";
     const cleanName = String(name || "").trim();
     const cleanEmail = String(email || "").trim().toLowerCase();
     const cleanLabel = String(label || "").trim();
@@ -59,17 +60,18 @@ export async function POST(request) {
       if (confirmedBooking) {
         const table = confirmedBooking.kind === "private" ? "private_slots" : "class_sessions";
         const resourceId = confirmedBooking.kind === "private" ? confirmedBooking.private_slot_id : confirmedBooking.class_session_id;
-        const fields = confirmedBooking.kind === "private" ? "starts_at,ends_at" : "starts_at,ends_at,title_en";
+        const fields = confirmedBooking.kind === "private" ? "starts_at,ends_at" : "starts_at,ends_at,title_en,title_lv";
         const { data: session, error: sessionError } = await supabaseAdmin.from(table).select(fields).eq("id", resourceId).maybeSingle();
         if (sessionError) throw sessionError;
         if (session) {
           confirmationSent = await sendBookingConfirmation({
             email: cleanEmail,
             name: cleanName,
-            title: confirmedBooking.kind === "private" ? "Art Studio Inspire session" : session.title_en,
+            title: confirmedBooking.kind === "private" ? (locale === "lv" ? "Art Studio Inspire privātā sesija" : locale === "ru" ? "Индивидуальная сессия Art Studio Inspire" : "Art Studio Inspire private session") : (locale === "lv" ? session.title_lv : session.title_en),
             startsAt: session.starts_at,
             endsAt: session.ends_at,
             token: confirmedBooking.manage_token,
+            locale,
           });
         }
       }
