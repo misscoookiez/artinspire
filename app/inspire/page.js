@@ -2486,16 +2486,6 @@ export default function InspirePage({ page = "home" }) {
           <img src="/art/inspire-icon-calendar.png" alt="" />
           <span>{t.apply}</span>
         </a>
-        <a href="/method" onClick={closeMobileMenuAndShowContent}>
-          <img src="/art/inspire-icon-palette.png" alt="" />
-          <span>
-            {lang === "lv"
-              ? "MĀCĪBU METODE"
-              : lang === "ru"
-                ? "МЕТОД ОБУЧЕНИЯ"
-                : "HOW WE WORK"}
-          </span>
-        </a>
         <a href="/events" onClick={closeMobileMenuAndShowContent}>
           <img
             className="inspire-gift-icon"
@@ -2504,10 +2494,20 @@ export default function InspirePage({ page = "home" }) {
           />
           <span>
             {lang === "lv"
-              ? "PRIVĀTIE PASĀKUMI"
+              ? "PASĀKUMI"
               : lang === "ru"
-                ? "ПРАЗДНИКИ"
-                : "PRIVATE EVENTS"}
+                ? "СОБЫТИЯ"
+                : "EVENTS"}
+          </span>
+        </a>
+        <a href="/method" onClick={closeMobileMenuAndShowContent}>
+          <img src="/art/inspire-icon-palette.png" alt="" />
+          <span>
+            {lang === "lv"
+              ? "MĀCĪBU METODE"
+              : lang === "ru"
+                ? "МЕТОД ОБУЧЕНИЯ"
+                : "HOW WE WORK"}
           </span>
         </a>
         <a href="/contact" onClick={closeMobileMenuAndShowContent}>

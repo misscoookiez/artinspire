@@ -4,6 +4,7 @@ import { artwork, classes } from "@/lib/catalog";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { attachStripeSession, createBookingHold } from "@/lib/bookings";
 import { attachArtworkCheckoutSession, createArtworkHold } from "@/lib/fulfillment";
+import { attachEventCheckoutSession, createEventTicketHold } from "@/lib/events";
 import { rateLimit } from "@/lib/rate-limit";
 import { isTrustedBrowserRequest } from "@/lib/request-security";
 
@@ -30,7 +31,7 @@ export async function POST(request) {
   if (!isTrustedBrowserRequest(request)) return NextResponse.json({ error: "Invalid request origin." }, { status: 403 });
   const throttle = rateLimit(request, "checkout", { limit: 8, windowMs: 60_000 });
   if (!throttle.allowed) return NextResponse.json({ error: "Please wait a moment and try again." }, { status: 429, headers: { "Retry-After": String(throttle.retryAfter) } });
-  let bookingHoldId, artworkHoldId;
+  let bookingHoldId, artworkHoldId, eventTicketHoldId;
   try {
     const body = await request.json();
     const origin = site();
@@ -41,7 +42,15 @@ export async function POST(request) {
     // It must never be used as the production scheduler: there is no durable hold.
     const allowLocalStripeBookingTest = process.env.NODE_ENV === "development" && process.env.STRIPE_TEST_BOOKINGS_WITHOUT_DATABASE === "true";
     let line_items, metadata;
-    if (body.kind === "art") {
+    if (body.kind === "event") {
+      if (!supabaseAdmin) return NextResponse.json({ error:"Events are not configured yet." }, { status:503 });
+      if (!/^[0-9a-f-]{36}$/i.test(String(body.eventId || "")) || !body.name || !/^\S+@\S+\.\S+$/.test(String(body.email || ""))) return NextResponse.json({ error:"Please enter your name and a valid email address." }, { status:400 });
+      const { data:event, error:eventError } = await supabaseAdmin.from("studio_events").select("id,title_en,starts_at,ends_at,price_cents,status").eq("id", body.eventId).maybeSingle();
+      if (eventError || !event || event.status !== "published" || !event.price_cents || new Date(event.starts_at).getTime() <= Date.now()) return NextResponse.json({ error:"This event is not available for ticket payment yet." }, { status:400 });
+      eventTicketHoldId = await createEventTicketHold({ eventId:event.id, email:String(body.email).trim().toLowerCase(), locale });
+      line_items=[{ price_data:{ currency:"eur", product_data:{ name:`Art Studio Inspire · ${event.title_en}`, description:new Intl.DateTimeFormat("en-GB", { timeZone:"Europe/Riga", day:"numeric", month:"short", hour:"2-digit", minute:"2-digit", hour12:false }).format(new Date(event.starts_at)) }, unit_amount:event.price_cents }, quantity:1 }];
+      metadata={ type:"event_ticket", event_id:event.id, event_ticket_hold_id:eventTicketHoldId, customer_name:String(body.name).trim() };
+    } else if (body.kind === "art") {
       let chosen = (body.items || []).map(({ id }) => artwork.find(a => a.id === id)).filter(Boolean);
       if(supabaseAdmin){
         const ids=(body.items||[]).map(item=>item.id).filter(id=>typeof id==="string");
@@ -130,6 +139,7 @@ export async function POST(request) {
     });
     if (bookingHoldId) await attachStripeSession(bookingHoldId, session.id);
     if (artworkHoldId) await attachArtworkCheckoutSession(artworkHoldId, session.id);
+    if (eventTicketHoldId) await attachEventCheckoutSession(eventTicketHoldId, session.id);
     return NextResponse.json({url:session.url});
   } catch (error) { console.error(error); return NextResponse.json({error:"Unable to start checkout. Please try again."},{status:500}); }
 }

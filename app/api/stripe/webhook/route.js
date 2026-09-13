@@ -4,7 +4,8 @@ import { stripe } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { confirmBookingHold, refundBookingPayment, releaseBookingHold } from "@/lib/bookings";
 import { claimStripeEvent, completeArtworkOrder, releaseArtworkHold } from "@/lib/fulfillment";
-import { sendBookingConfirmation, sendClassPassConfirmation, sendCompletedClassPaymentConfirmation, sendGiftCardConfirmation } from "@/lib/booking-email";
+import { confirmEventTicketHold, releaseEventTicketHold } from "@/lib/events";
+import { sendBookingConfirmation, sendClassPassConfirmation, sendCompletedClassPaymentConfirmation, sendEventTicketConfirmation, sendGiftCardConfirmation } from "@/lib/booking-email";
 
 export const runtime = "nodejs";
 
@@ -31,6 +32,10 @@ export async function POST(request) {
         const email=session.customer_details?.email || session.customer_email || "";
         if (metadata.type === "art_order") {
           await completeArtworkOrder({checkoutSessionId:session.id,paymentIntentId:session.payment_intent,email,amountCents:session.amount_total || 0,artworkIds:(metadata.artwork_ids || "").split(",").filter(Boolean),artworkHoldId:metadata.artwork_hold_id});
+        } else if (metadata.type === "event_ticket" && metadata.event_ticket_hold_id) {
+          const ticketId = await confirmEventTicketHold({ holdId:metadata.event_ticket_hold_id, checkoutSessionId:session.id, paymentIntentId:session.payment_intent, customerName:metadata.customer_name, email, amountCents:session.amount_total || 0 });
+          const [{data:ticket},{data:studioEvent}] = await Promise.all([supabaseAdmin.from("event_tickets").select("manage_token").eq("id",ticketId).maybeSingle(),supabaseAdmin.from("studio_events").select("*").eq("id",metadata.event_id).maybeSingle()]);
+          if(ticket && studioEvent) { try { await sendEventTicketConfirmation({email,name:metadata.customer_name,event:studioEvent,ticketToken:ticket.manage_token,locale:metadata.locale,paid:true}); } catch(emailError){console.error("Event ticket confirmation email failed",emailError);} }
         } else if (metadata.type === "class_payment") {
           const purchase = ["trial", "group", "other"].includes(metadata.purchase) ? metadata.purchase : "other";
           try { await sendCompletedClassPaymentConfirmation({email,name:session.customer_details?.name,purchase,amountCents:session.amount_total || 0,locale:metadata.locale}); }
@@ -68,6 +73,7 @@ export async function POST(request) {
       case "checkout.session.expired":
         await releaseBookingHold(event.data.object.id);
         await releaseArtworkHold(event.data.object.id);
+        await releaseEventTicketHold(event.data.object.id);
         break;
       case "charge.refunded":
         await refundBookingPayment(event.data.object.payment_intent);

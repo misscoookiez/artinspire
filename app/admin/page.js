@@ -10,6 +10,7 @@ const sections = [
   "Images",
   "Schedule",
   "Bookings",
+  "Events",
   "Artworks",
 ];
 const emptySlot = {
@@ -21,6 +22,11 @@ const emptySlot = {
   capacity: 7,
   price_cents: 4500,
   status: "open",
+};
+const emptyEvent = {
+  slug: "", status: "draft", starts_at: "", ends_at: "", capacity: 14, price_cents: 3000, image_url: "/art/studio-slide-room.webp", video_url: "",
+  title_lv: "", title_en: "", title_ru: "", summary_lv: "", summary_en: "", summary_ru: "", description_lv: "", description_en: "", description_ru: "", host_lv: "", host_en: "", host_ru: "",
+  location_lv: "Art Studio Inspire, Miera iela 17, Rīga, Latvija", location_en: "Art Studio Inspire, Miera iela 17, Riga, Latvia", location_ru: "Art Studio Inspire, Миера 17, Рига, Латвия",
 };
 const textFields = [
   [
@@ -258,6 +264,8 @@ export default function OwnerDashboard() {
   const [bookingView, setBookingView] = useState("upcoming");
   const [artworks, setArtworks] = useState([]);
   const [editingArtwork, setEditingArtwork] = useState(null);
+  const [eventData, setEventData] = useState({ events: [], tickets: [], waitlist: [], subscribers: [] });
+  const [editingEvent, setEditingEvent] = useState(null);
   const supabase = useMemo(() => getSupabaseBrowser(), []);
   useEffect(() => {
     if (!supabase) return;
@@ -388,9 +396,19 @@ export default function OwnerDashboard() {
       setNotice(error.message);
     }
   };
+  const loadEvents = async () => {
+    if (!session) return;
+    try {
+      const res = await fetch("/api/admin/events", { headers: auth });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setEventData(data);
+    } catch (error) { setNotice(error.message); }
+  };
   useEffect(() => {
     if (section === "Schedule" || section === "Bookings") loadSchedule();
     if (section === "Artworks") loadArtworks();
+    if (section === "Events") loadEvents();
   }, [section, session]);
   const createSlot = async (event) => {
     event.preventDefault();
@@ -527,6 +545,7 @@ export default function OwnerDashboard() {
       "A small, clear\ninbox.",
       "See every paid booking and update its status without a complicated CRM.",
     ],
+    Events: ["Make a moment\npeople remember.", "Create public events, edit every language and image, then see tickets and waitlist entries in one place."],
     Artworks: ["One work at\na time.", "Manage live artwork listings."],
   }[section];
   return (
@@ -1034,6 +1053,47 @@ export default function OwnerDashboard() {
                 There are no {bookingView === "all" ? "bookings" : bookingView} bookings to show.
               </p>
             )}
+          </div>
+        )}
+        {section === "Events" && (
+          <div className="admin-list admin-events-admin">
+            <div className="admin-list-head">
+              <div><p>PUBLIC EVENTS</p><small>{eventData.tickets.length} ticket records · {eventData.waitlist.length} waitlist entries · {eventData.subscribers.filter((item) => !item.unsubscribed_at).length} subscribers</small></div>
+              <button type="button" onClick={() => setEditingEvent({ ...emptyEvent })}>+ CREATE EVENT</button>
+            </div>
+            {!session ? <p className="admin-empty-note">Sign in with the owner email to create and edit public events.</p> : (
+              <>
+                {eventData.events.map((item) => {
+                  const sold = eventData.tickets.filter((ticket) => ticket.event_id === item.id && ["reserved", "paid"].includes(ticket.status)).length;
+                  return <article className="admin-event-row" key={item.id}>
+                    {item.image_url && <img src={item.image_url} alt="" />}
+                    <div><span>{new Date(item.starts_at).toLocaleString("en-GB", { day:"2-digit", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" })}</span><b>{item.title_en}</b><small>{item.status} · {sold}/{item.capacity} places · {item.price_cents ? `€${(item.price_cents / 100).toFixed(0)}` : "details soon"}</small></div>
+                    <button type="button" onClick={() => setEditingEvent({ ...item, starts_at:item.starts_at.slice(0,16), ends_at:item.ends_at.slice(0,16) })}>EDIT</button>
+                  </article>;
+                })}
+                {!eventData.events.length && <p className="admin-empty-note">No event records yet. Use Create event after running the ticketed-events migration.</p>}
+                {(eventData.tickets.length || eventData.waitlist.length) > 0 && <section className="admin-event-attendees"><h3>Tickets & waitlist</h3>{[...eventData.tickets, ...eventData.waitlist].slice(0, 60).map((item) => <p key={item.id}><b>{item.customer_name}</b> · {item.email} · <span>{item.status}</span></p>)}</section>}
+              </>
+            )}
+            {editingEvent && <form className="admin-event-editor" onSubmit={async (event) => {
+              event.preventDefault();
+              try {
+                const isExisting = Boolean(editingEvent.id);
+                const values = { ...editingEvent, starts_at:new Date(editingEvent.starts_at).toISOString(), ends_at:new Date(editingEvent.ends_at).toISOString(), capacity:Number(editingEvent.capacity), price_cents:editingEvent.price_cents === "" ? null : Number(editingEvent.price_cents) };
+                delete values.id; delete values.created_at; delete values.updated_at;
+                const res = await fetch("/api/admin/events", { method:isExisting ? "PATCH" : "POST", headers:{ "content-type":"application/json", ...auth }, body:JSON.stringify(isExisting ? { id:editingEvent.id, values } : { values }) });
+                const data = await res.json(); if (!res.ok) throw new Error(data.error);
+                setEditingEvent(null); setNotice(isExisting ? "Event updated." : "Event created."); loadEvents();
+              } catch (error) { setNotice(error.message); }
+            }}>
+              <div className="admin-event-editor-head"><p>{editingEvent.id ? "EDIT EVENT" : "NEW EVENT"}</p><button type="button" onClick={() => setEditingEvent(null)}>CLOSE</button></div>
+              <label>Event URL slug<input required value={editingEvent.slug} onChange={(event) => setEditingEvent((old) => ({ ...old, slug:event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-") }))} /></label>
+              <div className="admin-event-grid"><label>Status<select value={editingEvent.status} onChange={(event) => setEditingEvent((old) => ({ ...old, status:event.target.value }))}><option value="draft">Draft</option><option value="published">Published</option><option value="cancelled">Cancelled</option></select></label><label>Ticket capacity (up to 35)<input type="number" min="1" max="35" value={editingEvent.capacity} onChange={(event) => setEditingEvent((old) => ({ ...old, capacity:event.target.value }))} /></label><label>Ticket price in cents (leave blank for coming soon)<input type="number" min="0" value={editingEvent.price_cents ?? ""} onChange={(event) => setEditingEvent((old) => ({ ...old, price_cents:event.target.value }))} /></label></div>
+              <div className="admin-event-grid"><label>Starts<input required type="datetime-local" value={editingEvent.starts_at} onChange={(event) => setEditingEvent((old) => ({ ...old, starts_at:event.target.value }))} /></label><label>Ends<input required type="datetime-local" value={editingEvent.ends_at} onChange={(event) => setEditingEvent((old) => ({ ...old, ends_at:event.target.value }))} /></label></div>
+              <label>Image URL<input value={editingEvent.image_url || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, image_url:event.target.value }))} /></label><label>Video URL (YouTube or .mp4; optional)<input value={editingEvent.video_url || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, video_url:event.target.value }))} /></label>
+              {["lv", "en", "ru"].map((locale) => <section key={locale}><h3>{locale.toUpperCase()}</h3><label>Title<input required value={editingEvent[`title_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`title_${locale}`]:event.target.value }))} /></label><label>Short invitation<textarea value={editingEvent[`summary_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`summary_${locale}`]:event.target.value }))} /></label><label>Full description<textarea value={editingEvent[`description_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`description_${locale}`]:event.target.value }))} /></label><label>Host / collaborator<input value={editingEvent[`host_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`host_${locale}`]:event.target.value }))} /></label><label>Location<input value={editingEvent[`location_${locale}`] || ""} onChange={(event) => setEditingEvent((old) => ({ ...old, [`location_${locale}`]:event.target.value }))} /></label></section>)}
+              <button className="admin-save">SAVE EVENT</button>
+            </form>}
           </div>
         )}
         {section === "Artworks" && (

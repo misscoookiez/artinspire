@@ -23,7 +23,7 @@ deploy_prod:
   stage: deploy
   image: node:22-alpine
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"
       exists:
         - package.json
   cache:
@@ -72,3 +72,14 @@ deploy_prod:
         else
           echo "PID fails nav: pirmais deploy, PM2 vēl jāstartē kā root (sk. README 4.4)"
         fi'
+
+# Create one GitLab pipeline schedule (hourly, main branch) to run this job.
+# EVENT_REMINDER_SECRET is a protected/masked GitLab variable and must match
+# the private value in the server's /web/app/.env file.
+send_event_reminders:
+  stage: deploy
+  image: curlimages/curl:8.12.1
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - curl --fail --silent --show-error --request POST --header "Authorization: Bearer $EVENT_REMINDER_SECRET" https://artinspire.lv/api/events/reminders

@@ -689,6 +689,7 @@
 .admin-editor label:first-of-type {
   border-top: 0;
 }
+.admin-event-row{display:grid!important;grid-template-columns:86px 1fr auto;gap:16px;align-items:center!important}.admin-event-row img{width:86px;height:70px;object-fit:cover;border:1px solid #60dfeb}.admin-event-row>div{display:grid;gap:5px}.admin-event-row span,.admin-event-row small{color:#a9bdc9;font-size:11px}.admin-event-row button,.admin-event-editor button{border:1px solid #60dfeb;background:transparent;color:#8df5fb;padding:9px 11px;font-size:9px;letter-spacing:.1em}.admin-event-attendees{margin:23px 0;padding:18px;border:1px solid #463d51}.admin-event-attendees h3{margin:0 0 12px;color:#62e1ec;font-size:11px;letter-spacing:.13em}.admin-event-attendees p{margin:0;padding:8px 0;border-top:1px solid #332c3a;font-size:12px}.admin-event-attendees span{color:#8debf1}.admin-event-editor{margin-top:28px;padding:22px;border:1px solid #60dfeb;background:#100d18;display:grid;gap:13px}.admin-event-editor label{display:grid;gap:7px;color:#a9bdc9;font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.admin-event-editor input,.admin-event-editor textarea,.admin-event-editor select{box-sizing:border-box;width:100%;border:1px solid #4c4352;background:#0b0910;color:#fff;padding:10px;font:13px Arial,sans-serif}.admin-event-editor textarea{min-height:82px;resize:vertical}.admin-event-editor h3{margin:14px 0 0;color:#62e1ec;font-size:11px;letter-spacing:.13em}.admin-event-editor-head{display:flex;justify-content:space-between;align-items:center}.admin-event-editor-head p{margin:0;color:#62e1ec;font-size:11px;letter-spacing:.15em}.admin-event-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 @media (max-width: 850px) {
   .admin-media-group > div {
     grid-template-columns: 1fr;
@@ -696,4 +697,5 @@
   .admin-main header > div > span {
     max-width: 360px;
   }
+  .admin-event-grid{grid-template-columns:1fr}.admin-event-row{grid-template-columns:60px 1fr}.admin-event-row img{width:60px;height:60px}.admin-event-row button{grid-column:2}
 }

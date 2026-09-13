@@ -43,6 +43,18 @@ STUDIO_INBOX_EMAIL=misscoookiez@gmail.com
 This powers Contact and event-inquiry messages, reservation notifications and
 customer confirmations. Use a verified sender address for `RESEND_FROM_EMAIL`.
 
+## 3.1 Ticketed events and reminders
+
+Run `supabase/migrations/20260913_ticketed_events.sql` once in the Supabase SQL editor. It creates the event records, the first three programme cards, protected ticket capacity, waitlist and subscriber tables.
+
+Add a long random value to the server-only `/web/app/.env` file:
+
+```text
+EVENT_REMINDER_SECRET=long-private-random-value
+```
+
+Add the identical value as a protected/masked GitLab variable, then create an **hourly GitLab pipeline schedule** on the main branch. The `send_event_reminders` job runs every scheduled pipeline and sends only the appropriate 3-day and 24-hour reminder once per ticket. Never place this value in public site settings or an admin content field.
+
 ## 4. Stripe payments and scheduling
 
 Keep the existing production Stripe secret key and add a webhook endpoint in
