@@ -33,10 +33,11 @@
 }
 .inspire-after-class-payment-options {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
-.inspire-after-class-payment-options button {
+.inspire-after-class-payment-options > button,
+.inspire-after-class-payment-other > button {
   display: grid;
   gap: 9px;
   min-height: 150px;
@@ -49,14 +50,17 @@
   cursor: pointer;
   transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
-.inspire-after-class-payment-options button:hover:not(:disabled),
-.inspire-after-class-payment-options button:focus-visible {
+.inspire-after-class-payment-options > button:hover:not(:disabled),
+.inspire-after-class-payment-options > button:focus-visible,
+.inspire-after-class-payment-other > button:hover:not(:disabled),
+.inspire-after-class-payment-other > button:focus-visible {
   border-color: #7df2fb;
   background: linear-gradient(140deg, rgba(67, 226, 241, .22), rgba(118, 80, 234, .2));
   outline: none;
   transform: translateY(-2px);
 }
-.inspire-after-class-payment-options button:disabled { cursor: wait; opacity: .65; }
+.inspire-after-class-payment-options > button:disabled,
+.inspire-after-class-payment-other > button:disabled { cursor: wait; opacity: .65; }
 .inspire-after-class-payment-options small {
   color: #b89df6;
   font: 700 9px/1.25 Arial, Helvetica, sans-serif;
@@ -73,6 +77,27 @@
   font: 700 10px/1 Arial, Helvetica, sans-serif;
   letter-spacing: .13em;
 }
+.inspire-after-class-payment-other { position: relative; min-width: 0; }
+.inspire-after-class-payment-other > button { width: 100%; }
+.inspire-after-class-payment-other-form {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: calc(100% + 10px);
+  display: grid;
+  gap: 8px;
+  width: min(235px, 80vw);
+  padding: 14px;
+  border: 1px solid #7df2fb;
+  background: #101e3b;
+  box-shadow: 0 15px 35px rgba(1, 8, 25, .45);
+}
+.inspire-after-class-payment-other-form label { color: #adf7fb; font: 700 9px/1 Arial, Helvetica, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+.inspire-after-class-payment-other-form > div { display: flex; align-items: center; border: 1px solid rgba(164, 232, 243, .52); }
+.inspire-after-class-payment-other-form span { padding-left: 11px; color: #adf7fb; }
+.inspire-after-class-payment-other-form input { width: 100%; min-width: 0; padding: 10px; border: 0; outline: 0; background: transparent; color: #fff; font: 500 18px/1 Arial, Helvetica, sans-serif; }
+.inspire-after-class-payment-other-form > button { padding: 11px; border: 1px solid #7df2fb; background: #eafcff; color: #12223b; font: 700 10px/1 Arial, Helvetica, sans-serif; letter-spacing: .13em; cursor: pointer; }
+.inspire-after-class-payment-other-form > button:disabled { cursor: wait; opacity: .65; }
 .inspire-after-class-payment-status {
   grid-column: 1 / -1;
   min-height: 1.2em;
@@ -82,5 +107,9 @@
 }
 @media (max-width: 700px) {
   .inspire-page-classes .inspire-after-class-payment { grid-template-columns: 1fr; gap: 22px; margin-top: 28px; padding: 22px; }
-  .inspire-after-class-payment-options button { min-height: 132px; padding: 16px; }
+  .inspire-after-class-payment-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .inspire-after-class-payment-options > button, .inspire-after-class-payment-other > button { min-height: 132px; padding: 13px 11px; }
+  .inspire-after-class-payment-options strong { font-size: 27px; }
+  .inspire-after-class-payment-options small, .inspire-after-class-payment-options b { font-size: 8px; letter-spacing: .09em; }
+  .inspire-after-class-payment-other-form { bottom: calc(100% + 8px); right: 0; }
 }

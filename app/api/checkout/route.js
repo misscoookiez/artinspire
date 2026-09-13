@@ -57,8 +57,13 @@ export async function POST(request) {
       // This is deliberately not a reservation: a visitor is settling the
       // price of a class already attended, so it must never consume a future
       // place or create a booking hold.
-      const purchase = ["trial", "group"].includes(body.purchase) ? classPurchases[body.purchase] : null;
-      if (!purchase) return NextResponse.json({error:"Please choose either the trial or group-class payment."},{status:400});
+      const customAmount = Math.round(Number(body.customAmount));
+      const purchase = ["trial", "group"].includes(body.purchase)
+        ? classPurchases[body.purchase]
+        : body.purchase === "other" && Number.isInteger(customAmount) && customAmount >= 100 && customAmount <= 1_000_000
+          ? { name: "Other studio payment", amount: customAmount }
+          : null;
+      if (!purchase) return NextResponse.json({error:"Choose a class payment or enter another amount of at least €1."},{status:400});
       line_items=[{price_data:{currency:"eur",product_data:{name:`Art Studio Inspire · ${purchase.name}`,description:"Payment for a class already attended."},unit_amount:purchase.amount},quantity:1}];
       metadata={type:"class_payment", purchase:body.purchase};
     } else if (body.kind === "class") {

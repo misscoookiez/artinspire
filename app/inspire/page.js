@@ -1333,6 +1333,8 @@ export default function InspirePage({ page = "home" }) {
   const [checkoutOption, setCheckoutOption] = useState("");
   const [classPaymentStatus, setClassPaymentStatus] = useState("");
   const [classPaymentLoading, setClassPaymentLoading] = useState(false);
+  const [otherPaymentOpen, setOtherPaymentOpen] = useState(false);
+  const [otherPaymentAmount, setOtherPaymentAmount] = useState("");
   const [giftClasses, setGiftClasses] = useState(2);
   const [inquiryTopic, setInquiryTopic] = useState("");
   const [scheduleWeek, setScheduleWeek] = useState(-1);
@@ -2177,23 +2179,34 @@ export default function InspirePage({ page = "home" }) {
     setConfirmationEmailSent(false);
     setForm(true);
   };
-  const payForCompletedClass = async (purchase) => {
+  const paymentMessage = (message) => {
+    if (message === "opening") return lang === "lv" ? "Atver drošo apmaksu…" : lang === "ru" ? "Открываем безопасную оплату…" : "Opening secure checkout…";
+    if (message === "unavailable") return lang === "lv" ? "Apmaksu pašlaik nevar atvērt." : lang === "ru" ? "Сейчас не удаётся открыть оплату." : "Checkout is not available right now.";
+    if (message === "retry") return lang === "lv" ? "Apmaksu nevarēja atvērt. Mēģini vēlreiz." : lang === "ru" ? "Не удалось открыть оплату. Попробуйте ещё раз." : "Checkout could not be reached. Please try again.";
+    if (message === "amount") return lang === "lv" ? "Ievadi summu vismaz €1 apmērā." : lang === "ru" ? "Введите сумму не менее €1." : "Enter an amount of at least €1.";
+    return message;
+  };
+  const payForCompletedClass = async (purchase, customAmount) => {
+    if (purchase === "other" && (!Number.isFinite(customAmount) || customAmount < 100)) {
+      setClassPaymentStatus("amount");
+      return;
+    }
     setClassPaymentLoading(true);
-    setClassPaymentStatus(lang === "lv" ? "Atver drošo apmaksu…" : lang === "ru" ? "Открываем безопасную оплату…" : "Opening secure checkout…");
+    setClassPaymentStatus("opening");
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind: "class-payment", purchase }),
+        body: JSON.stringify({ kind: "class-payment", purchase, customAmount }),
       });
       const result = await response.json();
       if (result.url) window.location.href = result.url;
       else {
-        setClassPaymentStatus(result.error || (lang === "lv" ? "Apmaksu pašlaik nevar atvērt." : lang === "ru" ? "Сейчас не удаётся открыть оплату." : "Checkout is not available right now."));
+        setClassPaymentStatus(result.error || "unavailable");
         setClassPaymentLoading(false);
       }
     } catch {
-      setClassPaymentStatus(lang === "lv" ? "Apmaksu nevarēja atvērt. Mēģini vēlreiz." : lang === "ru" ? "Не удалось открыть оплату. Попробуйте ещё раз." : "Checkout could not be reached. Please try again.");
+      setClassPaymentStatus("retry");
       setClassPaymentLoading(false);
     }
   };
@@ -2693,8 +2706,20 @@ export default function InspirePage({ page = "home" }) {
               <strong>€25</strong>
               <b>{lang === "lv" ? "MAKSĀT →" : lang === "ru" ? "ОПЛАТИТЬ →" : "PAY →"}</b>
             </button>
+            <div className={`inspire-after-class-payment-other${otherPaymentOpen ? " is-open" : ""}`}>
+              <button type="button" disabled={classPaymentLoading} onClick={() => { setOtherPaymentOpen((isOpen) => !isOpen); setClassPaymentStatus(""); }}>
+                <small>{lang === "lv" ? "CITS MAKSĀJUMS" : lang === "ru" ? "ДРУГОЙ ПЛАТЁЖ" : "OTHER PAYMENT"}</small>
+                <strong>{lang === "lv" ? "Cits" : lang === "ru" ? "Другое" : "Other"}</strong>
+                <b>{lang === "lv" ? "IEVADI SUMMU →" : lang === "ru" ? "ВВЕСТИ СУММУ →" : "ENTER AMOUNT →"}</b>
+              </button>
+              {otherPaymentOpen && <div className="inspire-after-class-payment-other-form">
+                <label htmlFor="other-class-payment">{lang === "lv" ? "Summa" : lang === "ru" ? "Сумма" : "Amount"}</label>
+                <div><span>€</span><input id="other-class-payment" inputMode="decimal" type="number" min="1" step="0.01" value={otherPaymentAmount} onChange={(event) => setOtherPaymentAmount(event.target.value)} /></div>
+                <button type="button" disabled={classPaymentLoading} onClick={() => payForCompletedClass("other", Math.round(Number(otherPaymentAmount) * 100))}>{lang === "lv" ? "MAKSĀT →" : lang === "ru" ? "ОПЛАТИТЬ →" : "PAY →"}</button>
+              </div>}
+            </div>
           </div>
-          <p className="inspire-after-class-payment-status" role="status">{classPaymentStatus}</p>
+          <p className="inspire-after-class-payment-status" role="status">{paymentMessage(classPaymentStatus)}</p>
         </aside>
         <div className="inspire-space-details">
           <details>

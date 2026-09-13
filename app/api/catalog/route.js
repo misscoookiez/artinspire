@@ -3,6 +3,7 @@ import { artwork } from "@/lib/catalog";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import { ensureRollingClassSessions } from "@/lib/regular-class-schedule";
 import { isStudioWorkSession } from "@/lib/event-availability";
+import { ensureTattooRoomSlots } from "@/lib/tattoo-room-schedule";
 
 const emptyResult = { data: [], error: null };
 export async function GET(request) {
@@ -18,7 +19,10 @@ export async function GET(request) {
   }
 
   try {
-    await ensureRollingClassSessions(supabaseAdmin);
+    await Promise.all([
+      ensureRollingClassSessions(supabaseAdmin),
+      ensureTattooRoomSlots(supabaseAdmin),
+    ]);
   } catch (error) {
     console.error("Could not extend recurring class sessions", error);
   }
