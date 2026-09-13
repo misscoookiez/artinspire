@@ -18,7 +18,8 @@ export async function POST(request) {
   const throttle = rateLimit(request, "weekly-signup", { limit: 5, windowMs: 60_000 });
   if (!throttle.allowed) return NextResponse.json({ error: "Please wait a moment and try again." }, { status: 429, headers: { "Retry-After": String(throttle.retryAfter) } });
   try {
-    const { name, email, group, groupKey } = await request.json();
+    const { name, email, group, groupKey, locale: requestedLocale } = await request.json();
+    const locale = ["lv", "en", "ru"].includes(requestedLocale) ? requestedLocale : "en";
     const cleanName = String(name || "").trim();
     const cleanEmail = String(email || "").trim().toLowerCase();
     const cleanGroup = String(group || "").trim();
@@ -52,7 +53,7 @@ export async function POST(request) {
       );
     }
     try {
-      await sendGroupApplication({ name: cleanName, email: cleanEmail, group: cleanGroup });
+      await sendGroupApplication({ name: cleanName, email: cleanEmail, group: cleanGroup, locale });
     } catch (emailError) {
       console.error("Weekly sign-up email could not be sent", emailError);
     }

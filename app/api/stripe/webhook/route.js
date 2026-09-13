@@ -32,7 +32,7 @@ export async function POST(request) {
         if (metadata.type === "art_order") {
           await completeArtworkOrder({checkoutSessionId:session.id,paymentIntentId:session.payment_intent,email,amountCents:session.amount_total || 0,artworkIds:(metadata.artwork_ids || "").split(",").filter(Boolean),artworkHoldId:metadata.artwork_hold_id});
         } else if (metadata.type === "class_payment") {
-          const purchase = metadata.purchase === "trial" ? "trial" : "group";
+          const purchase = ["trial", "group", "other"].includes(metadata.purchase) ? metadata.purchase : "other";
           try { await sendCompletedClassPaymentConfirmation({email,name:session.customer_details?.name,purchase,amountCents:session.amount_total || 0,locale:metadata.locale}); }
           catch(emailError){console.error("Completed-class payment email failed",emailError);}
         } else if ((metadata.type === "class_booking" || metadata.type === "private_booking") && metadata.booking_hold_id) {
